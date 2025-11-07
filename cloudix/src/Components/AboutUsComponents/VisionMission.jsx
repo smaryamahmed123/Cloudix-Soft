@@ -1,0 +1,229 @@
+import React from "react";
+import { Box, Typography } from "@mui/material";
+import { motion as Motion } from "framer-motion"; // ✅ avoid eslint warning
+
+const VisionMission = ({ vision, mission }) => {
+  if (!vision || !mission) return null;
+
+  const visionImg = vision.image?.startsWith("http") ? vision.image : `${vision.image}`;
+  const missionImg = mission.image?.startsWith("http") ? mission.image : `${mission.image}`;
+
+  return (
+    <Box
+      sx={{
+        bgcolor: "#111E2C",
+        color: "#fff",
+        py: 8,
+        px: { xs: 2, md: 8 },
+        overflowX: "hidden",
+        width: "100%",
+        mx: "auto",
+      }}
+    >
+      {/* ---------------- Vision Section ---------------- */}
+      <Motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 4,
+            mb: 8,
+            px: { xs: 3, md: 8 },
+          }}
+        >
+          {/* ---- Left: Text ---- */}
+          <Motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            style={{ flex: 1, maxWidth: "600px" }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: "bold",
+                color: "#A9B838",
+                mb: 2,
+                textAlign: "center",
+              }}
+            >
+              {vision.title}
+            </Typography>
+
+            <Typography
+              sx={{
+                lineHeight: 1.8,
+                color: "#d1d5db",
+                fontSize: "1.1rem",
+                textAlign: "justify",
+              }}
+            >
+              {vision.description}
+            </Typography>
+          </Motion.div>
+
+          {/* ---- Right: Image ---- */}
+          <Motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            style={{ maxWidth: "100%" }}
+          >
+            <Box
+              sx={{
+                position: "relative",
+                display: "inline-block",
+                overflow: "hidden",
+                maxWidth: { xs: "100%", md: "100%", lg: "100%" },
+                "&::before, &::after": {
+                  content: '""',
+                  position: "absolute",
+                  width: "50%",
+                  height: "50%",
+                  border: "4px solid #A9B838",
+                },
+                "&::before": {
+                  top: 0,
+                  left: 0,
+                  borderRight: "none",
+                  borderBottom: "none",
+                },
+                "&::after": {
+                  bottom: 0,
+                  right: 0,
+                  borderLeft: "none",
+                  borderTop: "none",
+                },
+              }}
+            >
+              <Box
+                component="img"
+                src={visionImg}
+                alt="Our Vision"
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  borderRadius: "8px",
+                }}
+              />
+            </Box>
+          </Motion.div>
+        </Box>
+      </Motion.div>
+
+      {/* ---------------- Mission Section ---------------- */}
+      <Motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 4,
+            mb: 8,
+            px: { xs: 3, md: 8 },
+          }}
+        >
+          {/* ---- Left: Image ---- */}
+          <Motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            style={{ maxWidth: "100%" }}
+          >
+            <Box
+              sx={{
+                position: "relative",
+                display: "inline-block",
+                overflow: "hidden",
+                maxWidth: { xs: "100%", md: "100%", lg: "100%" },
+                "&::before, &::after": {
+                  content: '""',
+                  position: "absolute",
+                  width: "50%",
+                  height: "50%",
+                  border: "4px solid #A9B838",
+                },
+                "&::before": {
+                  top: 0,
+                  left: 0,
+                  borderRight: "none",
+                  borderBottom: "none",
+                },
+                "&::after": {
+                  bottom: 0,
+                  right: 0,
+                  borderLeft: "none",
+                  borderTop: "none",
+                },
+              }}
+            >
+              <Box
+                component="img"
+                src={missionImg}
+                alt="Our Mission"
+                sx={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  borderRadius: "8px",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+                }}
+              />
+            </Box>
+          </Motion.div>
+
+          {/* ---- Right: Text ---- */}
+          <Motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            style={{ flex: 1, maxWidth: "600px" }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: "bold",
+                color: "#A9B838",
+                mb: 2,
+                textAlign: "center",
+              }}
+            >
+              {mission.title}
+            </Typography>
+
+            <Typography
+              sx={{
+                lineHeight: 1.8,
+                color: "#d1d5db",
+                fontSize: "1.1rem",
+                textAlign: "justify",
+              }}
+            >
+              {mission.description}
+            </Typography>
+          </Motion.div>
+        </Box>
+      </Motion.div>
+    </Box>
+  );
+};
+
+export default VisionMission;

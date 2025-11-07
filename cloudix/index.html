@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloudix Soft</title>
+  <link rel="icon" type="image/png" href="/X.png" />
+  <style>
+    /* 🌥️ Fullscreen Loader */
+    #logo-loader {
+      position: fixed;
+      inset: 0;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      overflow: hidden;
+      transition: opacity 0.6s ease;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    /* 🟦 Common image styling */
+    .logo-img {
+      width: 160px;
+      height: 160px;
+      opacity: 0;
+      transform: translateX(0);
+      transition: all 0.6s ease;
+    }
+
+    #x-logo {
+      width: 80px;
+      height: 80px;
+      transform: none;
+      /* scale(0) rotate(0deg); */
+      transition: transform 0.8s ease;
+    }
+
+    /* ✨ Animation classes */
+    .show-left {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .show-right {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .spin-scale {
+      transform: scale(1.3) rotate(360deg);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loader Section -->
+  <div id="logo-loader">
+    <div class="logo-container">
+      <img id="cloudi-logo" class="logo-img" src="/cloudi.png" alt="Cloudi" style="transform: translateX(-60px);" />
+      <img id="x-logo" src="/X.png" alt="X" />
+      <img id="soft-logo" class="logo-img" src="/soft.png" alt="Soft" style="transform: translateX(60px);" />
+    </div>
+  </div>
+
+  <!-- React or other app mounts here -->
+  <div id="root"></div>
+
+  <script>
+    window.addEventListener("load", () => {
+      const loader = document.getElementById("logo-loader");
+      const cloudi = document.getElementById("cloudi-logo");
+      const xLogo = document.getElementById("x-logo");
+      const soft = document.getElementById("soft-logo");
+
+      // Animate images with slight delays like Framer Motion
+      setTimeout(() => {
+        cloudi.classList.add("show-left");
+      }, 600);
+
+      setTimeout(() => {
+        xLogo.classList.add("spin-scale");
+      }, 800);
+
+      setTimeout(() => {
+        soft.classList.add("show-right");
+      }, 1000);
+
+      // Fade out loader after animation
+      setTimeout(() => {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.remove(), 800);
+      }, 2800);
+    });
+  </script>
+
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
