@@ -1,4 +1,4 @@
-# My App (MERN Monorepo)
+# Cloudix Soft (MERN Monorepo)
 
 This repository contains the full-stack application — user client, admin panel, and backend API.
 
