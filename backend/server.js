@@ -33,7 +33,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://cloudix-soft.netlify.app/', // your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
