@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { Instagram, Facebook, Twitter, YouTube, LinkedIn } from "@mui/icons-material";
 import axios from "axios";
-
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 const SocialIcons = ({ color = "#769914", size = "large", circle = true }) => {
   const [socialLinks, setSocialLinks] = useState({});
   const theme = useTheme();
@@ -31,7 +31,7 @@ const SocialIcons = ({ color = "#769914", size = "large", circle = true }) => {
   useEffect(() => {
     const fetchLinks = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/contact-info");
+        const res = await axios.get(`${backendURL}/api/contact-info`);
         if (res.data?.socialLinks) {
           setSocialLinks(res.data.socialLinks);
         }
