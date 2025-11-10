@@ -8,6 +8,6 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "server/server.js" },
     { "src": "/(.*)", "dest": "admin/$1" },
-    { "src": "/(.*)", "dest": "client/$1" }
+    { "src": "/(.*)", "dest": "cloudix/$1" }
   ]
 }
