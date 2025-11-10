@@ -43,7 +43,7 @@ const Login = () => {
     try {
       const res = await axios.post(ADMIN_LOGIN_URL, form);
       localStorage.setItem('token', res.data.token);
-      navigate('/dashboard');
+      navigate('/admin/dashboard');
     } catch (err) {
       alert('Invalid credentials');
       console.error(err);

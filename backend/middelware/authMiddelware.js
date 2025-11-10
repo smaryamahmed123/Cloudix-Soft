@@ -1,8 +1,3 @@
-// import jwt from 'jsonwebtoken';
-
-
-
-// utils/generateToken.js
 // middleware/authMiddleware.js
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
