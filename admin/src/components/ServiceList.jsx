@@ -15,28 +15,29 @@ export default function ServiceList({ services, onDragEnd, onEdit, onDelete, onT
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {services.map((service, index) => (
-              <Draggable key={service._id} draggableId={service._id} index={index}>
-                {(provided) => (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    <ServiceCard
-                      service={service}
-                      onEdit={onEdit}
-                      onDelete={onDelete}
-                      onToggle={onToggle}
-                    />
-                  </Grid>
-                )}
-              </Draggable>
-            ))}
+            {Array.isArray(services) &&
+              services.map((service, index) => (
+                <Draggable key={service._id} draggableId={service._id} index={index}>
+                  {(provided) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <ServiceCard
+                        service={service}
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                        onToggle={onToggle}
+                      />
+                    </Grid>
+                  )}
+                </Draggable>
+              ))}
             {provided.placeholder}
           </Grid>
         )}
