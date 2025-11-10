@@ -2,7 +2,7 @@ import express from 'express';
 import {
   getContactInfo,
   updateContactInfo,
-} from '../controllers/contactInfoController.js';
+} from '../controllers/ContactInfoController.js';
 import { verifyAdmin } from '../middelware/authMiddelware.js';
 
 const router = express.Router();
