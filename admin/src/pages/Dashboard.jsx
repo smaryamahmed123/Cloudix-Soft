@@ -21,12 +21,12 @@ import { BarChart, LineChart } from "@mui/x-charts";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 // ===== Backend URLs =====
-const SERVICES_URL = "http://localhost:8000/api/services";
-const ADMIN_BLOG_URL = "http://localhost:8000/api/blogs";
-const ADMIN_CONTACT_MSG_URL = "http://localhost:8000/api/contact";
-const ABOUT_BASE_URL = "http://localhost:8000/api/about";
-const LOGOS_URL = "http://localhost:8000/api/logos"; // portfolio
-
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+const LOGOS_URL = `${backendURL}/api/logos`; 
+const SERVICES_URL = `${backendURL}/api/services`;
+const ADMIN_BLOG_URL = `${backendURL}/api/blogs`;
+const ADMIN_CONTACT_MSG_URL = `${backendURL}/api/contact`;
+const ABOUT_BASE_URL = `${backendURL}/api/about`;
 // ===== Reusable Stat Card =====
 const StatCard = ({ title, value, icon, bg, color, to, navigate }) => (
   <Paper
