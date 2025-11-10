@@ -9,7 +9,7 @@ import {
   Typography,
   Divider,
 } from '@mui/material';
-import { ADMIN_LOGIN_URL } from '../api/services';
+const ADMIN_LOGIN_URL = `${import.meta.env.VITE_ADMIN_LOGIN_URL}`;
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
