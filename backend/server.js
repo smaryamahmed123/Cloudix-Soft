@@ -34,7 +34,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-  origin: 'https://cloudix-soft.netlify.app', // your frontend
+  origin: ['https://cloudix-soft.netlify.app', 'https://cloudix-soft-admin.netlify.app/'], // your frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 app.use(express.json());
