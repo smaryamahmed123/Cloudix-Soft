@@ -1,10 +1,13 @@
-import { ExitToApp } from '@mui/icons-material';
-import axios from 'axios';
+import axios from "axios";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
-export const fetchServices = () => axios.get(backendURL);
-export const createService = (data) => axios.post(backendURL, data);
-export const updateService = (id, data) => axios.put(`${backendURL}/${id}`, data);
-export const deleteService = (id) => axios.delete(`${backendURL}/${id}`);
-export const reorderServices = (ids) => axios.put(`${backendURL}/reorder`, { ids });
-export const updateServiceVisibility = (id, visible) => axios.put(`${backendURL}/${id}/visibility`, { visible });  // ✅ this must exist
 
+// Use the correct route prefix
+const API_URL = `${backendURL}/api/services`;
+
+export const fetchServices = () => axios.get(API_URL);
+export const createService = (data) => axios.post(API_URL, data);
+export const updateService = (id, data) => axios.put(`${API_URL}/${id}`, data);
+export const deleteService = (id) => axios.delete(`${API_URL}/${id}`);
+export const reorderServices = (ids) => axios.put(`${API_URL}/reorder`, { ids });
+export const updateServiceVisibility = (id, visible) =>
+  axios.put(`${API_URL}/${id}/visibility`, { visible });
