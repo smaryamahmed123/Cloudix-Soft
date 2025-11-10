@@ -25,7 +25,7 @@ const WorkTogether = () => {
       sx={{
         backgroundColor: "#111E2C",
         color: "#fff",
-        py: { xs: 8, md: 20 },
+        py: { xs: 8, md: 12 },
         px: { xs: 3, md: 8 },
       }}
     >
