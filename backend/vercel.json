@@ -1,13 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { "src": "cloudix/package.json", "use": "@vercel/static-build", "config": { "distDir": "build" } },
-    { "src": "admin/package.json", "use": "@vercel/static-build", "config": { "distDir": "build" } },
-    { "src": "backend/server.js", "use": "@vercel/node" }
+    { "src": "server.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "backend/server.js" },
-    { "src": "/admin/(.*)", "dest": "admin/build/index.html" },
-    { "src": "/(.*)", "dest": "cloudix/build/index.html" }
+    { "src": "/api/(.*)", "dest": "server.js" }
   ]
 }
