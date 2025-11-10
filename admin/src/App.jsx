@@ -24,15 +24,15 @@ const App = () => {
         {/* Protected Admin Routes */}
         <Route element={<PrivateRoute />}>
           <Route element={<AdminLayout />}>
-            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="admin/dashboard" element={<Dashboard />} />
             <Route path="admin/messages" element={<AdminContactMessage />} />
-            <Route path="edit-contact" element={<AdminContactInfo />} />
+            <Route path="admin/edit-contact" element={<AdminContactInfo />} />
             <Route path="admin/services" element={<AdminServicesManager />} />
             <Route path="admin/blogs" element={<AdminBlogs />} />
-            <Route path="admin-about" element={<AdminAbout />} />
-            <Route path="admin-privacy-policy" element={<PrivacyPolicyAdmin />} />
-            <Route path="admin-portfolio" element={<LogoManager />} />
-            <Route path="admin-post-design" element={<AdminPostsManager />} />
+            <Route path="admin/about" element={<AdminAbout />} />
+            <Route path="admin/privacy-policy" element={<PrivacyPolicyAdmin />} />
+            <Route path="admin/portfolio" element={<LogoManager />} />
+            <Route path="admin/post-design" element={<AdminPostsManager />} />
           </Route>
         </Route>
 

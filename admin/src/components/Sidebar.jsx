@@ -39,15 +39,15 @@ const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
   const items = [
-    { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
+    { text: "Dashboard", icon: <DashboardIcon />, path: "/admin/dashboard" },
     { text: "Services", icon: <WorkIcon />, path: "/admin/services" },
     { text: "Blogs", icon: <ArticleIcon />, path: "/admin/blogs" },
     { text: "Messages", icon: <MessageIcon />, path: "/admin/messages" },
-    { text: "Portfolio", icon: <CollectionsIcon />, path: "/admin-portfolio" },
-    { text: "Posts", icon: <ArticleIcon />, path: "/admin-post-design" },
-    { text: "Edit Contact", icon: <ContactPhoneIcon />, path: "/edit-contact" },
-    { text: "About Us", icon: <InfoIcon />, path: "/admin-about" },
-    { text: "Privacy Policy", icon: <PolicyIcon />, path: "/admin-privacy-policy" },
+    { text: "Portfolio", icon: <CollectionsIcon />, path: "/admin/portfolio" },
+    { text: "Posts", icon: <ArticleIcon />, path: "/admin/post-design" },
+    { text: "Edit Contact", icon: <ContactPhoneIcon />, path: "/admin/edit-contact" },
+    { text: "About Us", icon: <InfoIcon />, path: "/admin/about" },
+    { text: "Privacy Policy", icon: <PolicyIcon />, path: "/admin/privacy-policy" },
   ];
 
   const drawerContent = (
