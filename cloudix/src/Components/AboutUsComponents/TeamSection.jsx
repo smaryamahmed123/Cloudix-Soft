@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { motion as Motion } from "framer-motion"; // ✅ renamed to Motion to avoid eslint warning
-import TeamImage from "../../assets/teamwork.png"; // replace with your image path
 
 const TeamSection = ({ teamIntro }) => {
   if (!teamIntro) return null;
