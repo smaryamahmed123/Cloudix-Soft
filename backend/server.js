@@ -10,7 +10,7 @@ import authRoutes from './routes/authRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import aboutRoutes from './routes/aboutRoute.js';
-import contactRoutes from './routes/contactRoutes.js';
+import contactRoutes from './routes/ContactRoutes.js';
 import servicesRoutes from './routes/servicesRoutes.js'
 import contactInfoRoutes from './routes/ContactInfoRoutes.js';
 import privacyPolicyRoutes from './routes/privacyPolicyRoutes.js';
