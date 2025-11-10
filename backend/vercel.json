@@ -6,8 +6,8 @@
     { "src": "backend/server.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "server/server.js" },
-    { "src": "/admin/(.*)", "dest": "admin/$1" },
-    { "src": "/(.*)", "dest": "cloudix/$1" }
+    { "src": "/api/(.*)", "dest": "backend/server.js" },
+    { "src": "/admin/(.*)", "dest": "admin/build/index.html" },
+    { "src": "/(.*)", "dest": "cloudix/build/index.html" }
   ]
 }
