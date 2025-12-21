@@ -177,7 +177,7 @@ const ModernCard = ({ icon, iconImage, title, description,}) => {
                 mt: 3, // push below circle
                 fontWeight: "bold",
                 color: textColorNormal,
-                fontSize: 15,
+                fontSize: 20,
                 borderBottom: "1px solid #111E2C",
                 display: "inline-block", // keeps underline tight to text
                 pb: 0.5, // space between text and border
