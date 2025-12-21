@@ -115,7 +115,7 @@ export default function HeroSection() {
         <Typography
           variant={textVariant}
           sx={{
-            fontWeight: 700,
+            fontWeight: { sm: 400, md: 500, lg: 700, xl: 800 },
             mb: 3,
             color: "#FFFFFF",
             lineHeight: 1.3,
