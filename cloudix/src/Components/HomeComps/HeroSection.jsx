@@ -116,7 +116,7 @@ export default function HeroSection() {
           variant={textVariant}
           sx={{
             fontWeight: 700,
-            fontSize: { sm: 400, md: 500, lg: 700, xl: 800 },
+            fontSize: { sm: 40, md: 50, lg: 70, xl: 80 },
             mb: 3,
             color: "#FFFFFF",
             lineHeight: 1.3,
