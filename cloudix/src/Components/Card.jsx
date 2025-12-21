@@ -146,7 +146,7 @@ const ModernCard = ({ icon, iconImage, title, description,}) => {
               mt: 5,
               color: textColorNormal,
               textAlign: "center",
-              fontSize: 10,
+              fontSize: '0.95rem',
             }}
           >
             {description}
@@ -192,7 +192,7 @@ const ModernCard = ({ icon, iconImage, title, description,}) => {
                 mt: 5,
                 color: '#FFFFFF',
                 textAlign: "center",
-              fontSize: 10,
+              fontSize: '0.95rem',
               }}
             >{description}</Typography>
           </>
