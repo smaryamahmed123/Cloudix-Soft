@@ -42,7 +42,13 @@ export default function DiagonalStrip({
         width: "130%",
         bgcolor: bgColor,
         border: `1px solid ${finalBorderColor}`,
-        py: 1,
+        // py: 1,
+        py: {
+          xs: 0.5,  // mobile
+          sm: 0.8,  // small tablets
+          md: 1.2,  // tablets
+          lg: 1.8,  // desktop
+        },
         overflow: "hidden",
         zIndex,
         boxShadow: "0 0 10px rgba(0,0,0,0.5)",
@@ -54,7 +60,8 @@ export default function DiagonalStrip({
         style={{
           display: "flex",
           whiteSpace: "nowrap",
-          fontSize: "1rem",
+          // fontSize: "1rem",
+          fontSize: "inherit",
           fontWeight: 500,
         }}
       >
@@ -64,12 +71,22 @@ export default function DiagonalStrip({
             sx={{
               color: textColor,
               mx: 4,
+              fontSize: {
+                xs: "0.7rem",
+                sm: "0.85rem",
+                md: "1rem",
+                lg: "1.1rem",
+              },
               display: "flex",
               alignItems: "center",
               "&::before": {
                 content: '"•"',
                 color: finalDotColor,
-                fontSize: "1.5rem",
+                // fontSize: "1.5rem",
+                fontSize: {
+                  xs: "1rem",
+                  md: "1.5rem",
+                },
                 mr: 2,
               },
             }}
