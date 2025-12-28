@@ -5,6 +5,7 @@ import useDevice from "../../hooks/useDevice";
 export default function DiagonalStrip({
   texts,
   bgColor,
+  borderColor,
   textColor = "#111",
   angle,
   position,
@@ -20,6 +21,7 @@ export default function DiagonalStrip({
         width: "130%",
         transform: `rotate(${angle}deg)`,
         bgcolor: bgColor,
+        borderColor: borderColor,
         py: 1,
         overflow: "hidden",
       }}

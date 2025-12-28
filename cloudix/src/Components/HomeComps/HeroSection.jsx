@@ -38,24 +38,66 @@ export default function HeroSection() {
       />
 
       {/* Content */}
-      <Box sx={{ position: "relative", zIndex: 2, maxWidth: 800 }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: 800,
+          textAlign: isLandscapeMobile ? "left" : { sm: "center", md: "left" },
+        }}
+      >
         <Typography
           sx={{
             fontWeight: 700,
             fontSize: isLandscapeMobile
               ? 22
-              : { sm: 30, md: 40, lg: 60 },
-            lineHeight: 1.25,
-            color: "#fff",
+              : { sm: 30, md: 40, lg: 60, xl: 70 },
+            lineHeight: 1.3,
+            color: "#FFFFFF",
             mb: 3,
             textAlign: isLandscapeMobile ? "left" : "justify",
+            textJustify: "inter-word",
           }}
         >
-          Make Your Brand Stand Out Through{" "}
-          <Box component="span" sx={{ bgcolor: "#BBBF19", color: "#111E2C", px: 1 }}>
-            Social Media
-          </Box>{" "}
-          Marketing
+          {/* Line 1 */}
+          <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+            Make Your Brand Stand
+          </Box>
+
+          <br />
+
+          {/* Line 2 */}
+          <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+            Out Through{" "}
+            <Box
+              component="span"
+              sx={{
+                bgcolor: "#BBBF19",
+                color: "#111E2C",
+                px: 1,
+                borderRadius: 1.5,
+                display: "inline-block",
+              }}
+            >
+              Social Media
+            </Box>
+          </Box>
+
+          <br />
+
+          {/* Line 3 */}
+          <Box
+            component="span"
+            sx={{
+              bgcolor: "#BBBF19",
+              color: "#111E2C",
+              px: 1,
+              borderRadius: 1.5,
+              display: "inline-block",
+            }}
+          >
+            Marketing
+          </Box>
         </Typography>
 
         <GradientButton
@@ -65,18 +107,21 @@ export default function HeroSection() {
         />
       </Box>
 
+
       {/* Decorative strips — desktop only */}
       {!isMobile && !isLandscapeMobile && (
         <>
           <DiagonalStrip
             texts={["Development", "Branding", "E-Commerce", "Animation"]}
             bgColor="#c6d24a"
+            borderColor="#111E2C"
             angle={40}
             position="90%"
           />
           <DiagonalStrip
             texts={["UI/UX", "Marketing", "Motion", "Branding"]}
             bgColor="#111E2C"
+            borderColor="#c6d24a"
             textColor="#fff"
             angle={-10}
             position="30%"
