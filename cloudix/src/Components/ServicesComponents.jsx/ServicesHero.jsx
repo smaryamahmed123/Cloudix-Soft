@@ -15,7 +15,7 @@ const ServicesHero = () => {
         py: { xs: 8, md: 12 },
         px: { xs: 2, md: 0 },
         textAlign: "center",
-        height: { xs: "600px", md: "800px" },
+        height: { xs: "60vh", md: "80vh" },
 
         display: "flex",
         justifyContent: "center",
