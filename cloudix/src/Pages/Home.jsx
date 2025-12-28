@@ -10,7 +10,7 @@ import ServicesSection from '../Components/ServicesComponents.jsx/ServicesSectio
 
 const Home = () => {
   return (
-    <Box sx={{ position: "relative", overflow: "hidden", backgroundColor: "#f9f9f9" }}>
+    <Box sx={{  overflowX: "hidden" , position: "relative", overflow: "hidden", backgroundColor: "#f9f9f9" }}>
       {/* Decorative Circles — send to back */}
       <Box sx={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <DecorativeCircle
