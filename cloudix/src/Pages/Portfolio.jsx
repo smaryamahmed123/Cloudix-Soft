@@ -8,7 +8,7 @@ import {
 import PortfolioHero from '../Components/PortfolioComps.jsx/PortfolioHero';
 import PostDesignSection from '../Components/PortfolioComps.jsx/PostDesignSection';
 import LogoDesignSection from '../Components/PortfolioComps.jsx/LogoDesignSection';
-import WebsiteDesignSection from '../Components/PortfolioComps.jsx/PortfolioSection2';
+import WebsiteDesignSection from '../Components/PortfolioComps.jsx/WebsiteDesignSection';
 import PortfolioSection3 from '../Components/PortfolioComps.jsx/PortfolioSection3';
 import ContactForm from '../Components/ContactComps/ContactForm';
 

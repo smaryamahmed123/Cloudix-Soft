@@ -15,7 +15,6 @@ const WebsitePreview = ({ image, link }) => {
         border: "1px solid rgba(255,255,255,0.15)",
         cursor: "pointer",
         position: "relative",
-        display: "block",
         mx: "auto",
         "& img": {
           width: "100%",
