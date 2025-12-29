@@ -12,6 +12,7 @@ import postRoutes from './routes/postRoutes.js';
 import aboutRoutes from './routes/aboutRoute.js';
 import contactRoutes from './routes/ContactRoutes.js';
 import servicesRoutes from './routes/servicesRoutes.js'
+import websiteRoutes from "./routes/websiteRoutes.js";
 import contactInfoRoutes from './routes/ContactInfoRoutes.js';
 import privacyPolicyRoutes from './routes/privacyPolicyRoutes.js';
 
@@ -51,6 +52,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/contact', contactRoutes);
+app.use("/api/websites", websiteRoutes);
 app.use('/api/services', servicesRoutes);
 app.use('/api/contact-info', contactInfoRoutes);
 app.use('/api/privacy-policy', privacyPolicyRoutes);
