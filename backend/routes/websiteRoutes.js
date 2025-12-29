@@ -5,7 +5,7 @@ import {
   deleteWebsite,
 } from "../controllers/websiteController.js";
 import { verifyAdmin } from "../middelware/authMiddelware.js";
-import { upload } from "../middleware/upload.js";
+import { upload } from "../middelware/upload.js";
 
 const router = express.Router();
 
