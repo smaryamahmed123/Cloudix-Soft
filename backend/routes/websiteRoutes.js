@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", getWebsites);
 
 // Admin
-router.post("/", verifyAdmin, upload.single("image"), addWebsite);
+router.post("/", upload.single("image"), addWebsite);
 router.delete("/:id", verifyAdmin, deleteWebsite);
 
 export default router;
