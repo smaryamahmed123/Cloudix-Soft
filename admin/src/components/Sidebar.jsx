@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
+import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 
 const drawerWidth = 220;
 
@@ -48,6 +49,7 @@ const Sidebar = () => {
     { text: "Edit Contact", icon: <ContactPhoneIcon />, path: "/admin/edit-contact" },
     { text: "About Us", icon: <InfoIcon />, path: "/admin/about" },
     { text: "Privacy Policy", icon: <PolicyIcon />, path: "/admin/privacy-policy" },
+    { text: "Add Website", icon: <AddToPhotosIcon />, path: "admin/addWebsite"}
   ];
 
   const drawerContent = (

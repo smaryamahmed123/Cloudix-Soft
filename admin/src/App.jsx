@@ -13,6 +13,7 @@ import AdminAbout from './pages/AdminAbout';
 import LogoManager from './pages/AdminLogoManager';
 import AdminPostsManager from './pages/AdminPostsManager';
 import AdminLayout from './components/AdminLayout';
+import AddWebsite from './pages/AdminWebsite';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="admin/privacy-policy" element={<PrivacyPolicyAdmin />} />
             <Route path="admin/portfolio" element={<LogoManager />} />
             <Route path="admin/post-design" element={<AdminPostsManager />} />
+            <Route path="admin/addWebsite" element={<AddWebsite />} />
           </Route>
         </Route>
 
