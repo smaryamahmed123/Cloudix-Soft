@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { motion as Motion } from "framer-motion"; // ✨ Import Framer Motion
 import WebsitePreview from "./WebsitePreview";
-import site1 from "src/assets/modified_image.png";
+import site1 from "../../assets/modified_image.png";
 import site2 from "../../assets/modified_image (1).png";
 import site3 from "../../assets/modified_image (2).png";
 import site4 from "../../assets/modified_image (3).png";
