@@ -4,7 +4,7 @@ import {
   getWebsites,
   deleteWebsite,
 } from "../controllers/websiteController.js";
-import adminAuth from "../middleware/adminAuth.js";
+import { verifyAdmin } from "../middelware/authMiddelware.js";
 import { upload } from "../middleware/upload.js";
 
 const router = express.Router();
@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", getWebsites);
 
 // Admin
-router.post("/", adminAuth, upload.single("image"), addWebsite);
-router.delete("/:id", adminAuth, deleteWebsite);
+router.post("/", verifyAdmin, upload.single("image"), addWebsite);
+router.delete("/:id", verifyAdmin, deleteWebsite);
 
 export default router;
