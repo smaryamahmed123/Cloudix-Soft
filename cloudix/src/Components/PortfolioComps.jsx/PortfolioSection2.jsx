@@ -1,5 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { motion as Motion } from "framer-motion"; // ✨ Import Framer Motion
+import WebsitePreview from "./WebsitePreview";
+import site1 from "src/assets/modified_image.png";
+import site2 from "../../assets/modified_image (1).png";
+import site3 from "../../assets/modified_image (2).png";
+import site4 from "../../assets/modified_image (3).png";
+import site5 from "../../assets/modified_image (4).png";
+
 
 const WebsiteDesignSection = () => {
   return (
@@ -89,6 +96,40 @@ const WebsiteDesignSection = () => {
         >
           E-commerce Website
         </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 6,
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <WebsitePreview
+            image={site1}
+            link="https://company-website-1.com"
+          />
+
+          <WebsitePreview
+            image={site2}
+            link="https://company-website-2.com"
+          />
+
+          <WebsitePreview
+            image={site3}
+            link="https://company-website-2.com"
+          />
+
+          <WebsitePreview
+            image={site4}
+            link="https://company-website-2.com"
+          />
+
+          <WebsitePreview
+            image={site5}
+            link="https://company-website-2.com"
+          />
+        </Box>
+
       </Motion.div>
     </Box>
   );
