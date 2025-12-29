@@ -3,6 +3,9 @@ import Website from "../models/Website.js";
 // ➕ Add Website (Admin)
 export const addWebsite = async (req, res) => {
   try {
+    console.log("BODY:", req.body);
+    console.log("FILE:", req.file);
+
     const website = await Website.create({
       title: req.body.title,
       link: req.body.link,
