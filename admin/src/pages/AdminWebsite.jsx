@@ -8,6 +8,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import WebsiteCard from "../components/WebsiteCard";
 import UploadWebsiteForm from "../components/UploadWebsiteForm";
@@ -58,6 +59,35 @@ export default function AdminWebsitesManager() {
   useEffect(() => {
     fetchWebsites();
   }, []);
+
+  // 🔀 Drag & Drop reorder
+  const handleDragEnd = async (result) => {
+    if (!result.destination) return;
+
+    const reordered = Array.from(websites);
+    const [moved] = reordered.splice(result.source.index, 1);
+    reordered.splice(result.destination.index, 0, moved);
+
+    setWebsites(reordered);
+
+    try {
+      await axios.put(
+        `${BASE_URL}/reorder`,
+        { ids: reordered.map((w) => w._id) },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
+    } catch {
+      setSnackbar({
+        open: true,
+        message: "Failed to save order ❌",
+        severity: "error",
+      });
+    }
+  };
 
   // 📤 Upload website
   const handleUpload = async () => {
@@ -131,11 +161,20 @@ export default function AdminWebsitesManager() {
 
   return (
     <Box sx={{ p: isMobile ? 2 : 4, minHeight: "100vh" }}>
-      <Typography variant="h4" textAlign="center" mb={4}>
+      <Typography variant="h4" textAlign="center" mb={1}>
         Manage Websites (Admin)
       </Typography>
 
-      {/* Desktop Upload Form */}
+      <Typography
+        variant="caption"
+        display="block"
+        textAlign="center"
+        sx={{ opacity: 0.6, mb: 3 }}
+      >
+        Drag cards to reorder websites
+      </Typography>
+
+      {/* Desktop Upload */}
       {!isMobile && (
         <UploadWebsiteForm
           form={form}
@@ -145,14 +184,47 @@ export default function AdminWebsitesManager() {
         />
       )}
 
-      {/* Websites Grid */}
-      <Grid container spacing={3} justifyContent="center">
-        {websites.map((site) => (
-          <Grid item xs={12} sm={6} md={4} key={site._id}>
-            <WebsiteCard site={site} onDelete={handleDelete} />
-          </Grid>
-        ))}
-      </Grid>
+      {/* 🔀 Drag & Drop Grid */}
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="websitesGrid">
+          {(provided) => (
+            <Grid
+              container
+              spacing={3}
+              justifyContent="center"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {websites.map((site, index) => (
+                <Draggable
+                  key={site._id}
+                  draggableId={site._id}
+                  index={index}
+                >
+                  {(provided) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      sx={{ cursor: "grab" }}
+                    >
+                      <WebsiteCard
+                        site={site}
+                        onDelete={handleDelete}
+                      />
+                    </Grid>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </Grid>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       {/* Mobile Modal */}
       {isMobile && (
@@ -170,7 +242,12 @@ export default function AdminWebsitesManager() {
         </>
       )}
 
-      <SnackbarAlert {...snackbar} onClose={() => setSnackbar({ ...snackbar, open: false })} />
+      <SnackbarAlert
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      />
       <LoadingBackdrop open={loading} />
     </Box>
   );
