@@ -4,6 +4,7 @@ import {
   getWebsites,
   deleteWebsite,
 } from "../controllers/websiteController.js";
+import { reorderWebsites } from "../controllers/websiteController.js";
 import { verifyAdmin } from "../middelware/authMiddelware.js";
 import { upload } from "../middelware/upload.js";
 
@@ -15,5 +16,6 @@ router.get("/", getWebsites);
 // Admin
 router.post("/", upload.single("image"), addWebsite);
 router.delete("/:id", verifyAdmin, deleteWebsite);
+router.put("/reorder", verifyAdmin, reorderWebsites);
 
 export default router;

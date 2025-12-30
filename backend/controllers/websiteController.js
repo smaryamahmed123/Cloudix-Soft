@@ -22,7 +22,7 @@ export const addWebsite = async (req, res) => {
 // 📥 Get All Websites (Client)
 export const getWebsites = async (req, res) => {
   try {
-    const websites = await Website.find().sort({ createdAt: -1 });
+    const websites = await Website.find().sort({ order: 1 });
     res.json(websites);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -34,6 +34,20 @@ export const deleteWebsite = async (req, res) => {
   try {
     await Website.findByIdAndDelete(req.params.id);
     res.json({ message: "Website deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const reorderWebsites = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    for (let i = 0; i < ids.length; i++) {
+      await Website.findByIdAndUpdate(ids[i], { order: i });
+    }
+
+    res.json({ message: "Order updated" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

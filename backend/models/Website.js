@@ -11,6 +11,7 @@ const websiteSchema = new mongoose.Schema(
       enum: ["static", "ecommerce"],
       required: true,
     },
+    order: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
