@@ -5,7 +5,6 @@ import {
   deleteWebsite,
   reorderWebsites
 } from "../controllers/websiteController.js";
-import { reorderWebsites } from "../controllers/websiteController.js";
 import { verifyAdmin } from "../middelware/authMiddelware.js";
 import { upload } from "../middelware/upload.js";
 
