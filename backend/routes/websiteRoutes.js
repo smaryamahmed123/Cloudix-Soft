@@ -15,7 +15,7 @@ router.get("/", getWebsites);
 
 // Admin
 router.post("/", upload.single("image"), addWebsite);
-router.delete("/:id", verifyAdmin, deleteWebsite);
-router.put("/reorder", verifyAdmin, reorderWebsites);
+router.delete("/:id", deleteWebsite);
+router.put("/reorder", reorderWebsites);
 
 export default router;
