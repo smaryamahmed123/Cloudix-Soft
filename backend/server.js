@@ -35,11 +35,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-  origin: ['https://cloudix-soft.netlify.app', 'https://cloudix-soft-admin.netlify.app'], // your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  origin: [
+    "https://cloudix-soft-admin.netlify.app",
+    "https://cloudix-soft.netlify.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+app.options("*", cors());
+
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
