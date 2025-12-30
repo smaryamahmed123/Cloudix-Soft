@@ -27,8 +27,8 @@ const WebsitePreview = ({ image, link, index, activeIndex }) => {
     >
       <Box
         sx={{
-          width: "380px",
-          height: "420px",
+          width: "680px",
+          height: "520px",
           overflow: "hidden",
           borderRadius: "18px",
           border: "1px solid rgba(255,255,255,0.15)",
