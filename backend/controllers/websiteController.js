@@ -7,10 +7,9 @@ export const addWebsite = async (req, res) => {
       return res.status(400).json({ message: "Image is required" });
     }
 
-    // Upload to Cloudinary using buffer
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder: "websites" }, // folder name in Cloudinary
+        { folder: "websites" },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);
@@ -24,7 +23,6 @@ export const addWebsite = async (req, res) => {
       link: req.body.link,
       category: req.body.category,
       image: result.secure_url,
-      public_id: result.public_id, // optional, if you want to delete later
     });
 
     res.status(201).json(website);
@@ -33,7 +31,6 @@ export const addWebsite = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 // 📥 Get All Websites (Client)
 export const getWebsites = async (req, res) => {

@@ -1,6 +1,11 @@
 import express from "express";
 import multer from "multer";
-import { addPost, getPosts, deletePost, reorderPosts } from "../controllers/postController.js";
+import {
+     addPost,
+     getPosts, 
+     deletePost, 
+     reorderPosts 
+    } from "../controllers/postController.js";
 
 const router = express.Router();
 
