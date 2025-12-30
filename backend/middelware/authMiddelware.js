@@ -1,3 +1,5 @@
+import User from '../models/User.js';
+
 export const verifyAdmin = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
