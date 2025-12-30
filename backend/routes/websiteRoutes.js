@@ -3,6 +3,7 @@ import {
   addWebsite,
   getWebsites,
   deleteWebsite,
+  reorderWebsites
 } from "../controllers/websiteController.js";
 import { reorderWebsites } from "../controllers/websiteController.js";
 import { verifyAdmin } from "../middelware/authMiddelware.js";
