@@ -16,8 +16,8 @@ const WebsiteDesignSection = () => {
     fetch(`${backendURL}/api/websites`)
       .then((res) => res.json())
       .then((data) => {
-        setStaticWebsites(data.filter((w) => w.type === "static"));
-        setEcommerceWebsites(data.filter((w) => w.type === "ecommerce"));
+        setStaticWebsites(data.filter((w) => w.category === "static"));
+      setEcommerceWebsites(data.filter((w) => w.category === "ecommerce"));
       });
   }, []);
 
