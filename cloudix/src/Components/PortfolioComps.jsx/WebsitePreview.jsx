@@ -41,17 +41,23 @@ const WebsitePreview = ({ image, link, index, activeIndex }) => {
           alt="Website Preview"
           sx={{
             width: "100%",
-            animation: "autoScroll 12s linear infinite",
+            height: "auto",
+            minHeight: "900px", // 🔥 IMPORTANT
+            animation: "autoScroll 14s linear infinite",
           }}
         />
       </Box>
 
-      {/* CSS animation */}
+      {/* CSS Animation */}
       <style>
         {`
           @keyframes autoScroll {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(calc(-100% + 520px)); }
+            0% {
+              transform: translateY(0);
+            }
+            100% {
+              transform: translateY(-380px);
+            }
           }
         `}
       </style>
