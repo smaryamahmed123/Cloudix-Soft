@@ -76,7 +76,7 @@ export default function AdminWebsitesManager() {
         { ids: reordered.map((w) => w._id) },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -109,7 +109,7 @@ export default function AdminWebsitesManager() {
       setLoading(true);
       await axios.post(BASE_URL, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
 
@@ -139,7 +139,7 @@ export default function AdminWebsitesManager() {
       setLoading(true);
       await axios.delete(`${BASE_URL}/${id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       fetchWebsites();
