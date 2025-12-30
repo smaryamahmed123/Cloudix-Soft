@@ -8,25 +8,28 @@ import WebsitePreview from "./WebsitePreview";
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const WebsiteDesignSection = () => {
-  const [websites, setWebsites] = useState([]);
+  const [staticWebsites, setStaticWebsites] = useState([]);
+  const [ecommerceWebsites, setEcommerceWebsites] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     fetch(`${backendURL}/api/websites`)
       .then((res) => res.json())
-      .then((data) => setWebsites(data))
-      .catch((err) => console.error("Failed to fetch websites:", err));
+      .then((data) => {
+        setStaticWebsites(data.filter((w) => w.type === "static"));
+        setEcommerceWebsites(data.filter((w) => w.type === "ecommerce"));
+      });
   }, []);
 
-  const next = () => {
+  const next = (list) => {
     setActiveIndex((prev) =>
-      prev === websites.length - 1 ? 0 : prev + 1
+      prev === list.length - 1 ? 0 : prev + 1
     );
   };
 
-  const prev = () => {
+  const prev = (list) => {
     setActiveIndex((prev) =>
-      prev === 0 ? websites.length - 1 : prev - 1
+      prev === 0 ? list.length - 1 : prev - 1
     );
   };
 
@@ -34,69 +37,40 @@ const WebsiteDesignSection = () => {
     <Box
       sx={{
         bgcolor: "#111E2C",
-        py: 12,
+        py: 14,
         color: "#fff",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Heading */}
+      {/* Section Heading */}
       <Motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Typography variant="h6" sx={{ fontWeight: "bold", mb: 10 }}>
-          Website Development & Designing
+        <Typography variant="h6" sx={{ fontWeight: 600, mb: 10 }}>
+          Website Design & Development
         </Typography>
       </Motion.div>
 
-      {/* Background Ghost Text */}
-      <Typography
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          fontSize: { xs: "4rem", md: "9rem" },
-          fontWeight: 800,
-          color: "rgba(255,255,255,0.03)",
-          whiteSpace: "nowrap",
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      >
-        E-COMMERCE WEBSITE
-      </Typography>
-
-      {/* Foreground Title */}
+      {/* ================= STATIC WEBSITES ================= */}
       <Typography
         variant="h2"
         sx={{
-          position: "relative",
-          zIndex: 1,
           textTransform: "uppercase",
           fontWeight: "bold",
           color: "transparent",
-          WebkitTextStroke: "1px #D9D9D980",
-          mb: 10,
+          WebkitTextStroke: "1px #A9B83880",
+          mb: 6,
         }}
       >
-        E-commerce Website
+        Static Websites
       </Typography>
 
-      {/* Website Stack */}
-      <Box
-        sx={{
-          position: "relative",
-          height: 460,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {websites.map((site, index) => (
+      <Box sx={{ position: "relative", height: 460 }}>
+        {staticWebsites.map((site, index) => (
           <WebsitePreview
             key={site._id}
             image={site.image}
@@ -107,32 +81,47 @@ const WebsiteDesignSection = () => {
         ))}
       </Box>
 
-      {/* Arrow Buttons */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          gap: 4,
-          mt: 6,
-        }}
-      >
-        <IconButton
-          onClick={prev}
-          sx={{
-            color: "#fff",
-            border: "1px solid rgba(255,255,255,0.3)",
-          }}
-        >
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 4, mt: 5 }}>
+        <IconButton onClick={() => prev(staticWebsites)} sx={{ color: "#fff" }}>
           <ArrowBackIosNewIcon />
         </IconButton>
+        <IconButton onClick={() => next(staticWebsites)} sx={{ color: "#fff" }}>
+          <ArrowForwardIosIcon />
+        </IconButton>
+      </Box>
 
-        <IconButton
-          onClick={next}
-          sx={{
-            color: "#fff",
-            border: "1px solid rgba(255,255,255,0.3)",
-          }}
-        >
+      {/* ================= E-COMMERCE WEBSITES ================= */}
+      <Typography
+        variant="h2"
+        sx={{
+          mt: 14,
+          textTransform: "uppercase",
+          fontWeight: "bold",
+          color: "transparent",
+          WebkitTextStroke: "1px #D9D9D980",
+          mb: 6,
+        }}
+      >
+        E-Commerce Websites
+      </Typography>
+
+      <Box sx={{ position: "relative", height: 460 }}>
+        {ecommerceWebsites.map((site, index) => (
+          <WebsitePreview
+            key={site._id}
+            image={site.image}
+            link={site.link}
+            index={index}
+            activeIndex={activeIndex}
+          />
+        ))}
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 4, mt: 5 }}>
+        <IconButton onClick={() => prev(ecommerceWebsites)} sx={{ color: "#fff" }}>
+          <ArrowBackIosNewIcon />
+        </IconButton>
+        <IconButton onClick={() => next(ecommerceWebsites)} sx={{ color: "#fff" }}>
           <ArrowForwardIosIcon />
         </IconButton>
       </Box>
