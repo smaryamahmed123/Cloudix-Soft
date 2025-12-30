@@ -15,6 +15,7 @@ const WebsitePreview = ({ image, link }) => {
         backgroundColor: "#0b1220",
         boxShadow: "0 20px 40px rgba(0,0,0,0.45)",
         height: 420,
+        position: "relative",
       }}
     >
       <Box
@@ -23,19 +24,10 @@ const WebsitePreview = ({ image, link }) => {
         alt="Website Preview"
         sx={{
           width: "100%",
-          minHeight: "800px",
-          animation: "scrollImage 14s linear infinite",
+          height: "100%",
+          objectFit: "cover",
         }}
       />
-
-      <style>
-        {`
-          @keyframes scrollImage {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-380px); }
-          }
-        `}
-      </style>
     </Box>
   );
 };
