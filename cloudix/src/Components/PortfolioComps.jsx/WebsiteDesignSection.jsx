@@ -1,21 +1,46 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import { motion as Motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import WebsitePreview from "./WebsitePreview";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const WebsiteDesignSection = () => {
   const [websites, setWebsites] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    fetch(`${backendURL}/api/websites`) // Replace with actual backend URL
-      .then(res => res.json())
-      .then(data => setWebsites(data))
-      .catch(err => console.error("Failed to fetch websites:", err));
+    fetch(`${backendURL}/api/websites`)
+      .then((res) => res.json())
+      .then((data) => setWebsites(data))
+      .catch((err) => console.error("Failed to fetch websites:", err));
   }, []);
 
+  const next = () => {
+    setActiveIndex((prev) =>
+      prev === websites.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prev = () => {
+    setActiveIndex((prev) =>
+      prev === 0 ? websites.length - 1 : prev - 1
+    );
+  };
+
   return (
-    <Box sx={{ bgcolor: "#111E2C", py: 10, color: "#fff", textAlign: "center" }}>
+    <Box
+      sx={{
+        bgcolor: "#111E2C",
+        py: 12,
+        color: "#fff",
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
       {/* Heading */}
       <Motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -27,58 +52,90 @@ const WebsiteDesignSection = () => {
         </Typography>
       </Motion.div>
 
-      {/* Categories */}
-      <Motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
+      {/* Background Ghost Text */}
+      <Typography
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          fontSize: { xs: "4rem", md: "9rem" },
+          fontWeight: 800,
+          color: "rgba(255,255,255,0.03)",
+          whiteSpace: "nowrap",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            textTransform: "uppercase",
-            fontWeight: "bold",
-            color: "transparent",
-            WebkitTextStroke: "1px #A9B83880",
-            mb: 4,
-          }}
-        >
-          Static Website
-        </Typography>
-      </Motion.div>
+        E-COMMERCE WEBSITE
+      </Typography>
 
-      <Motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.6 }}
+      {/* Foreground Title */}
+      <Typography
+        variant="h2"
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          textTransform: "uppercase",
+          fontWeight: "bold",
+          color: "transparent",
+          WebkitTextStroke: "1px #D9D9D980",
+          mb: 10,
+        }}
       >
-        <Typography
-          variant="h2"
-          sx={{
-            textTransform: "uppercase",
-            fontWeight: "bold",
-            color: "transparent",
-            WebkitTextStroke: "1px #D9D9D980",
-            mb: 8,
-          }}
-        >
-          E-commerce Website
-        </Typography>
+        E-commerce Website
+      </Typography>
 
-        {/* Website Previews */}
-        <Box
+      {/* Website Stack */}
+      <Box
+        sx={{
+          position: "relative",
+          height: 460,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        {websites.map((site, index) => (
+          <WebsitePreview
+            key={site._id}
+            image={site.image}
+            link={site.link}
+            index={index}
+            activeIndex={activeIndex}
+          />
+        ))}
+      </Box>
+
+      {/* Arrow Buttons */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 4,
+          mt: 6,
+        }}
+      >
+        <IconButton
+          onClick={prev}
           sx={{
-            display: "flex",
-            gap: 6,
-            justifyContent: "center",
-            flexWrap: "wrap",
+            color: "#fff",
+            border: "1px solid rgba(255,255,255,0.3)",
           }}
         >
-          {websites.map(site => (
-            <WebsitePreview key={site._id} image={site.image} link={site.link} />
-          ))}
-        </Box>
-      </Motion.div>
+          <ArrowBackIosNewIcon />
+        </IconButton>
+
+        <IconButton
+          onClick={next}
+          sx={{
+            color: "#fff",
+            border: "1px solid rgba(255,255,255,0.3)",
+          }}
+        >
+          <ArrowForwardIosIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 };
