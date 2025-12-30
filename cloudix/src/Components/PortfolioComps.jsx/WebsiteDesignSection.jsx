@@ -1,8 +1,6 @@
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import { motion as Motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import WebsitePreview from "./WebsitePreview";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -10,121 +8,64 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 const WebsiteDesignSection = () => {
   const [staticWebsites, setStaticWebsites] = useState([]);
   const [ecommerceWebsites, setEcommerceWebsites] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     fetch(`${backendURL}/api/websites`)
       .then((res) => res.json())
       .then((data) => {
-        setStaticWebsites(data.filter((w) => w.category === "static"));
-      setEcommerceWebsites(data.filter((w) => w.category === "ecommerce"));
+        setStaticWebsites(data.filter(w => w.category === "static"));
+        setEcommerceWebsites(data.filter(w => w.category === "ecommerce"));
       });
   }, []);
-
-  const next = (list) => {
-    setActiveIndex((prev) =>
-      prev === list.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const prev = (list) => {
-    setActiveIndex((prev) =>
-      prev === 0 ? list.length - 1 : prev - 1
-    );
-  };
 
   return (
     <Box
       sx={{
-        bgcolor: "#111E2C",
+        bgcolor: "#0b1220",
         py: 14,
         color: "#fff",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
       }}
     >
-      {/* Section Heading */}
+      {/* Heading */}
       <Motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Typography variant="h6" sx={{ fontWeight: 600, mb: 10 }}>
+        <Typography variant="h3" align="center" fontWeight={700} mb={2}>
           Website Design & Development
+        </Typography>
+
+        <Typography align="center" color="rgba(255,255,255,0.7)" mb={10}>
+          Modern, responsive, and high-performance websites built with React & MERN stack.
         </Typography>
       </Motion.div>
 
-      {/* ================= STATIC WEBSITES ================= */}
-      <Typography
-        variant="h2"
-        sx={{
-          textTransform: "uppercase",
-          fontWeight: "bold",
-          color: "transparent",
-          WebkitTextStroke: "1px #A9B83880",
-          mb: 6,
-        }}
-      >
+      {/* STATIC WEBSITES */}
+      <Typography variant="h5" align="center" mb={5}>
         Static Websites
       </Typography>
 
-      <Box sx={{ position: "relative", height: 460 }}>
-        {staticWebsites.map((site, index) => (
-          <WebsitePreview
-            key={site._id}
-            image={site.image}
-            link={site.link}
-            index={index}
-            activeIndex={activeIndex}
-          />
+      <Grid container spacing={4} justifyContent="center">
+        {staticWebsites.map(site => (
+          <Grid item xs={12} md={4} key={site._id}>
+            <WebsitePreview image={site.image} link={site.link} />
+          </Grid>
         ))}
-      </Box>
+      </Grid>
 
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 4, mt: 5 }}>
-        <IconButton onClick={() => prev(staticWebsites)} sx={{ color: "#fff" }}>
-          <ArrowBackIosNewIcon />
-        </IconButton>
-        <IconButton onClick={() => next(staticWebsites)} sx={{ color: "#fff" }}>
-          <ArrowForwardIosIcon />
-        </IconButton>
-      </Box>
-
-      {/* ================= E-COMMERCE WEBSITES ================= */}
-      <Typography
-        variant="h2"
-        sx={{
-          mt: 14,
-          textTransform: "uppercase",
-          fontWeight: "bold",
-          color: "transparent",
-          WebkitTextStroke: "1px #D9D9D980",
-          mb: 6,
-        }}
-      >
+      {/* E-COMMERCE WEBSITES */}
+      <Typography variant="h5" align="center" mt={12} mb={5}>
         E-Commerce Websites
       </Typography>
 
-      <Box sx={{ position: "relative", height: 460 }}>
-        {ecommerceWebsites.map((site, index) => (
-          <WebsitePreview
-            key={site._id}
-            image={site.image}
-            link={site.link}
-            index={index}
-            activeIndex={activeIndex}
-          />
+      <Grid container spacing={4} justifyContent="center">
+        {ecommerceWebsites.map(site => (
+          <Grid item xs={12} md={4} key={site._id}>
+            <WebsitePreview image={site.image} link={site.link} />
+          </Grid>
         ))}
-      </Box>
-
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 4, mt: 5 }}>
-        <IconButton onClick={() => prev(ecommerceWebsites)} sx={{ color: "#fff" }}>
-          <ArrowBackIosNewIcon />
-        </IconButton>
-        <IconButton onClick={() => next(ecommerceWebsites)} sx={{ color: "#fff" }}>
-          <ArrowForwardIosIcon />
-        </IconButton>
-      </Box>
+      </Grid>
     </Box>
   );
 };

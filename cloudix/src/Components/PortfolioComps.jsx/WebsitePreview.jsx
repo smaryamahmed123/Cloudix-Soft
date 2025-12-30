@@ -1,67 +1,42 @@
 import { Box } from "@mui/material";
-import { motion as Motion } from "framer-motion";
 
-const WebsitePreview = ({ image, link, index, activeIndex }) => {
-  const offset = index - activeIndex;
-
-  if (Math.abs(offset) > 2) return null;
-
+const WebsitePreview = ({ image, link }) => {
   return (
-    <Motion.a
+    <Box
+      component="a"
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      animate={{
-        scale: offset === 0 ? 1 : 0.92,
-        opacity: offset === 0 ? 1 : 0.55,
-        x: offset * 70,
-        y: Math.abs(offset) * 18,
-        zIndex: 10 - Math.abs(offset),
-      }}
-      transition={{ duration: 0.6 }}
-      style={{
-        position: "absolute",
-        cursor: "pointer",
+      sx={{
+        display: "block",
+        borderRadius: "16px",
+        overflow: "hidden",
+        border: "1px solid rgba(255,255,255,0.12)",
+        backgroundColor: "#0b1220",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.45)",
+        height: 420,
       }}
     >
       <Box
+        component="img"
+        src={image}
+        alt="Website Preview"
         sx={{
-          width: "680px",
-          height: "520px",
-          overflow: "hidden",
-          borderRadius: "18px",
-          border: "1px solid rgba(255,255,255,0.15)",
-          backgroundColor: "#000",
-          boxShadow: "0 25px 45px rgba(0,0,0,0.45)",
+          width: "100%",
+          minHeight: "800px",
+          animation: "scrollImage 14s linear infinite",
         }}
-      >
-        <Box
-          component="img"
-          src={image}
-          alt="Website Preview"
-          sx={{
-            width: "100%",
-            height: "auto",
-            minHeight: "900px", // 🔥 IMPORTANT
-            animation: "autoScroll 14s linear infinite",
-          }}
-        />
-      </Box>
+      />
 
-      {/* CSS Animation */}
       <style>
         {`
-          @keyframes autoScroll {
-            0% {
-              transform: translateY(0);
-            }
-            100% {
-              transform: translateY(-380px);
-            }
+          @keyframes scrollImage {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-380px); }
           }
         `}
       </style>
-    </Motion.a>
+    </Box>
   );
 };
 
