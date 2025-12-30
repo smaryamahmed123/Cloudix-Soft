@@ -7,7 +7,7 @@ export const loginAdmin = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('http://localhost:8000/api/auth/login', credentials);
-      localStorage.setItem('adminToken', data.token);
+      localStorage.setItem('token', data.token);
       return data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
@@ -19,7 +19,7 @@ const adminAuthSlice = createSlice({
   name: 'adminAuth',
   initialState: {
     admin: null,
-    token: localStorage.getItem('adminToken') || null,
+    token: localStorage.getItem('token') || null,
     loading: false,
     error: null,
   },
@@ -27,7 +27,7 @@ const adminAuthSlice = createSlice({
     logout: (state) => {
       state.admin = null;
       state.token = null;
-      localStorage.removeItem('adminToken');
+      localStorage.removeItem('token');
     },
   },
   extraReducers: (builder) => {
