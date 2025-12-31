@@ -3,6 +3,8 @@ import Website from "../models/Website.js";
 // ➕ Add Website (Admin)
 export const addWebsite = async (req, res) => {
   try {
+    console.log("FILE:", req.file);
+console.log("BODY:", req.body);
     if (!req.file) {
       return res.status(400).json({ message: "Image is required" });
     }
