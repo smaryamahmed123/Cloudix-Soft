@@ -90,14 +90,14 @@ export default function AdminWebsitesManager() {
 
   // 📤 Upload website
   const handleUpload = async () => {
-    if (!form.title || !form.link || !form.category || !form.image) {
-      setSnackbar({
-        open: true,
-        message: "Please fill all fields ⚠️",
-        severity: "warning",
-      });
-      return;
-    }
+    // if (!form.title || !form.link || !form.category || !form.image) {
+    //   setSnackbar({
+    //     open: true,
+    //     message: "Please fill all fields ⚠️",
+    //     severity: "warning",
+    //   });
+    //   return;
+    // }
 
     const formData = new FormData();
     Object.keys(form).forEach((key) => {
