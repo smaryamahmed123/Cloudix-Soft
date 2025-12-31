@@ -1,4 +1,5 @@
 import User from '../models/User.js';
+import jwt from "jsonwebtoken"; // ✅ Add this
 
 // export const verifyAdmin = async (req, res, next) => {
 //   const authHeader = req.headers.authorization;
