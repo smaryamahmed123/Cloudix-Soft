@@ -16,7 +16,7 @@ const upload = multer({ storage });
 router.get("/", getWebsites);
 
 // Admin
-router.post("/", upload.single("image"), addWebsite);
+router.post("/", verifyAdmin, upload.single("image"), addWebsite);
 router.put("/reorder", verifyAdmin, reorderWebsites);
 router.delete("/:id", verifyAdmin, deleteWebsite);
 
