@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 import {
   Box,
   Grid,
@@ -43,7 +43,7 @@ export default function AdminWebsitesManager() {
   const fetchWebsites = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(BASE_URL);
+      const res = await api.get("/api/websites");
       setWebsites(res.data);
     } catch {
       setSnackbar({
@@ -71,8 +71,7 @@ export default function AdminWebsitesManager() {
     setWebsites(reordered);
 
     try {
-      await axios.put(
-        `${BASE_URL}/reorder`,
+      await api.put("/api/websites/reorder",
         { ids: reordered.map((w) => w._id) },
         {
           headers: {
@@ -107,11 +106,7 @@ export default function AdminWebsitesManager() {
 
     try {
       setLoading(true);
-      await axios.post(BASE_URL, formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      await api.post("/api/websites", formData);
 
       setForm({ title: "", link: "", category: "", image: null });
       fetchWebsites();
@@ -137,11 +132,7 @@ export default function AdminWebsitesManager() {
   const handleDelete = async (id) => {
     try {
       setLoading(true);
-      await axios.delete(`${BASE_URL}/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      api.delete(`/api/websites/${id}`);
       fetchWebsites();
       setSnackbar({
         open: true,

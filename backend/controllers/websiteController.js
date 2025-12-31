@@ -17,12 +17,13 @@ export const addWebsite = async (req, res) => {
       );
       stream.end(req.file.buffer);
     });
-
+const count = await Website.countDocuments();
     const website = await Website.create({
       title: req.body.title,
       link: req.body.link,
       category: req.body.category,
       image: result.secure_url,
+      order: count, 
     });
 
     res.status(201).json(website);
@@ -53,15 +54,14 @@ export const deleteWebsite = async (req, res) => {
 };
 
 export const reorderWebsites = async (req, res) => {
-  try {
-    const { ids } = req.body;
+  const bulkOps = req.body.ids.map((id, index) => ({
+    updateOne: {
+      filter: { _id: id },
+      update: { order: index },
+    },
+  }));
 
-    for (let i = 0; i < ids.length; i++) {
-      await Website.findByIdAndUpdate(ids[i], { order: i });
-    }
-
-    res.json({ message: "Order updated" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  await Website.bulkWrite(bulkOps);
+  res.json({ message: "Order updated" });
 };
+

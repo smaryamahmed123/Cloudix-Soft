@@ -38,7 +38,11 @@ const adminAuthSlice = createSlice({
       })
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.loading = false;
-        state.admin = action.payload.user;
+        state.admin = {
+          _id: action.payload._id,
+          email: action.payload.email,
+          isAdmin: action.payload.isAdmin,
+        };
         state.token = action.payload.token;
       })
       .addCase(loginAdmin.rejected, (state, action) => {

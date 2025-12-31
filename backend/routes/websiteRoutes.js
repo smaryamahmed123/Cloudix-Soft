@@ -16,8 +16,8 @@ const upload = multer({ storage });
 router.get("/", getWebsites);
 
 // Admin
-router.put("/reorder", reorderWebsites);
 router.post("/", verifyAdmin, upload.single("image"), addWebsite);
-router.delete("/:id", deleteWebsite);
+router.put("/reorder", verifyAdmin, reorderWebsites);
+router.delete("/:id", verifyAdmin, deleteWebsite);
 
 export default router;
