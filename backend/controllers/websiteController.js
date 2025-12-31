@@ -29,6 +29,12 @@ const count = await Website.countDocuments();
     res.status(201).json(website);
   } catch (error) {
     console.error("❌ addWebsite error:", error);
+    console.error("❌ addWebsite error:", {
+    message: error.message,
+    stack: error.stack,
+    body: req.body,
+    user: req.adminId,
+  });
     res.status(500).json({ message: error.message });
   }
 };
@@ -39,6 +45,12 @@ export const getWebsites = async (req, res) => {
     const websites = await Website.find().sort({ order: 1 });
     res.json(websites);
   } catch (error) {
+    console.error("❌ addWebsite error:", {
+    message: error.message,
+    stack: error.stack,
+    body: req.body,
+    user: req.adminId,
+  });
     res.status(500).json({ message: error.message });
   }
 };
@@ -49,6 +61,12 @@ export const deleteWebsite = async (req, res) => {
     await Website.findByIdAndDelete(req.params.id);
     res.json({ message: "Website deleted" });
   } catch (error) {
+    console.error("❌ addWebsite error:", {
+    message: error.message,
+    stack: error.stack,
+    body: req.body,
+    user: req.adminId,
+  });
     res.status(500).json({ message: error.message });
   }
 };
