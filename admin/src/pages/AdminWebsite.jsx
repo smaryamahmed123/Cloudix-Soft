@@ -18,6 +18,7 @@ import LoadingBackdrop from "../components/LoadingBackdrop";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 const BASE_URL = `${backendURL}/api/websites`;
+console.log("TOKEN:", localStorage.getItem("token"));
 
 export default function AdminWebsitesManager() {
     const [websites, setWebsites] = useState([]);
