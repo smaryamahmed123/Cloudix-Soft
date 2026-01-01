@@ -21,7 +21,8 @@ export default function DiagonalStrip({
         width: "130%",
         transform: `rotate(${angle}deg)`,
         bgcolor: bgColor,
-        borderColor: borderColor,
+        borderTop: `2px solid ${borderColor}`,
+        borderBottom: `2px solid ${borderColor}`,
         py: 1,
         overflow: "hidden",
       }}
