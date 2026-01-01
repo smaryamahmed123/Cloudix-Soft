@@ -27,36 +27,39 @@ export default function DiagonalStrip({
         overflow: "hidden",
       }}
     >
-      <Motion.div
-        initial={{ x: "0%" }}
-        animate={!isLandscapeMobile ? { x: "-50%" } : false}
-        transition={{
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 20,
-          ease: "linear",
-        }}
-        style={{
-          display: "flex",
-          whiteSpace: "nowrap",
-          width: "max-content",
-        }}
-      >
-        {/* Duplicate content 3 times to avoid gaps */}
-        {[...texts, ...texts, ...texts].map((t, i) => (
-          <Typography
-            key={i}
-            sx={{
-              mx: 4,
-              color: textColor,
-              fontWeight: 500,
+      <Box sx={{ display: "flex", width: "fit-content" }}>
+        {[0, 1].map((_, loopIndex) => (
+          <Motion.div
+            key={loopIndex}
+            initial={{ x: "0%" }}
+            animate={!isLandscapeMobile ? { x: "-100%" } : false}
+            transition={{
+              duration: 20,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+            style={{
+              display: "flex",
+              whiteSpace: "nowrap",
               flexShrink: 0,
             }}
           >
-            • {t}
-          </Typography>
+            {texts.map((t, i) => (
+              <Typography
+                key={`${loopIndex}-${i}`}
+                sx={{
+                  mx: 4,
+                  color: textColor,
+                  fontWeight: 500,
+                  flexShrink: 0,
+                }}
+              >
+                • {t}
+              </Typography>
+            ))}
+          </Motion.div>
         ))}
-      </Motion.div>
+      </Box>
     </Box>
   );
 }
