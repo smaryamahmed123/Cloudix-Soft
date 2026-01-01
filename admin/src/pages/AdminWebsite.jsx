@@ -110,6 +110,7 @@ export default function AdminWebsitesManager() {
             await api.post("/api/websites", formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    "Content-Type": "multipart/form-data",
                 },
             });
 
