@@ -1,4 +1,4 @@
-import { Card, CardMedia, CardContent, CardActions, Typography, Button, Box } from "@mui/material";
+import { Card, CardMedia, CardContent, CardActions, Typography, Button, Chip, Box } from "@mui/material";
 
 export default function WebsiteCard({ site, onDelete }) {
   return (
@@ -13,12 +13,20 @@ export default function WebsiteCard({ site, onDelete }) {
 
       {/* Content */}
       <CardContent>
+        {/* Name / Title */}
         <Typography variant="h6" gutterBottom>
           {site.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          Category: {site.category}
-        </Typography>
+
+        {/* Category */}
+        <Chip
+          label={site.category}
+          size="small"
+          color="primary"
+          sx={{ mb: 1 }}
+        />
+
+        {/* Link */}
         <Typography
           variant="body2"
           color="primary"
