@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import imageCompression from "browser-image-compression";
 
 import WebsiteCard from "../components/WebsiteCard";
 import UploadWebsiteForm from "../components/UploadWebsiteForm";
@@ -90,49 +91,105 @@ export default function AdminWebsitesManager() {
     };
 
     // 📤 Upload website
+    // const handleUpload = async () => {
+    //     if (!form.title || !form.link || !form.category || !form.image) {
+    //       setSnackbar({
+    //         open: true,
+    //         message: "Please fill all fields ⚠️",
+    //         severity: "warning",
+    //       });
+    //       return;
+    //     }
+
+    //     const formData = new FormData();
+    //     Object.keys(form).forEach((key) => {
+    //         formData.append(key, form[key]);
+    //     });
+
+    //     try {
+    //         setLoading(true);
+    //         await api.post("/api/websites", formData, {
+    //             headers: {
+    //                 Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //                 "Content-Type": "multipart/form-data",
+    //             },
+    //         });
+
+    //         setForm({ title: "", link: "", category: "", image: null });
+    //         fetchWebsites();
+    //         setOpenModal(false);
+
+    //         setSnackbar({
+    //             open: true,
+    //             message: "Website added successfully ✅",
+    //             severity: "success",
+    //         });
+    //     } catch {
+    //         setSnackbar({
+    //             open: true,
+    //             message: "Failed to add website ❌",
+    //             severity: "error",
+    //         });
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
     const handleUpload = async () => {
-        // if (!form.title || !form.link || !form.category || !form.image) {
-        //   setSnackbar({
-        //     open: true,
-        //     message: "Please fill all fields ⚠️",
-        //     severity: "warning",
-        //   });
-        //   return;
-        // }
+  if (!form.title || !form.link || !form.category || !form.image) {
+    setSnackbar({
+      open: true,
+      message: "Please fill all fields ⚠️",
+      severity: "warning",
+    });
+    return;
+  }
 
-        const formData = new FormData();
-        Object.keys(form).forEach((key) => {
-            formData.append(key, form[key]);
-        });
+  try {
+    setLoading(true);
 
-        try {
-            setLoading(true);
-            await api.post("/api/websites", formData, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            setForm({ title: "", link: "", category: "", image: null });
-            fetchWebsites();
-            setOpenModal(false);
-
-            setSnackbar({
-                open: true,
-                message: "Website added successfully ✅",
-                severity: "success",
-            });
-        } catch {
-            setSnackbar({
-                open: true,
-                message: "Failed to add website ❌",
-                severity: "error",
-            });
-        } finally {
-            setLoading(false);
-        }
+    // ✅ Compress the image before upload
+    const options = {
+      maxSizeMB: 1,            // compress to ~1MB
+      maxWidthOrHeight: 1920,  // resize if too large
+      useWebWorker: true       // faster
     };
+    const compressedImage = await imageCompression(form.image, options);
+
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("link", form.link);
+    formData.append("category", form.category);
+    formData.append("image", compressedImage); // use compressed image
+
+    await api.post("/api/websites", formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    setForm({ title: "", link: "", category: "", image: null });
+    fetchWebsites();
+    setOpenModal(false);
+
+    setSnackbar({
+      open: true,
+      message: "Website added successfully ✅",
+      severity: "success",
+    });
+  } catch (error) {
+    console.error(error);
+    setSnackbar({
+      open: true,
+      message: "Failed to add website ❌",
+      severity: "error",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     // 🗑️ Delete website
     const handleDelete = async (id) => {
