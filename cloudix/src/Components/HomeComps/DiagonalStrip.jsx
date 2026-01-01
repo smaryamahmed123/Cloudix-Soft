@@ -28,7 +28,7 @@ export default function DiagonalStrip({
       }}
     >
       <Motion.div
-        animate={!isLandscapeMobile ? { x: ['0%', "-20%"] } : false}
+        animate={!isLandscapeMobile ? { x: ['0%', "-60%"] } : false}
         transition={{
           repeat: Infinity,
           duration: 20,
