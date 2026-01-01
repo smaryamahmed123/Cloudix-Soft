@@ -14,44 +14,6 @@ export const getAbout = async (req, res) => {
 };
 
 // === POST ===
-// export const createAbout = async (req, res) => {
-//   try {
-//     const data = JSON.parse(req.body.data || "{}");
-
-//     console.log("📥 Incoming Files:", req.files);
-//     console.log("📦 Parsed Data Before Image Assignment:", data);
-
-//     req.files.forEach((file) => {
-//       const field = file.fieldname;
-//       const filePath = `/uploads/about/${file.filename}`;
-
-//       // ✅ Handle team[] image uploads
-//       if (field.startsWith("team[")) {
-//         const match = field.match(/team\[(\d+)\]\.(\w+)/);
-//         if (match) {
-//           const index = Number(match[1]);
-//           const key = match[2];
-//           if (!data.team) data.team = [];
-//           if (!data.team[index]) data.team[index] = {};
-//           data.team[index][key] = filePath;
-//         }
-//       } else {
-//         const [section, key] = field.split(".");
-//         if (!data[section]) data[section] = {};
-//         data[section][key] = filePath;
-//       }
-//     });
-
-//     console.log("✅ Final Data Before Save:", data);
-
-//     const about = new About(data);
-//     await about.save();
-//     res.status(201).json(about);
-//   } catch (error) {
-//     console.error("❌ POST /api/about error:", error);
-//     res.status(400).json({ error: error.message });
-//   }
-// };
 const uploadToCloudinary = (fileBuffer, folder) => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(

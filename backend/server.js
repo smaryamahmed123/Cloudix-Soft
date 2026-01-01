@@ -53,7 +53,14 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
+app.use((req, res, next) => {
+  cors(corsOptions)(req, res, () => {
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(204);
+    }
+    next();
+  });
+});
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
