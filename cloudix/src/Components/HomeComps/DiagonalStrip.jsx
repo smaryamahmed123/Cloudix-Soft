@@ -28,21 +28,30 @@ export default function DiagonalStrip({
       }}
     >
       <Motion.div
-        animate={!isLandscapeMobile ? { x: ['0%', "-60%"] } : false}
+        initial={{ x: "0%" }}
+        animate={!isLandscapeMobile ? { x: "-50%" } : false}
         transition={{
           repeat: Infinity,
+          repeatType: "loop",
           duration: 20,
           ease: "linear",
         }}
         style={{
           display: "flex",
           whiteSpace: "nowrap",
+          width: "max-content",
         }}
       >
-        {texts.concat(texts).map((t, i) => (
+        {/* Duplicate content 3 times to avoid gaps */}
+        {[...texts, ...texts, ...texts].map((t, i) => (
           <Typography
             key={i}
-            sx={{ mx: 4, color: textColor, fontWeight: 500 }}
+            sx={{
+              mx: 4,
+              color: textColor,
+              fontWeight: 500,
+              flexShrink: 0,
+            }}
           >
             • {t}
           </Typography>
