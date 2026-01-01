@@ -21,19 +21,29 @@ export default function DiagonalStrip({
         width: "130%",
         transform: `rotate(${angle}deg)`,
         bgcolor: bgColor,
-        borderTop: `2px solid ${borderColor}`,
-        borderBottom: `2px solid ${borderColor}`,
+        borderTop: `1px solid ${borderColor}`,
+        borderBottom: `1px solid ${borderColor}`,
         py: 1,
         overflow: "hidden",
       }}
     >
       <Motion.div
-        animate={!isLandscapeMobile ? { x: ["0%", "-50%"] } : false}
-        transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
-        style={{ display: "flex", whiteSpace: "nowrap" }}
+        animate={!isLandscapeMobile ? { x: ["0%", "-100%"] } : false}
+        transition={{
+          repeat: Infinity,
+          duration: 20,
+          ease: "linear",
+        }}
+        style={{
+          display: "flex",
+          whiteSpace: "nowrap",
+        }}
       >
         {texts.concat(texts).map((t, i) => (
-          <Typography key={i} sx={{ mx: 4, color: textColor }}>
+          <Typography
+            key={i}
+            sx={{ mx: 4, color: textColor, fontWeight: 500 }}
+          >
             • {t}
           </Typography>
         ))}
