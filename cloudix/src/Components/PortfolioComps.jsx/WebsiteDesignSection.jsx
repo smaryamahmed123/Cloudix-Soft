@@ -326,7 +326,7 @@ const WebsiteDesignSection = () => {
                       loading="lazy"
                       sx={{
                         width: "100%",
-                        height: 220,
+                        height: "100%",
                         objectFit: "cover",
                         transition: "transform 0.6s ease",
                       }}
