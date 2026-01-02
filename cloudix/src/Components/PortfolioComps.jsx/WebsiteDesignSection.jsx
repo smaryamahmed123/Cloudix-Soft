@@ -283,11 +283,13 @@ const WebsiteDesignSection = () => {
           <Box
             sx={{
               display: "flex",
+              justifyContent: filteredWebsites.length < 3 ? "center" : "flex-start",
               gap: 5,
               px: { xs: 2, md: 6 },
               overflowX: "auto",
               scrollSnapType: "x mandatory",
               pb: 3,
+
               "&::-webkit-scrollbar": { height: 6 },
               "&::-webkit-scrollbar-thumb": {
                 background: "linear-gradient(90deg,#1e88e5,#42a5f5)",
@@ -295,12 +297,16 @@ const WebsiteDesignSection = () => {
               },
             }}
           >
+
             {filteredWebsites.map((site, index) => (
               <Motion.div
                 key={index}
                 whileHover={{ y: -12 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                style={{ scrollSnapAlign: "start" }}
+                style={{
+                  scrollSnapAlign: "center",
+                  flexShrink: 0,
+                }}
               >
                 <Box
                   sx={{
