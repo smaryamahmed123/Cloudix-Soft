@@ -44,11 +44,7 @@ const WebsiteDesignSection = () => {
           fontWeight={800}
           mb={2}
           sx={{
-            fontSize: {
-              xs: "1.9rem",
-              sm: "2.4rem",
-              md: "3rem",
-            },
+            fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" },
           }}
         >
           Website Design & Development
@@ -60,9 +56,7 @@ const WebsiteDesignSection = () => {
           mx="auto"
           color="rgba(255,255,255,0.65)"
           mb={{ xs: 6, md: 8 }}
-          sx={{
-            fontSize: { xs: "0.95rem", sm: "1rem" },
-          }}
+          sx={{ fontSize: { xs: "0.95rem", sm: "1rem" } }}
         >
           High-impact, conversion-focused websites crafted with modern
           technologies and refined user experience.
@@ -87,11 +81,7 @@ const WebsiteDesignSection = () => {
             <Tab
               key={val}
               value={val}
-              label={
-                val === "ecommerce"
-                  ? "E-Commerce"
-                  : "Business Websites"
-              }
+              label={val === "ecommerce" ? "E-Commerce" : "Business Websites"}
               sx={{
                 textTransform: "none",
                 fontWeight: 600,
@@ -100,9 +90,7 @@ const WebsiteDesignSection = () => {
                 borderRadius: "999px",
                 color: "rgba(255,255,255,0.7)",
                 transition: "all 0.3s ease",
-                "&:hover": {
-                  bgcolor: "rgba(255,255,255,0.12)",
-                },
+                "&:hover": { bgcolor: "rgba(255,255,255,0.12)" },
                 "&.Mui-selected": {
                   bgcolor: "#769914",
                   color: "#fff",
@@ -128,16 +116,15 @@ const WebsiteDesignSection = () => {
               display: "flex",
               justifyContent:
                 filteredWebsites.length < 3 ? "center" : "flex-start",
-              gap: 5,
-              px: { xs: 1.5, sm: 2, md: 6 },
+              gap: 4,
+              px: { xs: 2, sm: 3, md: 6 },
               overflowX: "auto",
               scrollSnapType: "x mandatory",
               pb: 3,
-              "&::-webkit-scrollbar": {
-                height: { xs: 0, sm: 6 },
-              },
+
+              "&::-webkit-scrollbar": { height: 6 },
               "&::-webkit-scrollbar-thumb": {
-                background: "linear-gradient(90deg,#1e88e5,#42a5f5)",
+                background: "#769914", // button color
                 borderRadius: 8,
               },
             }}
@@ -145,8 +132,7 @@ const WebsiteDesignSection = () => {
             {filteredWebsites.map((site, index) => (
               <Motion.div
                 key={index}
-                whileHover={{ y: -12 }}
-                transition={{ type: "spring", stiffness: 200 }}
+                whileHover={{ y: 0 }} // no hover move
                 style={{
                   scrollSnapAlign: "center",
                   flexShrink: 0,
@@ -154,36 +140,26 @@ const WebsiteDesignSection = () => {
               >
                 <Box
                   sx={{
-                    width: {
-                      xs: "90vw",
-                      sm: 360,
-                      md: 420,
-                      lg: 440,
-                    },
+                    width: { xs: "90vw", sm: 360, md: 420, lg: 440 },
                     bgcolor: "rgba(255,255,255,0.05)",
                     backdropFilter: "blur(16px)",
                     borderRadius: 5,
                     overflow: "hidden",
                     border: "1px solid rgba(255,255,255,0.08)",
-                    boxShadow:
-                      "0 30px 60px rgba(0,0,0,0.5)",
-                    "&:hover img": {
-                      transform: "translateY(-65%)",
-                    },
+                    boxShadow: "0 30px 60px rgba(0,0,0,0.5)",
                   }}
                 >
-                  {/* Image */}
                   {/* Image */}
                   <Box
                     sx={{
                       position: "relative",
                       height: { xs: 200, sm: 220, md: 260 },
-                      overflowY: "auto",          // vertical scroll allowed
-                      maxHeight: { xs: 200, sm: 220, md: 260 }, // can't scroll beyond image
+                      overflowY: "auto",
+                      maxHeight: { xs: 200, sm: 220, md: 260 },
                       scrollbarWidth: "thin",
                       "&::-webkit-scrollbar": { width: 6 },
                       "&::-webkit-scrollbar-thumb": {
-                        background: "rgba(118,153,20,0.5)",
+                        background: "#769914", // button color
                         borderRadius: 3,
                       },
                     }}
@@ -195,30 +171,16 @@ const WebsiteDesignSection = () => {
                       loading="lazy"
                       sx={{
                         width: "100%",
-                        height: "auto",         // maintain original size
-                        transform: "none",      // no hover translate
-                        transition: "none",     // remove hover animation
-                      }}
-                    />
-
-                    {/* Remove gradient overlay or make it very subtle */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        inset: 0,
-                        background: "rgba(0,0,0,0.05)", // subtle shadow
-                        pointerEvents: "none",
+                        height: "auto",
+                        transform: "none",
+                        transition: "none",
                       }}
                     />
                   </Box>
 
                   {/* Content */}
                   <Box p={3}>
-                    <Typography
-                      variant="h6"
-                      fontWeight={700}
-                      mb={1}
-                    >
+                    <Typography variant="h6" fontWeight={700} mb={1}>
                       {site.title}
                     </Typography>
                     <Typography
@@ -236,11 +198,10 @@ const WebsiteDesignSection = () => {
                         borderRadius: "999px",
                         textTransform: "none",
                         fontWeight: 600,
-                        fontSize: {
-                          xs: "0.85rem",
-                          sm: "0.95rem",
-                        },
+                        fontSize: { xs: "0.85rem", sm: "0.95rem" },
                         py: { xs: 1, sm: 1.2 },
+                        bgcolor: "#769914",
+                        "&:hover": { bgcolor: "#5f7d10" },
                       }}
                       href={site.link}
                       target="_blank"
@@ -267,6 +228,9 @@ const WebsiteDesignSection = () => {
             textTransform: "none",
             fontWeight: 600,
             fontSize: { xs: "0.9rem", sm: "1rem" },
+            borderColor: "#769914",
+            color: "#fff",
+            "&:hover": { borderColor: "#5f7d10" },
           }}
           href="/projects"
         >
