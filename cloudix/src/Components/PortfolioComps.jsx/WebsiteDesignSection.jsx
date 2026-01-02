@@ -304,7 +304,7 @@ const WebsiteDesignSection = () => {
               >
                 <Box
                   sx={{
-                    width: 340,
+                    width: 440,
                     bgcolor: "rgba(255,255,255,0.05)",
                     backdropFilter: "blur(16px)",
                     borderRadius: 5,
@@ -318,7 +318,15 @@ const WebsiteDesignSection = () => {
                   }}
                 >
                   {/* Image */}
-                  <Box sx={{ position: "relative", overflow: "hidden" }}>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      height: 260,
+                      overflowY: "auto",
+                      scrollbarWidth: "none",
+                      "&::-webkit-scrollbar": { display: "none" },
+                    }}
+                  >
                     <Box
                       component="img"
                       src={site.image}
@@ -326,17 +334,19 @@ const WebsiteDesignSection = () => {
                       loading="lazy"
                       sx={{
                         width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        transition: "transform 0.6s ease",
+                        transform: "translateY(0)",
+                        transition: "transform 6s linear",
                       }}
                     />
+
+                    {/* Gradient overlay */}
                     <Box
                       sx={{
                         position: "absolute",
                         inset: 0,
                         background:
-                          "linear-gradient(to top, rgba(0,0,0,0.65), transparent)",
+                          "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+                        pointerEvents: "none",
                       }}
                     />
                   </Box>
