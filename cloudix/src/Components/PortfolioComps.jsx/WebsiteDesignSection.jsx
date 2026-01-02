@@ -173,18 +173,18 @@ const WebsiteDesignSection = () => {
                   }}
                 >
                   {/* Image */}
+                  {/* Image */}
                   <Box
                     sx={{
                       position: "relative",
-                      height: {
-                        xs: 200,
-                        sm: 220,
-                        md: 260,
-                      },
-                      overflowY: "auto",
-                      scrollbarWidth: "none",
-                      "&::-webkit-scrollbar": {
-                        display: "none",
+                      height: { xs: 200, sm: 220, md: 260 },
+                      overflowY: "auto",          // vertical scroll allowed
+                      maxHeight: { xs: 200, sm: 220, md: 260 }, // can't scroll beyond image
+                      scrollbarWidth: "thin",
+                      "&::-webkit-scrollbar": { width: 6 },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "rgba(118,153,20,0.5)",
+                        borderRadius: 3,
                       },
                     }}
                   >
@@ -195,16 +195,18 @@ const WebsiteDesignSection = () => {
                       loading="lazy"
                       sx={{
                         width: "100%",
-                        transform: "translateY(0)",
-                        transition: "transform 6s linear",
+                        height: "auto",         // maintain original size
+                        transform: "none",      // no hover translate
+                        transition: "none",     // remove hover animation
                       }}
                     />
+
+                    {/* Remove gradient overlay or make it very subtle */}
                     <Box
                       sx={{
                         position: "absolute",
                         inset: 0,
-                        background:
-                          "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+                        background: "rgba(0,0,0,0.05)", // subtle shadow
                         pointerEvents: "none",
                       }}
                     />
