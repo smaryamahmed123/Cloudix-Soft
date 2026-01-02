@@ -263,7 +263,7 @@ const WebsiteDesignSection = () => {
                 px: 4,
                 borderRadius: "999px",
                 "&.Mui-selected": {
-                  bgcolor: "#1e88e5",
+                  bgcolor: "#769914",
                 },
               }}
             />
