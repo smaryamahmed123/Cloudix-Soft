@@ -10,7 +10,10 @@ const PortfolioHero = () => {
         position: "relative",
         height: { xs: "55vh", sm: "60vh", md: "66vh" },
         overflow: "hidden",
-
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        textAlign: "center",
         backgroundColor: "#111E2C",
 
         borderRadius: {
@@ -42,15 +45,15 @@ const PortfolioHero = () => {
           position: "absolute",
           inset: 0,
           background: `
-            linear-gradient(
-              to bottom,
-              rgba(17,30,44,0.95) 0%,
-              rgba(17,30,44,0.65) 25%,
-              rgba(17,30,44,0.4) 55%,
-              rgba(17,30,44,0.15) 75%,
-              rgba(17,30,44,0) 100%
-            )
-          `,
+      linear-gradient(
+        to bottom,
+        rgba(17,30,44,0.95) 0%,
+        rgba(17,30,44,0.65) 25%,
+        rgba(17,30,44,0.4) 55%,
+        rgba(17,30,44,0.75) 80%,
+        rgba(17,30,44,1) 100%
+      )
+    `,
           zIndex: 2,
         }}
       />
