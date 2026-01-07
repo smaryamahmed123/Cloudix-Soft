@@ -1,5 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence, motion as Motion } from "framer-motion";
+
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Services from "./Pages/Services";
@@ -7,22 +9,43 @@ import Portfolio from "./Pages/Portfolio";
 import Contact from "./Pages/Contact";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Blogs from "./Pages/Blogs";
-import Footer from "./Components/Footer";
+
 import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
+import ScrollRestoration from "./Components/ScrollRestoration";
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/blogs" element={<Blogs />} />
+        </Routes>
+      </Motion.div>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   return (
     <Router>
+      <ScrollRestoration />
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/blogs" element={<Blogs />} />
-      </Routes>
+      <AnimatedRoutes />
       <Footer />
     </Router>
   );
