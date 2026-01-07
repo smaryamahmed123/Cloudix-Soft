@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Grid, Typography, Link } from '@mui/material';
-import { motion } from 'framer-motion';
-import { Phone, Email, LocationOn } from '@mui/icons-material';
 import axios from 'axios';
-import SocialIcons from './SocialIcons';
-import Logo from './Logo';
+import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Grid, Typography, Link } from '@mui/material';
+import { Phone, Email, LocationOn } from '@mui/icons-material';
 import WhiteLogo from '/logo_white-removebg-preview-removebg-preview.png';
 
+import Logo from './Logo';
+import SocialIcons from './SocialIcons';
 const MotionBox = motion.create(Box);
 const MotionGrid = motion.create(Grid);
 
@@ -104,17 +105,19 @@ const Footer = () => {
           >
             <Box>
               <Typography variant="h6" sx={footerTitleStyle}>Quick Links</Typography>
-              <Link href="/" sx={footerItemStyle}>Home</Link>
-              <Link href="/services" sx={footerItemStyle}>Services</Link>
-              <Link href="/blogs" sx={footerItemStyle}>Blogs</Link>
-              <Link href="/portfolio" sx={footerItemStyle}>Portfolio</Link>
-              <Link href="/contact" sx={footerItemStyle}>Contact</Link>
+              <Link component={RouterLink} to="/" sx={footerItemStyle}>Home</Link>
+              <Link component={RouterLink} to="/services" sx={footerItemStyle}>Services</Link>
+              <Link component={RouterLink} to="/blogs" sx={footerItemStyle}>Blogs</Link>
+              <Link component={RouterLink} to="/portfolio" sx={footerItemStyle}>Portfolio</Link>
+              <Link component={RouterLink} to="/contact" sx={footerItemStyle}>Contact</Link>
+
+
             </Box>
 
             <Box>
               <Typography variant="h6" sx={footerTitleStyle}>About Us</Typography>
-              <Link href="/about" sx={footerItemStyle}>About Us</Link>
-              <Link href="/privacy-policy" sx={footerItemStyle}>Privacy Policy</Link>
+              <Link component={RouterLink} to="/about" sx={footerItemStyle}>About Us</Link>
+              <Link component={RouterLink} to="/privacy-policy" sx={footerItemStyle}>Privacy Policy</Link>
             </Box>
           </MotionGrid>
 
