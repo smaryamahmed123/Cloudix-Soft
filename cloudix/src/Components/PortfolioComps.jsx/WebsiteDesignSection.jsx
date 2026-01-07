@@ -179,17 +179,6 @@ const WebsiteDesignSection = () => {
 
                   {/* Content */}
                   <Box p={3}>
-                    <Typography variant="h6" fontWeight={700} mb={1}>
-                      {site.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="rgba(255,255,255,0.65)"
-                      mb={3}
-                    >
-                      {site.description}
-                    </Typography>
-
                     <Button
                       variant="contained"
                       fullWidth
