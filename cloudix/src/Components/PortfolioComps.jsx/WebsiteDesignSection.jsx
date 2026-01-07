@@ -152,9 +152,9 @@ const WebsiteDesignSection = () => {
                   <Box
                     sx={{
                       position: "relative",
-                      height: { xs: 200, sm: 220, md: 260 },
+                      height: { xs: 300, sm: 320, md: 400 },
                       overflowY: "auto",
-                      maxHeight: { xs: 200, sm: 220, md: 260 },
+                      maxHeight: { xs: 300, sm: 320, md: 400 },
                       scrollbarWidth: "thin",
                       "&::-webkit-scrollbar": { width: 6 },
                       "&::-webkit-scrollbar-thumb": {

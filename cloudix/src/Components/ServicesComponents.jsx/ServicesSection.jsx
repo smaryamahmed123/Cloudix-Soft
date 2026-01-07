@@ -107,19 +107,40 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
 
       {/* Animated Button */}
       {hasMore && (
+        // <motion.div
+        //   variants={buttonVariants}
+        //   initial="hidden"
+        //   whileInView="show"
+        //   viewport={{ once: true }}
+        //   style={{ textAlign: "center", marginTop: "2rem" }}
+        // >
+        //   <GradientButton
+        //     variant="contained"
+        //     onClick={() => navigate("/services")}
+        //     text="Show All"
+        //   />
+        // </motion.div>
         <motion.div
-          variants={buttonVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          style={{ textAlign: "center", marginTop: "2rem" }}
-        >
-          <GradientButton
-            variant="contained"
-            onClick={() => navigate("/services")}
-            text="Show All"
-          />
-        </motion.div>
+    variants={buttonVariants}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true }}
+  >
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        mt: 6, // professional spacing from cards
+      }}
+    >
+      <GradientButton
+        variant="contained"
+        onClick={() => navigate("/services")}
+        text="Show All"
+      />
+    </Box>
+  </motion.div>
       )}
     </Container>
   );
