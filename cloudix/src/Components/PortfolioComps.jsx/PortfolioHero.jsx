@@ -9,18 +9,18 @@ const PortfolioHero = () => {
       sx={{
         position: "relative",
         height: { xs: "55vh", sm: "60vh", md: "66vh" },
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        color: "#fff",
         overflow: "hidden",
+
+        backgroundColor: "#111E2C",
+
         borderRadius: {
           xs: "0 0 36px 36px",
           sm: "0 0 56px 56px",
           md: "0 0 77px 77px",
         },
-        boxShadow: "0px 8px 24px rgba(17,30,44,0.8)",
+
+        /* ✅ FIX */
+        boxShadow: "inset 0 -12px 24px rgba(0,0,0,0.35)",
       }}
     >
       {/* 🔹 Background Image */}
