@@ -41,10 +41,16 @@ const WebsiteDesignSection = () => {
       >
         <Typography
           align="center"
+          variant="h2"
+          component="h2"
           fontWeight={800}
           mb={2}
           sx={{
-            fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" },
+            fontSize: {
+              xs: "1.9rem",
+              sm: "2.4rem",
+              md: "3rem",
+            },
           }}
         >
           Website Design & Development

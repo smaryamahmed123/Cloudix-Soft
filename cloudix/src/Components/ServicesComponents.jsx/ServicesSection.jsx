@@ -81,27 +81,27 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         <Grid container spacing={4} justifyContent="center">
           {loading
             ? [...Array(limit === "all" ? 6 : limit)].map((_, index) => (
-                <Grid
-                  key={index}
-                  sx={{ gridColumn: { xs: "span 12", md: "span 6" } }}
-                >
-                  <CardSkeleton />
-                </Grid>
-              ))
+              <Grid
+                key={index}
+                sx={{ gridColumn: { xs: "span 12", md: "span 6" } }}
+              >
+                <CardSkeleton />
+              </Grid>
+            ))
             : displayedServices.map((service) => (
-                <Grid
-                  key={service._id}
-                  sx={{ gridColumn: { xs: "span 12", md: "span 6" } }}
-                  component={motion.div}
-                  variants={cardVariants}
-                >
-                  <ModernCard
-                    iconImage={service.iconImage}
-                    title={service.title}
-                    description={service.description}
-                  />
-                </Grid>
-              ))}
+              <Grid
+                key={service._id}
+                sx={{ gridColumn: { xs: "span 12", md: "span 6" } }}
+                component={motion.div}
+                variants={cardVariants}
+              >
+                <ModernCard
+                  iconImage={service.iconImage}
+                  title={service.title}
+                  description={service.description}
+                />
+              </Grid>
+            ))}
         </Grid>
       </motion.div>
 
@@ -121,26 +121,26 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         //   />
         // </motion.div>
         <motion.div
-    variants={buttonVariants}
-    initial="hidden"
-    whileInView="show"
-    viewport={{ once: true }}
-  >
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        mt: 6, // professional spacing from cards
-      }}
-    >
-      <GradientButton
-        variant="contained"
-        onClick={() => navigate("/services")}
-        text="Show All"
-      />
-    </Box>
-  </motion.div>
+          variants={buttonVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mb: 6, // professional spacing from cards
+            }}
+          >
+            <GradientButton
+              variant="contained"
+              onClick={() => navigate("/services")}
+              text="Show All"
+            />
+          </Box>
+        </motion.div>
       )}
     </Container>
   );
