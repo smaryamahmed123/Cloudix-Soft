@@ -68,13 +68,6 @@ const ContactInfo = () => {
           </>
         ) : (
           <>
-            {/* <ModernCard
-              variant="contact"
-              icon={<PhoneIcon fontSize="inherit" />}
-              title="PHONE"
-              description={info.phone}
-            /> */}
-
             <ModernCard
               variant="contact"
               icon={<PhoneIcon fontSize="inherit" />}
@@ -84,11 +77,11 @@ const ContactInfo = () => {
                   component="a"
                   href={`tel:${info.phone}`}
                   sx={{
-                    color: "#fff",
+                    color: "text.primary",
                     textDecoration: "none",
                     fontSize: "0.95rem",
                     "&:hover": {
-                      color: "#769914",
+                      color: "primary.main",
                     },
                   }}
                 >
@@ -102,34 +95,18 @@ const ContactInfo = () => {
               icon={<AccessTimeIcon fontSize="inherit" />}
               title="WORKING HOURS"
               description={
-                // <Typography
-                //   sx={{
-                //     whiteSpace: 'pre-line', // Keeps line breaks
-                //     textAlign: 'center',
-                //     fontSize: '0.95rem',
-                //   }}
-                // >
-                //   {formatWorkingHours(info.workingHours)}
-                // </Typography>
                 <Typography
                   sx={{
                     whiteSpace: "pre-line",
                     textAlign: "center",
                     fontSize: "0.95rem",
-                    color: "#fff", // or "text.primary" if on light bg
+                    color: "text.primary", // or "text.primary" if on light bg
                   }}
                 >
                   {formatWorkingHours(info.workingHours)}
                 </Typography>
               }
             />
-
-            {/* <ModernCard
-              variant="contact"
-              icon={<EmailIcon fontSize="inherit" />}
-              title="EMAIL"
-              description={info.email}
-            /> */}
             <ModernCard
               variant="contact"
               icon={<EmailIcon fontSize="inherit" />}
@@ -139,11 +116,11 @@ const ContactInfo = () => {
                   component="a"
                   href={`mailto:${info.email}`}
                   sx={{
-                    color: "#fff",
+                    color: "text.primary",
                     textDecoration: "none",
                     fontSize: "0.95rem",
                     "&:hover": {
-                      color: "#769914",
+                      color: "primary.main",
                     },
                   }}
                 >
