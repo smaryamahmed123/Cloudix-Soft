@@ -68,11 +68,33 @@ const ContactInfo = () => {
           </>
         ) : (
           <>
-            <ModernCard
+            {/* <ModernCard
               variant="contact"
               icon={<PhoneIcon fontSize="inherit" />}
               title="PHONE"
               description={info.phone}
+            /> */}
+
+            <ModernCard
+              variant="contact"
+              icon={<PhoneIcon fontSize="inherit" />}
+              title="PHONE"
+              description={
+                <Typography
+                  component="a"
+                  href={`tel:${info.phone}`}
+                  sx={{
+                    color: "#fff",
+                    textDecoration: "none",
+                    fontSize: "0.95rem",
+                    "&:hover": {
+                      color: "#769914",
+                    },
+                  }}
+                >
+                  {info.phone}
+                </Typography>
+              }
             />
 
             <ModernCard
@@ -80,11 +102,21 @@ const ContactInfo = () => {
               icon={<AccessTimeIcon fontSize="inherit" />}
               title="WORKING HOURS"
               description={
+                // <Typography
+                //   sx={{
+                //     whiteSpace: 'pre-line', // Keeps line breaks
+                //     textAlign: 'center',
+                //     fontSize: '0.95rem',
+                //   }}
+                // >
+                //   {formatWorkingHours(info.workingHours)}
+                // </Typography>
                 <Typography
                   sx={{
-                    whiteSpace: 'pre-line', // Keeps line breaks
-                    textAlign: 'center',
-                    fontSize: '0.95rem',
+                    whiteSpace: "pre-line",
+                    textAlign: "center",
+                    fontSize: "0.95rem",
+                    color: "#fff", // or "text.primary" if on light bg
                   }}
                 >
                   {formatWorkingHours(info.workingHours)}
@@ -92,11 +124,32 @@ const ContactInfo = () => {
               }
             />
 
-            <ModernCard
+            {/* <ModernCard
               variant="contact"
               icon={<EmailIcon fontSize="inherit" />}
               title="EMAIL"
               description={info.email}
+            /> */}
+            <ModernCard
+              variant="contact"
+              icon={<EmailIcon fontSize="inherit" />}
+              title="EMAIL"
+              description={
+                <Typography
+                  component="a"
+                  href={`mailto:${info.email}`}
+                  sx={{
+                    color: "#fff",
+                    textDecoration: "none",
+                    fontSize: "0.95rem",
+                    "&:hover": {
+                      color: "#769914",
+                    },
+                  }}
+                >
+                  {info.email}
+                </Typography>
+              }
             />
           </>
         )}
