@@ -18,16 +18,30 @@ const ContactInfo = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     axios
-      .get(`${backendURL}/api/contact-info`)
-      .then((res) => {
-        setInfo(res.data);
-        setLoading(false);
+      .get(`${backendURL}/api/contact-info`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        signal: controller.signal,
       })
+      .then((res) => setInfo(res.data))
       .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
+        if (err.name !== "CanceledError") {
+          console.error(err);
+        }
+      })
+      .finally(() => setLoading(false));
+
+    return () => controller.abort();
   }, []);
 
   // 🕒 Custom formatter for working hours
