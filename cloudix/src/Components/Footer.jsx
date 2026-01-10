@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Grid, Typography, Link } from '@mui/material';
 import { Phone, Email, LocationOn } from '@mui/icons-material';
-import WhiteLogo from '/logo_white-removebg-preview-removebg-preview.png';
+import WhiteLogo from '/logo_white-removebg-preview-removebg-preview.webp';
 
 import Logo from './Logo';
 import SocialIcons from './SocialIcons';

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GradientButton from "../GradientButton";
-import BgImage from "../../assets/home-bg.png";
+import BgImage from "../../assets/home-bg.webp";
 import DiagonalStrip from "./DiagonalStrip";
 import useDevice from "../../hooks/useDevice";
 
@@ -13,19 +13,64 @@ export default function HeroSection() {
   const buttonSize = isMobile ? "small" : isDesktop ? "large" : "medium";
 
   return (
+    // <Box
+    //   sx={{
+    //     position: "relative",
+    //     height: isLandscapeMobile ? "65vh" : { xs: "85vh", md: "100vh" },
+    //     display: "flex",
+    //     alignItems: "center",
+    //     px: { xs: 3, md: 10 },
+    //     overflow: "hidden",
+    //     backgroundImage: `url(${BgImage})`,
+    //     backgroundSize: "cover",
+    //     backgroundPosition: "center",
+    //   }}
+    // >
+    //   {/* Overlay */}
+    //   <Box
+    //     sx={{
+    //       position: "absolute",
+    //       inset: 0,
+    //       background:
+    //         "linear-gradient(90deg,#111E2C 10%,rgba(17,30,44,.85) 40%,rgba(17,30,44,.4) 100%)",
+    //       zIndex: 1,
+    //     }}
+    //   />
+
+    //   {/* Content */}
+    //   <Box
+    //     sx={{
+    //       position: "relative",
+    //       zIndex: 2,
+    //       maxWidth: 800,
+    //       textAlign: isLandscapeMobile ? "left" : { sm: "center", md: "left" },
+    //     }}
+    //   >
     <Box
       sx={{
         position: "relative",
         height: isLandscapeMobile ? "65vh" : { xs: "85vh", md: "100vh" },
-        display: "flex",
-        alignItems: "center",
-        px: { xs: 3, md: 10 },
         overflow: "hidden",
-        backgroundImage: `url(${BgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
+      {/* ✅ LCP IMAGE */}
+      <Box
+        component="img"
+        src="/images/home-bg.webp"
+        alt="Cloudix Soft hero background"
+        width="1600"
+        height="900"
+        loading="eager"
+        decoding="async"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      />
+
       {/* Overlay */}
       <Box
         sx={{
@@ -42,8 +87,10 @@ export default function HeroSection() {
         sx={{
           position: "relative",
           zIndex: 2,
-          maxWidth: 800,
-          textAlign: isLandscapeMobile ? "left" : { sm: "center", md: "left" },
+          display: "flex",
+          alignItems: "center",
+          height: "100%",
+          px: { xs: 3, md: 10 },
         }}
       >
         <Typography

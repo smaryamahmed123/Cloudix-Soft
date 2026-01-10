@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cloudix Soft</title>
+  <title>Cloudix Soft | Shariah-compliant IT Company</title>
   <link rel="icon" type="image/png" href="/X.png" />
 
   <style>
@@ -16,7 +16,12 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
+      opacity: 1;
       transition: opacity 0.6s ease;
+    }
+
+    #logo-loader[hidden] {
+      display: none;
     }
 
     .loader-wrapper {
@@ -26,13 +31,11 @@
       gap: 16px;
     }
 
-    /* 🧿 Logo */
     .loader-logo {
       width: 250px;
       height: auto;
     }
 
-    /* 🔵 Dots container */
     .dots {
       display: flex;
       gap: 10px;
@@ -42,40 +45,25 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background-color: #cfd8dc;
+      background-color: #769914; /* primary theme color */
+      opacity: 0.3;
       animation: dotPulse 1.4s infinite ease-in-out;
     }
 
-    .dot:nth-child(1) {
-      animation-delay: 0s;
-    }
-    .dot:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-    .dot:nth-child(3) {
-      animation-delay: 0.4s;
-    }
+    .dot:nth-child(1) { animation-delay: 0s; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
 
     @keyframes dotPulse {
-      0% {
-        opacity: 0.3;
-        background-color: #cfd8dc;
-      }
-      50% {
-        opacity: 1;
-        background-color: #769914; /* primary blue */
-      }
-      100% {
-        opacity: 0.3;
-        background-color: #cfd8dc;
-      }
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
     }
   </style>
 </head>
 
 <body>
   <!-- Loader -->
-  <div id="logo-loader">
+  <div id="logo-loader" role="status" aria-busy="true">
     <div class="loader-wrapper">
       <img src="/logo.png" alt="Cloudix Soft Logo" class="loader-logo" />
       <div class="dots">
@@ -89,17 +77,17 @@
   <!-- App root -->
   <div id="root"></div>
 
-  <script>
-    window.addEventListener("load", () => {
-      const loader = document.getElementById("logo-loader");
+  <script type="module">
+    import ReactDOM from 'react-dom/client';
+    import App from '/src/App.jsx';
 
-      setTimeout(() => {
-        loader.style.opacity = "0";
-        setTimeout(() => loader.remove(), 600);
-      }, 1200);
-    });
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+
+    // Remove loader after React app is mounted
+    const loader = document.getElementById('logo-loader');
+    loader.style.opacity = '0';
+    loader.addEventListener('transitionend', () => loader.remove());
   </script>
-
-  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

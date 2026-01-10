@@ -8,6 +8,7 @@ const Logo = ({ src, size = { xs: 40, sm: 50, md: 60, lg: 70 } }) => {
       component={Link}
       to="/"
       sx={{ display: "inline-flex", alignItems: "center" }}
+      aria-label="Go to homepage" 
     >
       <Box
         component="img"

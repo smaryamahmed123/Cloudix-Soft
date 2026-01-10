@@ -20,8 +20,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import GradientButton from "./GradientButton";
 import Logo from "./Logo";
-import WhiteLogo from "../../public/logo_white-removebg-preview-removebg-preview.png";
-import BlackLogo from "../../public/logo.png";
+import WhiteLogo from "../../public/logo_white-removebg-preview-removebg-preview.webp";
+import BlackLogo from "../../public/logo.webp";
 import SocialIcons from "./SocialIcons";
 
 const navItems = ["Home", "Services", "Portfolio", "About", "Contact"];
@@ -185,12 +185,6 @@ const Navbar = () => {
         onClose={() => setDrawerOpen(false)}
       >
         <Box sx={{ width: 250, p: 2, height: "100%" }}>
-          {/* <Typography
-            variant="h6"
-            sx={{ mb: 2, color: theme.palette.primary.main }}
-          >
-            {WhiteLogo}
-          </Typography> */}
           <Logo
             src={WhiteLogo}
             size={{ sx: 30, sm: 40, md: 50, lg: 60 }}
