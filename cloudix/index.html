@@ -77,17 +77,6 @@
   <!-- App root -->
   <div id="root"></div>
 
-  <script type="module">
-    import ReactDOM from 'react-dom/client';
-    import App from '/src/App.jsx';
-
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-
-    // Remove loader after React app is mounted
-    const loader = document.getElementById('logo-loader');
-    loader.style.opacity = '0';
-    loader.addEventListener('transitionend', () => loader.remove());
-  </script>
+ <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
