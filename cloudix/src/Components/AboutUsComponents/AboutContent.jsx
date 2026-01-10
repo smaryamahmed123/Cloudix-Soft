@@ -161,24 +161,25 @@
 
 
 
-
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
-import AboutImage from "../../assets/about-team.png"; // fallback image
+import AboutImage from "../../assets/about-team.png";
 
 const MotionBox = motion(Box);
 
 const AboutContent = ({ intro }) => {
-  if (!intro) return null;
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  // ✅ Determine image source: absolute URL or backend relative
+  if (!intro) return null; // early return AFTER hooks
+
   const backendURL = import.meta.env.VITE_BACKEND_URL || "";
   const imageSrc = intro.image
     ? intro.image.startsWith("http")
       ? intro.image
       : `${backendURL}${intro.image}`
-    : AboutImage; // fallback
+    : AboutImage;
 
   return (
     <MotionBox
@@ -192,131 +193,104 @@ const AboutContent = ({ intro }) => {
         color: "#111E2C",
         py: { xs: 8, md: 12 },
         px: { xs: 3, md: 8 },
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 6,
       }}
     >
-      <Grid
-        container
-        spacing={6}
+      {/* Left: Text */}
+      <MotionBox
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        viewport={{ once: true }}
+        sx={{ flex: 1, maxWidth: { xs: "100%", md: "50%" } }}
+      >
+        <Typography
+          variant="h3"
+          sx={{
+            fontWeight: 800,
+            mb: 4,
+            textAlign: { xs: "center", md: "left" },
+            color: "#111E2C",
+          }}
+        >
+          {intro.title}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "1rem", md: "1.3rem" },
+            mb: 2,
+            color: "#111E2C",
+            lineHeight: 1.8,
+            textAlign: "justify",
+          }}
+        >
+          {intro.description}
+        </Typography>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 700,
+            color: "#A9B838",
+            fontSize: { xs: "1.2rem", md: "1.4rem" },
+            textAlign: "justify",
+          }}
+        >
+          {intro.highlight}
+        </Typography>
+      </MotionBox>
+
+      {/* Right: Image */}
+      <MotionBox
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        viewport={{ once: true }}
         sx={{
+          flex: 1,
+          maxWidth: { xs: "100%", md: "50%" },
+          display: "flex",
           justifyContent: "center",
-          alignItems: "center",
+          position: "relative",
+          "&::before, &::after": {
+            content: '""',
+            position: "absolute",
+            width: "50%",
+            height: "100%",
+            border: "5px solid #111E2C",
+          },
+          "&::before": {
+            top: 0,
+            left: 0,
+            borderRight: "none",
+            borderBottom: "none",
+          },
+          "&::after": {
+            bottom: 0,
+            right: 0,
+            borderLeft: "none",
+            borderTop: "none",
+          },
         }}
       >
-        {/* ---- Section Heading ---- */}
-        <Grid item xs={12}>
-          <Typography
-            component={motion.h3}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            viewport={{ once: true }}
-            variant="h3"
-            sx={{
-              fontWeight: 800,
-              mb: 6,
-              textAlign: "center",
-              color: "#111E2C",
-            }}
-          >
-            {intro.title}
-          </Typography>
-        </Grid>
-
-        {/* ---- Main Content Row ---- */}
-        <Grid
-          item
-          xs={12}
-          container
-          spacing={4}
-          direction={{ xs: "column", md: "row" }}
-          alignItems="flex-start"
-          justifyContent="space-between"
-        >
-          {/* ---- Left Side: Text ---- */}
-          <Grid item xs={12} md={6}>
-            <MotionBox
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: { xs: "1rem", md: "1.3rem" },
-                  lineHeight: 1.8,
-                  mb: 4,
-                  color: "#111E2C",
-                  textAlign: "justify",
-                  textJustify: "inter-word",
-                }}
-              >
-                {intro.description}
-              </Typography>
-
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  color: "#A9B838",
-                  fontSize: { xs: "1.2rem", md: "1.4rem" },
-                  textAlign: "justify",
-                }}
-              >
-                {intro.highlight}
-              </Typography>
-            </MotionBox>
-          </Grid>
-
-          {/* ---- Right Side: Image ---- */}
-          <Grid item xs={12} md={6}>
-            <MotionBox
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              viewport={{ once: true }}
-              sx={{
-                position: "relative",
-                overflow: "hidden",
-                borderRadius: 2,
-                "&::before, &::after": {
-                  content: '""',
-                  position: "absolute",
-                  width: "50%",
-                  height: "100%",
-                  border: "5px solid #111E2C",
-                },
-                "&::before": {
-                  top: 0,
-                  left: 0,
-                  borderRight: "none",
-                  borderBottom: "none",
-                },
-                "&::after": {
-                  bottom: 0,
-                  right: 0,
-                  borderLeft: "none",
-                  borderTop: "none",
-                },
-              }}
-            >
-              <Box
-                component="img"
-                src={imageSrc}
-                alt={intro.title || "About Us"}
-                loading="lazy"
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                  borderRadius: "8px",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-                }}
-              />
-            </MotionBox>
-          </Grid>
-        </Grid>
-      </Grid>
+        <Box
+          component="img"
+          src={imageSrc}
+          alt={intro.title || "About Us"}
+          loading="lazy"
+          style={{
+            width: "100%",
+            maxHeight: isMobile ? "300px" : "100%",
+            objectFit: "cover",
+            borderRadius: "8px",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+          }}
+        />
+      </MotionBox>
     </MotionBox>
   );
 };
