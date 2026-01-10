@@ -530,7 +530,73 @@ const ContactForm = () => {
           Send us a message
         </Typography>
 
-        <Grid container spacing={3}>
+        {/* <Grid container spacing={3}> */}
+          {/* Left Side */}
+          {/* <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+              }}
+            >
+              <TextField
+                label="Full Name"
+                name="name"
+                variant="outlined"
+                fullWidth
+                value={formData.name}
+                onChange={handleChange}
+                error={!!errors.name}
+                helperText={errors.name}
+              />
+              <TextField
+                label="Email Address"
+                name="email"
+                variant="outlined"
+                fullWidth
+                value={formData.email}
+                onChange={handleChange}
+                error={!!errors.email}
+                helperText={errors.email}
+              />
+              <TextField
+                label="Phone Number"
+                name="phoneNo"
+                variant="outlined"
+                fullWidth
+                value={formData.phoneNo}
+                onChange={handleChange}
+                error={!!errors.phoneNo}
+                helperText={errors.phoneNo}
+              />
+            </Box>
+          </Grid> */}
+
+          {/* Right Side */}
+          {/* <Grid item xs={12} md={6}>
+            <TextField
+              label="Message"
+              name="message"
+              multiline
+              variant="outlined"
+              fullWidth
+              rows={7}
+              value={formData.message}
+              onChange={handleChange}
+              error={!!errors.message}
+              helperText={errors.message}
+              sx={{
+                height: '100%',
+                '& .MuiOutlinedInput-root': {
+                  height: '100%',
+                  alignItems: 'flex-start',
+                },
+              }}
+            />
+          </Grid> */}
+        {/* </Grid> */}
+  <Grid container spacing={3}>
           {/* Left Side */}
           <Grid item xs={12} md={6}>
             <Box
@@ -596,7 +662,6 @@ const ContactForm = () => {
             />
           </Grid>
         </Grid>
-
         <Box sx={{ textAlign: 'center', mt: 4 }}>
           <GradientButton
             text={loading ? <CircularProgress size={24} /> : 'Send via Email'}
