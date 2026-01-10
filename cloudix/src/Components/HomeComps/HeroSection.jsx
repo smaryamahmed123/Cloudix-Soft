@@ -56,7 +56,7 @@ export default function HeroSection() {
       {/* ✅ LCP IMAGE */}
       <Box
         component="img"
-        src="../../assets/home-bg.webp"
+        src={BgImage}
         alt="Cloudix Soft hero background"
         width="1600"
         height="900"
