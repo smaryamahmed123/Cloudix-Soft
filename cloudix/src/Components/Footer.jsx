@@ -33,7 +33,7 @@ const footerItemStyle = {
   mb: 1,
   textDecoration: 'none',
   fontSize: '0.9rem',
-  textAlign: { xs: 'center', md: 'left' },
+  textAlign: 'center',
   '&:hover': {
     color: '#BBBF19',
     textDecoration: 'none',
