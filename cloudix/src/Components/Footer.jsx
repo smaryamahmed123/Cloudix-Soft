@@ -83,7 +83,7 @@ const Footer = () => {
 
             {/* Show Social icons only on desktop here */}
             <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "flex-start" }}>
-              <SocialIcons circle={false} size="small" />
+              <SocialIcons circle={false} size="medium" />
             </Box>
           </MotionGrid>
 
