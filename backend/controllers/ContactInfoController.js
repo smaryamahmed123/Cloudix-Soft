@@ -3,7 +3,7 @@ import ContactInfo from '../models/ContactInfo.js';
 export const getContactInfo = async (req, res) => {
   try {
     const info = await ContactInfo.findOne();
-    res.json(info);
+    res.json(info || {});
   } catch (err) {               
     res.status(500).json({ error: 'Failed to fetch contact info' });
   }
