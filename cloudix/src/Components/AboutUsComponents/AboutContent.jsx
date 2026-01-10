@@ -172,7 +172,7 @@ const AboutContent = ({ intro }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  if (!intro) return null; // early return AFTER hooks
+  if (!intro) return null;
 
   const backendURL = import.meta.env.VITE_BACKEND_URL || "";
   const imageSrc = intro.image
@@ -196,8 +196,9 @@ const AboutContent = ({ intro }) => {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         alignItems: "center",
-        justifyContent: "space-between",
-        gap: 6,
+        justifyContent: "center", // center items on xs
+        gap: { xs: 4, md: 6 }, // smaller gap on mobile
+        overflowX: "hidden", // prevent horizontal scroll
       }}
     >
       {/* Left: Text */}
@@ -206,15 +207,19 @@ const AboutContent = ({ intro }) => {
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.3 }}
         viewport={{ once: true }}
-        sx={{ flex: 1, maxWidth: { xs: "100%", md: "50%" } }}
+        sx={{
+          flex: 1,
+          maxWidth: { xs: "100%", md: "50%" },
+          textAlign: { xs: "center", md: "left" },
+        }}
       >
         <Typography
           variant="h3"
           sx={{
             fontWeight: 800,
             mb: 4,
-            textAlign: { xs: "center", md: "left" },
             color: "#111E2C",
+            fontSize: { xs: "1.8rem", md: "2.5rem" },
           }}
         >
           {intro.title}
@@ -226,7 +231,6 @@ const AboutContent = ({ intro }) => {
             mb: 2,
             color: "#111E2C",
             lineHeight: 1.8,
-            textAlign: "justify",
           }}
         >
           {intro.description}
@@ -237,7 +241,6 @@ const AboutContent = ({ intro }) => {
             fontWeight: 700,
             color: "#A9B838",
             fontSize: { xs: "1.2rem", md: "1.4rem" },
-            textAlign: "justify",
           }}
         >
           {intro.highlight}
@@ -256,6 +259,7 @@ const AboutContent = ({ intro }) => {
           display: "flex",
           justifyContent: "center",
           position: "relative",
+          overflow: "hidden",
           "&::before, &::after": {
             content: '""',
             position: "absolute",
@@ -284,6 +288,7 @@ const AboutContent = ({ intro }) => {
           loading="lazy"
           style={{
             width: "100%",
+            maxWidth: "100%",
             maxHeight: isMobile ? "300px" : "100%",
             objectFit: "cover",
             borderRadius: "8px",
