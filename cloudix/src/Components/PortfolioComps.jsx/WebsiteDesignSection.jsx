@@ -251,8 +251,8 @@ import { useEffect, useState, useCallback } from "react";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-// Cloudinary optimization helper
-const getOptimizedImage = (url, width = 420) => {
+// Cloudinary image optimizer
+const getOptimizedImage = (url, width = 600) => {
   if (!url?.includes("cloudinary")) return url;
   return url.replace(
     "/upload/",
@@ -287,6 +287,11 @@ const WebsiteDesignSection = () => {
     (site) => site.category === category
   );
 
+  const categories = [
+    { value: "ecommerce", label: "E-Commerce" },
+    { value: "static", label: "Business Websites" },
+  ];
+
   return (
     <Box
       component="section"
@@ -301,22 +306,16 @@ const WebsiteDesignSection = () => {
       <Motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.9 }}
       >
         <Typography
+          component="h2"
           align="center"
           variant="h2"
-          component="h2"
           fontWeight={800}
           mb={2}
-          sx={{
-            fontSize: {
-              xs: "1.9rem",
-              sm: "2.4rem",
-              md: "3rem",
-            },
-          }}
+          sx={{ fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" } }}
         >
           Website Design & Development
         </Typography>
@@ -348,11 +347,11 @@ const WebsiteDesignSection = () => {
             backdropFilter: "blur(12px)",
           }}
         >
-          {["ecommerce", "static"].map((val) => (
+          {categories.map((tab) => (
             <Tab
-              key={val}
-              value={val}
-              label={val === "ecommerce" ? "E-Commerce" : "Business Websites"}
+              key={tab.value}
+              value={tab.value}
+              label={tab.label}
               sx={{
                 textTransform: "none",
                 fontWeight: 600,
@@ -404,27 +403,33 @@ const WebsiteDesignSection = () => {
                     key={i}
                     variant="rectangular"
                     width={360}
-                    height={320}
-                    sx={{ borderRadius: 5 }}
+                    height={400}
+                    sx={{ borderRadius: 5, flexShrink: 0 }}
                   />
                 ))
               : error
               ? (
                 <Typography
                   variant="h6"
-                  sx={{ color: "error.main", mt: 4, mx: "auto" }}
+                  sx={{ color: "error.main", textAlign: "center", width: "100%" }}
                 >
-                  Failed to load websites.
+                  Failed to load projects.
+                </Typography>
+              )
+              : filteredWebsites.length === 0
+              ? (
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#777", textAlign: "center", width: "100%" }}
+                >
+                  No projects found.
                 </Typography>
               )
               : filteredWebsites.map((site, index) => (
                   <Motion.div
                     key={site._id || index}
                     whileHover={{ y: 0 }}
-                    style={{
-                      scrollSnapAlign: "center",
-                      flexShrink: 0,
-                    }}
+                    style={{ scrollSnapAlign: "center", flexShrink: 0 }}
                   >
                     <Box
                       sx={{
@@ -437,14 +442,24 @@ const WebsiteDesignSection = () => {
                         boxShadow: "0 30px 60px rgba(0,0,0,0.5)",
                       }}
                     >
+                      {/* Image */}
                       <Box
-                        component="img"
-                        src={getOptimizedImage(site.image)}
-                        alt={site.title || "Website project"}
-                        loading="lazy"
-                        style={{ width: "100%", display: "block" }}
-                      />
+                        sx={{
+                          position: "relative",
+                          height: { xs: 300, sm: 320, md: 400 },
+                          overflow: "hidden",
+                        }}
+                      >
+                        <Box
+                          component="img"
+                          src={getOptimizedImage(site.image, 420)}
+                          alt={site.title || "Website project"}
+                          loading="lazy"
+                          sx={{ width: "100%", height: "auto" }}
+                        />
+                      </Box>
 
+                      {/* Button */}
                       <Box p={3}>
                         <Button
                           variant="contained"
