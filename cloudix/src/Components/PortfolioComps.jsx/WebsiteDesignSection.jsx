@@ -134,7 +134,7 @@ const WebsiteDesignSection = () => {
                 key={index}
                 whileHover={{ y: 0 }} // no hover move
                 style={{
-                  scrollSnapAlign: "center",
+                  scrollSnapAlign: "start",
                   flexShrink: 0,
                 }}
               >
