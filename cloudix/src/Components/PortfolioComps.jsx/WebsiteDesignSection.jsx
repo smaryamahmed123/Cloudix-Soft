@@ -41,16 +41,11 @@ const WebsiteDesignSection = () => {
       >
         <Typography
           align="center"
-          variant="h2"
-          component="h2"
+          component="h3"
           fontWeight={800}
           mb={2}
           sx={{
-            fontSize: {
-              xs: "1.9rem",
-              sm: "2.4rem",
-              md: "3rem",
-            },
+            fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" },
           }}
         >
           Website Design & Development
@@ -120,15 +115,16 @@ const WebsiteDesignSection = () => {
           <Box
             sx={{
               display: "flex",
-              gap: 3,
+              justifyContent: "center",
+              gap: 4,
               px: { xs: 2, sm: 3, md: 6 },
-              overflowX: "auto", // Horizontal scroll for projects
+              overflowX: "auto",
               scrollSnapType: "x mandatory",
-              scrollPaddingLeft: { xs: 16, sm: 24, md: 48 },
-              pb: 4,
+              pb: 3,
+
               "&::-webkit-scrollbar": { height: 6 },
               "&::-webkit-scrollbar-thumb": {
-                background: "#769914",
+                background: "#769914", // button color
                 borderRadius: 8,
               },
             }}
@@ -136,57 +132,54 @@ const WebsiteDesignSection = () => {
             {filteredWebsites.map((site, index) => (
               <Motion.div
                 key={index}
+                whileHover={{ y: 0 }} // no hover move
                 style={{
-                  scrollSnapAlign: "start",
+                  scrollSnapAlign: "center",
                   flexShrink: 0,
                 }}
               >
-                {/* Project Card */}
                 <Box
                   sx={{
-                    minWidth: { xs: "80vw", sm: 360, md: 420, lg: 440 },
-                    maxHeight: { xs: 400, sm: 450, md: 500 }, // card max height
+                    width: { xs: "90vw", sm: 360, md: 420, lg: 440 },
                     bgcolor: "rgba(255,255,255,0.05)",
                     backdropFilter: "blur(16px)",
                     borderRadius: 5,
                     overflow: "hidden",
                     border: "1px solid rgba(255,255,255,0.08)",
                     boxShadow: "0 30px 60px rgba(0,0,0,0.5)",
-                    display: "flex",
-                    flexDirection: "column",
                   }}
                 >
-                  {/* Vertical Scroll for Images */}
+                  {/* Image */}
                   <Box
                     sx={{
+                      position: "relative",
+                      height: { xs: 300, sm: 320, md: 400 },
                       overflowY: "auto",
+                      maxHeight: { xs: 300, sm: 320, md: 400 },
                       scrollbarWidth: "thin",
                       "&::-webkit-scrollbar": { width: 6 },
                       "&::-webkit-scrollbar-thumb": {
-                        background: "#769914",
+                        background: "#769914", // button color
                         borderRadius: 3,
                       },
                     }}
                   >
-                    {site.images.map((img, i) => (
-                      <Box
-                        component="img"
-                        key={i}
-                        src={img}
-                        alt={`${site.title} ${i + 1}`}
-                        loading="lazy"
-                        sx={{
-                          width: "100%",
-                          height: "auto",
-                          display: "block",
-                          mb: 1,
-                        }}
-                      />
-                    ))}
+                    <Box
+                      component="img"
+                      src={site.image}
+                      alt={site.title}
+                      loading="lazy"
+                      sx={{
+                        width: "100%",
+                        height: "auto",
+                        transform: "none",
+                        transition: "none",
+                      }}
+                    />
                   </Box>
 
-                  {/* Project Button */}
-                  <Box p={2}>
+                  {/* Content */}
+                  <Box p={3}>
                     <Button
                       variant="contained"
                       fullWidth
@@ -194,7 +187,8 @@ const WebsiteDesignSection = () => {
                         borderRadius: "999px",
                         textTransform: "none",
                         fontWeight: 600,
-                        py: 1,
+                        fontSize: { xs: "0.85rem", sm: "0.95rem" },
+                        py: { xs: 1, sm: 1.2 },
                         bgcolor: "#769914",
                         "&:hover": { bgcolor: "#5f7d10" },
                       }}
