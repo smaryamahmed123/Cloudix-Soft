@@ -300,6 +300,7 @@ function HeroSection() {
           text="Let's Talk"
           size={buttonSize}
           onClick={() => navigate("/contact")}
+          sx={{ width: "auto", display: "inline-flex" }}
         />
       </Box>
 
