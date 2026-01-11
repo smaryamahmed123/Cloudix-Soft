@@ -120,12 +120,12 @@ const WebsiteDesignSection = () => {
           <Box
             sx={{
               display: "flex",
-              gap: 4,
+              gap: 3,
               px: { xs: 2, sm: 3, md: 6 },
-              overflowX: "auto",
+              overflowX: "auto", // Horizontal scroll for projects
               scrollSnapType: "x mandatory",
-              scrollPaddingLeft: { xs: 16, sm: 24, md: 48 }, // first card fully visible
-              pb: 3,
+              scrollPaddingLeft: { xs: 16, sm: 24, md: 48 },
+              pb: 4,
               "&::-webkit-scrollbar": { height: 6 },
               "&::-webkit-scrollbar-thumb": {
                 background: "#769914",
@@ -137,29 +137,56 @@ const WebsiteDesignSection = () => {
               <Motion.div
                 key={index}
                 style={{
-                  scrollSnapAlign: "start", // important for left alignment
-                  flexShrink: 0, // prevents shrinking
+                  scrollSnapAlign: "start",
+                  flexShrink: 0,
                 }}
               >
+                {/* Project Card */}
                 <Box
                   sx={{
-                    width: { xs: "80vw", sm: 360, md: 420, lg: 440 }, // < 100vw for small screens
+                    minWidth: { xs: "80vw", sm: 360, md: 420, lg: 440 },
+                    maxHeight: { xs: 400, sm: 450, md: 500 }, // card max height
                     bgcolor: "rgba(255,255,255,0.05)",
                     backdropFilter: "blur(16px)",
                     borderRadius: 5,
                     overflow: "hidden",
                     border: "1px solid rgba(255,255,255,0.08)",
                     boxShadow: "0 30px 60px rgba(0,0,0,0.5)",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
                 >
+                  {/* Vertical Scroll for Images */}
                   <Box
-                    component="img"
-                    src={site.image}
-                    alt={site.title}
-                    loading="lazy"
-                    sx={{ width: "100%", height: "auto" }}
-                  />
-                  <Box p={3}>
+                    sx={{
+                      overflowY: "auto",
+                      scrollbarWidth: "thin",
+                      "&::-webkit-scrollbar": { width: 6 },
+                      "&::-webkit-scrollbar-thumb": {
+                        background: "#769914",
+                        borderRadius: 3,
+                      },
+                    }}
+                  >
+                    {site.images.map((img, i) => (
+                      <Box
+                        component="img"
+                        key={i}
+                        src={img}
+                        alt={`${site.title} ${i + 1}`}
+                        loading="lazy"
+                        sx={{
+                          width: "100%",
+                          height: "auto",
+                          display: "block",
+                          mb: 1,
+                        }}
+                      />
+                    ))}
+                  </Box>
+
+                  {/* Project Button */}
+                  <Box p={2}>
                     <Button
                       variant="contained"
                       fullWidth
@@ -167,7 +194,7 @@ const WebsiteDesignSection = () => {
                         borderRadius: "999px",
                         textTransform: "none",
                         fontWeight: 600,
-                        py: { xs: 1, sm: 1.2 },
+                        py: 1,
                         bgcolor: "#769914",
                         "&:hover": { bgcolor: "#5f7d10" },
                       }}
