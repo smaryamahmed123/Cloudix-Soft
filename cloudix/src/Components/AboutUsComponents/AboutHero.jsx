@@ -90,13 +90,7 @@ const AboutHero = () => {
           color: "accent.light",
         }}
       >
-        Welcome to Cloudix Soft, Pakistan’s first{" "}
-        <Typography
-          component="span"
-          sx={{ color: "accent.main", fontWeight: 600 }}
-        >
-          Shariah-compliant IT company
-        </Typography>
+        Welcome to Cloudix Soft, Pakistan’s first Shariah-compliant IT company
       </MotionTypography>
     </MotionBox>
   );
