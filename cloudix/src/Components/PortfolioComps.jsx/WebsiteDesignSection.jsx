@@ -115,7 +115,7 @@ const WebsiteDesignSection = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               gap: 4,
               px: { xs: 2, sm: 3, md: 6 },
               overflowX: "auto",
