@@ -177,7 +177,7 @@ const SocialIcons = ({ color = "#769914", size = "large", circle = true }) => {
         gap: circle ? 2 : 1.5,
       }}
     >
-      {icons.map(({ name }) =>
+      {/* {icons.map(({ name, IconComponent: Icon }) =>
         socialLinks[name] ? (
           <Suspense
             key={name}
@@ -211,11 +211,51 @@ const SocialIcons = ({ color = "#769914", size = "large", circle = true }) => {
                 "& svg": { color },
               }}
             >
-              <IconComponent sx={{ fontSize: iconSizes[finalSize] }} />
+              <Icon sx={{ fontSize: iconSizes[finalSize] }} />
             </IconButton>
           </Suspense>
         ) : null
-      )}
+      )} */}
+      {icons.map((item) =>
+        socialLinks[item.name] ? (
+          <Suspense
+            key={item.name}
+            fallback={
+              <IconButton
+                sx={{
+                  width: buttonSizes[finalSize],
+                  height: buttonSizes[finalSize],
+                  borderRadius: circle ? "50%" : "8px",
+                  backgroundColor: circle ? "#f9f9f9" : "transparent",
+                }}
+              >
+                <CircularProgress size={iconSizes[finalSize]} />
+              </IconButton>
+            }
+          >
+            <IconButton
+              href={socialLinks[item.name]}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                width: buttonSizes[finalSize],
+                height: buttonSizes[finalSize],
+                borderRadius: circle ? "50%" : "8px",
+                backgroundColor: circle ? "#f9f9f9" : "transparent",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  backgroundColor: circle ? "#e0e0e0" : "transparent",
+                  transform: "scale(1.1)",
+                },
+                "& svg": { color },
+              }}
+            >
+              {/* Use a variable inside JSX */}
+              {React.createElement(item.IconComponent, { sx: { fontSize: iconSizes[finalSize] } })}
+            </IconButton>
+          </Suspense>
+        ) : null
+      )}  
     </Box>
   );
 };
