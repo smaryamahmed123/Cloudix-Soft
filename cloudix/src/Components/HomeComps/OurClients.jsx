@@ -168,12 +168,8 @@ export default function OurClients() {
                   width={220}
                   height={120}
                   sx={{
+                    maxHeight: 180,
                     objectFit: "contain",
-                    filter: "grayscale(100%)",
-                    transition: "filter 0.3s ease",
-                    "&:hover": {
-                      filter: "grayscale(0%)",
-                    },
                   }}
                 />
               </Grid>

@@ -235,7 +235,7 @@ function HeroSection() {
         }}
       />
 
-      {/* Content */}
+      {/* Content
       <Box
         sx={{
           position: "relative",
@@ -300,7 +300,76 @@ function HeroSection() {
           text="Let's Talk"
           size={buttonSize}
           onClick={() => navigate("/contact")}
-          sx={{ width: "auto", display: "inline-flex" }}
+        />
+      </Box> */}
+
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 2,
+          display: "flex",
+          flexDirection: "column", // stack heading + button
+          justifyContent: "center",
+          height: "100%",
+          px: { xs: 3, md: 10 },
+          maxWidth: 900,
+          gap: 3, // vertical spacing between heading and button
+          alignItems: "flex-start", // button aligned to start (left)
+        }}
+      >
+        {/* Heading */}
+        <Typography
+          component="h1"
+          sx={{
+            fontWeight: 700,
+            fontSize: isLandscapeMobile
+              ? 22
+              : { sm: 30, md: 40, lg: 60, xl: 70 },
+            lineHeight: 1.25,
+            color: "#fff",
+            textAlign: isLandscapeMobile ? "left" : "justify",
+          }}
+        >
+          <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+            Make Your Brand Stand
+          </Box>
+          <br />
+          <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+            Out Through{" "}
+            <Box
+              component="span"
+              sx={{
+                bgcolor: "#BBBF19",
+                color: "#111E2C",
+                px: 1,
+                borderRadius: 1.5,
+                display: "inline-block",
+              }}
+            >
+              Social Media
+            </Box>
+          </Box>
+          <br />
+          <Box
+            component="span"
+            sx={{
+              bgcolor: "#BBBF19",
+              color: "#111E2C",
+              px: 1,
+              borderRadius: 1.5,
+              display: "inline-block",
+            }}
+          >
+            Marketing
+          </Box>
+        </Typography>
+
+        {/* ✅ Button below the heading */}
+        <GradientButton
+          aria-label="Contact Cloudix Soft"
+          text="Let's Talk"
+          size={buttonSize}
+          onClick={() => navigate("/contact")}
         />
       </Box>
 
