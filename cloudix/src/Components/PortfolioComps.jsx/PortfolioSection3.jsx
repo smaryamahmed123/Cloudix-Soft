@@ -118,7 +118,7 @@ const PortfolioSection3 = () => {
       }}
     >
       {/* 🌕 Animated Background Circle */}
-      <motion.div
+      <Motion.div
         aria-hidden="true"
         initial={{ scale: 0.85, opacity: 0 }}
         animate={{ scale: [0.85, 1.1, 0.85], opacity: 0.2 }}
