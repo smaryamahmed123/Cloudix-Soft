@@ -297,7 +297,7 @@ function WhyChooseUs() {
               display="flex"
               justifyContent="center"
             >
-              <motion.div
+              <Motion.div
                 variants={cardVariants}
                 whileHover={!prefersReducedMotion ? { scale: 1.05 } : undefined}
                 transition={{ type: "spring", stiffness: 180 }}
@@ -358,7 +358,7 @@ function WhyChooseUs() {
                     {feature.description}
                   </Typography>
                 </Box>
-              </motion.div>
+              </Motion.div>
             </Grid>
           ))}
         </Grid>
