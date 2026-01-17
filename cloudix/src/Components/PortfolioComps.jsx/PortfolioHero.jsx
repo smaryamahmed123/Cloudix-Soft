@@ -242,7 +242,7 @@
 
 import React from "react";
 import HeroSection from "../HeroSection";
-import PortfolioBg from "../assets/Portfolio-bg.png";
+import PortfolioBg from "../../assets/Portfolio-bg.png";
 
 const PortfolioPage = () => {
   return (
