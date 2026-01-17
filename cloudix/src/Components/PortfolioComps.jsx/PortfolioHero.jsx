@@ -241,7 +241,7 @@
 
 
 import React from "react";
-import HeroSection from "../Components/HeroSection";
+import HeroSection from "../HeroSection";
 import PortfolioBg from "../assets/Portfolio-bg.png";
 
 const PortfolioPage = () => {
