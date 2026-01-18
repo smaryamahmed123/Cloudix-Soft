@@ -33,40 +33,91 @@ const fadeUp = {
  */
 const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   return (
+    // <MotionBox
+    //   component="header"
+    //   role="banner"
+    //   aria-label="Hero section"
+    //   variants={containerVariants}
+    //   initial="hidden"
+    //   animate="visible"
+    //   sx={{
+    //     backgroundImage: `
+    //       linear-gradient(
+    //         to right,
+    //         rgba(17,30,44,0.85),
+    //         rgba(17,30,44,0.55) 40%,
+    //         rgba(17,30,44,0.15) 70%
+    //       ),
+    //       url(${image})
+    //     `,
+    //     backgroundSize: "cover",
+    //     backgroundPosition: "center",
+    //     backgroundRepeat: "no-repeat",
+    //     height: { xs: "55vh", md: "75vh" },
+    //     display: "flex",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     px: { xs: 2, md: 12 },
+    //     color: "#fff",
+    //     borderRadius: {
+    //       xs: "0 0 36px 36px",
+    //       sm: "0 0 56px 56px",
+    //       md: "0 0 77px 77px",
+    //     },
+    //     textAlign: "center",
+    //     position: "relative",
+    //     overflow: "hidden",
+    //   }}
+    // >
     <MotionBox
       component="header"
-      role="banner"
-      aria-label="Hero section"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       sx={{
+        position: "relative",
+        isolation: "isolate",
+        backgroundColor: "#111E2C",
+
         backgroundImage: `
-          linear-gradient(
-            to right,
-            rgba(17,30,44,0.85),
-            rgba(17,30,44,0.55) 40%,
-            rgba(17,30,44,0.15) 70%
-          ),
-          url(${image})
-        `,
+      linear-gradient(
+        to right,
+        rgba(17,30,44,0.85),
+        rgba(17,30,44,0.55) 40%,
+        rgba(17,30,44,0.15) 70%
+      ),
+      url(${image})
+    `,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+
         height: { xs: "55vh", md: "75vh" },
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         px: { xs: 2, md: 12 },
         color: "#fff",
+
         borderRadius: {
           xs: "0 0 36px 36px",
           sm: "0 0 56px 56px",
           md: "0 0 77px 77px",
         },
+
         textAlign: "center",
-        position: "relative",
         overflow: "hidden",
+
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "2px",
+          backgroundColor: "#111E2C",
+          zIndex: 5,
+        },
       }}
     >
       <Box sx={{ maxWidth: 620 }}>
