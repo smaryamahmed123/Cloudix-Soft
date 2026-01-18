@@ -109,7 +109,7 @@ const BlogPage = () => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: { xs: 'center', md: 'flex-start' },
+          alignItems: 'center',
           px: { xs: 2, md: 12 },
           position: 'relative',
           overflow: 'hidden',

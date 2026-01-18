@@ -56,7 +56,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
         height: { xs: "55vh", md: "75vh" },
         display: "flex",
         alignItems: "center",
-        justifyContent: { xs: "center", md: "flex-start" },
+        justifyContent: "center",
         px: { xs: 2, md: 12 },
         color: "#fff",
         borderRadius: {
