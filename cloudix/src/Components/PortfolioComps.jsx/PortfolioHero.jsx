@@ -251,8 +251,6 @@ const PortfolioPage = () => {
         image={PortfolioBg}
         title="Our Portfolio"
         subtitle="Showcasing our creativity through real-world digital solutions."
-        buttonText="View Projects"
-        buttonLink="/portfolio"
       />
       {/* Other content */}
     </>

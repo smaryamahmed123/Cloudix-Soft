@@ -81,6 +81,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
             fontWeight: 800,
             fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3.2rem" },
             lineHeight: 1.15,
+            color: "#FFFFFF",
             mb: 2,
           }}
         >
@@ -96,7 +97,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
           animate="visible"
           sx={{
             fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" },
-            color: "#F1F1F1",
+            color: "#A9B838",
             mb: buttonText ? 3 : 0,
           }}
         >
