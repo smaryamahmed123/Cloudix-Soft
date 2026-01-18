@@ -106,6 +106,7 @@ import React, { memo } from "react";
 import { Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import ContactBg from "../../assets/BGcontact.webp";
+import HeroSection from "../HeroSection";
 
 const MotionBox = motion.create(Box);
 const MotionTypography = motion.create(Typography);
