@@ -64,7 +64,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
           sm: "0 0 56px 56px",
           md: "0 0 77px 77px",
         },
-        textAlign: { xs: "center", md: "left" },
+        textAlign: "center",
         position: "relative",
         overflow: "hidden",
       }}
