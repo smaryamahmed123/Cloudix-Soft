@@ -99,11 +99,11 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
         px: { xs: 2, md: 12 },
         color: "#fff",
 
-        borderRadius: {
-          xs: "0 0 36px 36px",
-          sm: "0 0 56px 56px",
-          md: "0 0 77px 77px",
-        },
+        // borderRadius: {
+        //   xs: "0 0 36px 36px",
+        //   sm: "0 0 56px 56px",
+        //   md: "0 0 77px 77px",
+        // },
 
         textAlign: "center",
         overflow: "hidden",
