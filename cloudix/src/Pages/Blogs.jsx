@@ -99,7 +99,7 @@ const BlogPage = () => {
   return (
     <>
       {/* Hero Section */}
-      <Box
+      {/* <Box
         sx={{
           backgroundImage: `linear-gradient(to right, rgba(17,30,44,0.8), rgba(17,30,44,0) 70%), url(${bgImg})`,
           backgroundSize: 'cover',
@@ -119,7 +119,7 @@ const BlogPage = () => {
         }}
       >
         {/* Header Text */}
-        <Box sx={{ position: 'relative', zIndex: 2, textAlign: { xs: 'center', md: 'left' } }}>
+        {/* <Box sx={{ position: 'relative', zIndex: 2, textAlign: { xs: 'center', md: 'left' } }}>
           <Typography variant="h3" sx={{ fontWeight: 700, color: 'white' }}>
             Our Blog
           </Typography>
@@ -127,8 +127,12 @@ const BlogPage = () => {
             Stay inspired with our latest design, development, and marketing insights.
           </Typography>
         </Box>
-      </Box>
-      <HeroSection></HeroSection>
+      </Box> */} 
+       <HeroSection
+        image={bgImg}
+        title="About Us"
+        subtitle="Welcome to Cloudix Soft, Pakistan’s first Shariah-compliant IT company."
+      />
 
       {/* Blog Section */}
       <RootContainer maxWidth="lg">
