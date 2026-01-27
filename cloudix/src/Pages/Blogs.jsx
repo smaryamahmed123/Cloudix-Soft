@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import bgImg from '../assets/blog-bg.png';
+import HeroSection from '../Components/HeroSection';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -127,6 +128,7 @@ const BlogPage = () => {
           </Typography>
         </Box>
       </Box>
+      <HeroSection></HeroSection>
 
       {/* Blog Section */}
       <RootContainer maxWidth="lg">
