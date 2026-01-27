@@ -130,8 +130,8 @@ const BlogPage = () => {
       </Box> */} 
        <HeroSection
         image={bgImg}
-        title="About Us"
-        subtitle="Welcome to Cloudix Soft, Pakistan’s first Shariah-compliant IT company."
+        title="Our Blog"
+        subtitle="Stay inspired with our latest design, development, and marketing insights."
       />
 
       {/* Blog Section */}
