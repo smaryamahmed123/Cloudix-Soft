@@ -77,7 +77,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
       sx={{
         position: "relative",
         isolation: "isolate",
-        backgroundColor: "#111E2C",
+        backgroundColor: "#FFFFFF",
 
         backgroundImage: `
       linear-gradient(
