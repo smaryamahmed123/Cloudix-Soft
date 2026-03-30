@@ -267,7 +267,7 @@ const FrontSide = styled(CardSide)({
 const BackSide = styled(CardSide)({
   transform: "rotateY(180deg)",
   background: `linear-gradient(to right, ${COLORS.primary}, ${COLORS.secondary})`,
-  color: COLORS.white,
+  color: COLORS.text,
 });
 
 const IconCircle = styled(Box)({
