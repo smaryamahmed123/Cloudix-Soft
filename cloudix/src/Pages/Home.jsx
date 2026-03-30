@@ -36,7 +36,7 @@ const Home = () => {
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <HeroSection />
         <WhyChooseUs />
-        <Box sx={{ backgroundColor: "#111E2C" }}>
+        <Box sx={{ backgroundColor: "#111E2C", p: 5 }}>
           <ServicesSection limit={4} />
         </Box>
         <OurClients />
