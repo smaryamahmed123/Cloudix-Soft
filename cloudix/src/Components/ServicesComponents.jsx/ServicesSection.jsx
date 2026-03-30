@@ -107,19 +107,6 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
 
       {/* Animated Button */}
       {hasMore && (
-        // <motion.div
-        //   variants={buttonVariants}
-        //   initial="hidden"
-        //   whileInView="show"
-        //   viewport={{ once: true }}
-        //   style={{ textAlign: "center", marginTop: "2rem" }}
-        // >
-        //   <GradientButton
-        //     variant="contained"
-        //     onClick={() => navigate("/services")}
-        //     text="Show All"
-        //   />
-        // </motion.div>
         <motion.div
           variants={buttonVariants}
           initial="hidden"
