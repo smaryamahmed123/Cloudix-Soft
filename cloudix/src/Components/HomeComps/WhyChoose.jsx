@@ -17,7 +17,7 @@ const FEATURES = [
     alt: "Smart discovery icon",
     title: "Smart Discovery",
     description:
-      "We take time to understand your goals and challenges so every solution is tailored to your needs — not just off-the-shelf software.",
+      "We take time to understand your goals and challenges so every solution is tailored to your needs not just off the shelf software.",
   },
   {
     icon: Light,
@@ -45,7 +45,7 @@ const FEATURES = [
     alt: "Growing together icon",
     title: "Growing Together",
     description:
-      "Your success is our success. We aim to build lasting relationships that help your business grow — today and in the future.",
+      "Your success is our success. We aim to build lasting relationships that help your business grow today and in the future.",
   },
 ];
 
@@ -183,7 +183,7 @@ function WhyChooseUs() {
                   {/* Description */}
                   <Typography
                     variant="body2"
-                    sx={{ color: "#333", lineHeight: 1.6 }}
+                    sx={{ color: "#333", lineHeight: 1.6, fontWeight: 600, }}
                   >
                     {feature.description}
                   </Typography>
