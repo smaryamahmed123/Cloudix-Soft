@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import HeroSection from "../Components/HomeComps/HomeHero";
+import AboutContent from "../Components/AboutUsComponents/AboutContent";
 import WhyChooseUs from "../Components/HomeComps/WhyChoose";
 import OurClients from "../Components/HomeComps/OurClients";
 import DecorativeCircle from "../Components/DecorativeCircle";
