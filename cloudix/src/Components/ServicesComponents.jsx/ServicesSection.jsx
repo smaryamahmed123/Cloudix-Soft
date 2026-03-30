@@ -118,7 +118,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              mb: 6, // professional spacing from cards
+              mb: 2, // professional spacing from cards
             }}
           >
             <GradientButton
