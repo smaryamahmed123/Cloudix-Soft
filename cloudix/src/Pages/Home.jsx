@@ -47,10 +47,10 @@ useEffect(() => {
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <HeroSection />
         <AboutContent intro={intro} />
-        <WhyChooseUs />
         <Box sx={{ backgroundColor: "#111E2C", p: 2 }}>
           <ServicesSection limit={4} />
         </Box>
+        <WhyChooseUs />
         <OurClients />
       </Box>
     </Box>
