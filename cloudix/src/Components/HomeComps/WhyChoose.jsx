@@ -260,9 +260,9 @@ function WhyChooseUs() {
         <Typography
           id="why-choose-us-heading"
           component="h2"
-          sx={{  mb: 2, color: "#111E2C" }}
+          sx={{ fontWeight: "bold", mb: 2, color: "#111E2C" }}
         >
-          {/* fontWeight: 800, */}
+          
           Why Choose Us?
         </Typography>
 
