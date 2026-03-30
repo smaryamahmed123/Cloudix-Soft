@@ -148,7 +148,7 @@ const ModernCard = memo(function ModernCard({
             sx={{
               mt: 3,
               fontWeight: "bold",
-              borderBottom: `1px solid ${COLORS.white}`,
+              borderBottom: `1px solid ${COLORS.text}`,
               pb: 0.5,
               color: COLORS.text,
             }}
