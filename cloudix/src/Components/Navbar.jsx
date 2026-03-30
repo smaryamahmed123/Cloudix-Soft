@@ -131,10 +131,12 @@ const Navbar = () => {
                     sx={{
                       fontSize: 18,
                       color: scrolled ? "#111E2C" : "#ffffff",
+                      fontWeight: 500,
                       transition: "color 0.4s ease",
                       "&.active": {
+                        transform: "scale(1.05)",
                         color: theme.palette.primary.main,
-                        fontWeight: "bold",
+                        fontWeight: 700,
                         position: "relative",
                         "&::after": {
                           content: '""',
