@@ -9,6 +9,8 @@ import DecorativeCircle from "../Components/DecorativeCircle";
 import ServicesSection from "../Components/ServicesComponents.jsx/ServicesSection";
 import useDevice from "../hooks/useDevice";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
 const Home = () => {
   const { isLandscapeMobile } = useDevice();
   const [intro, setIntro] = useState(null);
