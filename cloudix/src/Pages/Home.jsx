@@ -35,6 +35,7 @@ const Home = () => {
 
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <HeroSection />
+        <AboutContent />
         <WhyChooseUs />
         <Box sx={{ backgroundColor: "#111E2C", p: 3 }}>
           <ServicesSection limit={4} />
