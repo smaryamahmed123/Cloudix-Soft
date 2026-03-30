@@ -231,7 +231,7 @@ function HeroSection() {
           inset: 0,
           background:
             "linear-gradient(90deg,#111E2C 10%,rgba(17,30,44,.85) 40%,rgba(17,30,44,.4) 100%)",
-          zIndex: 1,
+          zIndex: 0,
         }}
       />
 
@@ -239,7 +239,7 @@ function HeroSection() {
       <Box
         sx={{
           position: "relative",
-          zIndex: 2,
+          zIndex: 3,
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
