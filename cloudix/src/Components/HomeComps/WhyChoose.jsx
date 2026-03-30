@@ -75,7 +75,7 @@ function WhyChooseUs() {
 
   return (
     <Box
-      component="h2"
+      component="section"
       aria-labelledby="why-choose-us-heading"
       sx={{ py: { xs: 8, md: 10 }, textAlign: "center" }}
     >
@@ -88,7 +88,7 @@ function WhyChooseUs() {
       >
         <Typography
           id="why-choose-us-heading"
-          component="h1"
+          variant="h2"
           sx={{ mb: 2, color: "#111E2C" }}
         >
           
