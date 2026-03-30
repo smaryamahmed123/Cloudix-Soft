@@ -86,6 +86,7 @@ function DiagonalStrip({
       aria-hidden
       sx={{
         position: "absolute",
+        zIndex: 2,
         bottom: position,
         left: "-10%",
         width: "130%",
