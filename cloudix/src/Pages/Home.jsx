@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Box } from "@mui/material";
 import HeroSection from "../Components/HomeComps/HomeHero";
 import AboutContent from "../Components/AboutUsComponents/AboutContent";
