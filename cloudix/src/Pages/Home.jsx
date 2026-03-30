@@ -10,6 +10,13 @@ import useDevice from "../hooks/useDevice";
 
 const Home = () => {
   const { isLandscapeMobile } = useDevice();
+  const [intro, setIntro] = useState(null);
+
+useEffect(() => {
+  axios.get(`${backendURL}/api/about`)
+    .then(res => setIntro(res.data.intro))
+    .catch(err => console.error(err));
+}, []);
 
   return (
     <Box sx={{ position: "relative", overflow: "hidden", backgroundColor: "#f9f9f9" }}>
@@ -36,8 +43,8 @@ const Home = () => {
 
       <Box sx={{ position: "relative", zIndex: 1 }}>
         <HeroSection />
+        <AboutContent intro={intro} />
         <WhyChooseUs />
-        <AboutContent />
         <Box sx={{ backgroundColor: "#111E2C", p: 2 }}>
           <ServicesSection limit={4} />
         </Box>
