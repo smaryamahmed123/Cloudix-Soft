@@ -33,42 +33,6 @@ const fadeUp = {
  */
 const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   return (
-    // <MotionBox
-    //   component="header"
-    //   role="banner"
-    //   aria-label="Hero section"
-    //   variants={containerVariants}
-    //   initial="hidden"
-    //   animate="visible"
-    //   sx={{
-    //     backgroundImage: `
-    //       linear-gradient(
-    //         to right,
-    //         rgba(17,30,44,0.85),
-    //         rgba(17,30,44,0.55) 40%,
-    //         rgba(17,30,44,0.15) 70%
-    //       ),
-    //       url(${image})
-    //     `,
-    //     backgroundSize: "cover",
-    //     backgroundPosition: "center",
-    //     backgroundRepeat: "no-repeat",
-    //     height: { xs: "55vh", md: "75vh" },
-    //     display: "flex",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    //     px: { xs: 2, md: 12 },
-    //     color: "#fff",
-    //     borderRadius: {
-    //       xs: "0 0 36px 36px",
-    //       sm: "0 0 56px 56px",
-    //       md: "0 0 77px 77px",
-    //     },
-    //     textAlign: "center",
-    //     position: "relative",
-    //     overflow: "hidden",
-    //   }}
-    // >
     <MotionBox
       component="header"
       variants={containerVariants}
@@ -154,25 +118,6 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
         >
           {subtitle}
         </MotionTypography>
-
-        {/* Optional Button */}
-        {buttonText && buttonLink && (
-          <MotionButton
-            variants={fadeUp}
-            custom={3}
-            initial="hidden"
-            animate="visible"
-            href={buttonLink}
-            variant="contained"
-            sx={{
-              backgroundColor: "#111E2C",
-              color: "#fff",
-              "&:hover": { backgroundColor: "#1e3447" },
-            }}
-          >
-            {buttonText}
-          </MotionButton>
-        )}
       </Box>
     </MotionBox>
   );
