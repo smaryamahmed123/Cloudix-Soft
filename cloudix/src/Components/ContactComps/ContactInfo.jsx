@@ -232,7 +232,7 @@ const ContactInfo = () => {
         ? `${wh.saturday.open} – ${wh.saturday.close}`
         : "Closed";
 
-    return `Monday – Friday: ${weekday}\nSaturday – Sunday: ${weekend}`;
+    return `Monday – Saturday: ${weekday}\nSunday: ${weekend}`;
   };
 
   return (
