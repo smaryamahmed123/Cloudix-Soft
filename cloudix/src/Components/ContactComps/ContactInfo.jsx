@@ -57,7 +57,7 @@ const ContactInfo = () => {
         ? `${wh.saturday.open} – ${wh.saturday.close}`
         : "Closed";
 
-    return `Monday – Saturday: ${weekday}\nSunday: "Closed" `;
+    return `Monday – Saturday: ${weekday}\nSunday: Closed `;
   };
 
   return (
@@ -120,7 +120,7 @@ const ContactInfo = () => {
                   color: "text.primary",
                   textDecoration: "none",
                   fontSize: "0.95rem",
-                  "&:hover": { color: "primary.main" },
+                  "&:hover": { color: "white" },
                 }}
               >
                 {info.phone || "Not available"}
@@ -157,7 +157,7 @@ const ContactInfo = () => {
                   color: "text.primary",
                   textDecoration: "none",
                   fontSize: "0.95rem",
-                  "&:hover": { color: "primary.main" },
+                  "&:hover": { color: "white" },
                 }}
               >
                 {info.email || "Not available"}
