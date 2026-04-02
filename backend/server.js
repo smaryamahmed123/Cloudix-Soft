@@ -20,7 +20,12 @@ import User from './models/User.js';
 import bcrypt from 'bcryptjs';
 import path from "path";
 import { fileURLToPath } from "url";
+import rateLimit from "express-rate-limit";
 
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 5, // max 5 requests
+});
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -64,7 +69,7 @@ app.use("/api/logos", logoRoute);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/about', aboutRoutes);
-app.use('/api/contact', contactRoutes);
+app.use('/api/contact', contactLimiter, contactRoutes);
 app.use("/api/websites", websiteRoutes);
 app.use('/api/services', servicesRoutes);
 app.use('/api/contact-info', contactInfoRoutes);

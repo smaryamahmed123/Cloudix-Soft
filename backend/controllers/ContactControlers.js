@@ -5,43 +5,95 @@ const mailer = new MailerSend({
   apiKey: process.env.MAILERSEND_API_KEY,
 });
 
+// export const createMessage = async (req, res) => {
+//   const { name, email, message, phoneNo } = req.body;
+
+//   try {
+//     console.log("Incoming data:", { name, email, message, phoneNo }); 
+//     // Save message with pending status
+//     const newMsg = new ContactMessage({
+//       name,
+//       email,
+//       phoneNo,
+//       message,
+//       status: "pending",
+//     });
+//     await newMsg.save();
+
+//     // Send email to admin
+//     const sentFrom = new Sender(
+//       "test-q3enl6kq13742vwr.mlsender.net",
+//       "Website Contact Form"
+//     );
+//     const recipients = [new Recipient(process.env.ADMIN_EMAIL, "Admin")];
+
+//     const emailParams = new EmailParams()
+//       .setFrom(sentFrom)
+//       .setTo(recipients)
+//       .setSubject(`New Contact Message from ${name}`)
+//       .setText(`New message from ${name} (${email}, ${phoneNo}):\n\n${message}`);
+
+//     await mailer.email.send(emailParams);
+
+//     res.status(201).json({ message: "Message saved with status pending!" });
+//   } catch (err) {
+//     console.error("Contact form error:", err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// };
+
 export const createMessage = async (req, res) => {
   const { name, email, message, phoneNo } = req.body;
 
+  // ✅ Basic validation
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: "All required fields missing" });
+  }
+  
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    return res.status(400).json({ error: "Invalid email format" });
+  }
+
   try {
-    console.log("Incoming data:", { name, email, message, phoneNo }); 
-    // Save message with pending status
-    const newMsg = new ContactMessage({
+    // ✅ Save in DB (optional but good)
+    await ContactMessage.create({
       name,
       email,
       phoneNo,
       message,
       status: "pending",
     });
-    await newMsg.save();
 
-    // Send email to admin
+    // ✅ Send email
     const sentFrom = new Sender(
-      "test-q3enl6kq13742vwr.mlsender.net",
-      "Website Contact Form"
+      process.env.MAIL_FROM, // verified email/domain
+      "Contact Form"
     );
-    const recipients = [new Recipient(process.env.ADMIN_EMAIL, "Admin")];
+
+    const recipients = [
+      new Recipient(process.env.ADMIN_EMAIL, "Admin"),
+    ];
 
     const emailParams = new EmailParams()
       .setFrom(sentFrom)
       .setTo(recipients)
-      .setSubject(`New Contact Message from ${name}`)
-      .setText(`New message from ${name} (${email}, ${phoneNo}):\n\n${message}`);
+      .setSubject(`New Message from ${name}`)
+      .setText(`
+Name: ${name}
+Email: ${email}
+Phone: ${phoneNo}
+Message: ${message}
+      `);
 
     await mailer.email.send(emailParams);
 
-    res.status(201).json({ message: "Message saved with status pending!" });
+    res.status(200).json({ message: "Message sent successfully" });
+
   } catch (err) {
-    console.error("Contact form error:", err);
-    res.status(500).json({ error: "Server error" });
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong" });
   }
 };
-
 
 export const getMessages = async (req, res) => {
   try {
