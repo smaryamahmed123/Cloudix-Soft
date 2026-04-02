@@ -32,24 +32,7 @@ const CommitmentSection = ({ compliance }) => {
       }}
     >
       {/* ---- Section Heading ---- */}
-      <Typography
-        component={motion.h4}
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-        viewport={{ once: true }}
-        variant="h4"
-        sx={{
-          fontWeight: 800,
-          lineHeight: 1.3,
-          textAlign: "center",
-          mb: 6,
-          textDecoration: "underline",
-          color: "#111E2C",
-        }}
-      >
-        {compliance.title}
-      </Typography>
+     
 
       {/* ---- Paragraph + Image Row ---- */}
       <Box
@@ -70,6 +53,24 @@ const CommitmentSection = ({ compliance }) => {
           viewport={{ once: true }}
           sx={{ flex: 1, maxWidth: "600px" }}
         >
+           <Typography
+        component={motion.h4}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+        viewport={{ once: true }}
+        variant="h4"
+        sx={{
+          fontWeight: 800,
+          lineHeight: 1.3,
+          textAlign: "center",
+          mb: 6,
+          textDecoration: "underline",
+          color: "#111E2C",
+        }}
+      >
+        {compliance.title}
+      </Typography>
           <Typography
             variant="body1"
             sx={{
