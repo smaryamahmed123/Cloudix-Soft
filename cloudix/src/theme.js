@@ -97,13 +97,13 @@ const theme = createTheme({
       paddingRight: theme.spacing(2),
 
       [theme.breakpoints.up("md")]: {
-        paddingLeft: theme.spacing(6), // 48px
-        paddingRight: theme.spacing(6),
+        paddingLeft: theme.spacing(2), // 48px
+        paddingRight: theme.spacing(2),
       },
 
       [theme.breakpoints.up("lg")]: {
-        paddingLeft: theme.spacing(14), // 64px
-        paddingRight: theme.spacing(14),
+        paddingLeft: theme.spacing(2), // 64px
+        paddingRight: theme.spacing(2),
       },
     }),
   },
