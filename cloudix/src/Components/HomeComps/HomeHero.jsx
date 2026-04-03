@@ -127,7 +127,7 @@ function HeroSection() {
           flexDirection: "column", // stack heading + button
           justifyContent: "center",
           height: "100%",
-          px: { xs: 3, md: 10 },
+          px: { xs: 2, md: 4 },
           maxWidth: 900,
           gap: 3, // vertical spacing between heading and button
           alignItems: "flex-start", // button aligned to start (left)
