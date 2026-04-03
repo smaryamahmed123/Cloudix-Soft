@@ -26,7 +26,7 @@ const colors = {
 
 const AdminAbout = () => {
   const [about, setAbout] = useState({
-    intro: { title: "", description: "", image: "" },
+    intro: { title: "", description: "", image: "", highlight: "" },
     vision: { title: "", description: "", image: "" },
     mission: { title: "", description: "", image: "" },
     compliance: { title: "", description: "", image: "" },
@@ -219,6 +219,18 @@ const AdminAbout = () => {
                     value={about[section]?.description || ""}
                     onChange={(e) =>
                       handleNestedChange(section, "description", e.target.value)
+                    }
+                  />
+
+                   <TextField
+                    label="Highlight"
+                    fullWidth
+                    multiline
+                    minRows={8}
+                    sx={{ mb: 2 }}
+                    value={about[section]?.highlight || ""}
+                    onChange={(e) =>
+                      handleNestedChange(section, "highlight", e.target.value)
                     }
                   />
                 </Grid>
