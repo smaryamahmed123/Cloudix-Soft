@@ -97,13 +97,13 @@ const theme = createTheme({
           paddingRight: "16px",
 
           "@media (min-width:900px)": {
-            paddingLeft: 2,
-            paddingRight: 2,
+            paddingLeft: "48",
+            paddingRight: "48",
           },
 
           "@media (min-width:1200px)": {
-            paddingLeft: 2,
-            paddingRight: 2,
+            paddingLeft: "20",
+            paddingRight: "20",
           },
         },
       },
