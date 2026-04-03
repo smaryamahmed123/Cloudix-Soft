@@ -102,8 +102,8 @@ const theme = createTheme({
       },
 
       [theme.breakpoints.up("lg")]: {
-        paddingLeft: theme.spacing(4), // 64px
-        paddingRight: theme.spacing(4),
+        paddingLeft: theme.spacing(14), // 64px
+        paddingRight: theme.spacing(14),
       },
     }),
   },
