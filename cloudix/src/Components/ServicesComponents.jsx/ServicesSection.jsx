@@ -49,7 +49,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
   const hasMore = limit !== "all" && visibleServices.length > limit;
 
   return (
-    <Container sx={{ my: 8, ...sx }}>
+    <Container sx={{ my: 4, ...sx }}>
       {/* Animated Heading */}
       <motion.div
         variants={headingVariants}
@@ -118,7 +118,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              mb: 2, // professional spacing from cards
+              // mb: 2, // professional spacing from cards
             }}
           >
             <GradientButton
