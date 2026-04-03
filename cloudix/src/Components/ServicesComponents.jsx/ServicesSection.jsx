@@ -58,7 +58,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         viewport={{ once: true }}
       >
         <Typography
-          variant="h3"
+          variant="h2"
           align="center"
           sx={{
             fontWeight: "bold",
