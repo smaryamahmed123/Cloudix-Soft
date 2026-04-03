@@ -90,24 +90,24 @@ const theme = createTheme({
     },
 
     // ✅ PROFESSIONAL LAYOUT SYSTEM
-    MuiContainer: {
-      styleOverrides: {
-        root: {
-          paddingLeft: "16px",
-          paddingRight: "16px",
+  MuiContainer: {
+  styleOverrides: {
+    root: ({ theme }) => ({
+      paddingLeft: theme.spacing(2), // 16px
+      paddingRight: theme.spacing(2),
 
-          "@media (min-width:900px)": {
-            paddingLeft: "48px",
-            paddingRight: "48px",
-          },
-
-          "@media (min-width:1200px)": {
-            paddingLeft: "20px",
-            paddingRight: "20px",
-          },
-        },
+      [theme.breakpoints.up("md")]: {
+        paddingLeft: theme.spacing(6), // 48px
+        paddingRight: theme.spacing(6),
       },
-    },
+
+      [theme.breakpoints.up("lg")]: {
+        paddingLeft: theme.spacing(8), // 64px
+        paddingRight: theme.spacing(8),
+      },
+    }),
+  },
+},
   },
 });
 
