@@ -102,8 +102,8 @@ const theme = createTheme({
           },
 
           "@media (min-width:1200px)": {
-            paddingLeft: 3,
-            paddingRight: 3,
+            paddingLeft: 2,
+            paddingRight: 2,
           },
         },
       },
