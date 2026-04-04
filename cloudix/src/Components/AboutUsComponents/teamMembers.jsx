@@ -202,7 +202,6 @@
 // export default OurTeam;
 
 
-
 import {
   Box,
   Grid,
@@ -222,12 +221,7 @@ const OurTeam = ({ team }) => {
   if (!team) return null;
 
   return (
-    <Box
-      sx={{
-        py: 10,
-        bgcolor: "background.default",
-      }}
-    >
+    <Box sx={{ py: 10, bgcolor: "background.default" }}>
       <Container>
         {/* ---- Title ---- */}
         <Box textAlign="center" mb={8}>
@@ -253,28 +247,24 @@ const OurTeam = ({ team }) => {
                 transition={{
                   duration: 0.6,
                   delay: index * 0.2,
+                  ease: "easeOut",
                 }}
                 viewport={{ once: true }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    pt: { xs: 10, md: 10 },
-                  }}
-                >
+                <Box sx={{ display: "flex", justifyContent: "center", pt: { xs: 10, md: 10 } }}>
                   <Card
                     sx={{
+                      position: "relative", // important for avatar
                       borderRadius: 4,
                       textAlign: "center",
                       bgcolor: "grey.100",
                       boxShadow: 3,
-                      pt: 8,
+                      pt: 10,
                       pb: 4,
                       px: 2,
                       width: "100%",
                       maxWidth: 320,
-                      height: 460,
+                      minHeight: 500,
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
@@ -285,10 +275,10 @@ const OurTeam = ({ team }) => {
                       src={member.image}
                       alt={member.name}
                       sx={{
-                        width: 160,
-                        height: 160,
+                        width: { xs: 120, sm: 150, md: 160 },
+                        height: { xs: 120, sm: 150, md: 160 },
                         position: "absolute",
-                        top: -30,
+                        top: -60,
                         left: "50%",
                         transform: "translateX(-50%)",
                         boxShadow: 3,
@@ -297,7 +287,7 @@ const OurTeam = ({ team }) => {
                     />
 
                     {/* Content */}
-                    <CardContent sx={{ mt: 6 }}>
+                    <CardContent sx={{ mt: { xs: 6, sm: 8 } }}>
                       <Typography
                         variant="h6"
                         sx={{ fontWeight: "bold", color: "text.primary" }}
@@ -327,40 +317,43 @@ const OurTeam = ({ team }) => {
                       >
                         {member.description}
                       </Typography>
+
+                      {/* Social Icons */}
+                      <Stack
+                        direction="row"
+                        spacing={1.5}
+                        justifyContent="center"
+                        sx={{ mt: 2 }}
+                      >
+                        {member.socials?.instagram && (
+                          <IconButton
+                            href={member.socials.instagram}
+                            target="_blank"
+                            sx={iconBtnStyle}
+                          >
+                            <Instagram fontSize="small" />
+                          </IconButton>
+                        )}
+                        {member.socials?.linkedin && (
+                          <IconButton
+                            href={member.socials.linkedin}
+                            target="_blank"
+                            sx={iconBtnStyle}
+                          >
+                            <LinkedIn fontSize="small" />
+                          </IconButton>
+                        )}
+                        {member.socials?.facebook && (
+                          <IconButton
+                            href={member.socials.facebook}
+                            target="_blank"
+                            sx={iconBtnStyle}
+                          >
+                            <Facebook fontSize="small" />
+                          </IconButton>
+                        )}
+                      </Stack>
                     </CardContent>
-
-                    {/* Social Icons */}
-                    <Stack direction="row" spacing={1.5} mt="auto">
-                      {member.socials?.instagram && (
-                        <IconButton
-                          href={member.socials.instagram}
-                          target="_blank"
-                          sx={iconBtnStyle}
-                        >
-                          <Instagram fontSize="small" />
-                        </IconButton>
-                      )}
-
-                      {member.socials?.linkedin && (
-                        <IconButton
-                          href={member.socials.linkedin}
-                          target="_blank"
-                          sx={iconBtnStyle}
-                        >
-                          <LinkedIn fontSize="small" />
-                        </IconButton>
-                      )}
-
-                      {member.socials?.facebook && (
-                        <IconButton
-                          href={member.socials.facebook}
-                          target="_blank"
-                          sx={iconBtnStyle}
-                        >
-                          <Facebook fontSize="small" />
-                        </IconButton>
-                      )}
-                    </Stack>
                   </Card>
                 </Box>
               </Motion.div>
