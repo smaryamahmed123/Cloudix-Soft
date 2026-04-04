@@ -173,7 +173,7 @@ const AboutContent = ({ intro }) => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
       sx={{
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: "blue",
         color: theme.palette.text.primary,
         py: { xs: theme.spacing(4), md: theme.spacing(10) },
         overflowX: "hidden",
@@ -182,6 +182,7 @@ const AboutContent = ({ intro }) => {
       <Container
         maxWidth="lg"
         sx={{
+          backgroundColor: "red",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
