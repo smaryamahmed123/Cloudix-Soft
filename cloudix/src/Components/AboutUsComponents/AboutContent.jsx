@@ -28,7 +28,7 @@ const AboutContent = ({ intro }) => {
       sx={{
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        py: { xs: theme.spacing(4), md: theme.spacing(8) },
+        py: { xs: theme.spacing(2), md: theme.spacing(6) },
         overflowX: "hidden",
       }}
     >
