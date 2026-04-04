@@ -42,7 +42,7 @@ const AboutContent = ({ intro }) => {
           viewport={{ once: true }}
           sx={{
             flex: 1,
-            maxWidth: { xs: "100%", md: "480px" },
+            maxWidth: { xs: "100%", md: "50%" },
             textAlign: { xs: "center", md: "left" },
           }}
         >
