@@ -148,20 +148,21 @@
 
 
 
-
-
 import React from "react";
 import {
   Box,
-  Grid,
   Typography,
   Container,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
-import { motion as Motion } from "framer-motion";
+import { motion } from "framer-motion";
+
+const MotionBox = motion(Box);
 
 const TeamSection = ({ teamIntro }) => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   if (!teamIntro) return null;
 
@@ -170,112 +171,117 @@ const TeamSection = ({ teamIntro }) => {
     : `${teamIntro.image || ""}`;
 
   return (
-    <Box
+    <MotionBox
       component="section"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
       sx={{
         backgroundColor: theme.palette.primary.dark || "#111E2C",
         color: theme.palette.common.white,
-        py: { xs: theme.spacing(8), md: theme.spacing(12) },
+        py: { xs: theme.spacing(6), md: theme.spacing(10) },
         overflowX: "hidden",
       }}
     >
-      <Container maxWidth="xl">
-        <Grid container spacing={8} alignItems="center">
-          
-          {/* LEFT: TEXT */}
-          <Grid item xs={12} md={6}>
-            <Motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <Box
-                sx={{
-                  maxWidth: "500px",
-                  mx: { xs: "auto", md: 0 },
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontWeight: theme.typography.h3.fontWeight,
-                    color: theme.palette.accent.light,
-                    mb: theme.spacing(4),
-                    fontSize: { xs: "2rem", md: "2.6rem" },
-                  }}
-                >
-                  {teamIntro.title}
-                </Typography>
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column-reverse", md: "row" }, // 👈 SAME AS ABOUT
+          alignItems: "center",
+          gap: { xs: theme.spacing(5), md: theme.spacing(10) },
+        }}
+      >
+        
+        {/* LEFT: TEXT */}
+        <MotionBox
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          viewport={{ once: true }}
+          sx={{
+            flex: 1,
+            maxWidth: { xs: "100%", md: "50%" },
+            textAlign: { xs: "center", md: "left" },
+          }}
+        >
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: theme.typography.h3.fontWeight,
+              mb: theme.spacing(3),
+              color: theme.palette.accent.light,
+              fontSize: { xs: "1.8rem", md: "2.5rem" },
+            }}
+          >
+            {teamIntro.title}
+          </Typography>
 
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: { xs: "1rem", md: "1.2rem" },
-                    color: theme.palette.text.secondary,
-                    lineHeight: 1.8,
-                  }}
-                >
-                  {teamIntro.description}
-                </Typography>
-              </Box>
-            </Motion.div>
-          </Grid>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: { xs: "1rem", md: "1.3rem" },
+              mb: theme.spacing(2),
+              color: theme.palette.common.white,
+              lineHeight: 1.8,
+              textAlign: "justify",
+            }}
+          >
+            {teamIntro.description}
+          </Typography>
+        </MotionBox>
 
-          {/* RIGHT: IMAGE */}
-          <Grid item xs={12} md={6}>
-            <Motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <Box
-                sx={{
-                  position: "relative",
-                  maxWidth: "600px",
-                  mx: "auto",
-                  "&::before, &::after": {
-                    content: '""',
-                    position: "absolute",
-                    width: "50%",
-                    height: "50%",
-                    border: `5px solid ${theme.palette.accent.light}`,
-                  },
-                  "&::before": {
-                    top: 0,
-                    left: 0,
-                    borderRight: "none",
-                    borderBottom: "none",
-                  },
-                  "&::after": {
-                    bottom: 0,
-                    right: 0,
-                    borderLeft: "none",
-                    borderTop: "none",
-                  },
-                }}
-              >
-                <Box
-                  component="img"
-                  src={imageSrc}
-                  alt={teamIntro.title || "Our Team"}
-                  loading="lazy"
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    borderRadius: theme.shape.borderRadius,
-                    boxShadow: theme.shadows[6],
-                  }}
-                />
-              </Box>
-            </Motion.div>
-          </Grid>
-
-        </Grid>
+        {/* RIGHT: IMAGE */}
+        <MotionBox
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          viewport={{ once: true }}
+          sx={{
+            flex: 1,
+            maxWidth: { xs: "100%", md: "50%" },
+            display: "flex",
+            justifyContent: "center",
+            position: "relative",
+            overflow: "hidden",
+            "&::before, &::after": {
+              content: '""',
+              position: "absolute",
+              width: "50%",
+              height: "100%",
+              border: `5px solid ${theme.palette.accent.light}`,
+            },
+            "&::before": {
+              top: 0,
+              left: 0,
+              borderRight: "none",
+              borderBottom: "none",
+            },
+            "&::after": {
+              bottom: 0,
+              right: 0,
+              borderLeft: "none",
+              borderTop: "none",
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={imageSrc}
+            alt={teamIntro.title || "Our Team"}
+            loading="lazy"
+            sx={{
+              width: "100%",
+              maxHeight: isMobile ? "300px" : "100%",
+              objectFit: "cover",
+              borderRadius: theme.shape.borderRadius,
+              boxShadow: theme.shadows[6],
+            }}
+          />
+        </MotionBox>
       </Container>
-    </Box>
+    </MotionBox>
   );
 };
 
