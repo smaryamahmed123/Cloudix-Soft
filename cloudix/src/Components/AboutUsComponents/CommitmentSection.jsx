@@ -164,7 +164,7 @@ const CommitmentSection = ({ compliance }) => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: true }}
       sx={{
-        py: { xs: theme.spacing(8), md: theme.spacing(12) },
+        py: { xs: theme.spacing(2), md: theme.spacing(6) },
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
         overflowX: "hidden",
@@ -177,7 +177,7 @@ const CommitmentSection = ({ compliance }) => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          sx={{ mb: theme.spacing(6), textAlign: "center" }}
+          sx={{ mb: theme.spacing(3), textAlign: "center" }}
         >
           <Typography
             component={motion.h4}
