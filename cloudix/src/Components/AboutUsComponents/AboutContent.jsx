@@ -28,7 +28,7 @@ const AboutContent = ({ intro }) => {
       sx={{
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        py: { xs: theme.spacing(6), md: theme.spacing(10) },
+        py: { xs: theme.spacing(4), md: theme.spacing(8) },
         overflowX: "hidden",
       }}
     >
@@ -62,7 +62,7 @@ const AboutContent = ({ intro }) => {
             variant="body1"
             sx={{
               fontSize: { xs: "1rem", md: "1.3rem" },
-              mb: theme.spacing(2),
+              mb: theme.spacing(1),
               color: theme.palette.text.primary,
               lineHeight: 1.8,
               textAlign: "justify",
