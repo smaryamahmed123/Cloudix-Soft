@@ -32,7 +32,7 @@ const AboutContent = ({ intro }) => {
         overflowX: "hidden",
       }}
     >
-      <Container maxWidth="lg"  sx={{ backgroundColor: "red", display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: "center", gap: { xs: theme.spacing(5), md: theme.spacing(10) } }}>
+      <Container maxWidth="lg"  sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: "center", gap: { xs: theme.spacing(5), md: theme.spacing(10) } }}>
         
         {/* Left: Text */}
         <MotionBox
