@@ -28,7 +28,7 @@ const AboutContent = ({ intro }) => {
       sx={{
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
-        py: { xs: theme.spacing(8), md: theme.spacing(12) },
+        py: { xs: theme.spacing(6), md: theme.spacing(10) },
         overflowX: "hidden",
       }}
     >
@@ -50,7 +50,7 @@ const AboutContent = ({ intro }) => {
             variant="h3"
             sx={{
               fontWeight: theme.typography.h3.fontWeight,
-              mb: theme.spacing(4),
+              mb: theme.spacing(3),
               color: theme.palette.text.primary,
               fontSize: { xs: "1.8rem", md: "2.5rem" },
             }}
