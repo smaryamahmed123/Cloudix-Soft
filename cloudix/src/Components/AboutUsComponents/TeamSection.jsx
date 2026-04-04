@@ -178,7 +178,7 @@ const TeamSection = ({ teamIntro }) => {
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
       sx={{
-        backgroundColor: theme.palette.primary.dark || "#111E2C",
+        backgroundColor: theme.palette.primary.dark,
         color: theme.palette.common.white,
         py: { xs: theme.spacing(6), md: theme.spacing(10) },
         overflowX: "hidden",
