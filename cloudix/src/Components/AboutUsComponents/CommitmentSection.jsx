@@ -170,7 +170,7 @@ const CommitmentSection = ({ compliance }) => {
         overflowX: "hidden",
       }}
     >
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         {/* Section Heading */}
         <MotionBox
           initial={{ opacity: 0, y: -20 }}
