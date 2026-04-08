@@ -309,7 +309,7 @@ const AboutContent = ({ intro }) => {
       viewport={{ once: true }}
       sx={{
         // backgroundColor: theme.palette.background.subtle, // 🔥 Stripe section feel
-        background: "linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%)"
+        background: "linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%)",
         py: { xs: 10, md: 16 }, // 🔥 Apple spacing
       }}
     >
