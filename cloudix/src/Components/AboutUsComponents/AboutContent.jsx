@@ -79,40 +79,39 @@ const AboutContent = ({ intro }) => {
 
           {/* RIGHT */}
        <MotionBox
-  initial={{ opacity: 0, x: 50 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8, delay: 0.7 }}
-  viewport={{ once: true }}
-  sx={{
-    flex: 1,
-    maxWidth: { xs: "100%", md: "50%" },
-    display: "flex",
-    justifyContent: "center",
-    overflow: "hidden",
-    borderRadius: theme.shape.borderRadius,
-    position: "relative",
-    padding: "4px", // border thickness
-    background: theme.palette.text.primary,
-    // Use clip-path to show only top-left and bottom-right borders
-    clipPath:
-      "polygon(0% 0%, 50% 0%, 50% 4px, 4px 4px, 4px 50%, 0% 50%, 0% 0%, 100% 100%, 100% 50%, 96% 50%, 96% 96%, 50% 96%, 50% 100%, 100% 100%)",
-  }}
->
-  <MotionImg
-    src={imageSrc}
-    alt={intro.title}
-    whileHover={{ scale: 1.05 }}
-    transition={{ duration: 0.4 }}
-    loading="lazy"
-    style={{
-      width: "100%",
-      maxHeight: isMobile ? "300px" : "100%",
-      objectFit: "cover",
-      borderRadius: theme.shape.borderRadius,
-      display: "block",
-    }}
-  />
-</MotionBox>
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            viewport={{ once: true }}
+            sx={{
+              flex: 1,
+              maxWidth: { xs: "100%", md: "50%" },
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              overflow: "hidden",
+              borderRadius: theme.shape.borderRadius,
+               border: `5px solid ${theme.palette.text.primary}`,
+            
+              "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
+              "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
+            }}
+          >
+            <MotionImg
+              src={imageSrc}
+              alt={intro.title}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4 }}
+              loading="lazy"
+              style={{
+                width: "100%",
+                maxHeight: isMobile ? "300px" : "100%",
+                objectFit: "cover",
+                borderRadius: theme.shape.borderRadius,
+                boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+              }}
+            />
+          </MotionBox>
         </Box>
       </Container>
     </MotionBox>
