@@ -226,14 +226,14 @@ const AboutContent = ({ intro }) => {
               justifyContent: "center",
               overflow: "hidden",
               borderRadius: theme.shape.borderRadius,
-              "&::before, &::after": {
-                content: '""',
-                position: "absolute",
-                width: "50%",
-                height: "50%",
-                border: `5px solid ${theme.palette.text.primary}`,
-                borderRadius: 0,
-              },
+              // "&::before, &::after": {
+              //   content: '""',
+              //   position: "absolute",
+              //   width: "50%",
+              //   height: "50%",
+              //   border: `5px solid ${theme.palette.text.primary}`,
+              //   borderRadius: 0,
+              // },
               "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
               "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
             }}
