@@ -94,17 +94,17 @@ const theme = createTheme({
   MuiContainer: {
   styleOverrides: {
     root: ({ theme }) => ({
-      paddingLeft: theme.spacing(3), // 16px
-      paddingRight: theme.spacing(3),
+      paddingLeft: theme.spacing(2), // 16px
+      paddingRight: theme.spacing(2),
 
       [theme.breakpoints.up("md")]: {
-        paddingLeft: theme.spacing(4), // 48px
-        paddingRight: theme.spacing(4),
+        paddingLeft: theme.spacing(6), // 48px
+        paddingRight: theme.spacing(6),
       },
 
       [theme.breakpoints.up("lg")]: {
-        paddingLeft: theme.spacing(5), // 64px
-        paddingRight: theme.spacing(5),
+        paddingLeft: theme.spacing(8), // 64px
+        paddingRight: theme.spacing(8),
       },
     }),
   },
