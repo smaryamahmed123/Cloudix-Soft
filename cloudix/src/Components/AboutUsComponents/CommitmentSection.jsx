@@ -244,7 +244,7 @@ const CommitmentSection = ({ compliance }) => {
               display: "flex",
               justifyContent: "center",
               overflow: "hidden",
-              borderRadius: 2,
+              borderRadius: ${theme.shape.borderRadius},
               "&::before, &::after": {
                 content: '""',
                 position: "absolute",
