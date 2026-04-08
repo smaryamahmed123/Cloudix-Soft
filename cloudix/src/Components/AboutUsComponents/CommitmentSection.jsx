@@ -251,6 +251,7 @@ const CommitmentSection = ({ compliance }) => {
                 width: "50%",
                 height: "50%",
                 border: `5px solid ${theme.palette.text.primary}`,
+                borderRadius: theme.shape.borderRadius,
               },
               "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
               "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
