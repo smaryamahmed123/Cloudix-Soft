@@ -180,7 +180,7 @@ const AboutContent = ({ intro }) => {
       }}
     >
       <Container
-        maxWidth="lg"
+        maxWidth="xl"
         sx={{
           backgroundColor: "red",
           display: "flex",
