@@ -188,7 +188,39 @@ const TeamSection = ({ teamIntro }) => {
           gap: { xs: theme.spacing(5), md: theme.spacing(10) },
         }}
       >
-        {/* LEFT: TEXT */}
+       
+        {/* RIGHT: IMAGE */}
+        <MotionBox
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          viewport={{ once: true }}
+          sx={{
+            flex: 1,
+            maxWidth: { xs: "100%", md: "50%" },
+            display: "flex",
+            justifyContent: "center",
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: theme.shape.borderRadius,
+            boxShadow: "0 12px 40px rgba(0,0,0,0.08)", // subtle floating effect
+          }}
+        >
+          <MotionImg
+            src={imageSrc}
+            alt={teamIntro.title || "Our Team"}
+            whileHover={{ scale: 1.03, boxShadow: "0 16px 50px rgba(0,0,0,0.1)" }}
+            transition={{ duration: 0.4 }}
+            loading="lazy"
+            style={{
+              width: "100%",
+              maxWidth: isMobile ? "90%" : "500px",
+              objectFit: "cover",
+              borderRadius: theme.shape.borderRadius,
+            }}
+          />
+        </MotionBox>
+               {/* LEFT: TEXT */}
         <MotionBox
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -228,37 +260,6 @@ const TeamSection = ({ teamIntro }) => {
           </Typography>
         </MotionBox>
 
-        {/* RIGHT: IMAGE */}
-        <MotionBox
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
-          sx={{
-            flex: 1,
-            maxWidth: { xs: "100%", md: "50%" },
-            display: "flex",
-            justifyContent: "center",
-            position: "relative",
-            overflow: "hidden",
-            borderRadius: theme.shape.borderRadius,
-            boxShadow: "0 12px 40px rgba(0,0,0,0.08)", // subtle floating effect
-          }}
-        >
-          <MotionImg
-            src={imageSrc}
-            alt={teamIntro.title || "Our Team"}
-            whileHover={{ scale: 1.03, boxShadow: "0 16px 50px rgba(0,0,0,0.1)" }}
-            transition={{ duration: 0.4 }}
-            loading="lazy"
-            style={{
-              width: "100%",
-              maxWidth: isMobile ? "90%" : "500px",
-              objectFit: "cover",
-              borderRadius: theme.shape.borderRadius,
-            }}
-          />
-        </MotionBox>
       </Container>
     </MotionBox>
   );
