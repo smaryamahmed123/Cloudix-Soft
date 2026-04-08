@@ -89,7 +89,8 @@ const AboutContent = ({ intro }) => {
     position: "relative",
     display: "flex",
     justifyContent: "center",
-    overflow: "hidden",
+    overflow: "visible",
+    padding: "6px",
     borderRadius: theme.shape.borderRadius, // ✅ only container rounded
 
     "&::before, &::after": {
