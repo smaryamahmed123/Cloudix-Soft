@@ -95,59 +95,7 @@ const CommitmentSection = ({ compliance }) => {
           </MotionBox>
 
           {/* Right: Image */}
-           {/* <MotionBox */}
-            {/* initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            viewport={{ once: true }}
-            sx={{
-              flex: 1,
-              maxWidth: { xs: "100%", md: "50%" },
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              overflow: "hidden",
-              borderRadius: theme.shape.borderRadius,
-              "&::before, &::after": {
-                content: '""',
-                position: "absolute",
-                width: "50%",
-                height: "50%",
-                border: `5px solid ${theme.palette.text.primary}`, */}
-              {/* },  */}
-              // "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
-              // "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
-//                  "&::before": {
-//   top: 0,
-//   left: 0,
-//   borderRight: "none",
-//   borderBottom: "none",
-//   borderRadius: `${theme.shape.borderRadius}px 0 0 0`, // ✅ sirf top-left
-// },
-// "&::after": {
-//   bottom: 0,
-//   right: 0,
-//   borderLeft: "none",
-//   borderTop: "none",
-//   borderRadius: `0 0 ${theme.shape.borderRadius}px 0`, // ✅ sirf bottom-right
-// },
-//             }}
-          // >
-          //   <MotionImg
-          //     src={imageSrc}
-          //     alt={compliance.title || "Shariah Compliance"}
-          //     whileHover={{ scale: 1.05 }}
-          //     transition={{ duration: 0.4 }}
-          //     loading="lazy"
-          //     style={{
-          //       width: "100%",
-          //       maxHeight: isMobile ? "300px" : "100%",
-          //       objectFit: "cover",
-          //       borderRadius: theme.shape.borderRadius,
-          //       boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-          //     }}
-          //   />
-          // </MotionBox>
+           
   <Box sx={{ position: "relative", flex: 1, maxWidth: { xs: "100%", md: "50%" } }}>
   {/* Corners wrapper — no overflow hidden */}
   <Box sx={{
