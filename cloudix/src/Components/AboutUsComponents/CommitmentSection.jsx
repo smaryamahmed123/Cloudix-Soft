@@ -180,8 +180,8 @@ const CommitmentSection = ({ compliance }) => {
           sx={{ mb: theme.spacing(3), textAlign: "center" }}
         >
           <Typography
-            component={motion.h4}
-            variant="h4"
+            component={motion.h3}
+            variant="h3"
             sx={{
               fontWeight: theme.typography.fontWeightBold,
               lineHeight: 1.3,
