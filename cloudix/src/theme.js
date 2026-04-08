@@ -11,6 +11,17 @@ const theme = createTheme({
     },
   },
 
+  shape: {
+  borderRadius: 16, // Apple softness
+},
+
+custom: {
+  sectionSpacing: {
+    xs: 8,
+    md: 14,
+  },
+},
+
   palette: {
     primary: {
       main: "#769914",
@@ -26,6 +37,7 @@ const theme = createTheme({
     background: {
       default: "#FFFFFF",
       paper: "#FFFFFF",
+      subtle: "#F7F9FB",
     },
     text: {
       primary: "#373C3F",
