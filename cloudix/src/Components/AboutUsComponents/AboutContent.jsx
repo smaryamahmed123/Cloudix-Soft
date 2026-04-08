@@ -308,7 +308,8 @@ const AboutContent = ({ intro }) => {
       transition={{ duration: 0.7 }}
       viewport={{ once: true }}
       sx={{
-        backgroundColor: theme.palette.background.subtle, // 🔥 Stripe section feel
+        // backgroundColor: theme.palette.background.subtle, // 🔥 Stripe section feel
+        background: "linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%)"
         py: { xs: 10, md: 16 }, // 🔥 Apple spacing
       }}
     >
@@ -369,6 +370,10 @@ const AboutContent = ({ intro }) => {
                 maxWidth: "520px",
                 borderRadius: theme.shape.borderRadius,
                 boxShadow: "0 20px 60px rgba(0,0,0,0.08)", // 🔥 Stripe shadow
+                "&:hover": {
+                  transform: "scale(1.02)",
+                  transition: "0.4s ease",
+                }
               }}
             />
           </Box>
