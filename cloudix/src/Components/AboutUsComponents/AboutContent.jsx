@@ -370,7 +370,7 @@ const AboutContent = ({ intro }) => {
                 maxWidth: "520px",
                 borderRadius: theme.shape.borderRadius,
                 boxShadow: "0 20px 60px rgba(0,0,0,0.08)", // 🔥 Stripe shadow
-                border: `5px solid ${theme.palette.primary.dark}`
+                border: `5px solid ${theme.palette.primary.dark}`,
                 "&:hover": {
                   transform: "scale(1.02)",
                   transition: "0.4s ease",
