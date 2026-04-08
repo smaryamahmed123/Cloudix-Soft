@@ -152,9 +152,144 @@ import AboutImage from "../../assets/about-team.png";
 
 const MotionBox = motion(Box);
 
+// const AboutContent = ({ intro }) => {
+//   const theme = useTheme();
+//   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+//   if (!intro) return null;
+
+//   const backendURL = import.meta.env.VITE_BACKEND_URL || "";
+//   const imageSrc = intro.image
+//     ? intro.image.startsWith("http")
+//       ? intro.image
+//       : `${backendURL}${intro.image}`
+//     : AboutImage;
+
+//   return (
+//     <MotionBox
+//       component="section"
+//       initial={{ opacity: 0, y: 50 }}
+//       whileInView={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.8, ease: "easeOut" }}
+//       viewport={{ once: true }}
+//       sx={{
+//         backgroundColor: "blue",
+//         color: theme.palette.text.primary,
+//         py: { xs: theme.spacing(4), md: theme.spacing(10) },
+//         overflowX: "hidden",
+//       }}
+//     >
+//       <Container
+//         maxWidth="xl"
+//         sx={{
+//           backgroundColor: "red",
+//           display: "flex",
+//           flexDirection: { xs: "column", md: "row" },
+//           alignItems: "center",
+//           gap: { xs: theme.spacing(5), md: theme.spacing(10) },
+//         }}
+//       >
+//         {/* Left: Text */}
+//         <Box
+//           sx={{
+//             flex: 1,
+//             maxWidth: { xs: "100%", md: "50%" },
+//             textAlign: { xs: "center", md: "left" },
+//           }}
+//         >
+//           <Typography
+//             variant="h3"
+//             sx={{
+//               fontWeight: theme.typography.h3.fontWeight,
+//               mb: theme.spacing(3),
+//               color: theme.palette.text.primary,
+//               fontSize: { xs: "1.8rem", md: "2.5rem" },
+//             }}
+//           >
+//             {intro.title}
+//           </Typography>
+
+//           <Typography
+//             variant="body1"
+//             sx={{
+//               fontSize: { xs: "1rem", md: "1.3rem" },
+//               mb: theme.spacing(1),
+//               color: theme.palette.text.primary,
+//               lineHeight: 1.8,
+//               textAlign: "justify",
+//               textJustify: "inter-word",
+//             }}
+//           >
+//             {intro.description}
+//           </Typography>
+
+//           <Typography
+//             variant="h6"
+//             sx={{
+//               fontWeight: theme.typography.fontWeightBold,
+//               color: theme.palette.accent.light,
+//               fontSize: { xs: "1.2rem", md: "1.4rem" },
+//               textAlign: "justify",
+//               textJustify: "inter-word",
+//             }}
+//           >
+//             {intro.highlight}
+//           </Typography>
+//         </Box>
+
+//         {/* Right: Image */}
+//         <Box
+//           sx={{
+//             flex: 1,
+//             maxWidth: { xs: "100%", md: "50%" },
+//             display: "flex",
+//             justifyContent: "center",
+//             position: "relative",
+//             overflow: "hidden",
+//             "&::before, &::after": {
+//               content: '""',
+//               position: "absolute",
+//               width: "50%",
+//               height: "100%",
+//               border: `5px solid ${theme.palette.text.primary}`,
+//             },
+//             "&::before": {
+//               top: 0,
+//               left: 0,
+//               borderRight: "none",
+//               borderBottom: "none",
+//             },
+//             "&::after": {
+//               bottom: 0,
+//               right: 0,
+//               borderLeft: "none",
+//               borderTop: "none",
+//             },
+//           }}
+//         >
+//           <Box
+//             component="img"
+//             src={imageSrc}
+//             alt={intro.title || "About Us"}
+//             loading="lazy"
+//             sx={{
+//               width: "100%",
+//               maxWidth: "100%",
+//               maxHeight: isMobile ? "300px" : "100%",
+//               objectFit: "cover",
+//               borderRadius: theme.shape.borderRadius,
+//               boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+//             }}
+//           />
+//         </Box>
+//       </Container>
+//     </MotionBox>
+//   );
+// };
+
+
 const AboutContent = ({ intro }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   if (!intro) return null;
 
@@ -168,123 +303,79 @@ const AboutContent = ({ intro }) => {
   return (
     <MotionBox
       component="section"
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.7 }}
       viewport={{ once: true }}
       sx={{
-        backgroundColor: "blue",
-        color: theme.palette.text.primary,
-        py: { xs: theme.spacing(4), md: theme.spacing(10) },
-        overflowX: "hidden",
+        backgroundColor: theme.palette.background.subtle, // 🔥 Stripe section feel
+        py: { xs: 10, md: 16 }, // 🔥 Apple spacing
       }}
     >
-      <Container
-        maxWidth="xl"
-        sx={{
-          backgroundColor: "red",
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          gap: { xs: theme.spacing(5), md: theme.spacing(10) },
-        }}
-      >
-        {/* Left: Text */}
+      <Container maxWidth="lg">
         <Box
           sx={{
-            flex: 1,
-            maxWidth: { xs: "100%", md: "50%" },
-            textAlign: { xs: "center", md: "left" },
-          }}
-        >
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: theme.typography.h3.fontWeight,
-              mb: theme.spacing(3),
-              color: theme.palette.text.primary,
-              fontSize: { xs: "1.8rem", md: "2.5rem" },
-            }}
-          >
-            {intro.title}
-          </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{
-              fontSize: { xs: "1rem", md: "1.3rem" },
-              mb: theme.spacing(1),
-              color: theme.palette.text.primary,
-              lineHeight: 1.8,
-              textAlign: "justify",
-              textJustify: "inter-word",
-            }}
-          >
-            {intro.description}
-          </Typography>
-
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: theme.typography.fontWeightBold,
-              color: theme.palette.accent.light,
-              fontSize: { xs: "1.2rem", md: "1.4rem" },
-              textAlign: "justify",
-              textJustify: "inter-word",
-            }}
-          >
-            {intro.highlight}
-          </Typography>
-        </Box>
-
-        {/* Right: Image */}
-        <Box
-          sx={{
-            flex: 1,
-            maxWidth: { xs: "100%", md: "50%" },
             display: "flex",
-            justifyContent: "center",
-            position: "relative",
-            overflow: "hidden",
-            "&::before, &::after": {
-              content: '""',
-              position: "absolute",
-              width: "50%",
-              height: "100%",
-              border: `5px solid ${theme.palette.text.primary}`,
-            },
-            "&::before": {
-              top: 0,
-              left: 0,
-              borderRight: "none",
-              borderBottom: "none",
-            },
-            "&::after": {
-              bottom: 0,
-              right: 0,
-              borderLeft: "none",
-              borderTop: "none",
-            },
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: "center",
+            gap: { xs: 8, md: 14 }, // 🔥 IMPORTANT
           }}
         >
-          <Box
-            component="img"
-            src={imageSrc}
-            alt={intro.title || "About Us"}
-            loading="lazy"
-            sx={{
-              width: "100%",
-              maxWidth: "100%",
-              maxHeight: isMobile ? "300px" : "100%",
-              objectFit: "cover",
-              borderRadius: theme.shape.borderRadius,
-              boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-            }}
-          />
+
+          {/* LEFT */}
+          <Box flex={1}>
+            <Typography
+              variant="h3"
+              sx={{
+                mb: 3,
+                lineHeight: 1.2,
+                letterSpacing: "-0.4px",
+              }}
+            >
+              {intro.title}
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                mb: 4,
+                color: theme.palette.text.secondary,
+                lineHeight: 1.7,
+                maxWidth: "520px", // 🔥 PRO MOVE
+              }}
+            >
+              {intro.description}
+            </Typography>
+
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 600,
+                color: theme.palette.primary.main,
+              }}
+            >
+              {intro.highlight}
+            </Typography>
+          </Box>
+
+          {/* RIGHT */}
+          <Box flex={1} display="flex" justifyContent="center">
+            <Box
+              component="img"
+              src={imageSrc}
+              alt={intro.title}
+              sx={{
+                width: "100%",
+                maxWidth: "520px",
+                borderRadius: theme.shape.borderRadius,
+                boxShadow: "0 20px 60px rgba(0,0,0,0.08)", // 🔥 Stripe shadow
+              }}
+            />
+          </Box>
+
         </Box>
       </Container>
     </MotionBox>
   );
 };
-
 export default AboutContent;
