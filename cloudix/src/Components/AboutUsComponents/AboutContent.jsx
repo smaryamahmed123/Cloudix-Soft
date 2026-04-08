@@ -153,7 +153,7 @@ import AboutImage from "../../assets/about-team.png";
 const MotionBox = motion(Box);
 const MotionImg = motion("img");
 // const AboutContent = ({ intro }) => {
-//   const theme = useTheme();
+  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
 //   if (!intro) return null;
