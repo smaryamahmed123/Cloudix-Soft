@@ -102,19 +102,20 @@ const AboutContent = ({ intro }) => {
       // ❌ REMOVE borderRadius from here
     },
 
-    "&::before": {
-      top: 0,
-      left: 0,
-      borderRight: "none",
-      borderBottom: "none",
-    },
-
-    "&::after": {
-      bottom: 0,
-      right: 0,
-      borderLeft: "none",
-      borderTop: "none",
-    },
+   "&::before": {
+  top: 0,
+  left: 0,
+  borderRight: "none",
+  borderBottom: "none",
+  borderRadius: `${theme.shape.borderRadius}px 0 0 0`, // ✅ sirf top-left
+},
+"&::after": {
+  bottom: 0,
+  right: 0,
+  borderLeft: "none",
+  borderTop: "none",
+  borderRadius: `0 0 ${theme.shape.borderRadius}px 0`, // ✅ sirf bottom-right
+},
   }}
 >
   <MotionImg
