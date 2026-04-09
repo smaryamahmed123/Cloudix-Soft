@@ -130,9 +130,9 @@ const WorkTogether = () => {
       "&::before, &::after": {
         content: '""',
         position: "absolute",
-        width: 44,
-        height: 44,
-        border: "3px solid #A9B838",
+        width: '50%',
+        height: '50%',
+        border: "5px solid #A9B838",
         pointerEvents: "none",
         zIndex: 2,
       },
