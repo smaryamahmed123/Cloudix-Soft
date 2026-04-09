@@ -69,7 +69,7 @@ const WorkTogether = () => {
     initial="hidden"
     whileInView="show"
     viewport={{ once: true }}
-    style={{ flex: 1 }}
+    style={{ flex: 1, minWidth: 0  }}
   >
     <Typography
       variant="body1"
@@ -79,6 +79,8 @@ const WorkTogether = () => {
         color: "#d0d0d0",
         maxWidth: { xs: "100%", md: "600px" },
         textAlign: "justify",
+        whiteSpace: "normal",
+        wordBreak: "break-word",
       }}
     >
       At Cloudix Soft, we’re passionate about helping businesses grow in
