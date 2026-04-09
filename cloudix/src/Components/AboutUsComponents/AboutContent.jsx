@@ -143,17 +143,13 @@
 
 
 
-
-
-
-
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import AboutImage from "../../assets/about-team.png";
+import SectionImage from "./SectionImage"; // 🔥 Import your SectionImage
 
 const MotionBox = motion(Box);
-const MotionImg = motion("img");
 
 const AboutContent = ({ intro }) => {
   const theme = useTheme();
@@ -189,7 +185,7 @@ const AboutContent = ({ intro }) => {
             gap: { xs: 8, md: 14 },
           }}
         >
-          {/* LEFT TEXT */}
+          {/* LEFT */}
           <Box flex={1}>
             <Typography
               variant="h3"
@@ -202,11 +198,11 @@ const AboutContent = ({ intro }) => {
               variant="body1"
               sx={{
                 fontSize: { xs: "1rem", md: "1.3rem" },
-                mb: 2,
+                mb: theme.spacing(2),
                 color: theme.palette.text.secondary,
                 lineHeight: 1.7,
-                maxWidth: 520,
-                mx: { xs: "auto", md: 0 },
+                maxWidth: "520px",
+                margin: { xs: "0 auto", md: "0" },
                 textAlign: { xs: "center", md: "justify" },
               }}
             >
@@ -215,64 +211,20 @@ const AboutContent = ({ intro }) => {
 
             <Typography
               variant="h6"
-              sx={{
-                fontWeight: 600,
-                color: theme.palette.primary.main,
-              }}
+              sx={{ fontWeight: 600, color: theme.palette.primary.main }}
             >
               {intro.highlight}
             </Typography>
           </Box>
 
-          {/* RIGHT IMAGE */}
-          <MotionBox
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            viewport={{ once: true }}
-            sx={{
-              flex: 1,
-              maxWidth: { xs: "100%", md: "50%" },
-              display: "flex",
-              justifyContent: "center",
-              position: "relative",
-              overflow: "hidden",
-              "&::before, &::after": {
-                content: '""',
-                position: "absolute",
-                width: "50%",
-                height: "50%",
-                border: `5px solid ${theme.palette.primary.dark}`,
-              },
-              "&::before": {
-                top: 0,
-                left: 0,
-                borderRight: "none",
-                borderBottom: "none",
-              },
-              "&::after": {
-                bottom: 0,
-                right: 0,
-                borderLeft: "none",
-                borderTop: "none",
-              },
-            }}
-          >
-            <MotionImg
-              src={imageSrc}
-              alt={intro.title || "About Image"}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4 }}
-              loading="lazy"
-              sx={{
-                width: "100%",
-                maxHeight: isMobile ? 300 : "100%",
-                objectFit: "cover",
-                borderRadius: 3,
-                boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-              }}
-            />
-          </MotionBox>
+          {/* RIGHT */}
+          <SectionImage
+            src={imageSrc}
+            alt={intro.title || "About Image"}
+            accentColor={theme.palette.primary.dark}
+            direction="right"
+            delay={0.5}
+          />
         </Box>
       </Container>
     </MotionBox>
