@@ -40,53 +40,39 @@ const TeamSection = ({ teamIntro }) => {
       >
        
         {/* RIGHT: IMAGE */}
-        <MotionBox
-  initial={{ opacity: 0, x: 50 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8, delay: 0.5 }}
-  viewport={{ once: true }}
-  sx={{
-    flex: 1,
-    maxWidth: { xs: "100%", md: "50%" },
-    display: "flex",
-    justifyContent: "center",
-    position: "relative",
-    overflow: "visible", // changed from "hidden" to show corner borders
-    borderRadius: theme.shape.borderRadius,
-
-    // Top-left corner border
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      top: -10,
-      left: -10,
-      width: 60,
-      height: 60,
-      borderTop: "3px solid",
-      borderLeft: "3px solid",
-      borderColor: "primary.main",
-      borderTopLeftRadius: "12px",
-      zIndex: 1,
-      pointerEvents: "none",
-    },
-
-    // Bottom-right corner border
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      bottom: -10,
-      right: -10,
-      width: 60,
-      height: 60,
-      borderBottom: "3px solid",
-      borderRight: "3px solid",
-      borderColor: "primary.main",
-      borderBottomRightRadius: "12px",
-      zIndex: 1,
-      pointerEvents: "none",
-    },
-  }}
->
+         <MotionBox
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        viewport={{ once: true }}
+        sx={{
+          flex: 1,
+          maxWidth: { xs: "100%", md: "50%" },
+          display: "flex",
+          justifyContent: "center",
+          position: "relative",
+          overflow: "hidden",
+          "&::before, &::after": {
+            content: '""',
+            position: "absolute",
+            width: "50%",
+            height: "50%",
+            border: `5px solid ${theme.palette.accent.light} `,
+          },
+          "&::before": {
+            top: 0,
+            left: 0,
+            borderRight: "none",
+            borderBottom: "none",
+          },
+          "&::after": {
+            bottom: 0,
+            right: 0,
+            borderLeft: "none",
+            borderTop: "none",
+          },
+        }}
+      >
   <MotionImg
     src={imageSrc}
     alt={teamIntro.title || "Our Team"}
