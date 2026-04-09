@@ -54,121 +54,107 @@ const WorkTogether = () => {
 
           {/* Paragraph + Image */}
           <Box
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 2,
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            {/* Paragraph Section */}
-            <Motion.div
-              variants={paragraphVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              style={{ flex: 1 }}
-            >
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: "1.5rem",
-                  mb: 8,
-                  color: "#d0d0d0",
-                  maxWidth: "600px",
-                  textAlign: "justify",
-                }}
-              >
-                At Cloudix Soft, we’re passionate about helping businesses grow in
-                the digital world. Whether you need a modern website, a stronger
-                digital marketing strategy, or a custom software solution, our team
-                has the skills and experience to make it happen. We don’t just
-                deliver projects—we build solutions that bring real results.
-              </Typography>
-
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  color: "#A9B838",
-                  fontSize: "1.5rem",
-                  textAlign: "justify",
-                }}
-              >
-                Ready to take your business to the next level? <br />
-                Let’s connect and make it happen together.
-              </Typography>
-            </Motion.div>
-
-            {/* Image with border effect */}
-<Motion.div
-  variants={imageVariants}
-  initial="hidden"
-  whileInView="show"
-  viewport={{ once: true }}
-  whileHover={{ scale: 1.05 }}
-  transition={{ type: "spring", stiffness: 100 }}
-  style={{
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-  }}
->
-<Box
   sx={{
-    position: "relative",
-    display: "inline-block",
-    padding: "14px",          // ✅ space for brackets outside the image
-    // ✅ NO overflow: hidden  ← this was clipping bottom-right bracket
+    display: "flex",
+    flexDirection: { xs: "column-reverse", md: "row" }, // text above image on mobile
+    justifyContent: "center",
+    alignItems: "center",
+    gap: { xs: 2, md: 4 }, // smaller gap on mobile
     width: "100%",
-    maxWidth: { xs: "100%", md: "400px", lg: "500px" },
-    mx: "auto",
-    mt: { xs: 2, md: 0 },
-
-    "&::before, &::after": {
-      content: '""',
-      position: "absolute",
-      width: 48,              // ✅ fixed px — NOT "50%" (was scaling with container)
-      height: 48,
-      border: "5px solid #A9B838",
-      pointerEvents: "none",
-      zIndex: 2,
-    },
-    "&::before": {
-      top: 0,
-      left: 0,
-      borderRight: "none",
-      borderBottom: "none",
-      borderRadius: "3px 0 0 0",
-    },
-    "&::after": {
-      bottom: 0,
-      right: 0,
-      borderLeft: "none",
-      borderTop: "none",
-      borderRadius: "0 0 3px 0",
-    },
   }}
 >
-  <Box
-    component="img"
-    src={WorkTogetherImg}
-    alt="Work Together"
-    loading="lazy"
-    sx={{
+  {/* Paragraph Section */}
+  <Motion.div
+    variants={paragraphVariants}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true }}
+    style={{ flex: 1 }}
+  >
+    <Typography
+      variant="body1"
+      sx={{
+        fontSize: { xs: "1.2rem", md: "1.5rem" }, // smaller font on mobile
+        mb: { xs: 2, md: 4 }, // smaller margin on mobile
+        color: "#d0d0d0",
+        maxWidth: { xs: "100%", md: "600px" },
+        textAlign: "justify",
+      }}
+    >
+      At Cloudix Soft, we’re passionate about helping businesses grow in
+      the digital world. Whether you need a modern website, a stronger
+      digital marketing strategy, or a custom software solution, our team
+      has the skills and experience to make it happen. We don’t just
+      deliver projects—we build solutions that bring real results.
+    </Typography>
+
+    <Typography
+      variant="h6"
+      sx={{
+        fontWeight: 700,
+        color: "#A9B838",
+        fontSize: { xs: "1.2rem", md: "1.5rem" },
+        textAlign: "justify",
+      }}
+    >
+      Ready to take your business to the next level? <br />
+      Let’s connect and make it happen together.
+    </Typography>
+  </Motion.div>
+
+  {/* Image Section */}
+  <Motion.div
+    variants={imageVariants}
+    initial="hidden"
+    whileInView="show"
+    viewport={{ once: true }}
+    whileHover={{ scale: 1.05 }}
+    transition={{ type: "spring", stiffness: 100 }}
+    style={{
       width: "100%",
-      height: "auto",
-      display: "block",
-      borderRadius: 2,
-      boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+      display: "flex",
+      justifyContent: "center",
     }}
-  />
+  >
+    <Box
+      sx={{
+        position: "relative",
+        display: "inline-block",
+        padding: { xs: "6px", md: "12px" },
+        width: "100%",
+        maxWidth: { xs: "300px", md: "400px", lg: "500px" }, // smaller on mobile
+        mx: "auto",
+        mt: { xs: 2, md: 0 },
+
+        "&::before, &::after": {
+          content: '""',
+          position: "absolute",
+          width: "50%",
+          height: "50%",
+          border: "4px solid #A9B838",
+          pointerEvents: "none",
+          zIndex: 2,
+        },
+        "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
+        "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
+      }}
+    >
+      <Box
+        component="img"
+        src={WorkTogetherImg}
+        alt="Work Together"
+        loading="lazy"
+        sx={{
+          width: "100%",
+          height: "auto",
+          display: "block",
+          borderRadius: 2,
+          boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+        }}
+      />
+    </Box>
+  </Motion.div>
 </Box>
-</Motion.div>
-          </Box>
         </Grid>
       </Grid>
     </Box>
