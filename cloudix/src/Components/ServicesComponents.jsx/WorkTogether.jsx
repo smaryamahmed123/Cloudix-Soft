@@ -249,7 +249,7 @@ const WorkTogether = () => {
                   color: "#d0d0d0",
                   maxWidth: { xs: "100%", md: "600px" },
                   textAlign: "justify",
-                  wordBreak: "break-word",
+                  // wordBreak: "break-word",
                   whiteSpace: "normal",    // ✅ add this
                   overflowWrap: "break-word",
                 }}
