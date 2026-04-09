@@ -98,7 +98,7 @@ const AboutContent = ({ intro }) => {
             position: "absolute",
             width: "50%",
             height: "100%",
-            border: "5px solid #111E2C",
+            border: `5px solid ${theme.palette.primary.dark} `,
           },
           "&::before": {
             top: 0,
