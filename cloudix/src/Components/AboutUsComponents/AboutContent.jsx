@@ -57,10 +57,13 @@ const AboutContent = ({ intro }) => {
             <Typography
               variant="body1"
               sx={{
-                mb: 4,
+                fontSize: { xs: "1rem", md: "1.3rem" },
+                mb: theme.spacing(2),
                 color: theme.palette.text.secondary,
                 lineHeight: 1.7,
                 maxWidth: "520px", // 🔥 PRO MOVE
+                margin: { xs: "0 auto", md: "0" },
+                textAlign: { xs: "center", md: "justify" },
               }}
             >
               {intro.description}
