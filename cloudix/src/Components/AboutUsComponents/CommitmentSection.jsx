@@ -97,7 +97,7 @@ const CommitmentSection = ({ compliance }) => {
                  {/* ---- Right: Image ---- */}
         <SectionImage
             src={imageSrc}
-            alt={intro.title || "About Image"}
+            alt={compliance.title || "About Image"}
             accentColor={theme.palette.primary.dark}
             direction="right"
             delay={0.5}
