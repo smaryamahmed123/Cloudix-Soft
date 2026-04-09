@@ -104,28 +104,33 @@ const WorkTogether = () => {
             </Motion.div>
 
             {/* Image with border effect */}
-            <Motion.div
+<Motion.div
   variants={imageVariants}
   initial="hidden"
   whileInView="show"
   viewport={{ once: true }}
   whileHover={{ scale: 1.05 }}
   transition={{ type: "spring", stiffness: 100 }}
-  style={{ maxWidth: "100%", position: "relative" }}
+  style={{
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  }}
 >
   <Box
     sx={{
       position: "relative",
       display: "inline-block",
-      // ✅ NO overflow: hidden — was clipping the brackets
-      // ✅ padding creates space for brackets to sit outside the image
       padding: "12px",
-      maxWidth: { xs: "100%", md: "50%", lg: "100%" },
+      width: "100%",
+      maxWidth: { xs: "100%", md: "400px", lg: "500px" },
+      mx: "auto",
+      mt: { xs: 2, md: 0 },
 
       "&::before, &::after": {
         content: '""',
         position: "absolute",
-        width: 44,          // ✅ fixed px — not 50% (which scales with image)
+        width: 44,
         height: 44,
         border: "3px solid #A9B838",
         pointerEvents: "none",
@@ -136,32 +141,30 @@ const WorkTogether = () => {
         left: 0,
         borderRight: "none",
         borderBottom: "none",
-        borderRadius: "3px 0 0 0",
       },
       "&::after": {
         bottom: 0,
         right: 0,
         borderLeft: "none",
         borderTop: "none",
-        borderRadius: "0 0 3px 0",
       },
     }}
   >
-   <Box
-    component="img"
-    src={WorkTogetherImg}
-    alt="Work Together"
-    loading="lazy"
-    sx={{
-      width: "100%",
-      height: "auto",
-      display: "block",
-      borderRadius: 2,
-      boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
-    }}
-  />
-              </Box>
-            </Motion.div>
+    <Box
+      component="img"
+      src={WorkTogetherImg}
+      alt="Work Together"
+      loading="lazy"
+      sx={{
+        width: "100%",
+        height: "auto",
+        display: "block",
+        borderRadius: 2,
+        boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+      }}
+    />
+  </Box>
+</Motion.div>
           </Box>
         </Grid>
       </Grid>
