@@ -94,65 +94,45 @@ const CommitmentSection = ({ compliance }) => {
             </Typography>
           </MotionBox>
 
-          {/* Right: Image */}
-           <MotionBox
-  initial={{ opacity: 0, x: 50 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8, delay: 0.7 }}
-  viewport={{ once: true }}
-  sx={{
-    flex: 1,
-    maxWidth: { xs: "100%", md: "50%" },
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-
-    // Corner borders — sharp ends, no borderRadius on lines
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      width: "50%",
-      height: "50%",
-      border: `5px solid ${theme.palette.text.primary}`,
-      top: 0,
-      left: 0,
-      borderRight: "none",
-      borderBottom: "none",
-      borderRadius: `${theme.shape.borderRadius}px 0 0 0`, // sirf top-left corner round
-      zIndex: 2,
-      pointerEvents: "none",
-    },
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      width: "50%",
-      height: "50%",
-      border: `5px solid ${theme.palette.text.primary}`,
-      bottom: 0,
-      right: 0,
-      borderLeft: "none",
-      borderTop: "none",
-      borderRadius: `0 0 ${theme.shape.borderRadius}px 0`, // sirf bottom-right corner round
-      zIndex: 2,
-      pointerEvents: "none",
-    },
-  }}
->
-  <MotionImg
-    src={imageSrc}
-    alt={compliance.title || "Shariah Compliance"}
-    whileHover={{ scale: 1.05 }}
-    transition={{ duration: 0.4 }}
-    loading="lazy"
-    style={{
-      width: "100%",
-      maxHeight: isMobile ? "300px" : "100%",
-      objectFit: "cover",
-      borderRadius: theme.shape.borderRadius, // image ke saare corners round
-      boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
-    }}
-  />
-</MotionBox>
+                 {/* ---- Right: Image ---- */}
+        <MotionBox
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
+          viewport={{ once: true }}
+          sx={{
+            flex: 1,
+            maxWidth: { xs: "100%", md: "50%" },
+            position: "relative",
+            display: "inline-block",
+            overflow: "hidden",
+            borderRadius: 2,
+            "&::before, &::after": {
+              content: '""',
+              position: "absolute",
+              width: "50%",
+              height: "50%",
+              border: "5px solid #111E2C",
+            },
+            "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
+            "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
+          }}
+        >
+          <MotionImg
+            src={imageSrc}
+            alt={compliance.title || "Shariah Compliance"}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.4 }}
+            loading="lazy"
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+              borderRadius: "4px",
+            }}
+          />
+        </MotionBox>
         </Box>
       </Container>
     </MotionBox>
