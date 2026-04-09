@@ -112,7 +112,7 @@ const CommitmentSection = ({ compliance }) => {
               position: "absolute",
               width: "50%",
               height: "50%",
-              border: "5px solid #111E2C",
+              border: `5px solid ${theme.palette.primary.dark}`,
             },
             "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
             "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
