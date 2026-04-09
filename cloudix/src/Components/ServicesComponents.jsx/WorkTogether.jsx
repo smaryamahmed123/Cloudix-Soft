@@ -117,53 +117,56 @@ const WorkTogether = () => {
     justifyContent: "center",
   }}
 >
-  <Box
-    sx={{
-      position: "relative",
-      display: "inline-block",
-      padding: "12px",
-      width: "100%",
-      maxWidth: { xs: "100%", md: "400px", lg: "500px" },
-      mx: "auto",
-      mt: { xs: 2, md: 0 },
+<Box
+  sx={{
+    position: "relative",
+    display: "inline-block",
+    padding: "14px",          // ✅ space for brackets outside the image
+    // ✅ NO overflow: hidden  ← this was clipping bottom-right bracket
+    width: "100%",
+    maxWidth: { xs: "100%", md: "400px", lg: "500px" },
+    mx: "auto",
+    mt: { xs: 2, md: 0 },
 
-      "&::before, &::after": {
-        content: '""',
-        position: "absolute",
-        width: '50%',
-        height: '50%',
-        border: "5px solid #A9B838",
-        pointerEvents: "none",
-        zIndex: 2,
-      },
-      "&::before": {
-        top: 0,
-        left: 0,
-        borderRight: "none",
-        borderBottom: "none",
-      },
-      "&::after": {
-        bottom: 0,
-        right: 0,
-        borderLeft: "none",
-        borderTop: "none",
-      },
+    "&::before, &::after": {
+      content: '""',
+      position: "absolute",
+      width: 48,              // ✅ fixed px — NOT "50%" (was scaling with container)
+      height: 48,
+      border: "5px solid #A9B838",
+      pointerEvents: "none",
+      zIndex: 2,
+    },
+    "&::before": {
+      top: 0,
+      left: 0,
+      borderRight: "none",
+      borderBottom: "none",
+      borderRadius: "3px 0 0 0",
+    },
+    "&::after": {
+      bottom: 0,
+      right: 0,
+      borderLeft: "none",
+      borderTop: "none",
+      borderRadius: "0 0 3px 0",
+    },
+  }}
+>
+  <Box
+    component="img"
+    src={WorkTogetherImg}
+    alt="Work Together"
+    loading="lazy"
+    sx={{
+      width: "100%",
+      height: "auto",
+      display: "block",
+      borderRadius: 2,
+      boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
     }}
-  >
-    <Box
-      component="img"
-      src={WorkTogetherImg}
-      alt="Work Together"
-      loading="lazy"
-      sx={{
-        width: "100%",
-        height: "auto",
-        display: "block",
-        borderRadius: 2,
-        boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
-      }}
-    />
-  </Box>
+  />
+</Box>
 </Motion.div>
           </Box>
         </Grid>
