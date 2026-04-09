@@ -33,6 +33,7 @@ custom: {
     accent: {
       main: "#D4E157",
       light: "#A9B838",
+      sectionDivider: "#A9B838",
     },
     background: {
       default: "#FFFFFF",
@@ -49,7 +50,7 @@ custom: {
     fontFamily: `"Roboto","Segoe UI",Tahoma,Geneva,Verdana,sans-serif`,
     h1: { fontWeight: 700 },
     h2: { fontWeight: 700 },
-    h3: { fontWeight: 700 },
+    h3: {   fontWeight: 600, letterSpacing: "-0.02em", },
     body1: {
       fontSize: "1rem",
       color: "#7A7A7A",
@@ -92,6 +93,13 @@ custom: {
         },
       ],
     },
+
+    overline: {
+     fontSize: "0.7rem",
+     fontWeight: 600,
+     letterSpacing: "0.1em",
+     textTransform: "uppercase",
+},
 
     MuiDrawer: {
       styleOverrides: {
