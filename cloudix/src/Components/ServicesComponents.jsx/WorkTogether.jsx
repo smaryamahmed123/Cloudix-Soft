@@ -164,8 +164,6 @@
 
 
 
-
-
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { motion } from "framer-motion";
@@ -187,26 +185,28 @@ const imageVariants = {
   show: { opacity: 1, scale: 1, transition: { duration: 0.8, delay: 0.5 } },
 };
 
+const MotionBox = motion(Box);
+
 const WorkTogether = () => {
   return (
     <Box
       sx={{
-        bgcolor: "background.paper",
-        color: "text.primary",
-        py: { xs: 6, md: 12 },
+        backgroundColor: "#111E2C",
+        color: "#fff",
+        py: { xs: 8, md: 12 },
         px: { xs: 3, md: 8 },
       }}
     >
       <Grid
         container
         spacing={6}
-        alignItems="center"
         justifyContent="center"
+        alignItems="center"
       >
         {/* Left Section */}
         <Grid item xs={12} md={6}>
           {/* Heading */}
-          <motion.div
+          <MotionBox
             variants={textVariants}
             initial="hidden"
             whileInView="show"
@@ -216,88 +216,113 @@ const WorkTogether = () => {
               variant="h3"
               sx={{
                 fontWeight: 800,
-                mb: 3,
+                mb: 2,
                 lineHeight: 1.3,
+                color: "#d0d0d0",
               }}
             >
               Let’s Work Together
             </Typography>
-          </motion.div>
+          </MotionBox>
 
-          {/* Paragraph & CTA */}
-          <motion.div
-            variants={paragraphVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+          {/* Paragraph + Image */}
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              mt: 4,
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: "center",
+            }}
           >
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: { xs: "1.1rem", md: "1.5rem" },
-                mb: 4,
-                textAlign: "justify",
-              }}
-            >
-              At Cloudix Soft, we’re passionate about helping businesses grow
-              in the digital world. Whether you need a modern website, a
-              stronger digital marketing strategy, or a custom software
-              solution, our team has the skills and experience to make it
-              happen. We don’t just deliver projects—we build solutions that
-              bring real results.
-            </Typography>
+            {/* Paragraph Section */}
+            <Grid item xs={12} md={6}>
+              <MotionBox
+                variants={paragraphVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                sx={{ height: "100%" }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: "1.2rem", md: "1.5rem" },
+                    mb: 4,
+                    color: "#d0d0d0",
+                    textAlign: "justify",
+                  }}
+                >
+                  At Cloudix Soft, we’re passionate about helping businesses grow in
+                  the digital world. Whether you need a modern website, a stronger
+                  digital marketing strategy, or a custom software solution, our team
+                  has the skills and experience to make it happen. We don’t just
+                  deliver projects—we build solutions that bring real results.
+                </Typography>
 
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 700,
-                color: "success.main",
-                fontSize: { xs: "1.2rem", md: "1.5rem" },
-                textAlign: "justify",
-              }}
-            >
-              Ready to take your business to the next level? <br />
-              Let’s connect and make it happen together.
-            </Typography>
-          </motion.div>
-        </Grid>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 700,
+                    color: "#A9B838",
+                    fontSize: { xs: "1.3rem", md: "1.5rem" },
+                    textAlign: "justify",
+                  }}
+                >
+                  Ready to take your business to the next level? <br />
+                  Let’s connect and make it happen together.
+                </Typography>
+              </MotionBox>
+            </Grid>
 
-        {/* Right Section - Image */}
-        <Grid item xs={12} md={6}>
-          <motion.div
-            variants={imageVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 100 }}
-          >
-            <Box
-              sx={{
-                position: "relative",
-                width: "100%",
-                maxWidth: 500,
-                mx: "auto",
-                "&::before, &::after": {
-                  content: '""',
-                  position: "absolute",
-                  width: "50%",
-                  height: "50%",
-                  border: "4px solid",
-                  borderColor: "success.main",
-                },
-                "&::before": { top: 0, left: 0, borderRight: "none", borderBottom: "none" },
-                "&::after": { bottom: 0, right: 0, borderLeft: "none", borderTop: "none" },
-              }}
-            >
-              <Box
-                component="img"
-                src={WorkTogetherImg}
-                alt="Work Together"
-                sx={{ width: "100%", height: "auto", display: "block" }}
-              />
-            </Box>
-          </motion.div>
+            {/* Image Section */}
+            <Grid item xs={12} md={6}>
+              <MotionBox
+                variants={imageVariants}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 100 }}
+                sx={{
+                  maxWidth: "100%",
+                  position: "relative",
+                  display: "inline-block",
+                  overflow: "hidden",
+                  "&::before, &::after": {
+                    content: '""',
+                    position: "absolute",
+                    width: "50%",
+                    height: "50%",
+                    border: "5px solid #A9B838",
+                  },
+                  "&::before": {
+                    top: 0,
+                    left: 0,
+                    borderRight: "none",
+                    borderBottom: "none",
+                  },
+                  "&::after": {
+                    bottom: 0,
+                    right: 0,
+                    borderLeft: "none",
+                    borderTop: "none",
+                  },
+                }}
+              >
+                <Box
+                  component="img"
+                  src={WorkTogetherImg}
+                  alt="Work Together"
+                  sx={{
+                    width: "100%",
+                    height: "auto",
+                    display: "block",
+                  }}
+                />
+              </MotionBox>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>
