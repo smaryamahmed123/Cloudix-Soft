@@ -239,7 +239,7 @@ const WorkTogether = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
-              style={{ flex: 1, minWidth: 0 }}
+              style={{ flex: 1, minWidth: 0, width: "100%" }}
             >
               <Typography
                 variant="body1"
@@ -250,6 +250,8 @@ const WorkTogether = () => {
                   maxWidth: { xs: "100%", md: "600px" },
                   textAlign: "justify",
                   wordBreak: "break-word",
+                  whiteSpace: "normal",    // ✅ add this
+                  overflowWrap: "break-word",
                 }}
               >
                 At Cloudix Soft, we’re passionate about helping businesses grow in
