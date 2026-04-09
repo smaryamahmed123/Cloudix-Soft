@@ -147,19 +147,19 @@ const WorkTogether = () => {
       },
     }}
   >
-    <Box
-      component="img"
-      src={src}
-      alt={alt}
-      loading="lazy"
-      sx={{
-        width: "100%",
-        height: "auto",
-        display: "block",
-        borderRadius: 2,
-        boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
-      }}
-    />
+   <Box
+    component="img"
+    src={WorkTogetherImg}
+    alt="Work Together"
+    loading="lazy"
+    sx={{
+      width: "100%",
+      height: "auto",
+      display: "block",
+      borderRadius: 2,
+      boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
+    }}
+  />
               </Box>
             </Motion.div>
           </Box>
