@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, Container, useTheme, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
 import ShariahImage from "../../assets/Shariah-compliance.png"; // fallback
-import SectionImage from "./SectionImage";
+import SectionImage from "../SectionImage";
 const MotionBox = motion(Box);
 const MotionImg = motion("img");
 
