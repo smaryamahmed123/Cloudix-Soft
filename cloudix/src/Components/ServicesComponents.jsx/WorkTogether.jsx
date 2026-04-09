@@ -160,16 +160,6 @@ const WorkTogether = () => {
         boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
       }}
     />
-                <Box
-                  component="img"
-                  src={WorkTogetherImg}
-                  alt="Work Together"
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    display: "block",
-                  }}
-                />
               </Box>
             </Motion.div>
           </Box>
