@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { motion as Motion } from "framer-motion";
 import WorkTogetherImg from "../../assets/workTogether.png";
+import SectionImage from "../SectionImage";
 
 // Animation Variants
 const textVariants = {
@@ -104,54 +105,13 @@ const WorkTogether = () => {
             </Motion.div>
 
             {/* Image with border effect */}
-            <Motion.div
-              variants={imageVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 100 }}
-              style={{ maxWidth: "100%", position: "relative" }}
-            >
-              <Box
-                sx={{
-                  position: "relative",
-                  display: "inline-block",
-                  overflow: "hidden",
-                  maxWidth: { xs: "100%", md: "50%", lg: "100%" },
-                  "&::before, &::after": {
-                    content: '""',
-                    position: "absolute",
-                    width: "50%",
-                    height: "50%",
-                    border: "5px solid #A9B838",
-                  },
-                  "&::before": {
-                    top: 0,
-                    left: 0,
-                    borderRight: "none",
-                    borderBottom: "none",
-                  },
-                  "&::after": {
-                    bottom: 0,
-                    right: 0,
-                    borderLeft: "none",
-                    borderTop: "none",
-                  },
-                }}
-              >
-                <Box
-                  component="img"
-                  src={WorkTogetherImg}
-                  alt="Work Together"
-                  sx={{
-                    width: "100%",
-                    height: "auto",
-                    display: "block",
-                  }}
-                />
-              </Box>
-            </Motion.div>
+                    <SectionImage
+            src={WorkTogetherImg}
+            alt="WorkTogetherImg"
+            accentColor={theme.palette.primary.light}
+            direction="right"
+            delay={0.5}
+          />
           </Box>
         </Grid>
       </Grid>
