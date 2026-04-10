@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Container, useTheme, useMediaQuery } from "@mui/material";
 import { motion } from "framer-motion";
+import SectionImage from "../SectionImage";
 
 const MotionBox = motion(Box);
 const MotionImg = motion("img");
@@ -40,54 +41,13 @@ const TeamSection = ({ teamIntro }) => {
       >
        
         {/* RIGHT: IMAGE */}
-         <MotionBox
-        initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        viewport={{ once: true }}
-        sx={{
-          flex: 1,
-          maxWidth: { xs: "100%", md: "50%" },
-          display: "flex",
-          justifyContent: "center",
-          position: "relative",
-          overflow: "hidden",
-          "&::before, &::after": {
-            content: '""',
-            position: "absolute",
-            width: "50%",
-            height: "50%",
-            border: `5px solid ${theme.palette.accent.light} `,
-          },
-          "&::before": {
-            top: 0,
-            left: 0,
-            borderRight: "none",
-            borderBottom: "none",
-          },
-          "&::after": {
-            bottom: 0,
-            right: 0,
-            borderLeft: "none",
-            borderTop: "none",
-          },
-        }}
-      >
-  <MotionImg
-    src={imageSrc}
-    alt={teamIntro.title || "Our Team"}
-    whileHover={{ scale: 1.03, boxShadow: "0 16px 50px rgba(0,0,0,0.1)" }}
-    transition={{ duration: 0.4 }}
-    loading="lazy"
-    style={{
-      width: "100%",
-      maxWidth: isMobile ? "90%" : "500px",
-      objectFit: "cover",
-      borderRadius: theme.shape.borderRadius,
-      boxShadow: "0 12px 40px rgba(0,0,0,0.08)",
-    }}
-  />
-</MotionBox>
+        <SectionImage
+            src={imageSrc}
+            alt={teamIntro.title || "teamIntro"}
+            accentColor={theme.palette.primary.dark}
+            direction="right"
+            delay={0.5}
+          />
                {/* LEFT: TEXT */}
         <MotionBox
           initial={{ opacity: 0, x: -50 }}
