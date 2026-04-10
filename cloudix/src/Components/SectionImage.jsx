@@ -1,8 +1,8 @@
-import { Box } from "@mui/material";
+import { Box, useTheme, } from "@mui/material";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
-
+const theme = useTheme();
 const SectionImage = ({
   src,
   alt = "",
@@ -26,8 +26,8 @@ const SectionImage = ({
         "&::before, &::after": {
           content: '""',
           position: "absolute",
-          width: 40,
-          height: 40,
+          width: 50,
+          height: 50,
           border: `2px solid ${accentColor}`,
           zIndex: 2,
           pointerEvents: "none",
@@ -37,14 +37,14 @@ const SectionImage = ({
           left: -10,
           borderRight: "none",
           borderBottom: "none",
-          borderRadius: "4px 0 0 0",
+          borderRadius: `${theme.shape.borderRadius} 0 0 0`,
         },
         "&::after": {
           bottom: -10,
           right: -10,
           borderLeft: "none",
           borderTop: "none",
-          borderRadius: "0 0 4px 0",
+          borderRadius: `0 0 ${theme.shape.borderRadius} 0`,
         },
       }}
     >
@@ -59,7 +59,7 @@ const SectionImage = ({
           width: "100%",
           height: "auto",
           display: "block",
-          borderRadius: 3,
+          borderRadius: theme.shape.borderRadius,
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
         }}
       />
