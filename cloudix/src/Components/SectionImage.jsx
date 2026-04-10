@@ -2,7 +2,6 @@ import { Box, useTheme, } from "@mui/material";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
-const theme = useTheme();
 const SectionImage = ({
   src,
   alt = "",
@@ -10,6 +9,7 @@ const SectionImage = ({
   direction = "right",
   delay = 0.5,
 }) => {
+const theme = useTheme();
   return (
     <MotionBox
       initial={{ opacity: 0, x: direction === "right" ? 50 : -50 }}
