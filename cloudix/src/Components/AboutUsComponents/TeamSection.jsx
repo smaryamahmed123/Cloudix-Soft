@@ -44,7 +44,7 @@ const TeamSection = ({ teamIntro }) => {
         <SectionImage
             src={imageSrc}
             alt={teamIntro.title || "teamIntro"}
-            accentColor={theme.palette.primary.dark}
+            accentColor={theme.palette.primary.light}
             direction="right"
             delay={0.5}
           />
