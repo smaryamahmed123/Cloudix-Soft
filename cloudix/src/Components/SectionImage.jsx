@@ -29,7 +29,6 @@ const theme = useTheme();
           width: '50%',
           height: '50%',
           border: `5px solid ${accentColor}`,
-          borderRadius: theme.shape.borderRadius,
           zIndex: 2,
           pointerEvents: "none",
         },
