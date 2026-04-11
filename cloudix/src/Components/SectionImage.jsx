@@ -28,7 +28,7 @@ const theme = useTheme();
           position: "absolute",
           width: '50%',
           height: '50%',
-          border: `${theme.shape.borderRadius} solid ${accentColor}`,
+          border: `5px solid ${accentColor}`,
           zIndex: 2,
           pointerEvents: "none",
         },
@@ -59,6 +59,7 @@ const theme = useTheme();
           width: "100%",
           height: "auto",
           display: "block",
+          radius: theme.shape.borderRadius,
           borderRadius: theme.shape.borderRadius,
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
         }}
