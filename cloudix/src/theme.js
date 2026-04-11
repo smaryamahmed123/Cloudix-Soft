@@ -12,7 +12,7 @@ const theme = createTheme({
   },
 
   shape: {
-  borderRadius: 5, // Apple softness
+  borderRadius: '35px', // Apple softness
 },
 
 custom: {
