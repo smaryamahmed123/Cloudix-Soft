@@ -60,7 +60,8 @@ const theme = useTheme();
               flexDirection: { xs: "column", md: "row" },
               justifyContent: "center",
               alignItems: "center",
-              gap: 2,
+              // gap: 2,
+              gap: { xs: theme.spacing(5), md: theme.spacing(10) },
               width: "100%",
               height: "100%",
             }}
