@@ -108,7 +108,6 @@ const ContactInfo = () => {
           gap={2}
           mt={4}
         >
-          // Phone
 <ModernCard
   variant="contact"
   icon={<PhoneIcon fontSize="inherit" />}
@@ -129,7 +128,6 @@ const ContactInfo = () => {
   }
 />
 
-// Working Hours
 <ModernCard
   variant="contact"
   icon={<AccessTimeIcon fontSize="inherit" />}
@@ -148,7 +146,6 @@ const ContactInfo = () => {
   }
 />
 
-// Email
 <ModernCard
   variant="contact"
   icon={<EmailIcon fontSize="inherit" />}
