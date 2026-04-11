@@ -37,14 +37,14 @@ const theme = useTheme();
           left: -10,
           borderRight: "none",
           borderBottom: "none",
-          borderRadius: `40px 0 0 0`,
+          borderRadius: `35px 0 0 0`,
         },
         "&::after": {
           bottom: -10,
           right: -10,
           borderLeft: "none",
           borderTop: "none",
-          borderRadius: `0 0 40px 0`,
+          borderRadius: `0 0 35px 0`,
         },
       }}
     >
