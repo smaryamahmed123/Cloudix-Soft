@@ -32,7 +32,7 @@ const Section = ({ title, description, image, imageAlt, reverse = false }) => {
         <Box sx={{ flex: 1, maxWidth: { md: 520 } }}>
           <Typography
             variant="h3"
-            sx={{ fontSize: { xs: 28, md: 38 }, fontWeight: 500, lineHeight: 1.15, color: "#fff", mb: 2.5 }}
+            sx={{ fontSize: { xs: 28, md: 38 }, fontWeight: 500, lineHeight: 1.15, color: theme.palette.accent.light, mb: 2.5 }}
           >
             {title}
           </Typography>
