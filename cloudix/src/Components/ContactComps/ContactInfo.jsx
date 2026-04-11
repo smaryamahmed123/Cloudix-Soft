@@ -108,62 +108,66 @@ const ContactInfo = () => {
           gap={2}
           mt={4}
         >
-          <ModernCard
-            variant="contact"
-            icon={<PhoneIcon fontSize="inherit" />}
-            title="PHONE"
-            description={
-              <Typography
-                component="a"
-                href={`tel:${info.phone || ""}`}
-                sx={{
-                  color: "text.primary",
-                  textDecoration: "none",
-                  fontSize: "0.95rem",
-                  "&:hover": { color: theme.palette.accent.light },
-                }}
-              >
-                {info.phone || "Not available"}
-              </Typography>
-            }
-          />
+          // Phone
+<ModernCard
+  variant="contact"
+  icon={<PhoneIcon fontSize="inherit" />}
+  title="PHONE"
+  description={
+    <Typography
+      component="a"
+      href={`tel:${info.phone || ""}`}
+      sx={{
+        textDecoration: "none",
+        fontSize: "0.95rem",
+        color: "inherit",       // ✅ inherits from parent (white on back, dark on front)
+        "&:hover": { opacity: 0.8 },
+      }}
+    >
+      {info.phone || "Not available"}
+    </Typography>
+  }
+/>
 
-          <ModernCard
-            variant="contact"
-            icon={<AccessTimeIcon fontSize="inherit" />}
-            title="WORKING HOURS"
-            description={
-              <Typography
-                sx={{
-                  whiteSpace: "pre-line",
-                  textAlign: "center",
-                  fontSize: "0.95rem",
-                }}
-              >
-                {formatWorkingHours(info.workingHours)}
-              </Typography>
-            }
-          />
+// Working Hours
+<ModernCard
+  variant="contact"
+  icon={<AccessTimeIcon fontSize="inherit" />}
+  title="WORKING HOURS"
+  description={
+    <Typography
+      sx={{
+        whiteSpace: "pre-line",
+        textAlign: "center",
+        fontSize: "0.95rem",
+        color: "inherit",       // ✅
+      }}
+    >
+      {formatWorkingHours(info.workingHours)}
+    </Typography>
+  }
+/>
 
-          <ModernCard
-            variant="contact"
-            icon={<EmailIcon fontSize="inherit" />}
-            title="EMAIL"
-            description={
-              <Typography
-                component="a"
-                href={`mailto:${info.email || ""}`}
-                sx={{
-                  color: "text.primary",
-                  textDecoration: "none",
-                  fontSize: "0.95rem",
-                  "&:hover": {color: theme.palette.accent.light },
-                }}
-              >
-                {info.email || "Not available"}
-              </Typography>
-            }
-          />
+// Email
+<ModernCard
+  variant="contact"
+  icon={<EmailIcon fontSize="inherit" />}
+  title="EMAIL"
+  description={
+    <Typography
+      component="a"
+      href={`mailto:${info.email || ""}`}
+      sx={{
+        textDecoration: "none",
+        fontSize: "0.95rem",
+        color: "inherit",       // ✅
+        "&:hover": { opacity: 0.8 },
+      }}
+    >
+      {info.email || "Not available"}
+    </Typography>
+  }
+/>
         </Box>
       )}
     </MotionDiv>
