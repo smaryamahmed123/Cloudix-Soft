@@ -22,6 +22,8 @@ const theme = useTheme();
         position: "relative",
         display: "inline-block",
         width: "100%",
+        borderRadius: `${theme.shape.borderRadius}px`,  // ✅ added
+        overflow: "hidden",  
 
         "&::before, &::after": {
           content: '""',
@@ -58,9 +60,9 @@ const theme = useTheme();
         sx={{
           width: "100%",
           height: "auto",
-          display: "block",
-          radius: theme.shape.borderRadius,
-          borderRadius: theme.shape.borderRadius,
+          // display: "block",
+          // radius: theme.shape.borderRadius,
+          // borderRadius: theme.shape.borderRadius,
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
         }}
       />
