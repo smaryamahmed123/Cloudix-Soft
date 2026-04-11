@@ -78,8 +78,6 @@
 
 
 
-
-
 import React from "react";
 import { Box, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
@@ -96,7 +94,6 @@ const SectionImage = ({
   const theme = useTheme();
 
   return (
-    {/* Outer — handles entrance animation only, no hover */}
     <MotionBox
       initial={{ opacity: 0, x: direction === "right" ? 50 : -50 }}
       whileInView={{ opacity: 1, x: 0 }}
@@ -108,7 +105,6 @@ const SectionImage = ({
         width: "100%",
       }}
     >
-      {/* Inner — handles hover scale + contains borders + image together */}
       <MotionBox
         whileHover={{ scale: 1.04 }}
         transition={{ type: "spring", stiffness: 100 }}
@@ -117,7 +113,7 @@ const SectionImage = ({
           display: "inline-block",
           width: "100%",
           borderRadius: "35px",
-          overflow: "hidden",   // ✅ clips image corners
+          overflow: "hidden",
           "&::before, &::after": {
             content: '""',
             position: "absolute",
