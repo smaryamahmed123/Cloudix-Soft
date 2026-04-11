@@ -63,7 +63,8 @@ const CommitmentSection = ({ compliance }) => {
             flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
             justifyContent: "center",
-            gap: theme.spacing(6),
+            // gap: theme.spacing(6),
+            gap: { xs: theme.spacing(5), md: theme.spacing(10) },
             width: "100%",
           }}
         >
