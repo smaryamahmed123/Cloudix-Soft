@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme,  } from "@mui/material";
 import { motion as Motion, useInView } from "framer-motion";
 import SectionImage from "../SectionImage";
 
-const Section = ({ eyebrow, title, description, image, imageAlt, reverse = false }) => {
+const Section = ({ title, description, image, imageAlt, reverse = false }) => {
+  const theme = useTheme();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -56,7 +57,6 @@ const VisionMission = ({ vision, mission }) => {
   return (
     <Box sx={{ bgcolor: "#0a0f1a", color: "#fff", py: { xs: 10, md: 14 }, overflow: "hidden" }}>
       <Section
-        eyebrow="Our vision"
         title={vision.title}
         description={vision.description}
         image={vision.image}
@@ -69,7 +69,6 @@ const VisionMission = ({ vision, mission }) => {
       </Box>
 
       <Section
-        eyebrow="Our mission"
         title={mission.title}
         description={mission.description}
         image={mission.image}
