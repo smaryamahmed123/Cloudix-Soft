@@ -76,7 +76,7 @@ const OurTeam = ({ team }) => {
               >
                 <Card
                   sx={{
-                    borderRadius: 4,
+                    borderRadius: '16px',
                     textAlign: "center",
                     bgcolor: "#D9D9D9",
                     boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
