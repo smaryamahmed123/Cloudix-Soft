@@ -23,7 +23,7 @@ const theme = useTheme();
         display: "inline-block",
         width: "100%",
         borderRadius: `${theme.shape.borderRadius}px`,  // ✅ added
-        overflow: "hidden",  
+        // overflow: "hidden",  
 
         "&::before, &::after": {
           content: '""',
