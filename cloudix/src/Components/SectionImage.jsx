@@ -26,9 +26,9 @@ const theme = useTheme();
         "&::before, &::after": {
           content: '""',
           position: "absolute",
-          width: 50,
-          height: 50,
-          border: `2px solid ${accentColor}`,
+          width: '50%',
+          height: '50%',
+          border: `${theme.shape.borderRadius} solid ${accentColor}`,
           zIndex: 2,
           pointerEvents: "none",
         },
