@@ -71,7 +71,7 @@ const ContactInfo = () => {
         component="h2"
         variant={isMobile ? "h3" : "h2"}
         gutterBottom
-        sx={{ fontWeight: "bold", color: "#769914", textAlign: "center" }}
+        sx={{ fontWeight: "bold", color: theme.palette.primary.main, textAlign: "center" }}
       >
         Get In Touch
       </Typography>
@@ -120,7 +120,7 @@ const ContactInfo = () => {
                   color: "text.primary",
                   textDecoration: "none",
                   fontSize: "0.95rem",
-                  "&:hover": { color: "white" },
+                  "&:hover": { color: theme.palette.accent.light },
                 }}
               >
                 {info.phone || "Not available"}
@@ -157,7 +157,7 @@ const ContactInfo = () => {
                   color: "text.primary",
                   textDecoration: "none",
                   fontSize: "0.95rem",
-                  "&:hover": { color: "white" },
+                  "&:hover": {color: theme.palette.accent.light },
                 }}
               >
                 {info.email || "Not available"}
