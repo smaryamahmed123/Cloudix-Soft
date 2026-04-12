@@ -44,21 +44,32 @@ const ContactInfo = () => {
     return () => controller.abort();
   }, []);
 
+  // const formatWorkingHours = (wh) => {
+  //   if (!wh) return "No hours available";
+
+  //   const weekday =
+  //     wh.monday?.open && wh.monday?.close
+  //       ? `${wh.monday.open} – ${wh.monday.close}`
+  //       : "Closed";
+
+  //   const weekend =
+  //     wh.saturday?.open && wh.saturday?.close
+  //       ? `${wh.saturday.open} – ${wh.saturday.close}`
+  //       : "Closed";
+
+  //   return `Monday – Saturday: ${weekday}\nSunday: Closed `;
+  // };
+
   const formatWorkingHours = (wh) => {
-    if (!wh) return "No hours available";
+  if (!wh) return "No hours available";
 
-    const weekday =
-      wh.monday?.open && wh.monday?.close
-        ? `${wh.monday.open} – ${wh.monday.close}`
-        : "Closed";
+  const weekday =
+    wh.monday?.open && wh.monday?.close
+      ? `${wh.monday.open} – ${wh.monday.close}`
+      : "Closed";
 
-    const weekend =
-      wh.saturday?.open && wh.saturday?.close
-        ? `${wh.saturday.open} – ${wh.saturday.close}`
-        : "Closed";
-
-    return `Monday – Saturday: ${weekday}\nSunday: Closed `;
-  };
+  return { weekday };  // ✅ return object instead of string
+};
 
   return (
     <MotionDiv
@@ -119,6 +130,7 @@ const ContactInfo = () => {
       sx={{
         textDecoration: "none",
         fontSize: "0.95rem",
+        lineHeight: 2,  
         color: "inherit",       // ✅ inherits from parent (white on back, dark on front)
         "&:hover": { opacity: 0.8 },
       }}
@@ -133,16 +145,41 @@ const ContactInfo = () => {
   icon={<AccessTimeIcon fontSize="inherit" />}
   title="WORKING HOURS"
   description={
-    <Typography
-      sx={{
-        whiteSpace: "pre-line",
-        textAlign: "center",
-        fontSize: "0.95rem",
-        color: "inherit",       // ✅
-      }}
-    >
-      {formatWorkingHours(info.workingHours)}
-    </Typography>
+    <Box sx={{ textAlign: "center", color: "inherit" }}>
+      {/* Monday – Saturday label */}
+      <Typography sx={{ fontSize: "0.95rem", color: "inherit", lineHeight: 2 }}>
+        Monday – Saturday:
+      </Typography>
+
+      {/* Time on next line */}
+      <Typography sx={{ fontSize: "0.95rem", color: "inherit", lineHeight: 2 }}>
+        {info.workingHours?.monday?.open && info.workingHours?.monday?.close
+          ? `${info.workingHours.monday.open} – ${info.workingHours.monday.close}`
+          : "Closed"}
+      </Typography>
+
+      {/* Gap before Sunday */}
+      <Box sx={{ mt: 1.5 }} />
+
+      {/* Sunday row */}
+      <Typography sx={{ fontSize: "0.95rem", color: "inherit", lineHeight: 2 }}>
+        Sunday:{" "}
+        <Box
+          component="span"
+          sx={{
+            bgcolor: theme.palette.primary.main,   // ✅ highlighted
+            color: "#fff",
+            px: 1,
+            py: 0.2,
+            borderRadius: "4px",
+            fontSize: "0.85rem",
+            fontWeight: 600,
+          }}
+        >
+          Closed
+        </Box>
+      </Typography>
+    </Box>
   }
 />
 
@@ -157,6 +194,7 @@ const ContactInfo = () => {
       sx={{
         textDecoration: "none",
         fontSize: "0.95rem",
+        lineHeight: 2,  
         color: "inherit",       // ✅
         "&:hover": { opacity: 0.8 },
       }}
