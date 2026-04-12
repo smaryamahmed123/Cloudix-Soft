@@ -36,7 +36,7 @@ const Section = ({ title, description, image, imageAlt, reverse = false }) => {
           >
             {title}
           </Typography>
-          <Typography sx={{ fontSize: 16, lineHeight: 1.75, color: theme.palette.common.white }}>
+          <Typography sx={{ fontSize: { xs: "1rem", md: "1.3rem" }, lineHeight: 1.7, color: theme.palette.common.white }}>
             {description}
           </Typography>
         </Box>
