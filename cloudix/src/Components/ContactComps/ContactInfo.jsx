@@ -130,7 +130,7 @@ const ContactInfo = () => {
       sx={{
         textDecoration: "none",
         fontSize: "0.95rem",
-        lineHeight: 2,  
+        lineHeight: 3,  
         color: "inherit",       // ✅ inherits from parent (white on back, dark on front)
         "&:hover": { opacity: 0.8 },
       }}
@@ -147,8 +147,8 @@ const ContactInfo = () => {
   description={
     <Box sx={{ textAlign: "center", color: "inherit" }}>
       {/* Monday – Saturday label */}
-      <Typography sx={{ fontSize: "0.95rem", color: "inherit", lineHeight: 2 }}>
-        Monday – Saturday:
+      <Typography sx={{ fontSize: "0.95rem", color: "inherit", lineHeight: 3 }}>
+        Monday – Saturday
       </Typography>
 
       {/* Time on next line */}
@@ -189,7 +189,7 @@ const ContactInfo = () => {
       sx={{
         textDecoration: "none",
         fontSize: "0.95rem",
-        lineHeight: 2,  
+        lineHeight: 3,  
         color: "inherit",       // ✅
         "&:hover": { opacity: 0.8 },
       }}
