@@ -8,12 +8,12 @@ import HeroSection from "../HeroSection";
 
 const AboutHero = () => {
   return (
+    <>
       <HeroSection
         image={AboutBg}
         title="About Us"
         subtitle="Welcome to Cloudix Soft, Pakistan’s first Shariah-compliant IT company."
       />
-      {/* Other content */}
     </>
   );
 };
