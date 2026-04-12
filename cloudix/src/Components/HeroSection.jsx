@@ -41,6 +41,13 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
         //   ),
         //   url(${image})
         // `,
+        backgroundImage: `
+          linear-gradient(
+          ${theme.palette.primary.dark}80,
+          ${theme.palette.primary.dark}80
+         ),
+         url(${image})
+        `,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
