@@ -22,7 +22,6 @@ const imageVariants = {
 const WorkTogether = () => {
 const theme = useTheme();
   return (
-    <Container maxWidth="lg">
     <Box
       sx={{
         backgroundColor: "#111E2C",
@@ -31,6 +30,7 @@ const theme = useTheme();
         px: { xs: 3, md: 8 },
       }}
     >
+    <Container maxWidth="lg">
       <Grid container spacing={6} sx={{ display: "flex", justifyContent: "center" }}>
         {/* Left Section */}
         <Grid sx={{ gridColumn: { xs: "span 12", md: "span 6" } }}>
@@ -117,8 +117,8 @@ const theme = useTheme();
           </Box>
         </Grid>
       </Grid>
-    </Box>
     </Container> 
+    </Box>
   );
 };
 
