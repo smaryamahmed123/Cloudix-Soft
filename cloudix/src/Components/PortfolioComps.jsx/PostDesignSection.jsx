@@ -568,7 +568,7 @@ export default function PostDesignSection() {
                         component="img"
                         image={getOptimizedImage(post.image, 350)}
                         alt={post.title || "Post Design"}
-                        sx={{ height: 350, objectFit: "cover", width: "100%" }}
+                        sx={{objectFit: "cover", width: "100%" }}
                       />
                     </CardActionArea>
                   </Card>
