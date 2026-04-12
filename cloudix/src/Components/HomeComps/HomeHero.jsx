@@ -296,7 +296,7 @@ function HeroSection() {
         }}
       >
         <Typography
-          variant="h1"
+          variant="h2"
           sx={{
             fontSize: isLandscapeMobile
               ? 22
