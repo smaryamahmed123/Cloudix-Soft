@@ -46,7 +46,8 @@ const CommitmentSection = ({ compliance }) => {
             component={motion.h3}
             variant="h3"
             sx={{
-              fontWeight: theme.typography.fontWeightBold,
+              // fontWeight: theme.typography.fontWeightBold,
+              fontWeight: theme.typography.h3.fontWeight,
               lineHeight: 1.3,
               textDecoration: "underline",
               color: theme.palette.text.primary,
