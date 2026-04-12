@@ -49,7 +49,7 @@ custom: {
   typography: {
     fontFamily: `"Roboto","Segoe UI",Tahoma,Geneva,Verdana,sans-serif`,
     h1: { fontWeight: 700 },
-    h2: { fontWeight: 700 },
+    h2: { fontWeight: 650 },
     h3: {   fontWeight: 600, letterSpacing: "-0.02em", },
     body1: {
       fontSize: "1rem",
