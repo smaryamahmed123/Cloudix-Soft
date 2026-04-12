@@ -134,51 +134,54 @@ function HeroSection() {
         }}
       >
         {/* Heading */}
-        <Typography
-          component="h1"
-          sx={{
-            fontWeight: 700,
-            fontSize: isLandscapeMobile
-              ? 22
-              : { sm: 30, md: 40, lg: 60, xl: 70 },
-            lineHeight: 1.25,
-            color: "#fff",
-            textAlign: isLandscapeMobile ? "left" : "justify",
-          }}
-        >
-          <Box component="span" sx={{ whiteSpace: "nowrap" }}>
-            Make Your Brand Stand
-          </Box>
-          <br />
-          <Box component="span" sx={{ whiteSpace: "nowrap" }}>
-            Out Through{" "}
-            <Box
-              component="span"
-              sx={{
-                bgcolor: "#BBBF19",
-                color: "#111E2C",
-                px: 1,
-                borderRadius: 1.5,
-                display: "inline-block",
-              }}
-            >
-              Social Media
-            </Box>
-          </Box>
-          <br />
-          <Box
-            component="span"
-            sx={{
-              bgcolor: "#BBBF19",
-              color: "#111E2C",
-              px: 1,
-              borderRadius: 1.5,
-              display: "inline-block",
-            }}
-          >
-            Marketing
-          </Box>
-        </Typography>
+<Typography
+  component="h1"
+  sx={{
+    fontWeight: 700,
+    fontSize: isLandscapeMobile
+      ? 22
+      : { sm: 30, md: 40, lg: 60, xl: 70 },
+    lineHeight: 1.5,        // ✅ increased from 1.25 to 1.5
+    color: "#fff",
+    textAlign: isLandscapeMobile ? "left" : "justify",
+  }}
+>
+  <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+    Make Your Brand Stand
+  </Box>
+  <br />
+  <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+    Out Through{" "}
+    <Box
+      component="span"
+      sx={{
+        bgcolor: "#BBBF19",
+        color: "#111E2C",
+        px: 1,
+        borderRadius: 1.5,
+        display: "inline-block",
+        mb: 0.5,              // ✅ adds space below this span
+        lineHeight: 1.3,      // ✅ controls height of highlight box
+      }}
+    >
+      Social Media
+    </Box>
+  </Box>
+  <br />
+  <Box
+    component="span"
+    sx={{
+      bgcolor: "#BBBF19",
+      color: "#111E2C",
+      px: 1,
+      borderRadius: 1.5,
+      display: "inline-block",
+      lineHeight: 1.3,        // ✅ controls height of highlight box
+    }}
+  >
+    Marketing
+  </Box>
+</Typography>
 
         {/* ✅ Button below the heading */}
         <GradientButton
