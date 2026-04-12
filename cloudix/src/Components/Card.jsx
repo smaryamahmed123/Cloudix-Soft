@@ -206,7 +206,7 @@ const FlipBox = styled(MotionBox)({ width: "100%", height: "100%", transformStyl
 const CardSide = styled(Box)(({ theme }) => ({
   position: "absolute",
   inset: 0,
-  borderRadius: theme.shape.borderRadius,   // ✅ from theme
+  borderRadius: theme.spacing(3),   // ✅ from theme
   padding: theme.spacing(3, 2, 6),
   textAlign: "center",
   display: "flex",
