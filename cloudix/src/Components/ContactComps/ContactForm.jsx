@@ -8,6 +8,7 @@ import {
   Snackbar,
   Alert,
   Grid,
+  Container,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import GradientButton from '../GradientButton';
@@ -61,6 +62,7 @@ const ContactForm = () => {
   };
 
   return (
+    <Container maxWidth="lg">
     <Box
       sx={{
         display: 'flex',
@@ -178,6 +180,7 @@ const ContactForm = () => {
         </Alert>
       </Snackbar>
     </Box>
+    </Container> 
   );
 };
 
