@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, useTheme, } from "@mui/material";
+import { Box, Container, Grid, Typography, useTheme, } from "@mui/material";
 import { motion as Motion } from "framer-motion";
 import WorkTogetherImg from "../../assets/workTogether.png";
 import SectionImage from "../SectionImage";
@@ -22,6 +22,7 @@ const imageVariants = {
 const WorkTogether = () => {
 const theme = useTheme();
   return (
+    <Container maxWidth="lg">
     <Box
       sx={{
         backgroundColor: "#111E2C",
@@ -117,6 +118,7 @@ const theme = useTheme();
         </Grid>
       </Grid>
     </Box>
+    </Container> 
   );
 };
 
