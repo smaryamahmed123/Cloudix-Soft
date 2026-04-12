@@ -11,9 +11,9 @@ const theme = createTheme({
     },
   },
 
-  shape: {
-  borderRadius: '35px', // Apple softness
-},
+//   shape: {
+//   borderRadius: '35px', // Apple softness
+// },
 
 custom: {
   sectionSpacing: {
