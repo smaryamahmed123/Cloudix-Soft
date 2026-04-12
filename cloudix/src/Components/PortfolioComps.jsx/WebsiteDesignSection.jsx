@@ -400,6 +400,8 @@ const WebsiteDesignSection = () => {
                 overflowX: "auto",
                 scrollSnapType: "x mandatory",
                 pb: 3,
+                maxWidth: "1200px",   // ✅ ADD THIS
+                mx: "auto",           // ✅ ADD THIS
                 "&::-webkit-scrollbar": { height: 6 },
                 "&::-webkit-scrollbar-thumb": {
                   background: theme.palette.primary.main,             // ✅
