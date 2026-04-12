@@ -1,14 +1,14 @@
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import AboutHero from "../Components/AboutUsComponents/AboutHero";
-// import AboutContent from "../Components/AboutUsComponents/AboutContent";
-// import CommitmentSection from "../Components/AboutUsComponents/CommitmentSection";
-// import TeamSection from "../Components/AboutUsComponents/TeamSection";
-// import VisionMission from "../Components/AboutUsComponents/VisionMission";
-// import OurTeam from "../Components/AboutUsComponents/teamMembers";
-// import AboutSkeleton from "../Components/AboutUsComponents/AboutSkeleton";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import AboutHero from "../Components/AboutUsComponents/AboutHero";
+import AboutContent from "../Components/AboutUsComponents/AboutContent";
+import CommitmentSection from "../Components/AboutUsComponents/CommitmentSection";
+import TeamSection from "../Components/AboutUsComponents/TeamSection";
+import VisionMission from "../Components/AboutUsComponents/VisionMission";
+import OurTeam from "../Components/AboutUsComponents/teamMembers";
+import AboutSkeleton from "../Components/AboutUsComponents/AboutSkeleton";
 
-// const backendURL = import.meta.env.VITE_BACKEND_URL;
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 // const AboutUs = () => {
 //   const [about, setAbout] = useState(null);
