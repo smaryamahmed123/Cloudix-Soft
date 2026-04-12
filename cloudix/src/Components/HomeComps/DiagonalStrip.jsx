@@ -33,36 +33,38 @@ function DiagonalStrip({
         overflow: "hidden",
         pointerEvents: "none",
       }}
-    >
-      <MotionDiv
-        initial={{ x: "0%" }}
-        animate={!isLandscapeMobile ? { x: "-50%" } : undefined}
-        transition={{
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 20,
-          ease: "linear",
-        }}
-        style={{
-          display: "flex",
-          whiteSpace: "nowrap",
-          width: "max-content",
+    ><MotionDiv
+  initial={{ x: "0%" }}
+  animate={!isLandscapeMobile ? { x: "-50%" } : undefined}
+  transition={{
+    repeat: Infinity,
+    repeatType: "loop",
+    duration: 20,
+    ease: "linear",
+  }}
+  style={{
+    display: "flex",
+    whiteSpace: "nowrap",
+    width: "max-content",
+  }}
+>
+  {/* ✅ Two identical halves — when first half scrolls out, second is identical */}
+  {[...Array(2)].flatMap((_, i) =>
+    [...texts, ...texts, ...texts, ...texts].map((text, index) => (
+      <Typography
+        key={`${i}-${text}-${index}`}
+        sx={{
+          mx: 4,
+          color: textColor,
+          fontWeight: 500,
+          flexShrink: 0,
         }}
       >
-        {[...texts, ...texts, ...texts].map((text, index) => (
-          <Typography
-            key={`${text}-${index}`}
-            sx={{
-              mx: 4,
-              color: textColor,
-              fontWeight: 500,
-              flexShrink: 0,
-            }}
-          >
-            • {text}
-          </Typography>
-        ))}
-      </MotionDiv>
+        • {text}
+      </Typography>
+    ))
+  )}
+</MotionDiv>
     </Box>
   );
 }
