@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -72,6 +72,7 @@ const ContactInfo = () => {
 };
 
   return (
+    <Container maxWidth="lg">
     <MotionDiv
       initial={prefersReducedMotion ? false : { opacity: 0, x: -40 }}
       whileInView={prefersReducedMotion ? false : { opacity: 1, x: 0 }}
@@ -201,6 +202,7 @@ const ContactInfo = () => {
         </Box>
       )}
     </MotionDiv>
+    </Container> 
   );
 };
 
