@@ -166,15 +166,10 @@ const ContactInfo = () => {
         Sunday:{" "}
         <Box
           component="span"
-          sx={{
-            bgcolor: theme.palette.primary.main,   // ✅ highlighted
-            color: "#fff",
-            px: 1,
-            py: 0.2,
-            borderRadius: "4px",
-            fontSize: "0.85rem",
-            fontWeight: 600,
-          }}
+           sx={{
+              fontWeight: 700,        // ✅ bold
+              fontSize: "0.95rem",
+            }}
         >
           Closed
         </Box>
