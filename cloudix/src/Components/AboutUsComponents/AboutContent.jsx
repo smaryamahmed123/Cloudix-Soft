@@ -44,7 +44,7 @@ const AboutContent = ({ intro }) => {
           <Box flex={1}>
             <Typography
               variant="h3"
-              sx={{ mb: 3, lineHeight: 1.2, letterSpacing: "-0.4px" }}
+              sx={{ mb: 3, lineHeight: 1.2, fontWeight: theme.typography.h3.fontWeight, letterSpacing: "-0.4px" }}
             >
               {intro.title}
             </Typography>
