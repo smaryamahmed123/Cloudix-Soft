@@ -1,6 +1,6 @@
 // src/components/WhyChooseUs.jsx
 import React, { memo } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { motion as Motion, useReducedMotion } from "framer-motion";
 
 import Check from "../../assets/Mask group.png";
@@ -74,6 +74,7 @@ function WhyChooseUs() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
+    <Container maxWidth="lg">
     <Box
       component="section"
       aria-labelledby="why-choose-us-heading"
@@ -194,6 +195,7 @@ function WhyChooseUs() {
         </Grid>
       </Motion.div>
     </Box>
+      </Container> 
   );
 }
 
