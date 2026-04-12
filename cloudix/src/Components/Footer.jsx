@@ -6,7 +6,7 @@ import {
   Box,
   Grid,
   Typography,
-  Link
+  Link, Container
 } from "@mui/material";
 import {
   Phone,
@@ -98,10 +98,10 @@ const Footer = () => {
         sx={{
           bgcolor: "#111E2C",
           color: "#fff",
-          px: { xs: 3, md: 8 },
           py: 6,
         }}
       >
+        <Container maxWidth="lg">   
         <Grid container spacing={6} justifyContent="space-between">
 
           {/* About */}
@@ -205,6 +205,7 @@ const Footer = () => {
             © {new Date().getFullYear()} Cloudix Soft. All rights reserved.
           </Typography>
         </MotionBox>
+          </Container> 
       </Box>
     </MotionBox>
   );
