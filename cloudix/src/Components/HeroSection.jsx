@@ -28,48 +28,63 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      sx={{
-        position: "relative",
-        isolation: "isolate",
-        backgroundColor: theme.palette.background.default,          // ✅
+     // sx={{
+        // position: "relative",
+        // isolation: "isolate",
+        // backgroundColor: theme.palette.background.default,          // ✅
         // backgroundImage: `
         //   linear-gradient(
-        //     to right,
-        //     ${theme.palette.primary.dark}D9,
-        //     ${theme.palette.primary.dark}8C 40%,
-        //     ${theme.palette.primary.dark}26 70%
-        //   ),
-        //   url(${image})
+        //   ${theme.palette.primary.dark}80,
+        //   ${theme.palette.primary.dark}80
+        //  ),
+        //  url(${image})
         // `,
-        backgroundImage: `
-          linear-gradient(
-          ${theme.palette.primary.dark}80,
-          ${theme.palette.primary.dark}80
-         ),
-         url(${image})
-        `,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        height: { xs: "55vh", md: "75vh" },
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        px: { xs: 2, md: 12 },
-        color: theme.palette.common.white,                          // ✅
-        textAlign: "center",
-        overflow: "hidden",
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: "2px",
-          backgroundColor: theme.palette.primary.dark,             // ✅
-          zIndex: 5,
-        },
-      }}
+        // backgroundSize: "cover",
+        // backgroundPosition: "center",
+        // backgroundRepeat: "no-repeat",
+        // height: { xs: "55vh", md: "75vh" },
+        // display: "flex",
+        // alignItems: "center",
+        // justifyContent: "center",
+        // px: { xs: 2, md: 12 },
+        // color: theme.palette.common.white,                          // ✅
+        // textAlign: "center",
+        // overflow: "hidden",
+        // "&::after": {
+          // content: '""',
+          // position: "absolute",
+          // left: 0,
+          // right: 0,
+          // bottom: 0,
+          // height: "2px",
+          // backgroundColor: theme.palette.primary.dark,             // ✅
+          // zIndex: 5,
+        // },
+      //}}
+      sx={{
+  position: "relative",
+  isolation: "isolate",
+  backgroundImage: `
+    linear-gradient(
+      ${theme.palette.primary.dark}80,
+      ${theme.palette.primary.dark}80
+    ),
+    url(${image})
+  `,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  height: { xs: "55vh", md: "75vh" },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  px: { xs: 2, md: 12 },
+  color: theme.palette.common.white,
+  textAlign: "center",
+  overflow: "hidden",
+  // ❌ remove backgroundColor — it bleeds through as black/white strip
+  // ❌ remove ::after — causes visible line at bottom
+}}
     >
       <Box sx={{ maxWidth: 620 }}>
         <MotionTypography
