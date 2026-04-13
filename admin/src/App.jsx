@@ -3,17 +3,18 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
-import AdminContactMessage from './pages/AdminContactMessage';
-import AdminContactInfo from './pages/AdminContactInfo';
-import PrivateRoute from './components/PrivateRoute';
-import AdminServicesManager from './pages/AdminServicesManager';
-import PrivacyPolicyAdmin from './pages/AdminPrivacyPolicy';
 import AdminBlogs from './pages/AdminBlogs';
 import AdminAbout from './pages/AdminAbout';
-import LogoManager from './pages/AdminLogoManager';
-import AdminPostsManager from './pages/AdminPostsManager';
-import AdminLayout from './components/AdminLayout';
 import AddWebsite from './pages/AdminWebsite';
+import LogoManager from './pages/AdminLogoManager';
+import AdminLayout from './components/AdminLayout';
+import PrivateRoute from './components/PrivateRoute';
+import AdminSubscribers from './pages/AdminSubscribers';
+import AdminContactInfo from './pages/AdminContactInfo';
+import AdminPostsManager from './pages/AdminPostsManager';
+import PrivacyPolicyAdmin from './pages/AdminPrivacyPolicy';
+import AdminContactMessage from './pages/AdminContactMessage';
+import AdminServicesManager from './pages/AdminServicesManager';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="admin/messages" element={<AdminContactMessage />} />
             <Route path="admin/edit-contact" element={<AdminContactInfo />} />
             <Route path="admin/services" element={<AdminServicesManager />} />
+            <Route path="/admin/subscribers" element={<AdminSubscribers />} />
             <Route path="admin/blogs" element={<AdminBlogs />} />
             <Route path="admin/about" element={<AdminAbout />} />
             <Route path="admin/privacy-policy" element={<PrivacyPolicyAdmin />} />
