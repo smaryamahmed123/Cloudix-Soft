@@ -199,18 +199,18 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         <Box sx={{ textAlign: "center", py: { xs: 4, md: 6 } }}>
 
           {/* Main heading — same on both pages */}
-          <Typography
+         <Typography
             variant="h2"
             sx={{
               fontWeight: "bold",
-              color: theme.palette.common.white,
+              color: isShowingAll
+              ? theme.palette.text.primary      // ✅ dark text on services page
+              : theme.palette.common.white,     // ✅ white text on home page
               mb: 2,
-              // ✅ theme responsiveFontSizes handles size
             }}
           >
-            {isShowingAll ? "What We Offer" : "Our Features & Services"}
+          {isShowingAll ? "What We Offer" : "Our Features & Services"}
           </Typography>
-
           {/* Subheading — only on full services page */}
           {isShowingAll && (
             <Typography
