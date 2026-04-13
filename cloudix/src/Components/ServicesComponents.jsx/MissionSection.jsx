@@ -17,7 +17,7 @@ const MissionSection = () => {
         overflow: "hidden",
       }}
     >
-      <Container>
+      <Container maxwidth="lg">
         {/* ✅ Animated Heading */}
         <Motion.div
           initial={{ opacity: 0, y: 40 }}
