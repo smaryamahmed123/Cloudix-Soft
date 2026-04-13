@@ -74,7 +74,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  height: { xs: "55vh", md: "75vh" },
+  minHeight: { xs: "55vh", md: "75vh" },
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -82,6 +82,8 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   color: theme.palette.common.white,
   textAlign: "center",
   overflow: "hidden",
+  mb: 0,                                  // ✅ no bottom margin
+  borderRadius: 0, 
   // ❌ remove backgroundColor — it bleeds through as black/white strip
   // ❌ remove ::after — causes visible line at bottom
 }}
