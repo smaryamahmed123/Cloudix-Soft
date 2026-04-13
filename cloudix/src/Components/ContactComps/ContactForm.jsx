@@ -84,10 +84,10 @@ const ContactForm = () => {
             Send us a message
           </Typography>
 
-          <Grid container spacing={3} justifyContent={{ xs: "center", md: "flex-start" }}>
+          <Grid container spacing={3} >
             {/* Left Side — Inputs */}
             <Grid item xs={12} md={6}>   {/* ✅ xs=12 makes it full width on mobile */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', gap: 2 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 <TextField
                   label="Full Name"
                   name="name"
