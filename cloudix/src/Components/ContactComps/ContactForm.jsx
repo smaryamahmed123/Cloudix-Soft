@@ -86,7 +86,7 @@ const ContactForm = () => {
 
 <Grid container spacing={3}>
           {/* Left Side — Inputs */}
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid size={{md: 6, sm: 12, xs: 12}}>
             <Box
               sx={{
                 display: 'flex',
@@ -123,7 +123,7 @@ const ContactForm = () => {
           </Grid>
 
           {/* Right Side — Message */}
-          <Grid item xs={12} sm={12} md={6}>
+          <Grid size={{md: 6, sm: 12, xs: 12}}>
             <TextField
               label="Message"
               name="message"
