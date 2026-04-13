@@ -17,6 +17,7 @@ import {
 import {
   Dashboard as DashboardIcon,
   Work as WorkIcon,
+  EmailIcon as EmailIcon
   Article as ArticleIcon,
   Message as MessageIcon,
   Collections as CollectionsIcon,
@@ -42,14 +43,15 @@ const Sidebar = () => {
   const items = [
     { text: "Dashboard", icon: <DashboardIcon />, path: "/admin/dashboard" },
     { text: "Services", icon: <WorkIcon />, path: "/admin/services" },
+    { text: "Subscribers", icon: <EmailIcon />, path: "/admin/subscribers" },
     { text: "Blogs", icon: <ArticleIcon />, path: "/admin/blogs" },
     { text: "Messages", icon: <MessageIcon />, path: "/admin/messages" },
     { text: "Portfolio", icon: <CollectionsIcon />, path: "/admin/portfolio" },
     { text: "Posts", icon: <ArticleIcon />, path: "/admin/post-design" },
     { text: "Edit Contact", icon: <ContactPhoneIcon />, path: "/admin/edit-contact" },
     { text: "About Us", icon: <InfoIcon />, path: "/admin/about" },
+    { text: "Add Website", icon: <AddToPhotosIcon />, path: "admin/addWebsite"},
     { text: "Privacy Policy", icon: <PolicyIcon />, path: "/admin/privacy-policy" },
-    { text: "Add Website", icon: <AddToPhotosIcon />, path: "admin/addWebsite"}
   ];
 
   const drawerContent = (
