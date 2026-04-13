@@ -17,23 +17,6 @@ const MissionSection = () => {
         overflow: "hidden",
       }}
     >
-      <Motion.div
-        initial={{ opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-        viewport={{ once: true }}
-        style={{ position: "absolute" }}
-      >
-        <DecorativeCircle
-          size={{ xs: 300, sm: 400, md: 450 }}
-          borderColor="#E5E8C1"
-          innerSize={{ xs: 220, sm: 320, md: 380 }}
-          innerBorderColor="#C4C8CC"
-          position={{ left: "-15%", top: "20%" }}
-          zIndex={-1}
-        />
-      </Motion.div>
-
       <Container>
         {/* ✅ Animated Heading */}
         <Motion.div
