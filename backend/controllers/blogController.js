@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Blog from '../models/Blog.js';
 import cloudinary from '../config/cloudinary.js';
+import { sendBlogNotification } from '../utils/sendBlogNotification.js';
 
 // 📥 Get all blogs
 export const getAllBlogs = async (req, res) => {
@@ -36,6 +37,7 @@ export const createBlog = async (req, res) => {
           });
 
           const savedBlog = await blog.save();
+          await sendBlogNotification(savedBlog);
           res.status(201).json(savedBlog);
         }
       );
