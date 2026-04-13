@@ -29,3 +29,12 @@ export const unsubscribe = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const getSubscribers = async (req, res) => {
+  try {
+    const subscribers = await Subscriber.find().sort({ subscribedAt: -1 });
+    res.json(subscribers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
