@@ -58,7 +58,7 @@ const AboutContent = ({ intro }) => {
                 lineHeight: 1.7,
                 maxWidth: "520px",
                 margin: { xs: "0 auto", md: "0" },
-                textAlign: { xs: "center", md: "justify" },
+                textAlign: "justify",
               }}
             >
               {intro.description}
