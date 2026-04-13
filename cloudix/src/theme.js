@@ -24,7 +24,7 @@ let theme = createTheme({
     text: { primary: "#373C3F", secondary: "#7A7A7A" },
   },
   typography: {
-    fontFamily: `"Roboto","Segoe UI",Tahoma,Geneva,Verdana,sans-serif`,
+    fontFamily: `"Poppins", sans-serif`,
 
     h1: {
       fontWeight: 700,
@@ -83,7 +83,7 @@ let theme = createTheme({
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides: { body: { scrollBehavior: "smooth" } },
+      styleOverrides: { body: { scrollBehavior: "smooth", fontFamily: `"Poppins", sans-serif`, } },
     },
     MuiButton: {
       styleOverrides: { root: { fontWeight: 600 } },
