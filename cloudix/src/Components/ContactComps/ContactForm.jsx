@@ -126,6 +126,19 @@ const ContactForm = () => {
                 rows={7}
                 value={formData.message}
                 onChange={handleChange}
+                   sx={{
+
+                  height: '100%',
+
+                  '& .MuiOutlinedInput-root': {
+
+                    height: '100%',
+
+                    alignItems: 'flex-start',
+
+                  },
+
+                }}
               />
             </Grid>
           </Grid>
