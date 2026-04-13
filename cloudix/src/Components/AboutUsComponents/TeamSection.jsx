@@ -1,14 +1,116 @@
+// import React from "react";
+// import { Box, Typography, Container, useTheme, useMediaQuery } from "@mui/material";
+// import { motion } from "framer-motion";
+// import SectionImage from "../SectionImage";
+
+// const MotionBox = motion(Box);
+// const MotionImg = motion("img");
+
+// const TeamSection = ({ teamIntro }) => {
+//   const theme = useTheme();
+//   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+//   if (!teamIntro) return null;
+
+//   const imageSrc = teamIntro.image?.startsWith("http")
+//     ? teamIntro.image
+//     : `${teamIntro.image || ""}`;
+
+//   return (
+//     <MotionBox
+//       component="section"
+//       initial={{ opacity: 0, y: 50 }}
+//       whileInView={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.8, ease: "easeOut" }}
+//       viewport={{ once: true }}
+//       sx={{
+//         backgroundColor: theme.palette.primary.dark,
+//         color: theme.palette.common.white,
+//         py: { xs: theme.custom.sectionSpacing.xs, md: theme.custom.sectionSpacing.md },
+//         overflowX: "hidden",
+//       }}
+//     >
+//       <Container
+//         maxWidth="lg"
+//         sx={{
+//           display: "flex",
+//           flexDirection: { xs: "column-reverse", md: "row" },
+//           alignItems: "center",
+//           gap: { xs: theme.spacing(5), md: theme.spacing(10) },
+//         }}
+//       >
+       
+//         {/* RIGHT: IMAGE */}
+//         <SectionImage
+//             src={imageSrc}
+//             alt={teamIntro.title || "teamIntro"}
+//             accentColor={theme.palette.primary.light}
+//             direction="right"
+//             delay={0.5}
+//           />
+//                {/* LEFT: TEXT */}
+//         <MotionBox
+//           initial={{ opacity: 0, x: -50 }}
+//           whileInView={{ opacity: 1, x: 0 }}
+//           transition={{ duration: 0.8, delay: 0.3 }}
+//           viewport={{ once: true }}
+//           sx={{
+//             flex: 1,
+//             maxWidth: { xs: "100%", md: "50%" },
+//             textAlign: { xs: "center", md: "left" },
+//           }}
+//         >
+//           <Typography
+//             variant="h3"
+//             sx={{
+//               fontWeight: theme.typography.h3.fontWeight,
+//               mb: theme.spacing(3),
+//               color: theme.palette.accent.light,
+//               fontSize: { xs: "1.8rem", md: "2.5rem" },
+//             }}
+//           >
+//             {teamIntro.title}
+//           </Typography>
+
+//           <Typography
+//             variant="body1"
+//             sx={{
+//               fontSize: { xs: "1rem", md: "1.3rem" },
+//               mb: theme.spacing(2),
+//               color: theme.palette.common.white,
+//               lineHeight: 1.8,
+//               maxWidth: "600px",
+//               margin: { xs: "0 auto", md: "0" },
+//               textAlign: { xs: "center", md: "justify" },
+//             }}
+//           >
+//             {teamIntro.description}
+//           </Typography>
+//         </MotionBox>
+
+//       </Container>
+//     </MotionBox>
+//   );
+// };
+
+// export default TeamSection;
+
+
+
+
+
+
+
+
 import React from "react";
-import { Box, Typography, Container, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, Container, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import SectionImage from "../SectionImage";
 
 const MotionBox = motion(Box);
-const MotionImg = motion("img");
 
 const TeamSection = ({ teamIntro }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   if (!teamIntro) return null;
 
@@ -36,19 +138,19 @@ const TeamSection = ({ teamIntro }) => {
           display: "flex",
           flexDirection: { xs: "column-reverse", md: "row" },
           alignItems: "center",
-          gap: { xs: theme.spacing(5), md: theme.spacing(10) },
+          gap: { xs: 5, md: 10 },
         }}
       >
-       
-        {/* RIGHT: IMAGE */}
+        {/* LEFT: IMAGE */}
         <SectionImage
-            src={imageSrc}
-            alt={teamIntro.title || "teamIntro"}
-            accentColor={theme.palette.primary.light}
-            direction="right"
-            delay={0.5}
-          />
-               {/* LEFT: TEXT */}
+          src={imageSrc}
+          alt={teamIntro.title || "Team Image"}
+          accentColor={theme.palette.primary.light}
+          direction="right"
+          delay={0.5}
+        />
+
+        {/* RIGHT: TEXT */}
         <MotionBox
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -64,9 +166,9 @@ const TeamSection = ({ teamIntro }) => {
             variant="h3"
             sx={{
               fontWeight: theme.typography.h3.fontWeight,
-              mb: theme.spacing(3),
+              mb: 3,
               color: theme.palette.accent.light,
-              fontSize: { xs: "1.8rem", md: "2.5rem" },
+              // ✅ theme responsiveFontSizes handles size automatically
             }}
           >
             {teamIntro.title}
@@ -75,19 +177,18 @@ const TeamSection = ({ teamIntro }) => {
           <Typography
             variant="body1"
             sx={{
-              fontSize: { xs: "1rem", md: "1.3rem" },
-              mb: theme.spacing(2),
+              mb: 2,
               color: theme.palette.common.white,
               lineHeight: 1.8,
               maxWidth: "600px",
-              margin: { xs: "0 auto", md: "0" },
+              mx: { xs: "auto", md: 0 },
               textAlign: { xs: "center", md: "justify" },
+              // ✅ theme responsiveFontSizes handles size automatically
             }}
           >
             {teamIntro.description}
           </Typography>
         </MotionBox>
-
       </Container>
     </MotionBox>
   );
