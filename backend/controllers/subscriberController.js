@@ -32,8 +32,25 @@ export const unsubscribe = async (req, res) => {
 
 export const getSubscribers = async (req, res) => {
   try {
-    const subscribers = await Subscriber.find().sort({ subscribedAt: -1 });
-    res.json(subscribers);
+    const { page = 1, limit = 10, search = "" } = req.query;
+
+    const query = {
+      email: { $regex: search, $options: "i" },
+    };
+
+    const subscribers = await Subscriber.find(query)
+      .sort({ subscribedAt: -1 })
+      .limit(Number(limit))
+      .skip((page - 1) * limit);
+
+    const total = await Subscriber.countDocuments(query);
+
+    res.json({
+      subscribers,
+      total,
+      page: Number(page),
+      pages: Math.ceil(total / limit),
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
