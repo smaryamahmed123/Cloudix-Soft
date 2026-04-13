@@ -64,7 +64,7 @@ const BlogPage = () => {
   const handleSubscribe = async () => {
     if (!subEmail) return;
     try {
-      await axios.post(`${backendURL}/api/subscribe`, { email: subEmail });
+      await axios.post(`${backendURL}/api/newsletter/subscribe`, { email: subEmail });
       setSubSnackbar({ open: true, message: 'Subscribed successfully!', severity: 'success' });
       setSubEmail('');
     } catch (err) {
