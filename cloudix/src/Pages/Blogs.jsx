@@ -290,7 +290,7 @@ const handleSubscribe = async () => {
   </Box>
 </SidebarCard>
 
-// Add Snackbar before closing fragment:
+{/* Snackbar notification */}
 <Snackbar
   open={subSnackbar.open}
   autoHideDuration={4000}
