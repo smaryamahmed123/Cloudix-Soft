@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
 import GradientButton from "../GradientButton";
-import DecorativeCircle from "../DecorativeCircle";
 import { useNavigate } from "react-router-dom";
 import { motion as Motion } from "framer-motion"; // 👈 Import framer-motion
 
@@ -18,24 +17,6 @@ const MissionSection = () => {
         overflow: "hidden",
       }}
     >
-      {/* ✅ Animated Decorative Circles */}
-      <Motion.div
-        initial={{ opacity: 0, scale: 0.6 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }}
-        style={{ position: "absolute" }}
-      >
-        <DecorativeCircle
-          size={{ xs: 250, sm: 350, md: 400, lg: 500 }}
-          borderColor="#111e2c22"
-          innerSize={{ xs: 180, sm: 280, md: 320, lg: 420 }}
-          innerBorderColor="#dadc6961"
-          position={{ left: "-15%", top: "10%" }}
-          zIndex={0}
-        />
-      </Motion.div>
-
       <Motion.div
         initial={{ opacity: 0, scale: 0.6 }}
         whileInView={{ opacity: 1, scale: 1 }}
