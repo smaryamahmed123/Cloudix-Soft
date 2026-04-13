@@ -17,7 +17,7 @@ import {
 import {
   Dashboard as DashboardIcon,
   Work as WorkIcon,
-  EmailIcon as EmailIcon,
+  Email as EmailIcon,
   Article as ArticleIcon,
   Message as MessageIcon,
   Collections as CollectionsIcon,
