@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, useTheme, useMediaQuery, Container } from "@mui/material";
 import { motion } from "framer-motion";
-import AboutImage from "../../assets/about-team.png";
 import SectionImage from "../SectionImage";
 
 const MotionBox = motion(Box);
