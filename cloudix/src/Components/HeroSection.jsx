@@ -204,6 +204,3 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
 
 export default HeroSection;
 
-
-
-export default HeroSection;
