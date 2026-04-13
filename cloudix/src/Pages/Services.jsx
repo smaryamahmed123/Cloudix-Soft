@@ -19,7 +19,6 @@ import DesignServicesIcon from "@mui/icons-material/DesignServices";
 
 import ModernCard from "../Components/Card";
 import CardSkeleton from "../Components/CardSkeleton";
-import DecorativeCircle from "../Components/DecorativeCircle";
 import ServicesHero from "../Components/ServicesComponents.jsx/ServicesHero";
 import WorkTogether from "../Components/ServicesComponents.jsx/WorkTogether";
 import MissionSection from "../Components/ServicesComponents.jsx/MissionSection";
@@ -39,19 +38,9 @@ const Services = () => {
 
   return (
     <>
-      {/* Decorative Background Circles */}
-      <DecorativeCircle
-        size={{ xs: 180, sm: 350, md: 600 }}
-        innerSize={{ xs: 140, sm: 300, md: 550 }}
-        position={{
-          bottom: { xs: -100, sm: -140, md: -160 },
-          left: { xs: -100, sm: -140, md: -160 },
-        }}
-      />
-
       <ServicesHero />
 
-      <Container
+      {/* <Container
         maxWidth="lg"
         sx={{
           my: { xs: 6, md: 10 },
@@ -59,7 +48,7 @@ const Services = () => {
           position: "relative",
           zIndex: 2,
         }}
-      >
+      > */}
       </Container>
       <ServicesSection limit="all" />
       <WorkTogether />
