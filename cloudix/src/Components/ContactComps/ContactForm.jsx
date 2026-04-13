@@ -84,64 +84,65 @@ const ContactForm = () => {
             Send us a message
           </Typography>
 
-          <Grid container spacing={3} >
-            {/* Left Side — Inputs */}
-            <Grid item xs={12} md={6}>   {/* ✅ xs=12 makes it full width on mobile */}
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}>
-                <TextField
-                  label="Full Name"
-                  name="name"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-                <TextField
-                  label="Email Address"
-                  name="email"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-                <TextField
-                  label="Phone Number"
-                  name="phoneNo"
-                  variant="outlined"
-                  fullWidth
-                  value={formData.phoneNo}
-                  onChange={handleChange}
-                />
-              </Box>
-            </Grid>
-
-            {/* Right Side — Message */}
-            <Grid item xs={12} md={6}>   {/* ✅ xs=12 makes it full width on mobile */}
+<Grid container spacing={3}>
+          {/* Left Side — Inputs */}
+          <Grid size={{md: 6, sm: 12}}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                gap: 2,
+              }}
+            >
               <TextField
-                label="Message"
-                name="message"
-                multiline
+                label="Full Name"
+                name="name"
                 variant="outlined"
                 fullWidth
-                rows={7}
-                value={formData.message}
+                value={formData.name}
                 onChange={handleChange}
-                   sx={{
-
-                  height: '100%',
-
-                  '& .MuiOutlinedInput-root': {
-
-                    height: '100%',
-
-                    alignItems: 'flex-start',
-
-                  },
-
-                }}
               />
-            </Grid>
+              <TextField
+                label="Email Address"
+                name="email"
+                variant="outlined"
+                fullWidth
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <TextField
+                label="Phone Number"
+                name="phoneNo"
+                variant="outlined"
+                fullWidth
+                value={formData.phoneNo}
+                onChange={handleChange}
+              />
+            </Box>
           </Grid>
+
+          {/* Right Side — Message */}
+          <Grid size={{md: 6, sm: 12}}>
+            <TextField
+              label="Message"
+              name="message"
+              multiline
+              variant="outlined"
+              fullWidth
+              rows={7}
+              value={formData.message}
+              onChange={handleChange}
+              sx={{
+                height: '100%',
+                '& .MuiOutlinedInput-root': {
+                  height: '100%',
+                  alignItems: 'flex-start',
+                },
+              }}
+            />
+          </Grid>
+        </Grid>
 
           <Box sx={{ textAlign: 'center', mt: 4 }}>
             <GradientButton text="Send via Email" onClick={handleSubmit} />
