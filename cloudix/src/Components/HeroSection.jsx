@@ -19,8 +19,117 @@ const fadeUp = {
   }),
 };
 
+// const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
+//   const theme = useTheme();  // ✅
+
+//   return (
+//     <MotionBox
+//       component="header"
+//       variants={containerVariants}
+//       initial="hidden"
+//       animate="visible"
+//      // sx={{
+//         // position: "relative",
+//         // isolation: "isolate",
+//         // backgroundColor: theme.palette.background.default,          // ✅
+//         // backgroundImage: `
+//         //   linear-gradient(
+//         //   ${theme.palette.primary.dark}80,
+//         //   ${theme.palette.primary.dark}80
+//         //  ),
+//         //  url(${image})
+//         // `,
+//         // backgroundSize: "cover",
+//         // backgroundPosition: "center",
+//         // backgroundRepeat: "no-repeat",
+//         // height: { xs: "55vh", md: "75vh" },
+//         // display: "flex",
+//         // alignItems: "center",
+//         // justifyContent: "center",
+//         // px: { xs: 2, md: 12 },
+//         // color: theme.palette.common.white,                          // ✅
+//         // textAlign: "center",
+//         // overflow: "hidden",
+//         // "&::after": {
+//           // content: '""',
+//           // position: "absolute",
+//           // left: 0,
+//           // right: 0,
+//           // bottom: 0,
+//           // height: "2px",
+//           // backgroundColor: theme.palette.primary.dark,             // ✅
+//           // zIndex: 5,
+//         // },
+//       //}}
+//       sx={{
+//   position: "relative",
+//   isolation: "isolate",
+//   backgroundImage: `
+//     linear-gradient(
+//       ${theme.palette.primary.dark}80,
+//       ${theme.palette.primary.dark}80
+//     ),
+//     url(${image})
+//   `,
+//   backgroundSize: "cover",
+//   backgroundPosition: "center",
+//   backgroundRepeat: "no-repeat",
+//   minHeight: { xs: "55vh", md: "75vh" },
+//   display: "flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+//   px: { xs: 2, md: 12 },
+//   color: theme.palette.common.white,
+//   textAlign: "center",
+//   overflow: "hidden",
+//   mb: 0,                                  // ✅ no bottom margin
+//   borderRadius: 0, 
+//   // ❌ remove backgroundColor — it bleeds through as black/white strip
+//   // ❌ remove ::after — causes visible line at bottom
+// }}
+//     >
+//       <Box sx={{ maxWidth: 620 }}>
+//         <MotionTypography
+//           component="h1"
+//           variants={fadeUp}
+//           custom={1}
+//           initial="hidden"
+//           animate="visible"
+//           sx={{
+//             fontWeight: theme.typography.h1.fontWeight,             // ✅
+//             fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3.2rem" },
+//             lineHeight: 1.15,
+//             color: theme.palette.common.white,                      // ✅
+//             mb: 2,
+//           }}
+//         >
+//           {title}
+//         </MotionTypography>
+
+//         <MotionTypography
+//           component="p"
+//           variants={fadeUp}
+//           custom={2}
+//           initial="hidden"
+//           animate="visible"
+//           sx={{
+//             fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" },
+//             fontWeight: 600,                                         // ✅ bold subtitle
+//             color: theme.palette.accent.light,                      // ✅ #A9B838 from theme
+//             mb: buttonText ? 3 : 0,
+//           }}
+//         >
+//           {subtitle}
+//         </MotionTypography>
+//       </Box>
+//     </MotionBox>
+//   );
+// };
+
+
+
 const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
-  const theme = useTheme();  // ✅
+  const theme = useTheme();
 
   return (
     <MotionBox
@@ -28,65 +137,32 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-     // sx={{
-        // position: "relative",
-        // isolation: "isolate",
-        // backgroundColor: theme.palette.background.default,          // ✅
-        // backgroundImage: `
-        //   linear-gradient(
-        //   ${theme.palette.primary.dark}80,
-        //   ${theme.palette.primary.dark}80
-        //  ),
-        //  url(${image})
-        // `,
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
-        // backgroundRepeat: "no-repeat",
-        // height: { xs: "55vh", md: "75vh" },
-        // display: "flex",
-        // alignItems: "center",
-        // justifyContent: "center",
-        // px: { xs: 2, md: 12 },
-        // color: theme.palette.common.white,                          // ✅
-        // textAlign: "center",
-        // overflow: "hidden",
-        // "&::after": {
-          // content: '""',
-          // position: "absolute",
-          // left: 0,
-          // right: 0,
-          // bottom: 0,
-          // height: "2px",
-          // backgroundColor: theme.palette.primary.dark,             // ✅
-          // zIndex: 5,
-        // },
-      //}}
       sx={{
-  position: "relative",
-  isolation: "isolate",
-  backgroundImage: `
-    linear-gradient(
-      ${theme.palette.primary.dark}80,
-      ${theme.palette.primary.dark}80
-    ),
-    url(${image})
-  `,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  minHeight: { xs: "55vh", md: "75vh" },
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  px: { xs: 2, md: 12 },
-  color: theme.palette.common.white,
-  textAlign: "center",
-  overflow: "hidden",
-  mb: 0,                                  // ✅ no bottom margin
-  borderRadius: 0, 
-  // ❌ remove backgroundColor — it bleeds through as black/white strip
-  // ❌ remove ::after — causes visible line at bottom
-}}
+        position: "relative",
+        isolation: "isolate",
+        backgroundImage: `
+          linear-gradient(
+            ${theme.palette.primary.dark}80,
+            ${theme.palette.primary.dark}80
+          ),
+          url(${image})
+        `,
+        backgroundSize: "cover",          // ✅ always fills box regardless of image size
+        backgroundPosition: "center",     // ✅ centers image in box
+        backgroundRepeat: "no-repeat",
+        height: { xs: "50vh", md: "70vh" }, // ✅ fixed height — not minHeight
+        width: "100%",                    // ✅ full width always
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        px: { xs: 2, md: 12 },
+        color: theme.palette.common.white,
+        textAlign: "center",
+        overflow: "hidden",               // ✅ clips any image overflow
+        flexShrink: 0,                    // ✅ prevents height collapsing
+        mb: 0,
+        borderRadius: 0,
+      }}
     >
       <Box sx={{ maxWidth: 620 }}>
         <MotionTypography
@@ -96,10 +172,10 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
           initial="hidden"
           animate="visible"
           sx={{
-            fontWeight: theme.typography.h1.fontWeight,             // ✅
+            fontWeight: theme.typography.h1.fontWeight,
             fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3.2rem" },
             lineHeight: 1.15,
-            color: theme.palette.common.white,                      // ✅
+            color: theme.palette.common.white,
             mb: 2,
           }}
         >
@@ -114,8 +190,8 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
           animate="visible"
           sx={{
             fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" },
-            fontWeight: 600,                                         // ✅ bold subtitle
-            color: theme.palette.accent.light,                      // ✅ #A9B838 from theme
+            fontWeight: 600,
+            color: theme.palette.accent.light,
             mb: buttonText ? 3 : 0,
           }}
         >
@@ -125,5 +201,9 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
     </MotionBox>
   );
 };
+
+export default HeroSection;
+
+
 
 export default HeroSection;
