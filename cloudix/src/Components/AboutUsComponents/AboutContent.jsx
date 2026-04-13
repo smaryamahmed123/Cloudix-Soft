@@ -159,7 +159,7 @@ const AboutContent = ({ intro }) => {
                 mb: { xs: 2, md: 3 },
                 lineHeight: 1.7,
                 maxWidth: "520px",
-                textAlign: { xs: "justify", md: "left" },
+                textAlign: "justify",
                 mx: { xs: "auto", md: 0 },
               }}
             >
