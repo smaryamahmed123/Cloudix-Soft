@@ -31,11 +31,10 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   sx={{
     position: "relative",
     // height: { xs: "50vh", md: "70vh" },
-    height: {
-  xs: "30vh",  // smaller for contain
-  sm: "40vh",
-  md: "60vh",
-},
+    height: "30vh",  // smaller for contain
+  // sm: "40vh",
+  // md: "60vh",
+// },
     width: "100%",
     display: "flex",
     alignItems: "center",
