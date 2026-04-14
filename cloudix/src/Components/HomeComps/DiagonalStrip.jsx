@@ -151,34 +151,17 @@ function DiagonalStrip({
         {/* Two identical halves for seamless infinite loop */}
         {[0, 1].flatMap((half) =>
           repeated.map((text, index) => (
-            <Typography
-              key={`${half}-${index}`}
-              sx={{
-                mx: { md: 3, lg: 4 },
-                color: textColor,
-                fontWeight: 700,
-                fontSize: { md: "0.9rem", lg: "1.1rem", xl: "1.25rem" },
-                flexShrink: 0,
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              {/* Bullet dot */}
-              <Box
-                component="span"
-                sx={{
-                  display: "inline-block",
-                  width: 7,
-                  height: 7,
-                  borderRadius: "50%",
-                  bgcolor: textColor,
-                  opacity: 0.7,
-                  flexShrink: 0,
-                }}
-              />
-              {text}
-            </Typography>
+             <Typography
+         key={`${i}-${text}-${index}`}
+         sx={{
+           mx: { md: 3, lg: 4 },
+           color: textColor,
+           fontWeight: 500,
+           flexShrink: 0,
+         }}
+       >
+         • {text}
+       </Typography>
           ))
         )}
       </MotionDiv>
