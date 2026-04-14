@@ -121,8 +121,8 @@ function DiagonalStrip({
         width: "155%",
         transform: `rotate(${angle}deg)`,
         bgcolor: bgColor,
-        borderTop: `2px solid ${borderColor}`,
-        borderBottom: `2px solid ${borderColor}`,
+        borderTop: `1px solid ${borderColor}`,
+        borderBottom: `1px solid ${borderColor}`,
         py: { md: 1, lg: 1.5 },
         overflow: "hidden",
         pointerEvents: "none",
@@ -149,7 +149,7 @@ function DiagonalStrip({
         }}
       >
         {/* Two identical halves for seamless infinite loop */}
-        {[0, 1].flatMap((half) =>
+        {[0, 1].flatMap((_, i, half) =>
           repeated.map((text, index) => (
              <Typography
          key={`${i}-${text}-${index}`}
