@@ -93,7 +93,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         whileInView="show"
         viewport={{ once: true }}
       >
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={2} justifyContent="center">
           {loading
             ? [...Array(limit === "all" ? 6 : limit)].map((_, index) => (
                 <Grid
