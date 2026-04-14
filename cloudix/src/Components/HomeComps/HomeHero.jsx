@@ -131,8 +131,8 @@ function HeroSection() {
             bgColor={theme.palette.accent.main}
             borderColor={theme.palette.primary.dark}
             angle={40}
-            // position="90%"
-            position="5%"
+            position="90%"
+           // position="5%"
           />
           <DiagonalStrip
             texts={["UI/UX", "Marketing", "Motion", "Branding"]}
@@ -140,8 +140,8 @@ function HeroSection() {
             borderColor="#d9d9d9"
             textColor={theme.palette.common.white}
             angle={-10}
-            //position="30%"
-            position="-5%" 
+            position="30%"
+            //position="-5%" 
           />
         </>
       )}
