@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container,} from '@mui/material';
 import AboutHero from "../Components/AboutUsComponents/AboutHero";
 import AboutContent from "../Components/AboutUsComponents/AboutContent";
 import CommitmentSection from "../Components/AboutUsComponents/CommitmentSection";
@@ -36,7 +35,6 @@ const AboutUs = () => {
 
       {loading && <AboutSkeleton />}  {/* ✅ skeleton shows below hero while loading */}
 
-      <Container maxWidth="lg" >
       {!loading && error && (
         <div style={{ textAlign: "center", padding: "50px 0", color: "red" }}>
           {error}
@@ -54,7 +52,6 @@ const AboutUs = () => {
           {about?.team?.length > 0 && <OurTeam team={about.team} />}
         </>
       )}
-      </Container>
     </>
   );
 };
