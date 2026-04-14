@@ -1,6 +1,6 @@
 // src/components/WhyChooseUs.jsx
 import React, { memo } from "react";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, useTheme, } from "@mui/material";
 import { motion as Motion, useReducedMotion } from "framer-motion";
 
 import Check from "../../assets/Mask group.png";
@@ -71,6 +71,7 @@ const cardVariants = {
 /* ---------------- COMPONENT ---------------- */
 
 function WhyChooseUs() {
+  const theme = useTheme();
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -89,8 +90,8 @@ function WhyChooseUs() {
       >
         <Typography
           id="why-choose-us-heading"
-          variant="h2"
-          sx={{ mb: 2, color: "#111E2C" }}
+          variant="h3"
+          sx={{ mb: 2, color: theme.palette.primary.dark }}
         >
           
           Why Choose Us?
