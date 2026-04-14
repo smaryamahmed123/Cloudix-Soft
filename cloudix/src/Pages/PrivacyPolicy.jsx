@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, Box, useTheme } from '@mui/material';
-import bgImg from '../assets/Privicy-bg.png';
+import bgImg from '../assets/Privicy-bg.webp';
 import HeroSection from '../Components/HeroSection';
 import { parseRichText } from '../utils/parseRichText'; // ✅ import parser
 
