@@ -100,7 +100,12 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   animate="visible"
   sx={{
     position: "relative",
-    height: { xs: "50vh", md: "70vh" },
+    // height: { xs: "50vh", md: "70vh" },
+    height: {
+  xs: "40vh",  // smaller for contain
+  sm: "50vh",
+  md: "70vh",
+}
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -109,21 +114,28 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   }}
 >
   {/* ✅ Background Image (LCP Optimized like Home Hero) */}
-  <Box
-    component="img"
-    src={image}
-    alt={title}
-    loading="lazy"
-    decoding="async"
-    fetchpriority="low"
-    sx={{
-      position: "absolute",
-      inset: 0,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-    }}
-  />
+<Box
+  component="img"
+  src={image}
+  alt={title}
+  loading="lazy"
+  decoding="async"
+  fetchpriority="low"
+  sx={{
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+
+    // ✅ KEY PART (like post section behavior)
+    objectFit: {
+      xs: "contain",   // mobile → show full image (no crop)
+      sm: "cover",     // tablet+
+    },
+
+    backgroundColor: "#000", // fills empty space when contain
+  }}
+/>
 
   {/* ✅ Overlay (same as home hero) */}
   <Box
