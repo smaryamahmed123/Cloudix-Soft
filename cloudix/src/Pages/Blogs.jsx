@@ -5,7 +5,7 @@ import {
   Grid, Button, Box, TextField, Snackbar, Alert, useTheme,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import bgImg from '../assets/blog-bg.png';
+import bgImg from '../assets/blog-bg.webp';
 import HeroSection from '../Components/HeroSection';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
