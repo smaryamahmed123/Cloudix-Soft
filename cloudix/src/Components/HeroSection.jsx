@@ -41,7 +41,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
         backgroundSize: "cover",          // ✅ always fills box regardless of image size
         backgroundPosition: "center",     // ✅ centers image in box
         backgroundRepeat: "no-repeat",
-        maxheight: { xs: "50vh", md: "70vh" }, // ✅ fixed height — not minHeight
+        minheight: { xs: "50vh", md: "70vh" }, // ✅ fixed height — not minHeight
         width: "100%",                    // ✅ full width always
         display: "flex",
         alignItems: "center",
