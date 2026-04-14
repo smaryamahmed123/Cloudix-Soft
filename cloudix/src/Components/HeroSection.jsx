@@ -160,6 +160,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
         fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3.2rem" },
         lineHeight: 1.15,
         mb: 2,
+        color: theme.palette.common.white,
       }}
     >
       {title}
