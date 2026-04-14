@@ -330,7 +330,7 @@ function HeroSection() {
             bgColor={theme.palette.accent.main}
             borderColor={theme.palette.primary.dark}
             angle={40}
-            position="90%"
+            position="86%"
           />
           {/* Dark strip — shallow angle, bottom */}
           <DiagonalStrip
@@ -338,8 +338,8 @@ function HeroSection() {
             bgColor={theme.palette.primary.dark}
             borderColor="rgba(200,242,58,0.25)"
             textColor={theme.palette.common.white}
-            angle={-10}
-            position="30%"
+            angle={-12}
+            position="22%"
             reverse
           />
         </>
