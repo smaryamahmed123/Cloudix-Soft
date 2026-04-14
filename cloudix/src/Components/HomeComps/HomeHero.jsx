@@ -367,8 +367,12 @@ function HeroSection() {
   const { isMobile, isDesktop, isLandscapeMobile } = useDevice();
   const buttonSize = isMobile ? "small" : isDesktop ? "large" : "medium";
 
-  // Strips and side labels only on lg+ to prevent overflow on tablets/landscape
-  const showStrips = isDesktop;
+  const isWiderThan600 = useMediaQuery("(min-width:600px)");
+
+  // Strips visible on any screen wider than 600px
+  const showStrips = isWiderThan600 && !isLandscapeMobile;
+
+  // Side labels only on desktop (lg+) — too cramped on tablets
   const showSideLabels = isDesktop;
 
   return (
