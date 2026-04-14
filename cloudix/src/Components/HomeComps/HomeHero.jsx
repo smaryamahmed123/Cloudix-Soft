@@ -215,7 +215,11 @@ function HeroSection() {
         }}
       />
 
-      {/* Vertical side labels — desktop only */}
+     
+
+      {/* Main content */}
+       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 3 }}>
+          {/* Vertical side labels — desktop only */}
       {!isMobile && !isLandscapeMobile && (
         <Box
           aria-hidden
@@ -249,9 +253,6 @@ function HeroSection() {
           ))}
         </Box>
       )}
-
-      {/* Main content */}
-       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 3 }}>
          <Box
            sx={{
              display: "flex",
