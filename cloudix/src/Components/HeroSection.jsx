@@ -52,12 +52,12 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   sx={{ 
     position: "absolute", 
     inset: 0, width: "100%", 
-    // height: "100%",
-    height: {{
-      xs:"30vh",  // smaller for contain
-      sm: "40vh",
-      md: "60vh",
-    },
+    height: "100%",
+    // height: {{
+    //   xs:"30vh",  // smaller for contain
+    //   sm: "40vh",
+    //   md: "60vh",
+    // }},
     objectFit: "cover", 
   }} 
 />
