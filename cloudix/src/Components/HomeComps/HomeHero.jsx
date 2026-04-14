@@ -251,79 +251,75 @@ function HeroSection() {
       )}
 
       {/* Main content */}
-      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 3 }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: { xs: 2.5, md: 3 },
-            alignItems: "flex-start",
-            maxWidth: { xs: "100%", sm: "85%", md: 600, lg: 700 },
-            pb: { xs: 8, md: 0 },
-            pl: { md: 4, lg: 5 }, // offset for the side labels
-          }}
-        >
-          {/* Headline */}
-          <Typography
-            variant="h3"
-            sx={{
-              fontSize: isLandscapeMobile
-                ? 22
-                : { xs: 28, sm: 34, md: 42, lg: 58, xl: 66 },
-              fontWeight: 800,
-              lineHeight: 1.18,
-              letterSpacing: "-0.02em",
-              color: theme.palette.common.white,
-            }}
-          >
-            <Box component="span" sx={{ whiteSpace: "nowrap" }}>
-              Make Your Brand Stand
-            </Box>
-            <br />
-            <Box component="span" sx={{ whiteSpace: "nowrap" }}>
-              Out Through{" "}
-              <Box
-                component="span"
-                sx={{
-                  bgcolor: theme.palette.secondary.main,
-                  color: theme.palette.primary.dark,
-                  px: { xs: 1, md: 1.5 },
-                  borderRadius: 1.5,
-                  display: "inline-block",
-                  mb: 0.5,
-                  lineHeight: 1.28,
-                }}
-              >
-                Social Media
-              </Box>
-            </Box>
-            <br />
-            <Box
-              component="span"
-              sx={{
-                bgcolor: theme.palette.secondary.main,
-                color: theme.palette.primary.dark,
-                px: { xs: 1, md: 1.5 },
-                borderRadius: 1.5,
-                display: "inline-block",
-                lineHeight: 1.28,
-              }}
-            >
-              Marketing
-            </Box>
-          </Typography>
+       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 3 }}>
+         <Box
+           sx={{
+             display: "flex",
+             flexDirection: "column",
+             justifyContent: "center",
+             gap: 3,
+             alignItems: "flex-start",
+             // maxWidth: { xs: "100%", md: 700 },  // ✅ text doesn't stretch full width on desktop
+             maxWidth: { xs: "100%", sm: "85%", md: 600, lg: 700 },
+             pb: { xs: 8, md: 0 },
+           }}
+         >
+           <Typography
+             variant="h3"
+             sx={{
+               fontSize: isLandscapeMobile
+                 ? 22
+                 : { sm: 30, md: 40, lg: 60, xl: 70 },
+               lineHeight: 1.5,
+               color: theme.palette.common.white,
+               textAlign: isLandscapeMobile ? "left" : "justify",
+             }}
+           >
+             <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+               Make Your Brand Stand
+             </Box>
+             <br />
+             <Box component="span" sx={{ whiteSpace: "nowrap" }}>
+               Out Through{" "}
+               <Box
+                 component="span"
+                 sx={{
+                   bgcolor: theme.palette.secondary.main,
+                   color: theme.palette.primary.dark,
+                   px: 1,
+                   borderRadius: 1.5,
+                   display: "inline-block",
+                   mb: 0.5,
+                   lineHeight: 1.3,
+                 }}
+               >
+                 Social Media
+               </Box>
+             </Box>
+             <br />
+             <Box
+               component="span"
+               sx={{
+                 bgcolor: theme.palette.secondary.main,
+                 color: theme.palette.primary.dark,
+                 px: 1,
+                 borderRadius: 1.5,
+                 display: "inline-block",
+                 lineHeight: 1.3,
+               }}
+             >
+               Marketing
+             </Box>
+           </Typography>
 
-          {/* CTA Button */}
-          <GradientButton
-            aria-label="Contact Cloudix Soft"
-            text="Let's Talk"
-            size={buttonSize}
-            onClick={() => navigate("/contact")}
-          />
-        </Box>
-      </Container>
-
+           <GradientButton
+             aria-label="Contact Cloudix Soft"
+             text="Let's Talk"
+             size={buttonSize}
+             onClick={() => navigate("/contact")}
+           />
+         </Box>
+       </Container>
       {/* Diagonal strips — desktop only */}
       {!isMobile && !isLandscapeMobile && (
         <>
