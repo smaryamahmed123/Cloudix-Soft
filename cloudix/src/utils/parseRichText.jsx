@@ -17,7 +17,8 @@ export function parseRichText(text) {
   if (!text) return null;
 
   // Combined regex: matches **bold** OR [label](url)
-  const pattern = /\*\*(.+?)\*\*|\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g;
+  // const pattern = /\*\*(.+?)\*\*|\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g;
+  const pattern = /\*\*(.+?)\*\*|\[(.+?)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+|tel:[^\s)]+)\)/g;
 
   const nodes = [];
   let lastIndex = 0;
@@ -40,16 +41,26 @@ export function parseRichText(text) {
     } else if (match[2] && match[3]) {
       // [label](url)
       nodes.push(
-        <Link
-          key={key++}
-          href={match[3]}
-          target="_blank"
-          rel="noopener noreferrer"
-          underline="hover"
-          sx={{ fontWeight: 500 }}
-        >
-          {match[2]}
-        </Link>
+        // <Link
+        //   key={key++}
+        //   href={match[3]}
+        //   target="_blank"
+        //   rel="noopener noreferrer"
+        //   underline="hover"
+        //   sx={{ fontWeight: 500 }}
+        // >
+        //   {match[2]}
+        // </Link>
+           <Link
+             key={key++}
+             href={match[3]}
+             target={match[3].startsWith("http") ? "_blank" : undefined}
+             rel="noopener noreferrer"
+             underline="hover"
+             sx={{ fontWeight: 500 }}
+           >
+             {match[2]}
+           </Link>
       );
     }
 
