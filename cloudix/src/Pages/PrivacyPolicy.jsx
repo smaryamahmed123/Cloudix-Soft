@@ -33,7 +33,7 @@ const PrivacyPolicyUser = () => {
       />
 
       {/* Policy Content */}
-      <Container maxWidth="lg" sx={{ pb: { xs: 8, md: 12 } }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
         {sections.length === 0 ? (
           <Typography variant="body1" align="center" color="text.secondary">
             No privacy policy available.
