@@ -46,6 +46,7 @@ const AboutContent = ({ intro }) => {
               sx={{
                 mb: { xs: 2, md: 3 },
                 lineHeight: 1.2,
+                color: theme.palette.primary.dark
                 letterSpacing: "-0.4px",
               }}
             >
