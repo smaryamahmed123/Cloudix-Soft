@@ -15,7 +15,7 @@ function HeroSection() {
   const isWiderThan600 = useMediaQuery("(min-width:600px)");
 
   // Strips visible on any screen wider than 600px
-  const showStrips = isWiderThan600 && !isLandscapeMobile;
+  const showStrips = isWiderThan600;
 
   // Side labels only on desktop (lg+) — too cramped on tablets
   const showSideLabels = isDesktop;
