@@ -1,5 +1,5 @@
 import HeroSection from "../HeroSection";
-import ServicesBg from "../../assets/services-bg.png";
+import ServicesBg from "../../assets/services-bg.webp";
 
 const ServicesHero = () => {
   return (
