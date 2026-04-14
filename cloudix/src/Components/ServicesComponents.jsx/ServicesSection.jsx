@@ -126,7 +126,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
       >
         <Grid
           container
-          rowSpacing={{ xs: 2, md: 4 }}
+          rowSpacing={{ xs: 2, md: 3 }}
           columnSpacing={{ xs: 2, md: 3 }}
           justifyContent="center"
         >
