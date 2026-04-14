@@ -125,18 +125,7 @@ function HeroSection() {
 
       {/* Decorative strips — desktop only */}
       {!isMobile && !isLandscapeMobile && (
-          <Box
-    sx={{
-      position: "absolute",
-      top: 0,
-      right: 0,
-      width: "55%",        // ✅ only occupies right 55% of screen
-      height: "100%",
-      overflow: "hidden",  // ✅ clips strips that go outside this box
-      zIndex: 1,           // ✅ behind text (Container is zIndex: 3)
-      pointerEvents: "none",
-    }}
-  >
+          <>
           <DiagonalStrip
             texts={["Development", "Branding", "E-Commerce", "Animation"]}
             bgColor={theme.palette.accent.main}
@@ -154,7 +143,7 @@ function HeroSection() {
             position="30%"
             //position="-5%" 
           />
-        </Box>
+        </>
       )}
     </Box>
   );
