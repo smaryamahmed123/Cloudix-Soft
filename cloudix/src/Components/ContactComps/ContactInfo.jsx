@@ -66,7 +66,7 @@ const ContactInfo = () => {
       <Typography
         variant="h3"
         gutterBottom
-        sx={{ fontWeight: "bold", color: theme.palette.primary.main, textAlign: "center", mt:2 }}
+        sx={{ fontWeight: "bold", color: theme.palette.primary.main, textAlign: "center", pt:2 }}
       >
         Get In Touch
       </Typography>
