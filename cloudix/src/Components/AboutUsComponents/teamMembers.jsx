@@ -46,11 +46,13 @@ const OurTeam = ({ team }) => {
       <Grid
         container
         spacing={4}
+        alignItems="stretch" 
         justifyContent="center"
         sx={{ width: "100%", margin: 0, px: { xs: 2, sm: 4 } }}
       >
         {team.map((member, index) => (
-          <Grid key={index} item xs={12} sm={6} md={4}>
+          // <Grid key={index} item xs={12} sm={6} md={4}>
+          <Grid key={index} item xs={12} sm={6} md={4} sx={{ display: "flex" }}>
             <Motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -76,12 +78,13 @@ const OurTeam = ({ team }) => {
                     px: 2,
                     width: "100%",
                     maxWidth: 320,
-                    height: { xs: 440, sm: 460, md: 480 },
+                    // height: { xs: 440, sm: 460, md: 480 },
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "space-between",
-                    boxSizing: "border-box",
+                    // boxSizing: "border-box",
+                    height: "100%",
                   }}
                 >
                   {/* Avatar */}
