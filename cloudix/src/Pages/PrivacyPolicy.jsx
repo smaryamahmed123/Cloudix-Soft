@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, Box, useTheme } from '@mui/material';
 import bgImg from '../assets/Privicy-bg.png';
-import HeroSection from '../Components/HeroSection'; // ✅ import
+import HeroSection from '../Components/HeroSection';
+import { parseRichText } from '../utils/parseRichText'; // ✅ import parser
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -23,16 +24,13 @@ const PrivacyPolicyUser = () => {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: theme.palette.background.subtle,}}>
-
-      {/* ✅ Reusable Hero Section */}
+    <Box sx={{ backgroundColor: theme.palette.background.subtle }}>
       <HeroSection
         image={bgImg}
         title="Privacy Policy"
         subtitle="Learn how we collect, use, and protect your personal information."
       />
 
-      {/* Policy Content */}
       <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
         {sections.length === 0 ? (
           <Typography variant="body1" align="center" color="text.secondary">
@@ -41,6 +39,7 @@ const PrivacyPolicyUser = () => {
         ) : (
           sections.map((section, index) => (
             <Box key={index} sx={{ mb: 5 }}>
+              {/* Section heading — supports **bold** and [links](url) */}
               <Typography
                 variant="h6"
                 gutterBottom
@@ -49,24 +48,36 @@ const PrivacyPolicyUser = () => {
                   color: theme.palette.primary.dark,
                 }}
               >
-                {section.title}
+                {parseRichText(section.title)}
               </Typography>
+
+              {/*
+                Content: split by newlines first so line breaks are preserved,
+                then parse each line for bold/links.
+              */}
               <Typography
                 variant="body1"
+                component="div"            // ✅ use div so <p> nesting is valid
                 sx={{
-                  whiteSpace: 'pre-wrap',
                   textAlign: 'justify',
                   color: theme.palette.text.secondary,
                   lineHeight: 1.8,
                 }}
               >
-                {section.content}
+                {section.content
+                  .split('\n')
+                  .map((line, i, arr) => (
+                    <React.Fragment key={i}>
+                      {parseRichText(line)}
+                      {/* Preserve line breaks except after the last line */}
+                      {i < arr.length - 1 && <br />}
+                    </React.Fragment>
+                  ))}
               </Typography>
             </Box>
           ))
         )}
       </Container>
-
     </Box>
   );
 };
