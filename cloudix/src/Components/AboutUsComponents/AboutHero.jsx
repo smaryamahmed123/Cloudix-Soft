@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 // import { motion } from "framer-motion";
-import AboutBg from "../../assets/aboutus-bg.webp";
+import AboutBg from "../../assets/about-bg.webp";
 import HeroSection from "../HeroSection";
 
 
