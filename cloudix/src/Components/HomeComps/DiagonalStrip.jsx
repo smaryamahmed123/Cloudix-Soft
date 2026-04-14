@@ -123,7 +123,7 @@ function DiagonalStrip({
         bgcolor: bgColor,
         borderTop: `1px solid ${borderColor}`,
         borderBottom: `1px solid ${borderColor}`,
-        py: { md: 1, lg: 1.5 },
+        py: { md: 0.7, lg: 1 },
         overflow: "hidden",
         pointerEvents: "none",
         zIndex: 8,
