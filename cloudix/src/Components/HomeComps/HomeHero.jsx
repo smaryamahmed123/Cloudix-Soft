@@ -45,12 +45,7 @@ function HeroSection() {
           position: "absolute",
           inset: 0,
           width: "100%",
-          // height: "100%",
-              height: {
-                xs:"40vh",  // smaller for contain
-                sm: "50vh",
-                md: "60vh",
-              },
+          height: "100%",
           objectFit: "cover",
         }}
       />
