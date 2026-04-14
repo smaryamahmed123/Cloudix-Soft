@@ -328,7 +328,7 @@ function HeroSection() {
             texts={["Development", "Branding", "Animation", "E-Commerce", "Editing"]}
             bgColor={theme.palette.accent.main}
             borderColor={theme.palette.primary.dark}
-            angle={40}
+            angle={50}
             position="82%"
           />
           {/* Dark strip — shallow angle, bottom */}
