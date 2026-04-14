@@ -44,22 +44,6 @@ const ContactInfo = () => {
     return () => controller.abort();
   }, []);
 
-  // const formatWorkingHours = (wh) => {
-  //   if (!wh) return "No hours available";
-
-  //   const weekday =
-  //     wh.monday?.open && wh.monday?.close
-  //       ? `${wh.monday.open} – ${wh.monday.close}`
-  //       : "Closed";
-
-  //   const weekend =
-  //     wh.saturday?.open && wh.saturday?.close
-  //       ? `${wh.saturday.open} – ${wh.saturday.close}`
-  //       : "Closed";
-
-  //   return `Monday – Saturday: ${weekday}\nSunday: Closed `;
-  // };
-
   const formatWorkingHours = (wh) => {
   if (!wh) return "No hours available";
 
@@ -80,10 +64,9 @@ const ContactInfo = () => {
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
       <Typography
-        component="h2"
-        variant={isMobile ? "h3" : "h2"}
+        variant="h3"
         gutterBottom
-        sx={{ fontWeight: "bold", color: theme.palette.primary.main, textAlign: "center" }}
+        sx={{ fontWeight: "bold", color: theme.palette.primary.main, textAlign: "center", mt:2 }}
       >
         Get In Touch
       </Typography>
