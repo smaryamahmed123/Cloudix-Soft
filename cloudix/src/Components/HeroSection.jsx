@@ -133,7 +133,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
       sm: "cover",     // tablet+
     },
 
-    backgroundColor: "#000", // fills empty space when contain
+    backgroundColor: "rgba(255,255,255,0.95)", // fills empty space when contain
   }}
 />
 
