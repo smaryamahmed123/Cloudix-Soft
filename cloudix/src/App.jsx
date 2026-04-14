@@ -18,10 +18,6 @@ function AnimatedRoutes() {
   const location = useLocation();
 
   return (
-function AnimatedRoutes() {
-  const location = useLocation();
-
-  return (
     <Routes location={location}>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
@@ -33,7 +29,6 @@ function AnimatedRoutes() {
     </Routes>
   );
 }
-
 function App() {
   return (
     <Router>
