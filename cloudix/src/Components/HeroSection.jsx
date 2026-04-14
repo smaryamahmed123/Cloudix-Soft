@@ -35,7 +35,7 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
       xs:"30vh",  // smaller for contain
       sm: "40vh",
       md: "60vh",
-    },
+    }},
     width: "100%",
     display: "flex",
     alignItems: "center",
