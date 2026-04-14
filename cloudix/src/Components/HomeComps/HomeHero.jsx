@@ -55,11 +55,9 @@ function HeroSection() {
         sx={{
           position: "absolute",
           inset: 0,
-          background: `linear-gradient(105deg,
-            ${theme.palette.primary.dark}F8 0%,
-            ${theme.palette.primary.dark}DD 38%,
-            ${theme.palette.primary.dark}88 60%,
-            ${theme.palette.primary.dark}22 100%)`,
+          background: `linear-gradient(
+            ${theme.palette.primary.dark}80,
+            ${theme.palette.primary.dark}80)`,
           zIndex: 0,
         }}
       />
@@ -199,7 +197,7 @@ function HeroSection() {
             bgColor={theme.palette.accent.main}
             borderColor={theme.palette.primary.dark}
             textColor={theme.palette.primary.dark}
-            angle={38}
+            angle={40}
             position="86%"
           />
           {/* Dark strip — shallow angle, lower area */}
