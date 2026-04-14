@@ -21,10 +21,10 @@ function DiagonalStrip({
       aria-hidden
       sx={{
         position: "absolute",
-        zIndex: 1,
+        // zIndex: 1,
         bottom: position,
-        left: "-10%",
-        width: "130%",
+        left: "-20%",
+        width: "150%",
         transform: `rotate(${angle}deg)`,
         bgcolor: bgColor,
         borderTop: `1px solid ${borderColor}`,
