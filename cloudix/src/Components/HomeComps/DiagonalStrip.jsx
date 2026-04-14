@@ -156,7 +156,7 @@ function DiagonalStrip({
          sx={{
            mx: { md: 3, lg: 4 },
            color: textColor,
-           fontWeight: 500,
+           fontWeight: 400,
            flexShrink: 0,
          }}
        >
