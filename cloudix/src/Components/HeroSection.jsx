@@ -31,10 +31,11 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   sx={{
     position: "relative",
     // height: { xs: "50vh", md: "70vh" },
-    height: "40vh",  // smaller for contain
-  // sm: "40vh",
-  // md: "60vh",
-// },
+    height: {{
+      xs:"30vh",  // smaller for contain
+      sm: "40vh",
+      md: "60vh",
+    },
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -51,7 +52,12 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   sx={{ 
     position: "absolute", 
     inset: 0, width: "100%", 
-    height: "100%", 
+    // height: "100%",
+    height: {{
+      xs:"30vh",  // smaller for contain
+      sm: "40vh",
+      md: "60vh",
+    },
     objectFit: "cover", 
   }} 
 />
