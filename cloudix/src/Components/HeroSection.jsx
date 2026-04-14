@@ -23,76 +23,6 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   const theme = useTheme();
 
   return (
-    // <MotionBox
-    //   component="header"
-    //   variants={containerVariants}
-    //   initial="hidden"
-    //   animate="visible"
-    //   sx={{
-    //     position: "relative",
-    //     isolation: "isolate",
-    //     backgroundImage: `
-    //       linear-gradient(
-    //         ${theme.palette.primary.dark}80,
-    //         ${theme.palette.primary.dark}80
-    //       ),
-    //       url(${image})
-    //     `,
-    //     backgroundSize: "cover",          // ✅ always fills box regardless of image size
-    //     backgroundPosition: "center",     // ✅ centers image in box
-    //     backgroundRepeat: "no-repeat",
-    //     height: { xs: "50vh", md: "70vh" }, // ✅ fixed height — not minHeight
-    //     width: "100%",                    // ✅ full width always
-    //     display: "flex",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    //     px: { xs: 2, md: 12 },
-    //     color: theme.palette.common.white,
-    //     textAlign: "center",
-    //     overflow: "hidden",               // ✅ clips any image overflow
-    //     flexShrink: 0,                    // ✅ prevents height collapsing
-    //     mb: 0,
-    //     borderRadius: 0,
-    //   }}
-    // >
-    //   <Box sx={{ maxWidth: 620 }}>
-    //     <MotionTypography
-    //       component="h1"
-    //       variants={fadeUp}
-    //       custom={1}
-    //       initial="hidden"
-    //       animate="visible"
-    //       sx={{
-    //         fontWeight: theme.typography.h1.fontWeight,
-    //         fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3.2rem" },
-    //         lineHeight: 1.15,
-    //         color: theme.palette.common.white,
-    //         mb: 2,
-    //       }}
-    //     >
-    //       {title}
-    //     </MotionTypography>
-
-    //     <MotionTypography
-    //       component="p"
-    //       variants={fadeUp}
-    //       custom={2}
-    //       initial="hidden"
-    //       animate="visible"
-    //       sx={{
-    //         fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" },
-    //         fontWeight: 600,
-    //         color: theme.palette.accent.light,
-    //         mb: buttonText ? 3 : 0,
-    //       }}
-    //     >
-    //       {subtitle}
-    //     </MotionTypography>
-    //   </Box>
-    // </MotionBox>
-    
-
-
 <MotionBox
   component="header"
   variants={containerVariants}
@@ -114,27 +44,17 @@ const HeroSection = ({ image, title, subtitle, buttonText, buttonLink }) => {
   }}
 >
   {/* ✅ Background Image (LCP Optimized like Home Hero) */}
-<Box
-  component="img"
-  src={image}
-  alt={title}
-  loading="lazy"
-  decoding="async"
-  fetchpriority="low"
-  sx={{
-    position: "absolute",
-    inset: 0,
-    width: "100%",
-    height: "100%",
-
-    // ✅ KEY PART (like post section behavior)
-    objectFit: {
-      xs: "contain",   // mobile → show full image (no crop)
-      sm: "cover",     // tablet+
-    },
-
-    backgroundColor: "rgba(255,255,255,0.95)", // fills empty space when contain
-  }}
+<Box component="img" 
+  src={image} alt={title} 
+  loading="lazy" 
+  decoding="async" 
+  fetchpriority="low" 
+  sx={{ 
+    position: "absolute", 
+    inset: 0, width: "100%", 
+    height: "100%", 
+    objectFit: "cover", 
+  }} 
 />
 
   {/* ✅ Overlay (same as home hero) */}
