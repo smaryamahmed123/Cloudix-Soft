@@ -108,7 +108,9 @@ export default function PostDesignSection() {
                           image={post.image}
                           alt={post.title}
                           sx={{
-                            height: 350,
+                            // height: 350,
+                            height: { xs: "auto", sm: "auto", md: "auto" },  // natural height
+                            maxHeight: { xs: 220, sm: 300, md: 380 },
                             objectFit: "cover",
                             width: "100%",
                           }}
