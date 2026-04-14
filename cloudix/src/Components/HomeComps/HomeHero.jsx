@@ -53,7 +53,7 @@ function HeroSection() {
       />
 
       {/* ✅ Container for consistent width */}
-      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 3 }}>
         <Box
           sx={{
             display: "flex",
@@ -61,7 +61,9 @@ function HeroSection() {
             justifyContent: "center",
             gap: 3,
             alignItems: "flex-start",
-            maxWidth: { xs: "100%", md: 700 },  // ✅ text doesn't stretch full width on desktop
+            // maxWidth: { xs: "100%", md: 700 },  // ✅ text doesn't stretch full width on desktop
+            maxWidth: { xs: "100%", sm: "85%", md: 600, lg: 700 },
+            pb: { xs: 8, md: 0 },
           }}
         >
           <Typography
@@ -129,7 +131,8 @@ function HeroSection() {
             bgColor={theme.palette.accent.main}
             borderColor={theme.palette.primary.dark}
             angle={40}
-            position="90%"
+            // position="90%"
+            position="5%"
           />
           <DiagonalStrip
             texts={["UI/UX", "Marketing", "Motion", "Branding"]}
@@ -137,7 +140,8 @@ function HeroSection() {
             borderColor="#d9d9d9"
             textColor={theme.palette.common.white}
             angle={-10}
-            position="30%"
+            //position="30%"
+            position="-5%" 
           />
         </>
       )}
