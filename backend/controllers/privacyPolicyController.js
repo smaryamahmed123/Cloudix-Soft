@@ -1,37 +1,3 @@
-// import PrivacyPolicy from '../models/PrivacyPolicy.js';
-
-// export const getPolicy = async (req, res) => {
-//   try {
-//     let policy = await PrivacyPolicy.findOne();
-//     if (!policy) {
-//       policy = new PrivacyPolicy({ sections: [] });
-//       await policy.save();
-//     }
-//     res.json(policy);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// };
-
-// export const updatePolicy = async (req, res) => {
-//   try {
-//     const { sections } = req.body;
-//     let policy = await PrivacyPolicy.findOne();
-//     if (!policy) {
-//       policy = new PrivacyPolicy({ sections });
-//     } else {
-//       policy.sections = sections;
-//       policy.updatedAt = Date.now();
-//     }
-//     await policy.save();
-//     res.json({ message: 'Privacy Policy updated successfully.' });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Failed to update policy.' });
-//   }
-// };
-
-
-
 // controllers/privacyPolicyController.js
 import PrivacyPolicy from '../models/PrivacyPolicy.js';
 
