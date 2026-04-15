@@ -110,7 +110,7 @@ export default function PostDesignSection() {
                           sx={{
                             // height: 350,
                             height: { xs: "auto", sm: "auto", md: "auto" },  // natural height
-                            maxHeight: { xs: 220, sm: 300, md: 380 },
+                            maxHeight: { xs: 220, sm: 270, md: 320 },
                             objectFit: "cover",
                             width: "100%",
                           }}
