@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const MotionBox = motion.create(Box);
 
-const CARD = { width: "100%", maxWidth: 240, margin: "auto", height: 370 };
+const CARD = { width: 220 height: 370 };
 
 const CardWrapper = styled(Box)(({ theme }) => ({
   perspective: 1000,
