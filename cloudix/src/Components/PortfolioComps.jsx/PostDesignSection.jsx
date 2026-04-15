@@ -69,7 +69,7 @@ export default function PostDesignSection() {
         <Grid container spacing={3} justifyContent="center">
           {posts.length > 0 ? (
             posts.map((post, index) => (
-              <Grid item xs={6} sm={6} md={4} lg={3} key={post._id}>
+              <Grid item xs={12} sm={4} md={4} key={post._id}>
                 {/* ✅ Animate Each Card */}
                 <Motion.div
                   initial={{ opacity: 0, y: 50 }}
