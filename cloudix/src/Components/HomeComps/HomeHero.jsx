@@ -77,12 +77,12 @@ function HeroSection() {
             aria-hidden
             sx={{
               position: "absolute",
-              left: { lg: -6, xl: -10 },
+              left: { lg: -2, xl: -4 },
               top: "50%",
               transform: "translateY(-50%)",
               display: "flex",
               flexDirection: "column",
-              gap: { lg: 1.5, xl: 2 },
+              gap: { lg: 0.8, xl: 1.2 },
               zIndex: 15,
             }}
           >
@@ -99,8 +99,8 @@ function HeroSection() {
                       : "0.52rem",
                     xl: "0.58rem",
                   },
-                  fontWeight: 600,
-                  letterSpacing: "2px",
+                  fontWeight: 400,
+                  letterSpacing: "1px",
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.28)",
                   userSelect: "none",
