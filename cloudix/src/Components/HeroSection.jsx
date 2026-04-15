@@ -108,6 +108,7 @@ const HeroSection = ({ image, title, subtitle }) => {
       >
         <MotionTypography
           component="h1"
+          variant="h1"
           variants={fadeUp}
           custom={1}
           initial="hidden"
@@ -116,6 +117,7 @@ const HeroSection = ({ image, title, subtitle }) => {
             fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3.2rem" },
             fontWeight: 700,
             mb: 2,
+            color: theme.palette.common.white
           }}
         >
           {title}
