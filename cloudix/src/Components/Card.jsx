@@ -88,25 +88,33 @@ const ModernCard = memo(function ModernCard({ icon, iconImage, title, descriptio
         <FrontSide>
           <IconCircle>{renderIcon()}</IconCircle>
           <Typography variant="h6" sx={{
-            mt: 3, fontWeight: "bold",
-            borderBottom: `1px solid ${theme.palette.text.primary}`, pb: 0.5,
+            mt: 3,
+            borderBottom: `1px solid ${theme.palette.text.primary}`, 
+            pb: 0.5,
           }}>
             {title}
           </Typography>
-          <Typography sx={{ mt: 5, fontSize: "0.95rem" }}>{description}</Typography>
+          <Typography 
+            variant="body1"
+            sx={{ mt: 5}}>
+            {description}
+          </Typography>
         </FrontSide>
 
         {/* BACK */}
         <BackSide>
           <IconCircle>{renderIcon()}</IconCircle>
           <Typography variant="h6" sx={{
-            mt: 3, fontWeight: "bold",
-            borderBottom: `1px solid ${theme.palette.primary.dark}`, pb: 0.5,
+            mt: 3,
+            borderBottom: `1px solid ${theme.palette.primary.dark}`,
+            pb: 0.5,
             color: theme.palette.primary.dark,
           }}>
             {title}
           </Typography>
-          <Typography sx={{ mt: 5, fontSize: "0.95rem", color: theme.palette.common.white }}>
+          <Typography 
+            variant="body1"
+            sx={{ mt: 5, color: theme.palette.common.white }}>
             {description}
           </Typography>
         </BackSide>
