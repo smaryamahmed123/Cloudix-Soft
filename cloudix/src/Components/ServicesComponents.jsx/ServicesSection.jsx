@@ -126,8 +126,8 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
       >
         <Grid
           container
-          rowSpacing={{ xs: 2, md: 3 }}
-          columnSpacing={{ xs: 2, md: 3 }}
+          rowSpacing={{ xs: 2, md: 2 }}
+          columnSpacing={{ xs: 1.5, md: 2 }}
           justifyContent="center"
         >
           {loading
@@ -142,7 +142,8 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
                 <Grid
                   item
                   xs={12}
-                  md={6}
+                  sm={6}
+                  md={3}
                   key={service._id}
                   component={motion.div}
                   variants={cardVariants}
