@@ -56,7 +56,7 @@ const ContactInfo = () => {
 };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx{{py:3}}>
     <MotionDiv
       initial={prefersReducedMotion ? false : { opacity: 0, x: -40 }}
       whileInView={prefersReducedMotion ? false : { opacity: 1, x: 0 }}
@@ -66,7 +66,7 @@ const ContactInfo = () => {
       <Typography
         variant="h3"
         gutterBottom
-        sx={{ fontWeight: "bold", color: theme.palette.primary.main, textAlign: "center", pt:2 }}
+        sx={{color: theme.palette.primary.main, textAlign: "center" }}
       >
         Get In Touch
       </Typography>
