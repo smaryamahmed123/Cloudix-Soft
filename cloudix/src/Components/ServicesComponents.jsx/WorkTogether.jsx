@@ -19,7 +19,7 @@ const WorkTogether = () => {
       sx={{
         backgroundColor: "#111E2C",
         color: "#fff",
-        py: { xs: 8, md: 14 },
+        py: { xs: 6, md: 10 },
       }}
     >
       <Container maxWidth="lg">

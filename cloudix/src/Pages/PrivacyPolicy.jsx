@@ -31,7 +31,7 @@ const PrivacyPolicyUser = () => {
         subtitle="Learn how we collect, use, and protect your personal information."
       />
 
-      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 }, }}>
         {sections.length === 0 ? (
           <Typography variant="body1" align="center" color="text.secondary">
             No privacy policy available.

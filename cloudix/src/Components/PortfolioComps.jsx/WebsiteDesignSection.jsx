@@ -15,7 +15,7 @@ const WebsiteSkeleton = () => (
       gap: 4,
       px: { xs: 2, sm: 3, md: 6 },
       overflowX: "hidden",
-      pb: 3,
+      py: { xs: 6, md: 10 },
     }}
   >
     {[...Array(3)].map((_, i) => (

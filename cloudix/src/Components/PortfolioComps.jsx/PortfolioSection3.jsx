@@ -16,7 +16,7 @@ const PortfolioSection3 = () => {
         bgcolor: theme.palette.primary.dark,
         color: theme.palette.common.white,
         textAlign: "center",
-        py: { xs: 8, md: 10 },
+        py: { xs: 6, md: 10 },
         position: "relative",
         overflow: "hidden",
         isolation: "isolate",

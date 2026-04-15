@@ -84,7 +84,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         whileInView="show"
         viewport={{ once: true }}
       >
-        <Box sx={{ textAlign: "center", py: { xs: 4, md: 6 } }}>
+        <Box sx={{ textAlign: "center", py: { xs: 6, md: 10 }, }}>
           <Typography
             variant="h2"
             sx={{

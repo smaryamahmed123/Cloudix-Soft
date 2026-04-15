@@ -34,7 +34,8 @@ const TeamSection = ({ teamIntro }) => {
           display: "flex",
           flexDirection: { xs: "column-reverse", md: "row" },
           alignItems: "center",
-          gap: { xs: 5, md: 10 },
+          py: { xs: 6, md: 10 },
+          // gap: { xs: 5, md: 10 },
         }}
       >
         {/* LEFT: IMAGE */}

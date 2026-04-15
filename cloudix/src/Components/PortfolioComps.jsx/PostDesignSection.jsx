@@ -48,7 +48,7 @@ export default function PostDesignSection() {
   };
 
   return (
-    <Box sx={{ bgcolor: "#FFFFFF", py: 10 }}>
+    <Box sx={{ bgcolor: "#FFFFFF", py: { xs: 6, md: 10 }, }}>
       {/* Section Title */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
         <Typography

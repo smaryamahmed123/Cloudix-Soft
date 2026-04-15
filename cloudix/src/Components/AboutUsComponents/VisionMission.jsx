@@ -23,7 +23,7 @@ const Section = ({ title, description, image, imageAlt, reverse = false }) => {
           gap: { xs: 5, md: 10 },
           maxWidth: 1100,
           mx: "auto",
-          mb: { xs: 9, md: 12 },
+          py: { xs: 6, md: 10 },
           px: { xs: 3, md: 6 },
         }}
       >

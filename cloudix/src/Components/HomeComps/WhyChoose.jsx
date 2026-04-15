@@ -79,7 +79,7 @@ function WhyChooseUs() {
     <Box
       component="section"
       aria-labelledby="why-choose-us-heading"
-      sx={{ py: { xs: 8, md: 10 }, textAlign: "center" }}
+      sx={{ py: { xs: 6, md: 10 }, textAlign: "center" }}
     >
       {/* Heading */}
       <Motion.div

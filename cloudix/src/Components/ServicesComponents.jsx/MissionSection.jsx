@@ -11,7 +11,7 @@ const MissionSection = () => {
     <Box
       sx={{
         backgroundColor: "#fff",
-        py: { xs: 8, md: 12 },
+        py: { xs: 6, md: 10 },
         textAlign: "center",
         position: "relative",
         overflow: "hidden",

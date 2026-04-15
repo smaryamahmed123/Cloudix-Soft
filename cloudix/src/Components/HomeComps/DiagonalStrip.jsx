@@ -54,7 +54,7 @@ function DiagonalStrip({
         transition={{
           repeat: Infinity,
           repeatType: "loop",
-          duration: 45,
+          duration: 50,
           ease: "linear",
         }}
         style={{

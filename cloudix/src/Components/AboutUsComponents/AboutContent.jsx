@@ -26,7 +26,7 @@ const AboutContent = ({ intro }) => {
       viewport={{ once: true }}
       sx={{
         background: "linear-gradient(180deg, #ffffff 0%, #f7f9fb 100%)",
-        py: { xs: 8, md: 14 },
+        py: { xs: 6, md: 10 },
       }}
     >
       <Container maxWidth="lg">

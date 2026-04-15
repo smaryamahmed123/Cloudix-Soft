@@ -7,13 +7,14 @@ import { motion as Motion } from "framer-motion";
 
 const OurTeam = ({ team }) => {
   const theme = useTheme();
+  const [expanded, setExpanded] = useState(false);
 
   if (!team) return null;
 
   return (
     <Box
       sx={{
-        py: { xs: 8, md: 12 },
+        py: { xs: 6, md: 10 },
         textAlign: "center",
         overflowX: "hidden",
         bgcolor: theme.palette.background.paper,
@@ -46,7 +47,7 @@ const OurTeam = ({ team }) => {
       <Grid
         container
         spacing={4}
-        alignItems="stretch" 
+        alignItems="stretch"
         justifyContent="center"
         sx={{ width: "100%", margin: 0, px: { xs: 2, sm: 4 } }}
       >
@@ -144,7 +145,10 @@ const OurTeam = ({ team }) => {
                         lineHeight: 1.6,
                         textAlign: "justify",
                         px: 1,
-                        // ✅ theme handles size
+                        display: "-webkit-box",
+                        WebkitLineClamp: expanded ? "unset" : 4,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
                       }}
                     >
                       {member.description}

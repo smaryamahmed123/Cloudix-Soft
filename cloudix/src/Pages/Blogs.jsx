@@ -84,7 +84,7 @@ const BlogPage = () => {
 
       {/* Blog Section */}
       <RootContainer maxWidth="lg">
-        <Box textAlign="center" sx={{ py: { xs: 4, md: 6 } }}>
+        <Box textAlign="center" sx={{ py: { xs: 6, md: 10 }, }}>
           <Typography variant="h6" color="primary" sx={{ mb: 1 }}>
             Blog & Insights
           </Typography>

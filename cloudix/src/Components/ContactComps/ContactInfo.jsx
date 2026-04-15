@@ -56,7 +56,7 @@ const ContactInfo = () => {
 };
 
   return (
-    <Container maxWidth="lg" sx={{ py: 3 }}>
+    <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 }, }}>
     <MotionDiv
       initial={prefersReducedMotion ? false : { opacity: 0, x: -40 }}
       whileInView={prefersReducedMotion ? false : { opacity: 1, x: 0 }}

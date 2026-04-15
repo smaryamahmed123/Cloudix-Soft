@@ -32,29 +32,6 @@ const CommitmentSection = ({ compliance }) => {
       }}
     >
       <Container maxWidth="lg">
-
-        {/* Section Heading */}
-        <MotionBox
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-          sx={{ mb: 4, textAlign: "center" }}
-        >
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: theme.typography.h3.fontWeight,
-              lineHeight: 1.3,
-              textDecoration: "underline",
-              color: theme.palette.text.primary,
-              // ✅ theme responsiveFontSizes handles size automatically
-            }}
-          >
-            {compliance.title}
-          </Typography>
-        </MotionBox>
-
         {/* Paragraph + Image Row */}
         <Box
           sx={{
@@ -77,6 +54,18 @@ const CommitmentSection = ({ compliance }) => {
               maxWidth: { xs: "100%", md: "50%" },
             }}
           >
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: theme.typography.h3.fontWeight,
+                lineHeight: 1.3,
+                textDecoration: "underline",
+                color: theme.palette.text.primary,
+                // ✅ theme responsiveFontSizes handles size automatically
+              }}
+            >
+              {compliance.title}
+            </Typography>
             <Typography
               variant="body1"
               sx={{

@@ -7,7 +7,7 @@ const AboutSkeleton = () => {
   return (
     <Box>
       {/* ── AboutContent: text left, image right ── */}
-      <Box sx={{ py: { xs: 10, md: 16 }, background: theme.palette.background.default }}>
+      <Box sx={{ py: { xs: 6, md: 10 }, background: theme.palette.background.default }}>
         <Container maxWidth="lg">
           <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: { xs: 5, md: 10 }, alignItems: "center" }}>
             {/* Left text */}

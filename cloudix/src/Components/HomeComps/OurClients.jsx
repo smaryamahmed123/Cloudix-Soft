@@ -46,7 +46,7 @@ export default function OurClients() {
     <Box
       component="section"
       aria-labelledby="our-clients-heading"
-      sx={{ pb: { xs: 8, md: 10 } }}
+      sx={{ py: { xs: 6, md: 10 }, }}
     >
       <Container maxwidth="lg">
         <Typography
