@@ -80,7 +80,7 @@ const OurTeam = ({ team }) => {
                     px: 2,
                     width: "100%",
                     maxWidth: 320,
-                    // height: { xs: 440, sm: 460, md: 480 },
+                    height: { xs: 440, sm: 460, md: 480 },
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -147,7 +147,7 @@ const OurTeam = ({ team }) => {
                         textAlign: "justify",
                         px: 1,
                         display: "-webkit-box",
-                        WebkitLineClamp: expanded ? "unset" : 4,
+                        WebkitLineClamp: expanded ? "unset" : 6,
                         WebkitBoxOrient: "vertical",
                         overflow: "hidden",
                       }}
