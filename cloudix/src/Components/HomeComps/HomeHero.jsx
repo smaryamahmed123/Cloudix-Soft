@@ -10,14 +10,11 @@ function HeroSection() {
   const navigate = useNavigate();
   const theme = useTheme();
   const { isMobile, isDesktop, isLandscapeMobile } = useDevice();
+
   const buttonSize = isMobile ? "small" : isDesktop ? "large" : "medium";
+  const isWiderThan600 = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const isWiderThan600 = useMediaQuery("(min-width:600px)");
-
-  // Strips visible on any screen wider than 600px
   const showStrips = isWiderThan600;
-
-  // Side labels only on desktop (lg+) — too cramped on tablets
   const showSideLabels = isDesktop;
 
   return (
@@ -31,38 +28,38 @@ function HeroSection() {
         alignItems: "center",
       }}
     >
-      {/* LCP Optimized Background Image */}
+      {/* 🚀 HERO IMAGE (LCP OPTIMIZED) */}
       <Box
         component="img"
         src={BgImage}
         alt="Cloudix Soft digital marketing services"
-        width="1600"
-        height="900"
         loading="eager"
         decoding="async"
-        fetchpriority="high"
-        style={{
+        fetchPriority="high"
+        sx={{
           position: "absolute",
           inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
+          transform: "translateZ(0)", // GPU acceleration
         }}
       />
 
-      {/* Dark gradient overlay — uses theme colors */}
+      {/* 🌑 OVERLAY */}
       <Box
         sx={{
           position: "absolute",
           inset: 0,
           background: `linear-gradient(
             ${theme.palette.primary.dark}80,
-            ${theme.palette.primary.dark}80)`,
+            ${theme.palette.primary.dark}80
+          )`,
           zIndex: 0,
         }}
       />
 
-      {/* Content — pt on xs/sm so it clears the fixed navbar */}
+      {/* CONTENT */}
       <Container
         maxWidth="lg"
         sx={{
@@ -71,7 +68,7 @@ function HeroSection() {
           pt: { xs: 10, sm: 11, md: 0 },
         }}
       >
-        {/* Vertical side labels — lg+ only */}
+        {/* SIDE LABELS */}
         {showSideLabels && (
           <Box
             aria-hidden
@@ -82,8 +79,7 @@ function HeroSection() {
               transform: "translateY(-50%)",
               display: "flex",
               flexDirection: "column",
-              gap: { lg: 0.8, xl: 1.2 },
-              zIndex: 15,
+              gap: 1,
             }}
           >
             {["Marketing", "UI/UX", "Creative Design"].map((label) => (
@@ -92,19 +88,11 @@ function HeroSection() {
                 sx={{
                   writingMode: "vertical-rl",
                   transform: "rotate(180deg)",
-                  // Tied to theme breakpoints — no magic numbers
-                  fontSize: {
-                    lg: theme.typography.body2.fontSize
-                      ? `calc(${theme.typography.body2.fontSize} * 0.6)`
-                      : "0.52rem",
-                    xl: "0.58rem",
-                  },
-                  fontWeight: 400,
+                  fontSize: "0.55rem",
                   letterSpacing: "1px",
                   textTransform: "uppercase",
                   color: "rgba(255,255,255,0.28)",
                   userSelect: "none",
-                  whiteSpace: "nowrap",
                 }}
               >
                 {label}
@@ -113,55 +101,39 @@ function HeroSection() {
           </Box>
         )}
 
-        {/* Hero text + CTA */}
+        {/* HERO TEXT */}
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            // Use theme spacing — gap scales with theme
-            gap: { xs: theme.spacing(2), md: theme.spacing(3) },
+            gap: 3,
             alignItems: "flex-start",
-            // Width: full on mobile, constrained on larger screens
-            maxWidth: { xs: "100%", sm: "82%", md: "56%", lg: 600, xl: 680 },
+            maxWidth: { xs: "100%", sm: "82%", md: "56%", lg: 600 },
             pb: { xs: 4, md: 0 },
           }}
         >
           <Typography
             variant="h3"
             sx={{
-              // Let theme h3 handle font-size via responsiveFontSizes
-              // Only override for landscape where it must be smaller
               ...(isLandscapeMobile && { fontSize: "1.2rem" }),
               lineHeight: 1.25,
               color: theme.palette.common.white,
               fontWeight: 800,
             }}
           >
-            <Box component="span" sx={{ whiteSpace: "nowrap" }}>
-              Make Your Brand Stand
-            </Box>
+            Make Your Brand Stand
             <br />
-            {/* Allow wrap on very small screens so text doesn't overflow */}
+            Out Through{" "}
             <Box
               component="span"
-              sx={{ whiteSpace: { xs: "normal", sm: "nowrap" } }}
+              sx={{
+                bgcolor: theme.palette.secondary.main,
+                color: theme.palette.primary.dark,
+                px: 1,
+                borderRadius: 1,
+              }}
             >
-              Out Through{" "}
-              <Box
-                component="span"
-                sx={{
-                  bgcolor: theme.palette.secondary.main,
-                  color: theme.palette.primary.dark,
-                  px: { xs: 0.75, md: 1 },
-                  borderRadius: 1.5,
-                  display: "inline-block",
-                  mb: 0.5,
-                  lineHeight: 1.3,
-                }}
-              >
-                Social Media
-              </Box>
+              Social Media
             </Box>
             <br />
             <Box
@@ -169,10 +141,8 @@ function HeroSection() {
               sx={{
                 bgcolor: theme.palette.secondary.main,
                 color: theme.palette.primary.dark,
-                px: { xs: 0.75, md: 1 },
-                borderRadius: 1.5,
-                display: "inline-block",
-                lineHeight: 1.3,
+                px: 1,
+                borderRadius: 1,
               }}
             >
               Marketing
@@ -180,7 +150,6 @@ function HeroSection() {
           </Typography>
 
           <GradientButton
-            aria-label="Contact Cloudix Soft"
             text="Let's Talk"
             size={buttonSize}
             onClick={() => navigate("/contact")}
@@ -188,10 +157,9 @@ function HeroSection() {
         </Box>
       </Container>
 
-      {/* Diagonal strips — desktop lg+ only */}
+      {/* STRIPS */}
       {showStrips && (
         <>
-          {/* Yellow strip — steep angle, top-right area */}
           <DiagonalStrip
             texts={["Development", "Branding", "Animation", "E-Commerce", "Editing"]}
             bgColor={theme.palette.accent.main}
@@ -200,9 +168,9 @@ function HeroSection() {
             angle={40}
             position="86%"
           />
-          {/* Dark strip — shallow angle, lower area */}
+
           <DiagonalStrip
-            texts={["Creative Design", "UI/UX", "Marketing", "Motion", "Animation", "Editing"]}
+            texts={["Creative Design", "UI/UX", "Marketing", "Motion", "Editing"]}
             bgColor={theme.palette.primary.dark}
             borderColor={theme.palette.accent.main}
             textColor={theme.palette.common.white}
@@ -217,6 +185,3 @@ function HeroSection() {
 }
 
 export default memo(HeroSection);
-
-
-
