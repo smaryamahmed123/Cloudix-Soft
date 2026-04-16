@@ -62,7 +62,7 @@ const ContactForm = () => {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           sx={{
             bgcolor: theme.palette.background.paper,
-            py: { xs: 6, md: 10 },     // ✅ replaces isMobile ternary
+            py: { xs: 2, sm: 4, md: 6 },     // ✅ replaces isMobile ternary
             px: { xs: 2, sm: 4, md: 6 }, 
             borderRadius: 2,
             boxShadow: 3,
