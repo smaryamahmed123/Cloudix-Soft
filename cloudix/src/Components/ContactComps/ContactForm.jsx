@@ -53,8 +53,7 @@ const ContactForm = () => {
           justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
-          py: 6,
-          px: 2,
+          py: { xs: 6, md: 10 }, 
         }}
       >
         <MotionBox
@@ -64,6 +63,7 @@ const ContactForm = () => {
           sx={{
             bgcolor: theme.palette.background.paper,
             py: { xs: 6, md: 10 },     // ✅ replaces isMobile ternary
+            px: { xs: 2, sm: 4, md: 6 }, 
             borderRadius: 2,
             boxShadow: 3,
             width: '100%',
