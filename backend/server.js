@@ -43,6 +43,8 @@ app.use(passport.session());
 const allowedOrigins = [
   "https://cloudix-soft-admin.netlify.app",
   "https://cloudix-soft.netlify.app",
+  "https://cloudixsoft.com",
+  "https://www.cloudixsoft.com"
 ];
 
 app.use(
