@@ -4,7 +4,8 @@ import { MailerSend, EmailParams, Recipient, Sender } from "mailersend";
 const mailer = new MailerSend({
   apiKey: process.env.MAILERSEND_API_KEY,
 });
-console.log("MAILERSEND_API_KEY:", process.env.MAILERSEND_API_KEY);
+console.log("KEY EXISTS:", !!process.env.MAILERSEND_API_KEY);
+console.log("KEY LENGTH:", process.env.MAILERSEND_API_KEY?.length);
 export const createMessage = async (req, res) => {
   const { name, email, message, phoneNo } = req.body;
 
