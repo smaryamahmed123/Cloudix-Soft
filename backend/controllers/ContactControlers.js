@@ -28,10 +28,10 @@ export const createMessage = async (req, res) => {
     });
 
     // ✅ Send email
-    const sentFrom = new Sender(
-      process.env.MAIL_FROM, // verified email/domain
-      "Contact Form"
-    );
+const sentFrom = new Sender(
+  process.env.MAILERSEND_FROM_EMAIL,
+  process.env.MAILERSEND_FROM_NAME
+);
 
     const recipients = [
       new Recipient(process.env.ADMIN_EMAIL, "Admin"),
