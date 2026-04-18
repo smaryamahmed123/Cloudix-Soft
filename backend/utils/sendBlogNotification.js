@@ -4,7 +4,7 @@ import Subscriber from '../models/Subscriber.js';
 
 export const sendBlogNotification = async (blog) => {
   try {
-    const subscribers = await Subscriber.find({ active: true });
+    const subscribers = await Subscriber.find({ email, active: true });
     if (subscribers.length === 0) return;
 
     const sentFrom = new Sender(
