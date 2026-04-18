@@ -44,8 +44,15 @@ export const createBlog = async (req, res) => {
 
       uploadStream.end(req.file.buffer);
     } else {
-      const blog = new Blog({ title, content });
+      const blog = new Blog({ title, content, author, category });
       const savedBlog = await blog.save();
+
+        try {
+          await sendBlogNotification(savedBlog);
+        } catch (err) {
+          console.error("Email failed:", err.message);
+        }
+      
       res.status(201).json(savedBlog);
     }
   } catch (err) {
