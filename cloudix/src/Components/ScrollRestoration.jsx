@@ -8,9 +8,17 @@ export default function ScrollRestoration() {
   const location = useLocation();
   const navigationType = useNavigationType();
   const prevPath = useRef(location.pathname);
+  const isInitialMount = useRef(true); // Track first render
 
   useEffect(() => {
     if (typeof window === "undefined") return; // SSR safe
+
+    // On initial load / reload → always scroll to top
+    if (isInitialMount.current) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+      isInitialMount.current = false;
+      return;
+    }
 
     // Save scroll position of the previous page
     scrollPositions[prevPath.current] = window.scrollY;
