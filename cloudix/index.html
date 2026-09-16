@@ -3,28 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cloudix Soft | Shariah-compliant IT Company</title>
+
+  <!-- Primary SEO Tags -->
+  <title>Cloudix Soft | Web Development, Mobile Apps & Digital Marketing</title>
+  <meta name="title" content="Cloudix Soft | Web Development, Mobile Apps & Digital Marketing" />
+  <meta name="description" content="Cloudix Soft provides custom web development, mobile apps, e-commerce solutions, and ethical digital marketing to grow your business. Request a quote!" />
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cloudixsoft.com/" />
+  <meta property="og:title" content="Cloudix Soft | Web & Mobile App Development Company" />
+  <meta property="og:description" content="Custom web development, mobile apps, e-commerce, and digital marketing services." />
+  <meta property="og:image" content="https://cloudixsoft.com/og-image.jpg" />
+
   <link rel="icon" type="image/png" href="/X.png" />
 
-    <!-- ✅ Disable browser scroll restoration FIRST -->
+  <!-- Disable browser scroll restoration -->
   <script>history.scrollRestoration = 'manual';</script>
 
-    <!-- ✅ Poppins Font -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="preload" as="image" href="/about-bg.webp" />
-  <link rel="preload" as="image" href="/home-bg.webp" />
-  <link rel="preload" as="image" href="/contact-bg.webp" />
-  <link rel="preload" as="image" href="/Portfolio-bg.webp" />
-  <link rel="preload" as="image" href="/services-bg.webp" />
-  <link rel="preload" as="image" href="/blog-bg.webp" />
-  <link rel="preload" as="image" href="/Privicy-bg.webp" />
+  <!-- Preload ONLY Above-The-Fold Hero LCP Asset -->
+  <link rel="preload" as="image" href="/home-bg.webp" fetchpriority="high" />
 
+  <!-- JSON-LD Structured Data for Local/Professional Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Cloudix Soft",
+    "url": "https://cloudixsoft.com/",
+    "logo": "https://cloudixsoft.com/logo.png",
+    "description": "Cloudix Soft offers custom web development, mobile app creation, e-commerce, and digital marketing services.",
+    "priceRange": "$$"
+  }
+  </script>
 
   <style>
-    /* 🌥️ Fullscreen Loader */
+    /* Fullscreen Loader */
     #logo-loader {
       position: fixed;
       inset: 0;
@@ -62,7 +81,7 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background-color: #769914; /* primary theme color */
+      background-color: #769914;
       opacity: 0.3;
       animation: dotPulse 1.4s infinite ease-in-out;
     }
@@ -79,7 +98,6 @@
 </head>
 
 <body>
-  <!-- Loader -->
   <div id="logo-loader" role="status" aria-busy="true">
     <div class="loader-wrapper">
       <img src="/logo.png" alt="Cloudix Soft Logo" class="loader-logo" />
@@ -91,9 +109,7 @@
     </div>
   </div>
 
-  <!-- App root -->
   <div id="root"></div>
-
- <script type="module" src="/src/main.jsx"></script>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
