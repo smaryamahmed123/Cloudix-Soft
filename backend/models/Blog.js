@@ -11,16 +11,32 @@ const blogSchema = new mongoose.Schema(
 
     slug: {
       type: String,
+      required: true,
       unique: true,
-      sparse: true,
-      index: true,
       trim: true,
+      index: true,
     },
 
     content: {
       type: String,
       required: true,
+    },
+
+    excerpt: {
+      type: String,
       trim: true,
+      maxlength: 300,
+      default: "",
+    },
+
+    coverImage: {
+      type: String,
+      default: "",
+    },
+
+    coverImagePublicId: {
+      type: String,
+      default: "",
     },
 
     category: {
@@ -36,33 +52,34 @@ const blogSchema = new mongoose.Schema(
       required: true,
       trim: true,
       maxlength: 100,
-      default: "Admin",
+      default: "Cloudix Soft Team",
     },
 
-    image: {
+    seoTitle: {
       type: String,
+      trim: true,
+      maxlength: 60,
       default: "",
     },
 
-    public_id: {
+    seoDescription: {
       type: String,
+      trim: true,
+      maxlength: 160,
       default: "",
     },
 
-    // Number of times the blog has been viewed
     views: {
       type: Number,
       default: 0,
       min: 0,
     },
 
-    // Allows admin to hide/show a blog
     visible: {
       type: Boolean,
       default: true,
     },
 
-    // Controls blog display order
     order: {
       type: Number,
       default: 0,
