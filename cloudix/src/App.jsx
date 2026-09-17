@@ -1,19 +1,20 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import ScrollRestoration from "./Components/ScrollRestoration";
+import { lazyWithRetry } from "./utils/lazyWithRetry";
 
-// Lazy Loaded Pages
-const Home = lazy(() => import("./Pages/Home"));
-const About = lazy(() => import("./Pages/About"));
-const Services = lazy(() => import("./Pages/Services"));
-const Portfolio = lazy(() => import("./Pages/Portfolio"));
-const Contact = lazy(() => import("./Pages/Contact"));
-const PrivacyPolicy = lazy(() => import("./Pages/PrivacyPolicy"));
-const Blogs = lazy(() => import("./Pages/Blogs"));
+// Safe Lazy Loaded Pages
+const Home = lazyWithRetry(() => import("./Pages/Home"));
+const About = lazyWithRetry(() => import("./Pages/About"));
+const Services = lazyWithRetry(() => import("./Pages/Services"));
+const Portfolio = lazyWithRetry(() => import("./Pages/Portfolio"));
+const Contact = lazyWithRetry(() => import("./Pages/Contact"));
+const PrivacyPolicy = lazyWithRetry(() => import("./Pages/PrivacyPolicy"));
+const Blogs = lazyWithRetry(() => import("./Pages/Blogs"));
 
 // Route Fallback Loader
 const PageLoader = () => (
@@ -31,6 +32,11 @@ const PageLoader = () => (
 
 function AnimatedRoutes() {
   const location = useLocation();
+
+  // Reset retry flag on successful navigation
+  useEffect(() => {
+    window.sessionStorage.removeItem("page-has-been-refreshed");
+  }, [location]);
 
   return (
     <Suspense fallback={<PageLoader />}>
