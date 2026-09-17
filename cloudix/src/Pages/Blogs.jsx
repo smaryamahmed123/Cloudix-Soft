@@ -1,249 +1,437 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
-import { useNavigate } from "react-router-dom";
 import {
-  Container, Typography, Card, CardContent, CardMedia,
-  Grid, Button, Box, TextField, Snackbar, Alert, useTheme,
-  Skeleton, CardActionArea,
+  Alert,
+  Box,
+  Button,
+  Container,
+  Grid,
+  Typography,
 } from "@mui/material";
-import { styled } from "@mui/system";
-import bgImg from "../assets/blog-bg.webp";
-import HeroSection from "../Components/HeroSection";
+import { useNavigate } from "react-router-dom";
+
+import BlogHero from "../Components/BlogComponents/BlogHero";
+import BlogCategories from "../Components/BlogComponents/BlogCategories";
+import FeaturedBlog from "../Components/BlogComponents/FeaturedBlog";
+import BlogCard from "../Components/BlogComponents/BlogCard";
+import PopularBlogs from "../Components/BlogComponents/PopularBlogs";
+import NewsletterCard from "../Components/BlogComponents/NewsletterCard";
+import BlogCTA from "../Components/BlogComponents/BlogCTA";
+import BlogSkeleton from "../Components/BlogComponents/BlogSkeleton";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-const RootContainer = styled(Container)({
-  minHeight: "100vh",
-  paddingTop: "40px",
-  paddingBottom: "80px",
-});
-
-const BlogCard = styled(Card)({
-  borderRadius: "12px",
-  boxShadow: "0 4px 14px rgba(0,0,0,0.08)",
-  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-  "&:hover": {
-    transform: "translateY(-6px)",
-    boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
-  },
-  height: "100%",
-  display: "flex",
-  flexDirection: "column",
-});
-
-const CardFooter = styled(Box)({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginTop: "auto",
-});
-
-const SidebarCard = styled(Card)({
-  borderRadius: "12px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
-  padding: "24px",
-});
-
 const BlogPage = () => {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleCount, setVisibleCount] = useState(6);
-  const [subEmail, setSubEmail] = useState("");
-  const [subLoading, setSubLoading] = useState(false);
-  const [subSnackbar, setSubSnackbar] = useState({
-    open: false, message: "", severity: "success",
-  });
 
   useEffect(() => {
-    axios
-      .get(`${backendURL}/api/blogs`)
-      .then((res) => {
-        setBlogs(Array.isArray(res.data) ? res.data : []);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    const fetchBlogs = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const response = await axios.get(
+          `${backendURL}/api/blogs`
+        );
+
+        const data = Array.isArray(response.data)
+          ? response.data
+          : [];
+
+        setBlogs(data);
+      } catch (err) {
+        console.error("Blog fetch error:", err);
+
+        setError(
+          "We couldn't load the articles right now. Please try again."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
   }, []);
 
-  const truncateText = (text, maxLength) =>
-    text?.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  const categories = useMemo(() => {
+    const uniqueCategories = blogs
+      .map((blog) => blog.category?.trim())
+      .filter(Boolean);
 
-  const handleSubscribe = async () => {
-    if (!subEmail || !subEmail.includes("@")) {
-      setSubSnackbar({ open: true, message: "Please enter a valid email address.", severity: "warning" });
-      return;
-    }
-    setSubLoading(true);
-    try {
-      await axios.post(`${backendURL}/api/newsletter/subscribe`, { email: subEmail });
-      setSubSnackbar({ open: true, message: "Subscribed successfully!", severity: "success" });
-      setSubEmail("");
-    } catch (err) {
-      const msg = err.response?.status === 409 ? "Already subscribed!" : "Subscription failed.";
-      setSubSnackbar({ open: true, message: msg, severity: "error" });
-    } finally {
-      setSubLoading(false);
-    }
+    return [
+      "All",
+      ...Array.from(new Set(uniqueCategories)),
+    ];
+  }, [blogs]);
+
+  const filteredBlogs = useMemo(() => {
+    const normalizedSearch = search.trim().toLowerCase();
+
+    return blogs.filter((blog) => {
+      const matchesCategory =
+        selectedCategory === "All" ||
+        blog.category?.toLowerCase() ===
+          selectedCategory.toLowerCase();
+
+      const matchesSearch =
+        !normalizedSearch ||
+        blog.title?.toLowerCase().includes(normalizedSearch) ||
+        blog.content?.toLowerCase().includes(normalizedSearch) ||
+        blog.category?.toLowerCase().includes(normalizedSearch) ||
+        blog.author?.toLowerCase().includes(normalizedSearch);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [blogs, search, selectedCategory]);
+
+  const featuredBlog =
+    !search && selectedCategory === "All"
+      ? blogs[0]
+      : null;
+
+  const articles = featuredBlog
+    ? filteredBlogs.filter(
+        (blog) => blog._id !== featuredBlog._id
+      )
+    : filteredBlogs;
+
+  const visibleBlogs = articles.slice(0, visibleCount);
+
+  const openBlog = (blog) => {
+    navigate(`/blogs/${blog.slug || blog._id}`);
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setVisibleCount(6);
+  };
+
+  const handleSearch = (value) => {
+    setSearch(value);
+    setVisibleCount(6);
   };
 
   return (
     <>
-      {/* 1. Page SEO Metadata */}
       <Helmet>
-        <title>Blog & Insights | Tech & Marketing - Cloudix Soft</title>
+        <title>
+          Blog & Insights | Digital Marketing & Technology |
+          Cloudix Soft
+        </title>
+
         <meta
           name="description"
-          content="Explore Cloudix Soft's latest articles on web development, mobile app creation, graphic design trends, and digital marketing strategies."
+          content="Explore Cloudix Soft's insights on digital marketing, web development, e-commerce, branding, social media, technology, and business growth."
         />
-        <meta property="og:title" content="Blog & Insights | Cloudix Soft" />
+
+        <meta
+          name="keywords"
+          content="Cloudix Soft blog, digital marketing, web development, e-commerce, branding, SEO, social media marketing, Pakistan"
+        />
+
+        <meta
+          property="og:title"
+          content="Blog & Insights | Cloudix Soft"
+        />
+
         <meta
           property="og:description"
-          content="Latest insights on software engineering, UX/UI design, and digital growth."
+          content="Practical insights about digital marketing, websites, branding, e-commerce and technology."
         />
-        <link rel="canonical" href="https://cloudixsoft.com/blogs" />
+
+        <meta
+          property="og:type"
+          content="website"
+        />
+
+        <link
+          rel="canonical"
+          href="https://cloudixsoft.com/blogs"
+        />
       </Helmet>
 
-      {/* 2. Hero Section */}
-      <HeroSection
-        image={bgImg}
-        title="Our Blog"
-        subtitle="Stay inspired with our latest design, development, and marketing insights."
+      <BlogHero
+        search={search}
+        setSearch={handleSearch}
       />
 
-      {/* 3. Main Section */}
-      <RootContainer maxWidth="lg">
-        <Box textAlign="center" sx={{ py: { xs: 4, md: 8 } }}>
-          <Typography variant="h6" color="primary" sx={{ mb: 1, fontWeight: 600 }}>
-            Blog & Insights
-          </Typography>
-          <Typography component="h1" variant="h3" sx={{ fontWeight: 700, mb: 2, color: theme.palette.text.primary }}>
-            Exploring creativity, innovation, and digital excellence
-          </Typography>
-          <Typography variant="body1" sx={{ color: theme.palette.text.secondary, maxWidth: 620, mx: "auto", lineHeight: 1.6 }}>
-            Discover strategies, tips, and stories that help you grow your brand and build meaningful user experiences.
-          </Typography>
-        </Box>
+      <BlogCategories
+        categories={categories}
+        selected={selectedCategory}
+        onSelect={handleCategoryChange}
+      />
 
-        <Grid container spacing={4}>
-          {/* Blog Grid */}
-          <Grid item xs={12} md={8}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          py: { xs: 5, md: 8 },
+        }}
+      >
+        {error && (
+          <Alert
+            severity="error"
+            sx={{ mb: 4 }}
+          >
+            {error}
+          </Alert>
+        )}
+
+        {loading ? (
+          <>
+            <Box sx={{ mb: 6 }}>
+              <BlogSkeleton />
+            </Box>
+
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 800,
+                color: "#111E2C",
+                mb: 3,
+              }}
+            >
+              Latest Articles
+            </Typography>
+
             <Grid container spacing={3}>
-              {loading
-                ? [...Array(4)].map((_, i) => (
-                    <Grid item xs={12} sm={6} key={i}>
-                      <Skeleton variant="rectangular" height={200} sx={{ borderRadius: "12px", mb: 1 }} />
-                      <Skeleton variant="text" width="40%" height={20} />
-                      <Skeleton variant="text" width="80%" height={28} />
-                      <Skeleton variant="text" width="100%" height={20} />
-                    </Grid>
-                  ))
-                : blogs.slice(0, visibleCount).map((blog) => (
-                    <Grid item xs={12} sm={6} key={blog._id}>
-                      <BlogCard>
-                        {/* Clickable Card Action Area leading to Single Blog Page */}
-                        <CardActionArea onClick={() => navigate(`/blogs/${blog.slug || blog._id}`)}>
-                          <CardMedia
-                            component="img"
-                            height="200"
-                            image={blog.image}
-                            alt={blog.title}
-                            loading="lazy"
-                          />
-                          <CardContent>
-                            <Typography variant="caption" color="primary" sx={{ fontWeight: 600 }}>
-                              {blog.category || "General"}
-                            </Typography>
-                            <Typography component="h2" variant="h6" sx={{ fontWeight: 600, mb: 1, lineHeight: 1.3 }}>
-                              {blog.title}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                              {truncateText(blog.content, 110)}
-                            </Typography>
-                            <CardFooter>
-                              <Typography variant="caption" color="text.secondary">
-                                {blog.author || "Cloudix Team"}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary">
-                                {blog.createdAt ? new Date(blog.createdAt).toLocaleDateString() : ""}
-                              </Typography>
-                            </CardFooter>
-                          </CardContent>
-                        </CardActionArea>
-                      </BlogCard>
-                    </Grid>
-                  ))}
-            </Grid>
-
-            {/* Load More Button */}
-            {!loading && visibleCount < blogs.length && (
-              <Box textAlign="center" mt={5}>
-                <Button
-                  variant="outlined"
-                  onClick={() => setVisibleCount((prev) => prev + 6)}
-                  sx={{ borderRadius: "999px", px: 4, py: 1, textTransform: "none", fontWeight: 600 }}
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  key={item}
                 >
-                  Load More Articles
-                </Button>
-              </Box>
-            )}
-          </Grid>
+                  <BlogSkeleton />
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        ) : blogs.length === 0 ? (
+          <Box
+            sx={{
+              textAlign: "center",
+              py: 10,
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{ fontWeight: 700 }}
+            >
+              No articles yet
+            </Typography>
 
-          {/* Sidebar Newsletter */}
-          <Grid item xs={12} md={4}>
-            <SidebarCard>
-              <Typography component="h3" variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
-                Sign up for our newsletter
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Get notified when we publish new blogs and tech updates.
-              </Typography>
-              <Box>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  label="Enter your email address"
-                  size="small"
-                  value={subEmail}
-                  onChange={(e) => setSubEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSubscribe()}
-                  sx={{ mb: 1.5 }}
-                />
-                <Button
-                  fullWidth
-                  variant="contained"
-                  disabled={subLoading}
-                  onClick={handleSubscribe}
+            <Typography
+              color="text.secondary"
+              sx={{ mt: 1 }}
+            >
+              Check back soon for new insights from Cloudix Soft.
+            </Typography>
+          </Box>
+        ) : (
+          <>
+            {featuredBlog && (
+              <FeaturedBlog
+                blog={featuredBlog}
+                onClick={() => openBlog(featuredBlog)}
+              />
+            )}
+
+            <Grid
+              container
+              spacing={5}
+            >
+              <Grid
+                item
+                xs={12}
+                md={8}
+              >
+                <Box>
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: 2,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Box>
+                      <Typography
+                        variant="overline"
+                        sx={{
+                          color: "#769914",
+                          fontWeight: 700,
+                        }}
+                      >
+                        EXPLORE OUR INSIGHTS
+                      </Typography>
+
+                      <Typography
+                        component="h2"
+                        sx={{
+                          fontSize: {
+                            xs: "1.8rem",
+                            md: "2.3rem",
+                          },
+                          fontWeight: 800,
+                          color: "#111E2C",
+                        }}
+                      >
+                        Latest Articles
+                      </Typography>
+                    </Box>
+
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                    >
+                      {articles.length}{" "}
+                      {articles.length === 1
+                        ? "article"
+                        : "articles"}
+                    </Typography>
+                  </Box>
+
+                  {articles.length === 0 ? (
+                    <Box
+                      sx={{
+                        py: 8,
+                        textAlign: "center",
+                        border: "1px dashed #ccc",
+                        borderRadius: 3,
+                      }}
+                    >
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: 700 }}
+                      >
+                        No matching articles
+                      </Typography>
+
+                      <Typography
+                        color="text.secondary"
+                        sx={{ mt: 1 }}
+                      >
+                        Try another search or category.
+                      </Typography>
+
+                      <Button
+                        onClick={() => {
+                          setSearch("");
+                          setSelectedCategory("All");
+                        }}
+                        sx={{
+                          mt: 2,
+                          color: "#769914",
+                          textTransform: "none",
+                        }}
+                      >
+                        Clear filters
+                      </Button>
+                    </Box>
+                  ) : (
+                    <>
+                      <Grid
+                        container
+                        spacing={3}
+                      >
+                        {visibleBlogs.map((blog) => (
+                          <Grid
+                            item
+                            xs={12}
+                            sm={6}
+                            key={blog._id}
+                          >
+                            <BlogCard
+                              blog={blog}
+                              onClick={openBlog}
+                            />
+                          </Grid>
+                        ))}
+                      </Grid>
+
+                      {visibleCount <
+                        articles.length && (
+                        <Box
+                          sx={{
+                            textAlign: "center",
+                            mt: 5,
+                          }}
+                        >
+                          <Button
+                            variant="outlined"
+                            onClick={() =>
+                              setVisibleCount(
+                                (previous) =>
+                                  previous + 6
+                              )
+                            }
+                            sx={{
+                              borderColor: "#769914",
+                              color: "#769914",
+                              borderRadius: "999px",
+                              px: 4,
+                              py: 1.1,
+                              textTransform: "none",
+                              fontWeight: 700,
+                              "&:hover": {
+                                borderColor: "#5f7d10",
+                                backgroundColor:
+                                  "rgba(118,153,20,0.05)",
+                              },
+                            }}
+                          >
+                            Load More Articles
+                          </Button>
+                        </Box>
+                      )}
+                    </>
+                  )}
+                </Box>
+              </Grid>
+
+              <Grid
+                item
+                xs={12}
+                md={4}
+              >
+                <Box
                   sx={{
-                    backgroundColor: theme.palette.primary.dark,
-                    color: theme.palette.common.white,
-                    py: 1,
-                    textTransform: "none",
-                    fontWeight: 600,
-                    "&:hover": { backgroundColor: theme.palette.primary.main },
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 3,
+                    position: {
+                      md: "sticky",
+                    },
+                    top: {
+                      md: 75,
+                    },
                   }}
                 >
-                  {subLoading ? "Subscribing..." : "Subscribe"}
-                </Button>
-              </Box>
-            </SidebarCard>
-          </Grid>
-        </Grid>
-      </RootContainer>
+                  <NewsletterCard />
 
-      {/* Snackbar Alerts */}
-      <Snackbar
-        open={subSnackbar.open}
-        autoHideDuration={4000}
-        onClose={() => setSubSnackbar({ ...subSnackbar, open: false })}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert severity={subSnackbar.severity} sx={{ width: "100%" }}>
-          {subSnackbar.message}
-        </Alert>
-      </Snackbar>
+                  <PopularBlogs
+                    blogs={articles}
+                    onClick={openBlog}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
+          </>
+        )}
+      </Container>
+
+      {!loading && blogs.length > 0 && <BlogCTA />}
     </>
   );
 };

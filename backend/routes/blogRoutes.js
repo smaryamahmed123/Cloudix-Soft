@@ -1,17 +1,27 @@
-import express from 'express';
-import multer from 'multer';
-import { getAllBlogs, createBlog, deleteBlog, reorderBlogs } from '../controllers/blogController.js';
+import express from "express";
+import multer from "multer";
+
+import {
+  getAllBlogs,
+  createBlog,
+  deleteBlog,
+  reorderBlogs,
+} from "../controllers/blogController.js";
 
 const router = express.Router();
 
-// 📸 Memory storage for multer
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
 
-// Routes
-router.get('/', getAllBlogs);
-router.post('/', upload.single('image'), createBlog);
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+});
+
+router.get("/", getAllBlogs);
+router.post("/", upload.single("image"), createBlog);
 router.put("/reorder", reorderBlogs);
-router.delete('/:id', deleteBlog);
+router.delete("/:id", deleteBlog);
 
 export default router;

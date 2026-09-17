@@ -15,6 +15,8 @@ const Portfolio = lazyWithRetry(() => import("./Pages/Portfolio"));
 const Contact = lazyWithRetry(() => import("./Pages/Contact"));
 const PrivacyPolicy = lazyWithRetry(() => import("./Pages/PrivacyPolicy"));
 const Blogs = lazyWithRetry(() => import("./Pages/Blogs"));
+const BlogDetails = lazyWithRetry(() => import("./Pages/BlogDetails"));
+
 
 // Route Fallback Loader
 const PageLoader = () => (
@@ -48,6 +50,7 @@ function AnimatedRoutes() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs/:slug" element={<BlogDetails />} />
       </Routes>
     </Suspense>
   );
