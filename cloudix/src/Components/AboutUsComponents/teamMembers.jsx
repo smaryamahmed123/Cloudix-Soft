@@ -32,7 +32,8 @@ const OurTeam = ({ team }) => {
         }}
       >
         <Typography
-          variant="h2"
+          component="h2" 
+          variant="h3"
           sx={{
             fontWeight: "bold",
             color: theme.palette.accent.light,

@@ -70,7 +70,8 @@ const WebsiteDesignSection = () => {
         >
           <Typography
             align="center"
-            component="h3"
+            component="h2" 
+            variant="h3" 
             fontWeight={800}
             mb={2}
             sx={{ fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" } }}

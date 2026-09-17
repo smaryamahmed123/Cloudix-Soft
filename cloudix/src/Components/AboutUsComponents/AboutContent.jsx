@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, useTheme, useMediaQuery, Container } from "@mui/material";
+import { Box, Typography, useTheme, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import SectionImage from "../SectionImage";
 
@@ -15,7 +15,7 @@ const AboutContent = ({ intro }) => {
     ? intro.image.startsWith("http")
       ? intro.image
       : `${backendURL}${intro.image}`
-    : AboutImage;
+    : "";
 
   return (
     <MotionBox
@@ -38,22 +38,22 @@ const AboutContent = ({ intro }) => {
             gap: { xs: 5, md: 10 },
           }}
         >
-          {/* LEFT */}
+          {/* LEFT TEXT */}
           <Box flex={1}>
-            {/* Title — theme handles responsive size */}
             <Typography
+              component="h2" // Changed to h2 for proper SEO outline
               variant="h3"
               sx={{
                 mb: { xs: 2, md: 3 },
                 lineHeight: 1.2,
                 color: theme.palette.primary.dark,
                 letterSpacing: "-0.4px",
+                fontWeight: 700,
               }}
             >
               {intro.title}
             </Typography>
 
-            {/* Description — theme handles responsive size */}
             <Typography
               variant="body1"
               sx={{
@@ -62,28 +62,30 @@ const AboutContent = ({ intro }) => {
                 maxWidth: "520px",
                 textAlign: "justify",
                 mx: { xs: "auto", md: 0 },
+                color: "text.primary",
               }}
             >
               {intro.description}
             </Typography>
 
-            {/* Highlight — theme handles responsive size */}
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 600,
-                color: theme.palette.primary.main,
-                mt: { xs: 1, md: 2 },
-              }}
-            >
-              {intro.highlight}
-            </Typography>
+            {intro.highlight && (
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 600,
+                  color: theme.palette.primary.main,
+                  mt: { xs: 1, md: 2 },
+                }}
+              >
+                {intro.highlight}
+              </Typography>
+            )}
           </Box>
 
-          {/* RIGHT */}
+          {/* RIGHT IMAGE */}
           <SectionImage
             src={imageSrc}
-            alt={intro.title || "About Image"}
+            alt={intro.title || "About Cloudix Soft"}
             accentColor={theme.palette.primary.dark}
             direction="right"
             delay={0.5}

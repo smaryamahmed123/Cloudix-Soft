@@ -52,6 +52,7 @@ export default function PostDesignSection() {
       {/* Section Title */}
       <Box sx={{ textAlign: "center", mb: 6 }}>
         <Typography
+          component="h2"
           variant="h3"
           sx={{
             fontWeight: "bold",
@@ -179,7 +180,8 @@ export default function PostDesignSection() {
               left: 0,
               width: "100vw",
               height: "100vh",
-              background: "rgba(64, 62, 62, 0.47)",
+              // background: "rgba(64, 62, 62, 0.47)",
+              background: "rgba(0, 0, 0, 0.75)",
               backdropFilter: "blur(8px)",
               display: "flex",
               justifyContent: "center",

@@ -3,18 +3,22 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Provider } from "react-redux";
 import { ThemeProvider, CssBaseline } from "@mui/material";
+import { HelmetProvider } from "react-helmet-async";
 import theme from "./theme";
 import { store } from "./redux/store";
 
-// Mount React App
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </ThemeProvider>
+  <React.StrictMode>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </ThemeProvider>
+    </HelmetProvider>
+  </React.StrictMode>
 );
 
 // Remove loader after React app mounts
