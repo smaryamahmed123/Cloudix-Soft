@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { Helmet } from 'react-helmet-async';
 import PortfolioHero from '../Components/PortfolioComps.jsx/PortfolioHero';
 import PostDesignSection from '../Components/PortfolioComps.jsx/PostDesignSection';
@@ -8,6 +8,33 @@ import PortfolioSection3 from '../Components/PortfolioComps.jsx/PortfolioSection
 import ContactForm from '../Components/ContactComps/ContactForm';
 
 export default function MarketingAgencyPortfolio() {
+
+  useEffect(() => {
+    // If there is no hash, start at the top
+    if (!window.location.hash) {
+      window.scrollTo({
+        top: 0,
+        behavior: "instant",
+      });
+
+      return;
+    }
+
+    const sectionId = window.location.hash.substring(1);
+
+    // Wait for the portfolio sections to render
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
+  }, []);
+
   return (
     <>
       <Helmet>

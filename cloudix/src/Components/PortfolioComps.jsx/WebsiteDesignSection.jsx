@@ -55,6 +55,7 @@ const WebsiteDesignSection = () => {
 
   return (
     <Box
+      id="websites"
       sx={{
         py: { xs: 10, md: 16 },
         color: "#fff",
@@ -70,8 +71,8 @@ const WebsiteDesignSection = () => {
         >
           <Typography
             align="center"
-            component="h2" 
-            variant="h3" 
+            component="h2"
+            variant="h3"
             fontWeight={800}
             mb={2}
             sx={{ fontSize: { xs: "1.9rem", sm: "2.4rem", md: "3rem" } }}

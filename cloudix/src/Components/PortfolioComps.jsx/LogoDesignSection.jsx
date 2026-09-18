@@ -54,7 +54,7 @@ const LogoDesignSection = () => {
   }, [fetchLogos]);
 
   return (
-    <Box sx={{ bgcolor: "#D9D9D9", position: "relative", zIndex: 2, pb: 10 }}>
+    <Box id="logos" sx={{ bgcolor: "#D9D9D9", position: "relative", zIndex: 2, pb: 10 }}>
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 }, }}>
 
         <Typography
