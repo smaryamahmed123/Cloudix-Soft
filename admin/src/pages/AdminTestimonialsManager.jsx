@@ -209,16 +209,7 @@ export default function AdminTestimonialsManager() {
         form.isFeatured
       );
 
-      await axios.post(
-        BASE_URL,
-        formData,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data",
-          },
-        }
-      );
+      await axios.post(BASE_URL, formData);
 
       setForm(emptyForm);
       setOpenModal(false);

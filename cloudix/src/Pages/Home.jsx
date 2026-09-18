@@ -6,6 +6,7 @@ import HeroSection from "../Components/HomeComps/HomeHero";
 import WhyChooseUs from "../Components/HomeComps/WhyChoose";
 import OurClients from "../Components/HomeComps/OurClients";
 import Testimonials from "../Components/HomeComps/Testimonials";
+import FeaturedWork from "../Components/HomeComps/FeaturedWork";
 import AboutContent from "../Components/AboutUsComponents/AboutContent";
 import ServicesSection from "../Components/ServicesComponents.jsx/ServicesSection";
 
@@ -29,6 +30,7 @@ useEffect(() => {
         <Box sx={{ backgroundColor: "#111E2C", p: 2 }}>
           <ServicesSection limit={4} />
         </Box>
+        <FeaturedWork />
         <WhyChooseUs />
         <Testimonials />
         <OurClients />
