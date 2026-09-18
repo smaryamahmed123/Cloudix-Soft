@@ -487,24 +487,6 @@ export default function AdminBlogs() {
             articles
           </Typography>
         </Box>
-
-        <Button
-          variant="contained"
-          onClick={handleOpenModal}
-          disabled={uploading}
-          sx={{
-            backgroundColor:
-              "#769914",
-            fontWeight: 700,
-            px: 3,
-            "&:hover": {
-              backgroundColor:
-                "#627f11",
-            },
-          }}
-        >
-          + Add Blog
-        </Button>
       </Box>
 
       {/* --------------------------------

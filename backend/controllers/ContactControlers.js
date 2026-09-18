@@ -6,57 +6,94 @@ const mailer = new MailerSend({
 });
   
 export const createMessage = async (req, res) => {
-console.log("KEY EXISTS:", !!process.env.MAILERSEND_API_KEY);
-console.log("KEY LENGTH:", process.env.MAILERSEND_API_KEY?.length);
-  const { name, email, message, phoneNo } = req.body;
+  console.log("KEY EXISTS:", !!process.env.MAILERSEND_API_KEY);
+  console.log("KEY LENGTH:", process.env.MAILERSEND_API_KEY?.length);
 
-  // ✅ Basic validation
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: "All required fields missing" });
+  const {
+    name,
+    email,
+    message,
+    phoneNo,
+    service,
+  } = req.body;
+
+  // Basic validation
+  if (!name || !email || !message || !phoneNo) {
+    return res.status(400).json({
+      error: "Name, email, phone number, and message are required.",
+    });
   }
-  
+
   if (!/\S+@\S+\.\S+/.test(email)) {
-    return res.status(400).json({ error: "Invalid email format" });
+    return res.status(400).json({
+      error: "Invalid email format",
+    });
+  }
+
+  if (!/^(\+?\d{7,15})$/.test(phoneNo)) {
+    return res.status(400).json({
+      error: "Invalid phone number format",
+    });
   }
 
   try {
-    // ✅ Save in DB (optional but good)
+    // Save message in MongoDB
     await ContactMessage.create({
       name,
       email,
       phoneNo,
+      service,
       message,
       status: "pending",
     });
 
-    // ✅ Send email
-const sentFrom = new Sender(
-  process.env.MAILERSEND_FROM_EMAIL,
-  process.env.MAILERSEND_FROM_NAME
-);
+    // MailerSend sender
+    const sentFrom = new Sender(
+      process.env.MAILERSEND_FROM_EMAIL,
+      process.env.MAILERSEND_FROM_NAME
+    );
 
+    // Admin recipient
     const recipients = [
-      new Recipient(process.env.ADMIN_EMAIL, "Admin"),
+      new Recipient(
+        process.env.ADMIN_EMAIL,
+        "Admin"
+      ),
     ];
 
+    // Email
     const emailParams = new EmailParams()
       .setFrom(sentFrom)
       .setTo(recipients)
-      .setSubject(`New Message from ${name}`)
+      .setSubject(`New Contact Message from ${name}`)
       .setText(`
+New Contact Form Submission
+============================
+
 Name: ${name}
 Email: ${email}
 Phone: ${phoneNo}
-Message: ${message}
+Service: ${service || "Not selected"}
+
+Message:
+${message}
+
+============================
+Cloudix Soft Contact Form
       `);
 
     await mailer.email.send(emailParams);
 
-    res.status(200).json({ message: "Message sent successfully" });
+    res.status(200).json({
+      message: "Message sent successfully",
+    });
 
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Something went wrong" });
+    console.error("Contact message error:", err);
+
+    res.status(500).json({
+      error: "Something went wrong",
+    });
   }
 };
 

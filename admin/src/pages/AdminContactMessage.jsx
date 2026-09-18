@@ -191,6 +191,28 @@ const AdminContactMessages = () => {
                         <Typography
                           variant="body2"
                           component="span"
+                          sx={{
+                            display: "block",
+                            color: "text.primary",
+                          }}
+                        >
+                          <strong>Phone:</strong> {msg.phoneNo}
+                        </Typography>
+
+                        <Typography
+                          variant="body2"
+                          component="span"
+                          sx={{
+                            display: "block",
+                            color: "text.primary",
+                          }}
+                        >
+                          <strong>Service:</strong>{" "}
+                          {msg.service || "Not selected"}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          component="span"
                           sx={{ display: 'block', color: 'text.primary' }}
                         >
                           <strong>Message:</strong> {msg.message}
