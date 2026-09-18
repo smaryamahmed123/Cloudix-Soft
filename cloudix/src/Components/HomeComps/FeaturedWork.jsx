@@ -4,18 +4,21 @@ import {
   Box,
   Container,
   Typography,
-  Button,
   CircularProgress,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import GradientButton from "../GradientButton"; // adjust path if needed
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const MotionBox = motion(Box);
 
 export default function FeaturedWork() {
+  const navigate = useNavigate();
+
   const [website, setWebsite] = useState(null);
   const [logo, setLogo] = useState(null);
   const [post, setPost] = useState(null);
@@ -42,7 +45,6 @@ export default function FeaturedWork() {
           ? postsRes.data
           : [];
 
-        // First item = latest/first ordered project
         setWebsite(websites[0] || null);
         setLogo(logos[0] || null);
         setPost(posts[0] || null);
@@ -80,21 +82,6 @@ export default function FeaturedWork() {
         overflow: "hidden",
       }}
     >
-      {/* Decorative background */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: -180,
-          right: -180,
-          width: 400,
-          height: 400,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(118,153,20,0.10), transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
-
       <Container
         maxWidth="lg"
         sx={{
@@ -102,7 +89,9 @@ export default function FeaturedWork() {
           zIndex: 1,
         }}
       >
-        {/* ================= HEADER ================= */}
+        {/* =====================================================
+            HEADER
+        ===================================================== */}
 
         <MotionBox
           initial={{ opacity: 0, y: 35 }}
@@ -138,7 +127,6 @@ export default function FeaturedWork() {
               },
               lineHeight: 1.1,
               fontWeight: 800,
-              letterSpacing: "-1px",
             }}
           >
             Featured{" "}
@@ -171,7 +159,9 @@ export default function FeaturedWork() {
           </Typography>
         </MotionBox>
 
-        {/* ================= WEBSITE ================= */}
+        {/* =====================================================
+            WEBSITE PROJECT
+        ===================================================== */}
 
         {website && (
           <MotionBox
@@ -193,18 +183,13 @@ export default function FeaturedWork() {
               overflow: "hidden",
               mb: 3,
               boxShadow: "0 15px 45px rgba(17,30,44,0.16)",
-              cursor: "pointer",
 
               "&:hover .website-image": {
                 transform: "scale(1.05)",
               },
-
-              "&:hover .website-arrow": {
-                transform: "translateX(5px)",
-              },
             }}
           >
-            {/* Website Image */}
+            {/* Image */}
             <Box
               className="website-image"
               component="img"
@@ -220,17 +205,17 @@ export default function FeaturedWork() {
               }}
             />
 
-            {/* Dark overlay */}
+            {/* Overlay */}
             <Box
               sx={{
                 position: "absolute",
                 inset: 0,
                 background:
-                  "linear-gradient(90deg, rgba(5,15,29,0.94) 0%, rgba(5,15,29,0.72) 38%, rgba(5,15,29,0.15) 100%)",
+                  "linear-gradient(90deg, rgba(5,15,29,0.95) 0%, rgba(5,15,29,0.72) 40%, rgba(5,15,29,0.15) 100%)",
               }}
             />
 
-            {/* Website Content */}
+            {/* Content */}
             <Box
               sx={{
                 position: "relative",
@@ -251,6 +236,7 @@ export default function FeaturedWork() {
                 },
               }}
             >
+              {/* Label */}
               <Box
                 sx={{
                   display: "inline-flex",
@@ -310,42 +296,27 @@ export default function FeaturedWork() {
                 strong digital presence and engaging user experience.
               </Typography>
 
+              {/* Your GradientButton */}
               {website.link && (
-                <Button
-                  component="a"
-                  href={website.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="contained"
-                  endIcon={
-                    <ArrowForwardIcon
-                      className="website-arrow"
-                      sx={{
-                        transition: "transform 0.3s ease",
-                      }}
-                    />
-                  }
-                  sx={{
-                    backgroundColor: "#769914",
-                    color: "#fff",
-                    borderRadius: "999px",
-                    px: 3,
-                    py: 1.2,
-                    fontWeight: 700,
-                    textTransform: "none",
-                    "&:hover": {
-                      backgroundColor: "#657f11",
-                    },
+                <GradientButton
+                  text="VIEW PROJECT"
+                  size="medium"
+                  onClick={() => {
+                    window.open(
+                      website.link,
+                      "_blank",
+                      "noopener,noreferrer"
+                    );
                   }}
-                >
-                  View Project
-                </Button>
+                />
               )}
             </Box>
           </MotionBox>
         )}
 
-        {/* ================= LOGO + POST ================= */}
+        {/* =====================================================
+            LOGO + POST
+        ===================================================== */}
 
         <Box
           sx={{
@@ -357,35 +328,38 @@ export default function FeaturedWork() {
             gap: 3,
           }}
         >
-          {/* ================= LOGO ================= */}
+          {/* =================================================
+              LOGO
+          ================================================= */}
 
           {logo && (
             <MotionBox
+              component="button"
+              type="button"
+              onClick={() => navigate("/portfolio")}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              onClick={() => {
-                window.location.href = "/portfolio";
-              }}
               sx={{
                 position: "relative",
+                width: "100%",
                 height: {
                   xs: 330,
                   sm: 380,
                   md: 390,
                 },
+                border: 0,
+                padding: 0,
                 borderRadius: 4,
                 overflow: "hidden",
                 cursor: "pointer",
+                textAlign: "left",
+                background: "none",
                 boxShadow: "0 12px 35px rgba(17,30,44,0.14)",
 
                 "&:hover .portfolio-image": {
                   transform: "scale(1.06)",
-                },
-
-                "&:hover .portfolio-arrow": {
-                  transform: "translateX(5px)",
                 },
               }}
             >
@@ -414,7 +388,7 @@ export default function FeaturedWork() {
                 }}
               />
 
-              {/* Category */}
+              {/* Label */}
               <Box
                 sx={{
                   position: "absolute",
@@ -447,87 +421,67 @@ export default function FeaturedWork() {
                   bottom: 22,
                   left: 22,
                   right: 22,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-end",
-                  gap: 2,
                 }}
               >
-                <Box>
-                  <Typography
-                    component="h3"
-                    sx={{
-                      color: "#fff",
-                      fontWeight: 800,
-                      fontSize: {
-                        xs: "22px",
-                        sm: "25px",
-                      },
-                      mb: 0.8,
-                    }}
-                  >
-                    Logo Design
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      color: "rgba(255,255,255,0.72)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    Creative identity for your brand.
-                  </Typography>
-                </Box>
-
-                <Box
-                  className="portfolio-arrow"
+                <Typography
+                  component="h3"
                   sx={{
-                    minWidth: 45,
-                    height: 45,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(255,255,255,0.6)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
                     color: "#fff",
-                    transition: "transform 0.3s ease",
+                    fontWeight: 800,
+                    fontSize: {
+                      xs: "22px",
+                      sm: "25px",
+                    },
+                    mb: 0.8,
                   }}
                 >
-                  <ArrowForwardIcon />
-                </Box>
+                  Logo Design
+                </Typography>
+
+                <Typography
+                  sx={{
+                    color: "rgba(255,255,255,0.72)",
+                    fontSize: "13px",
+                  }}
+                >
+                  Creative identity for your brand.
+                </Typography>
               </Box>
             </MotionBox>
           )}
 
-          {/* ================= POST ================= */}
+          {/* =================================================
+              POST
+          ================================================= */}
 
           {post && (
             <MotionBox
+              component="button"
+              type="button"
+              onClick={() => navigate("/portfolio")}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              onClick={() => {
-                window.location.href = "/portfolio";
-              }}
               sx={{
                 position: "relative",
+                width: "100%",
                 height: {
                   xs: 330,
                   sm: 380,
                   md: 390,
                 },
+                border: 0,
+                padding: 0,
                 borderRadius: 4,
                 overflow: "hidden",
                 cursor: "pointer",
+                textAlign: "left",
+                background: "none",
                 boxShadow: "0 12px 35px rgba(17,30,44,0.14)",
 
                 "&:hover .portfolio-image": {
                   transform: "scale(1.06)",
-                },
-
-                "&:hover .portfolio-arrow": {
-                  transform: "translateX(5px)",
                 },
               }}
             >
@@ -556,7 +510,7 @@ export default function FeaturedWork() {
                 }}
               />
 
-              {/* Category */}
+              {/* Label */}
               <Box
                 sx={{
                   position: "absolute",
@@ -589,60 +543,39 @@ export default function FeaturedWork() {
                   bottom: 22,
                   left: 22,
                   right: 22,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-end",
-                  gap: 2,
                 }}
               >
-                <Box>
-                  <Typography
-                    component="h3"
-                    sx={{
-                      color: "#fff",
-                      fontWeight: 800,
-                      fontSize: {
-                        xs: "22px",
-                        sm: "25px",
-                      },
-                      mb: 0.8,
-                    }}
-                  >
-                    Post Design
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      color: "rgba(255,255,255,0.72)",
-                      fontSize: "13px",
-                    }}
-                  >
-                    Engaging designs for social media.
-                  </Typography>
-                </Box>
-
-                <Box
-                  className="portfolio-arrow"
+                <Typography
+                  component="h3"
                   sx={{
-                    minWidth: 45,
-                    height: 45,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(255,255,255,0.6)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
                     color: "#fff",
-                    transition: "transform 0.3s ease",
+                    fontWeight: 800,
+                    fontSize: {
+                      xs: "22px",
+                      sm: "25px",
+                    },
+                    mb: 0.8,
                   }}
                 >
-                  <ArrowForwardIcon />
-                </Box>
+                  Post Design
+                </Typography>
+
+                <Typography
+                  sx={{
+                    color: "rgba(255,255,255,0.72)",
+                    fontSize: "13px",
+                  }}
+                >
+                  Engaging designs for social media.
+                </Typography>
               </Box>
             </MotionBox>
           )}
         </Box>
 
-        {/* ================= VIEW FULL PORTFOLIO ================= */}
+        {/* =====================================================
+            VIEW FULL PORTFOLIO
+        ===================================================== */}
 
         <MotionBox
           initial={{ opacity: 0, y: 25 }}
@@ -650,39 +583,16 @@ export default function FeaturedWork() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
           sx={{
-            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
             mt: { xs: 5, md: 6 },
           }}
         >
-          <Button
-            component="a"
-            href="/portfolio"
-            variant="contained"
-            endIcon={<ArrowForwardIcon />}
-            sx={{
-              backgroundColor: "#769914",
-              color: "#fff",
-              borderRadius: "999px",
-              px: {
-                xs: 3,
-                md: 4,
-              },
-              py: 1.4,
-              fontSize: {
-                xs: "14px",
-                md: "15px",
-              },
-              fontWeight: 700,
-              textTransform: "none",
-              boxShadow: "0 8px 25px rgba(118,153,20,0.25)",
-              "&:hover": {
-                backgroundColor: "#657f11",
-                boxShadow: "0 10px 30px rgba(118,153,20,0.35)",
-              },
-            }}
-          >
-            View Full Portfolio
-          </Button>
+          <GradientButton
+            text="VIEW FULL PORTFOLIO"
+            size="medium"
+            onClick={() => navigate("/portfolio")}
+          />
         </MotionBox>
       </Container>
     </Box>
