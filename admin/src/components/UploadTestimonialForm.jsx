@@ -25,6 +25,8 @@ export default function UploadTestimonialForm({
     }));
   };
 
+  const isVideo = form.type === "video";
+
   return (
     <Box
       component="form"
@@ -37,6 +39,8 @@ export default function UploadTestimonialForm({
         p: { xs: 2, sm: 3 },
         borderRadius: 3,
         boxShadow: 3,
+        maxHeight: isMobile ? "90vh" : "none",
+        overflowY: isMobile ? "auto" : "visible",
       }}
     >
       <Typography
@@ -48,25 +52,35 @@ export default function UploadTestimonialForm({
         Add Testimonial
       </Typography>
 
-      <Typography
-        color="text.secondary"
-        mb={3}
-      >
+      <Typography color="text.secondary" mb={3}>
         Add client feedback to your website.
       </Typography>
 
       <Divider sx={{ mb: 3 }} />
 
-      {/* Type */}
+      {/* ================= TYPE ================= */}
 
       <TextField
         fullWidth
         select
         label="Testimonial Type"
         value={form.type}
-        onChange={(e) =>
-          updateForm("type", e.target.value)
-        }
+        onChange={(e) => {
+          const type = e.target.value;
+
+          updateForm("type", type);
+
+          // Clear fields that don't belong to video testimonials
+          if (type === "video") {
+            setForm((prev) => ({
+              ...prev,
+              type: "video",
+              clientImage: null,
+              text: "",
+              rating: 5,
+            }));
+          }
+        }}
         sx={{ mb: 2 }}
       >
         <MenuItem value="text">
@@ -78,7 +92,7 @@ export default function UploadTestimonialForm({
         </MenuItem>
       </TextField>
 
-      {/* Client name */}
+      {/* ================= CLIENT NAME ================= */}
 
       <TextField
         fullWidth
@@ -86,30 +100,24 @@ export default function UploadTestimonialForm({
         label="Client Name"
         value={form.clientName}
         onChange={(e) =>
-          updateForm(
-            "clientName",
-            e.target.value
-          )
+          updateForm("clientName", e.target.value)
         }
         sx={{ mb: 2 }}
       />
 
-      {/* Company */}
+      {/* ================= COMPANY ================= */}
 
       <TextField
         fullWidth
         label="Company / Business"
         value={form.companyName}
         onChange={(e) =>
-          updateForm(
-            "companyName",
-            e.target.value
-          )
+          updateForm("companyName", e.target.value)
         }
         sx={{ mb: 2 }}
       />
 
-      {/* Position */}
+      {/* ================= POSITION ================= */}
 
       <TextField
         fullWidth
@@ -117,62 +125,94 @@ export default function UploadTestimonialForm({
         placeholder="CEO / Founder / Customer"
         value={form.position}
         onChange={(e) =>
-          updateForm(
-            "position",
-            e.target.value
-          )
+          updateForm("position", e.target.value)
         }
         sx={{ mb: 2 }}
       />
 
-      {/* Client image */}
+      {/* ================================================= */}
+      {/* TEXT TESTIMONIAL ONLY */}
+      {/* ================================================= */}
 
-      <Box sx={{ mb: 3 }}>
-        <Typography
-          fontWeight={700}
-          mb={1}
-        >
-          Client Image
-        </Typography>
+      {!isVideo && (
+        <>
+          {/* CLIENT IMAGE */}
 
-        <Button
-          variant="outlined"
-          component="label"
-        >
-          Choose Image
+          <Box sx={{ mb: 3 }}>
+            <Typography fontWeight={700} mb={1}>
+              Client Image
+            </Typography>
 
-          <input
-            hidden
-            type="file"
-            accept="image/*"
+            <Button
+              variant="outlined"
+              component="label"
+            >
+              Choose Image
+
+              <input
+                hidden
+                type="file"
+                accept="image/*"
+                onChange={(e) =>
+                  updateForm(
+                    "clientImage",
+                    e.target.files[0]
+                  )
+                }
+              />
+            </Button>
+
+            {form.clientImage && (
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                mt={1}
+              >
+                {form.clientImage.name}
+              </Typography>
+            )}
+          </Box>
+
+          {/* FEEDBACK */}
+
+          <TextField
+            fullWidth
+            required
+            multiline
+            rows={5}
+            label="Client Feedback"
+            placeholder="What did the client say about Cloudix Soft?"
+            value={form.text}
             onChange={(e) =>
-              updateForm(
-                "clientImage",
-                e.target.files[0]
-              )
+              updateForm("text", e.target.value)
             }
+            sx={{ mb: 3 }}
           />
-        </Button>
 
-        {form.clientImage && (
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            mt={1}
-          >
-            {form.clientImage.name}
-          </Typography>
-        )}
-      </Box>
+          {/* RATING */}
 
-      {/* Video */}
+          <Box sx={{ mb: 3 }}>
+            <Typography fontWeight={700} mb={1}>
+              Rating
+            </Typography>
 
-      {form.type === "video" && (
+            <Rating
+              value={form.rating}
+              onChange={(e, value) =>
+                updateForm("rating", value || 5)
+              }
+            />
+          </Box>
+        </>
+      )}
+
+      {/* ================================================= */}
+      {/* VIDEO TESTIMONIAL ONLY */}
+      {/* ================================================= */}
+
+      {isVideo && (
         <Box sx={{ mb: 3 }}>
-          <Typography
-            fontWeight={700}
-            mb={1}
-          >
+          <Typography fontWeight={700} mb={1}>
             Testimonial Video
           </Typography>
 
@@ -207,44 +247,7 @@ export default function UploadTestimonialForm({
         </Box>
       )}
 
-      {/* Testimonial */}
-
-      <TextField
-        fullWidth
-        required
-        multiline
-        rows={5}
-        label="Client Feedback"
-        placeholder="What did the client say about Cloudix Soft?"
-        value={form.text}
-        onChange={(e) =>
-          updateForm("text", e.target.value)
-        }
-        sx={{ mb: 3 }}
-      />
-
-      {/* Rating */}
-
-      <Box sx={{ mb: 3 }}>
-        <Typography
-          fontWeight={700}
-          mb={1}
-        >
-          Rating
-        </Typography>
-
-        <Rating
-          value={form.rating}
-          onChange={(e, value) =>
-            updateForm(
-              "rating",
-              value || 5
-            )
-          }
-        />
-      </Box>
-
-      {/* Published */}
+      {/* ================= PUBLISHED ================= */}
 
       <FormControlLabel
         control={
@@ -257,15 +260,13 @@ export default function UploadTestimonialForm({
               )
             }
             sx={{
-              "& .MuiSwitch-switchBase.Mui-checked":
-                {
-                  color: "#769914",
-                },
+              "& .MuiSwitch-switchBase.Mui-checked": {
+                color: "#769914",
+              },
 
               "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
                 {
-                  backgroundColor:
-                    "#769914",
+                  backgroundColor: "#769914",
                 },
             }}
           />
@@ -277,7 +278,7 @@ export default function UploadTestimonialForm({
         }
       />
 
-      {/* Featured */}
+      {/* ================= FEATURED ================= */}
 
       <FormControlLabel
         control={
@@ -293,6 +294,8 @@ export default function UploadTestimonialForm({
         }
         label="Featured testimonial"
       />
+
+      {/* ================= SUBMIT ================= */}
 
       <Button
         type="submit"

@@ -115,28 +115,39 @@ export default function AdminTestimonialsManager() {
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    if (
-      !form.clientName.trim() ||
-      !form.text.trim()
-    ) {
+    // Client name
+    if (!form.clientName.trim()) {
       setSnackbar({
         open: true,
-        message:
-          "Please enter client name and feedback ⚠️",
+        message: "Please enter client name ⚠️",
         severity: "warning",
       });
 
       return;
     }
 
+    // Text testimonial validation
+    if (
+      form.type === "text" &&
+      !form.text.trim()
+    ) {
+      setSnackbar({
+        open: true,
+        message: "Please enter client feedback ⚠️",
+        severity: "warning",
+      });
+
+      return;
+    }
+
+    // Video testimonial validation
     if (
       form.type === "video" &&
       !form.video
     ) {
       setSnackbar({
         open: true,
-        message:
-          "Please select a testimonial video ⚠️",
+        message: "Please select a testimonial video ⚠️",
         severity: "warning",
       });
 
@@ -148,11 +159,7 @@ export default function AdminTestimonialsManager() {
 
       const formData = new FormData();
 
-      formData.append(
-        "type",
-        form.type
-      );
-
+      formData.append("type", form.type);
       formData.append(
         "clientName",
         form.clientName
@@ -168,15 +175,29 @@ export default function AdminTestimonialsManager() {
         form.position
       );
 
-      formData.append(
-        "text",
-        form.text
-      );
+      // Only send feedback/rating for text testimonials
+      if (form.type === "text") {
+        formData.append("text", form.text);
+        formData.append("rating", form.rating);
 
-      formData.append(
-        "rating",
-        form.rating
-      );
+        if (form.clientImage) {
+          formData.append(
+            "clientImage",
+            form.clientImage
+          );
+        }
+      }
+
+      // Only send video for video testimonial
+      if (
+        form.type === "video" &&
+        form.video
+      ) {
+        formData.append(
+          "video",
+          form.video
+        );
+      }
 
       formData.append(
         "isPublished",
@@ -187,23 +208,6 @@ export default function AdminTestimonialsManager() {
         "isFeatured",
         form.isFeatured
       );
-
-      if (form.clientImage) {
-        formData.append(
-          "clientImage",
-          form.clientImage
-        );
-      }
-
-      if (
-        form.type === "video" &&
-        form.video
-      ) {
-        formData.append(
-          "video",
-          form.video
-        );
-      }
 
       await axios.post(
         BASE_URL,
@@ -217,7 +221,6 @@ export default function AdminTestimonialsManager() {
       );
 
       setForm(emptyForm);
-
       setOpenModal(false);
 
       await fetchTestimonials();
