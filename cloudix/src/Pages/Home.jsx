@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Box } from "@mui/material";
+import useDevice from "../hooks/useDevice";
 import HeroSection from "../Components/HomeComps/HomeHero";
-import AboutContent from "../Components/AboutUsComponents/AboutContent";
 import WhyChooseUs from "../Components/HomeComps/WhyChoose";
 import OurClients from "../Components/HomeComps/OurClients";
+import Testimonials from "../Components/HomeComps/Testimonials";
+import AboutContent from "../Components/AboutUsComponents/AboutContent";
 import ServicesSection from "../Components/ServicesComponents.jsx/ServicesSection";
-import useDevice from "../hooks/useDevice";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -29,6 +30,7 @@ useEffect(() => {
           <ServicesSection limit={4} />
         </Box>
         <WhyChooseUs />
+        <Testimonials />
         <OurClients />
       </Box>
     </Box>

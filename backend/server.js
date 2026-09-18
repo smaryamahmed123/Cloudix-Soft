@@ -15,6 +15,7 @@ import websiteRoutes from "./routes/websiteRoutes.js";
 import servicesRoutes from './routes/servicesRoutes.js'
 import subscriberRoutes from './routes/subscriberRoutes.js';
 import contactInfoRoutes from './routes/ContactInfoRoutes.js';
+import testimonialRoutes from "./routes/testimonialRoutes.js";
 import privacyPolicyRoutes from './routes/privacyPolicyRoutes.js';
 
 import User from './models/User.js';
@@ -76,6 +77,7 @@ app.use("/api/websites", websiteRoutes);
 app.use('/api/services', servicesRoutes);
 app.use('/api/newsletter', subscriberRoutes);
 app.use('/api/contact-info', contactInfoRoutes);
+app.use("/api/testimonials", testimonialRoutes);
 app.use('/api/privacy-policy', privacyPolicyRoutes);
 app.use('/api/contact', contactLimiter, contactRoutes);
 

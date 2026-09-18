@@ -52,6 +52,7 @@ const Sidebar = () => {
     { text: "About Us", icon: <InfoIcon />, path: "/admin/about" },
     { text: "Add Website", icon: <AddToPhotosIcon />, path: "admin/addWebsite"},
     { text: "Privacy Policy", icon: <PolicyIcon />, path: "/admin/privacy-policy" },
+    { text: "Testimonials", icon: <PolicyIcon />, path: "/admin/testimonials" },
   ];
 
   const drawerContent = (
