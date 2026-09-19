@@ -33,16 +33,32 @@ const backendURL =
 const BASE_URL =
   `${backendURL}/api/testimonials`;
 
+const CLOUDINARY_SIGNATURE_URL =
+  `${backendURL}/api/cloudinary/testimonial-video-signature`;
+
 const emptyForm = {
   type: "text",
+
   clientName: "",
+
   companyName: "",
+
   position: "",
+
   text: "",
+
   clientImage: null,
+
   video: null,
+
+  videoUrl: "",
+
+  videoPublicId: "",
+
   rating: 5,
+
   isPublished: true,
+
   isFeatured: false,
 };
 
@@ -72,9 +88,9 @@ export default function AdminTestimonialsManager() {
     theme.breakpoints.down("sm")
   );
 
-  // ============================================
+  // =====================================================
   // FETCH
-  // ============================================
+  // =====================================================
 
   const fetchTestimonials = async () => {
     try {
@@ -83,7 +99,9 @@ export default function AdminTestimonialsManager() {
       const res =
         await axios.get(BASE_URL);
 
-      const sorted = [...res.data].sort(
+      const sorted = [
+        ...res.data,
+      ].sort(
         (a, b) =>
           (a.order ?? 0) -
           (b.order ?? 0)
@@ -95,8 +113,10 @@ export default function AdminTestimonialsManager() {
 
       setSnackbar({
         open: true,
+
         message:
           "Failed to fetch testimonials ❌",
+
         severity: "error",
       });
     } finally {
@@ -108,46 +128,163 @@ export default function AdminTestimonialsManager() {
     fetchTestimonials();
   }, []);
 
-  // ============================================
-  // ADD
-  // ============================================
+  // =====================================================
+  // UPLOAD VIDEO DIRECTLY TO CLOUDINARY
+  // =====================================================
+
+  const uploadVideoToCloudinary = async (
+    videoFile
+  ) => {
+    try {
+      // -----------------------------------------------
+      // GET SIGNATURE FROM YOUR BACKEND
+      // -----------------------------------------------
+
+      const signatureResponse =
+        await axios.get(
+          CLOUDINARY_SIGNATURE_URL
+        );
+
+      const {
+        timestamp,
+        folder,
+        signature,
+        cloudName,
+        apiKey,
+      } = signatureResponse.data;
+
+      // -----------------------------------------------
+      // CLOUDINARY FORM DATA
+      // -----------------------------------------------
+
+      const cloudinaryFormData =
+        new FormData();
+
+      cloudinaryFormData.append(
+        "file",
+        videoFile
+      );
+
+      cloudinaryFormData.append(
+        "api_key",
+        apiKey
+      );
+
+      cloudinaryFormData.append(
+        "timestamp",
+        timestamp
+      );
+
+      cloudinaryFormData.append(
+        "folder",
+        folder
+      );
+
+      cloudinaryFormData.append(
+        "signature",
+        signature
+      );
+
+      // -----------------------------------------------
+      // DIRECT CLOUDINARY UPLOAD
+      // -----------------------------------------------
+
+      const response =
+        await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`,
+          cloudinaryFormData,
+          {
+            onUploadProgress:
+              (progressEvent) => {
+                if (
+                  progressEvent.total
+                ) {
+                  const percent =
+                    Math.round(
+                      (progressEvent.loaded /
+                        progressEvent.total) *
+                        100
+                    );
+
+                  console.log(
+                    `Cloudinary upload: ${percent}%`
+                  );
+                }
+              },
+          }
+        );
+
+      return {
+        video:
+          response.data.secure_url,
+
+        videoPublicId:
+          response.data.public_id,
+      };
+    } catch (error) {
+      console.error(
+        "❌ Cloudinary video upload error:",
+        error
+      );
+
+      throw new Error(
+        error.response?.data?.error
+          ?.message ||
+          "Video upload failed"
+      );
+    }
+  };
+
+  // =====================================================
+  // ADD TESTIMONIAL
+  // =====================================================
 
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    // Client name
+    // ===================================================
+    // VALIDATION
+    // ===================================================
+
     if (!form.clientName.trim()) {
       setSnackbar({
         open: true,
-        message: "Please enter client name ⚠️",
+
+        message:
+          "Please enter client name ⚠️",
+
         severity: "warning",
       });
 
       return;
     }
 
-    // Text testimonial validation
     if (
       form.type === "text" &&
       !form.text.trim()
     ) {
       setSnackbar({
         open: true,
-        message: "Please enter client feedback ⚠️",
+
+        message:
+          "Please enter client feedback ⚠️",
+
         severity: "warning",
       });
 
       return;
     }
 
-    // Video testimonial validation
     if (
       form.type === "video" &&
       !form.video
     ) {
       setSnackbar({
         open: true,
-        message: "Please select a testimonial video ⚠️",
+
+        message:
+          "Please select a testimonial video ⚠️",
+
         severity: "warning",
       });
 
@@ -157,9 +294,49 @@ export default function AdminTestimonialsManager() {
     try {
       setLoading(true);
 
+      let videoUrl = "";
+      let videoPublicId = "";
+
+      // =================================================
+      // VIDEO → DIRECT CLOUDINARY UPLOAD
+      // =================================================
+
+      if (
+        form.type === "video" &&
+        form.video
+      ) {
+        setSnackbar({
+          open: true,
+
+          message:
+            "Uploading video to Cloudinary...",
+
+          severity: "info",
+        });
+
+        const videoResult =
+          await uploadVideoToCloudinary(
+            form.video
+          );
+
+        videoUrl =
+          videoResult.video;
+
+        videoPublicId =
+          videoResult.videoPublicId;
+      }
+
+      // =================================================
+      // SEND TESTIMONIAL TO BACKEND
+      // =================================================
+
       const formData = new FormData();
 
-      formData.append("type", form.type);
+      formData.append(
+        "type",
+        form.type
+      );
+
       formData.append(
         "clientName",
         form.clientName
@@ -175,10 +352,20 @@ export default function AdminTestimonialsManager() {
         form.position
       );
 
-      // Only send feedback/rating for text testimonials
+      // =================================================
+      // TEXT TESTIMONIAL
+      // =================================================
+
       if (form.type === "text") {
-        formData.append("text", form.text);
-        formData.append("rating", form.rating);
+        formData.append(
+          "text",
+          form.text
+        );
+
+        formData.append(
+          "rating",
+          form.rating
+        );
 
         if (form.clientImage) {
           formData.append(
@@ -188,38 +375,67 @@ export default function AdminTestimonialsManager() {
         }
       }
 
-      // Only send video for video testimonial
-      if (
-        form.type === "video" &&
-        form.video
-      ) {
+      // =================================================
+      // VIDEO TESTIMONIAL
+      // =================================================
+
+      if (form.type === "video") {
         formData.append(
           "video",
-          form.video
+          videoUrl
+        );
+
+        formData.append(
+          "videoPublicId",
+          videoPublicId
         );
       }
 
+      // =================================================
+      // PUBLISHED
+      // =================================================
+
       formData.append(
         "isPublished",
-        form.isPublished
+        String(form.isPublished)
       );
+
+      // =================================================
+      // FEATURED
+      // =================================================
 
       formData.append(
         "isFeatured",
-        form.isFeatured
+        String(form.isFeatured)
       );
 
-      await axios.post(BASE_URL, formData);
+      // =================================================
+      // SEND TO BACKEND
+      // =================================================
 
-      setForm(emptyForm);
+      await axios.post(
+        BASE_URL,
+        formData
+      );
+
+      // =================================================
+      // RESET
+      // =================================================
+
+      setForm({
+        ...emptyForm,
+      });
+
       setOpenModal(false);
 
       await fetchTestimonials();
 
       setSnackbar({
         open: true,
+
         message:
           "Testimonial added successfully ✅",
+
         severity: "success",
       });
     } catch (error) {
@@ -230,9 +446,12 @@ export default function AdminTestimonialsManager() {
 
       setSnackbar({
         open: true,
+
         message:
+          error.message ||
           error.response?.data?.message ||
           "Failed to add testimonial ❌",
+
         severity: "error",
       });
     } finally {
@@ -240,9 +459,9 @@ export default function AdminTestimonialsManager() {
     }
   };
 
-  // ============================================
+  // =====================================================
   // DELETE
-  // ============================================
+  // =====================================================
 
   const handleDelete = async (id) => {
     try {
@@ -256,15 +475,21 @@ export default function AdminTestimonialsManager() {
 
       setSnackbar({
         open: true,
+
         message:
           "Testimonial deleted 🗑️",
+
         severity: "success",
       });
     } catch (error) {
+      console.error(error);
+
       setSnackbar({
         open: true,
+
         message:
           "Failed to delete testimonial ❌",
+
         severity: "error",
       });
     } finally {
@@ -272,14 +497,16 @@ export default function AdminTestimonialsManager() {
     }
   };
 
-  // ============================================
+  // =====================================================
   // REORDER
-  // ============================================
+  // =====================================================
 
   const handleDragEnd = async (
     result
   ) => {
-    if (!result.destination) return;
+    if (!result.destination) {
+      return;
+    }
 
     const reordered =
       Array.from(testimonials);
@@ -310,38 +537,57 @@ export default function AdminTestimonialsManager() {
 
       setSnackbar({
         open: true,
+
         message:
           "Testimonial order updated ✅",
+
         severity: "success",
       });
-    } catch {
+    } catch (error) {
+      console.error(error);
+
       await fetchTestimonials();
 
       setSnackbar({
         open: true,
+
         message:
           "Failed to save order ❌",
+
         severity: "error",
       });
     }
   };
 
+  // =====================================================
+  // UI
+  // =====================================================
+
   return (
     <Box
       sx={{
         p: isMobile ? 2 : 4,
+
         minHeight: "100vh",
+
         backgroundColor:
-          theme.palette.background.default,
+          theme.palette.background
+            .default,
       }}
     >
+      {/* ================================================= */}
+      {/* TITLE */}
+      {/* ================================================= */}
+
       <Typography
         variant="h4"
         textAlign="center"
         mb={1}
         sx={{
           color:
-            theme.palette.primary.main,
+            theme.palette.primary
+              .main,
+
           fontWeight: 700,
         }}
       >
@@ -353,24 +599,31 @@ export default function AdminTestimonialsManager() {
         color="text.secondary"
         mb={4}
       >
-        Drag cards to reorder client feedback
+        Drag cards to reorder client
+        feedback
       </Typography>
 
-      {/* Desktop add form */}
+      {/* ================================================= */}
+      {/* DESKTOP ADD FORM */}
+      {/* ================================================= */}
 
       {!isMobile && (
         <Box sx={{ mb: 5 }}>
           <UploadTestimonialForm
             form={form}
             setForm={setForm}
-            handleUpload={handleUpload}
+            handleUpload={
+              handleUpload
+            }
             loading={loading}
             isMobile={false}
           />
         </Box>
       )}
 
-      {/* Testimonials */}
+      {/* ================================================= */}
+      {/* TESTIMONIALS */}
+      {/* ================================================= */}
 
       <DragDropContext
         onDragEnd={handleDragEnd}
@@ -386,9 +639,14 @@ export default function AdminTestimonialsManager() {
               {...provided.droppableProps}
             >
               {testimonials.map(
-                (testimonial, index) => (
+                (
+                  testimonial,
+                  index
+                ) => (
                   <Draggable
-                    key={testimonial._id}
+                    key={
+                      testimonial._id
+                    }
                     draggableId={
                       testimonial._id
                     }
@@ -406,7 +664,8 @@ export default function AdminTestimonialsManager() {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         sx={{
-                          cursor: "grab",
+                          cursor:
+                            "grab",
                         }}
                       >
                         <TestimonialCard
@@ -429,7 +688,9 @@ export default function AdminTestimonialsManager() {
         </Droppable>
       </DragDropContext>
 
-      {/* Mobile */}
+      {/* ================================================= */}
+      {/* MOBILE */}
+      {/* ================================================= */}
 
       {isMobile && (
         <>
@@ -448,14 +709,19 @@ export default function AdminTestimonialsManager() {
             }
             sx={{
               display: "flex",
+
               alignItems: "center",
-              justifyContent: "center",
+
+              justifyContent:
+                "center",
             }}
           >
             <UploadTestimonialForm
               form={form}
               setForm={setForm}
-              handleUpload={handleUpload}
+              handleUpload={
+                handleUpload
+              }
               loading={loading}
               isMobile
             />
@@ -463,19 +729,32 @@ export default function AdminTestimonialsManager() {
         </>
       )}
 
+      {/* ================================================= */}
+      {/* SNACKBAR */}
+      {/* ================================================= */}
+
       <SnackbarAlert
         open={snackbar.open}
         onClose={() =>
           setSnackbar((prev) => ({
             ...prev,
+
             open: false,
           }))
         }
-        severity={snackbar.severity}
+        severity={
+          snackbar.severity
+        }
         message={snackbar.message}
       />
 
-      <LoadingBackdrop open={loading} />
+      {/* ================================================= */}
+      {/* LOADING */}
+      {/* ================================================= */}
+
+      <LoadingBackdrop
+        open={loading}
+      />
     </Box>
   );
 }

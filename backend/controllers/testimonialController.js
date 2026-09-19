@@ -8,14 +8,18 @@ import mongoose from "mongoose";
 
 export const getTestimonials = async (req, res) => {
     try {
-        const testimonials = await Testimonial.find().sort({
-            order: 1,
-            createdAt: -1,
-        });
+        const testimonials =
+            await Testimonial.find().sort({
+                order: 1,
+                createdAt: -1,
+            });
 
         res.json(testimonials);
     } catch (error) {
-        console.error("❌ getTestimonials error:", error);
+        console.error(
+            "❌ getTestimonials error:",
+            error
+        );
 
         res.status(500).json({
             message: error.message,
@@ -27,14 +31,18 @@ export const getTestimonials = async (req, res) => {
 // GET PUBLISHED TESTIMONIALS
 // =====================================================
 
-export const getPublishedTestimonials = async (req, res) => {
+export const getPublishedTestimonials = async (
+    req,
+    res
+) => {
     try {
-        const testimonials = await Testimonial.find({
-            isPublished: true,
-        }).sort({
-            order: 1,
-            createdAt: -1,
-        });
+        const testimonials =
+            await Testimonial.find({
+                isPublished: true,
+            }).sort({
+                order: 1,
+                createdAt: -1,
+            });
 
         res.json(testimonials);
     } catch (error) {
@@ -54,6 +62,8 @@ export const getPublishedTestimonials = async (req, res) => {
 // =====================================================
 
 export const addTestimonial = async (req, res) => {
+    let uploadedClientImagePublicId = "";
+
     try {
         const {
             type,
@@ -64,131 +74,159 @@ export const addTestimonial = async (req, res) => {
             rating,
             isPublished,
             isFeatured,
+            video,
+            videoPublicId,
         } = req.body;
 
-        if (!clientName) {
+        // =================================================
+        // BASIC VALIDATION
+        // =================================================
+
+        if (!clientName?.trim()) {
             return res.status(400).json({
                 message: "Client name is required",
             });
         }
 
-        if (type === "text" && !text) {
+        // =================================================
+        // TEXT TESTIMONIAL
+        // =================================================
+
+        if (
+            type === "text" &&
+            !text?.trim()
+        ) {
             return res.status(400).json({
-                message: "Client feedback is required",
+                message:
+                    "Client feedback is required",
             });
         }
 
-        if (type === "video" && !req.files?.video?.[0]) {
+        // =================================================
+        // VIDEO TESTIMONIAL
+        // =================================================
+
+        if (
+            type === "video" &&
+            !video
+        ) {
             return res.status(400).json({
-                message: "Testimonial video is required",
+                message:
+                    "Testimonial video is required",
             });
         }
 
-        // ---------------------------------------------
-        // Client image
-        // ---------------------------------------------
+        // =================================================
+        // CLIENT IMAGE
+        // =================================================
 
         let clientImage = "";
         let clientImagePublicId = "";
 
-        if (req.files?.clientImage?.[0]) {
-            const imageResult = await new Promise(
-                (resolve, reject) => {
-                    const stream =
-                        cloudinary.uploader.upload_stream(
-                            {
-                                folder: "testimonials/clients",
-                                resource_type: "image",
-                            },
-                            (error, result) => {
-                                if (error) reject(error);
-                                else resolve(result);
-                            }
+        if (
+            req.files?.clientImage?.[0]
+        ) {
+            const imageResult =
+                await new Promise(
+                    (resolve, reject) => {
+                        const stream =
+                            cloudinary.uploader.upload_stream(
+                                {
+                                    folder:
+                                        "testimonials/clients",
+
+                                    resource_type:
+                                        "image",
+                                },
+
+                                (
+                                    error,
+                                    result
+                                ) => {
+                                    if (error) {
+                                        reject(
+                                            error
+                                        );
+                                    } else {
+                                        resolve(
+                                            result
+                                        );
+                                    }
+                                }
+                            );
+
+                        stream.end(
+                            req.files
+                                .clientImage[0]
+                                .buffer
                         );
+                    }
+                );
 
-                    stream.end(
-                        req.files.clientImage[0].buffer
-                    );
-                }
-            );
+            clientImage =
+                imageResult.secure_url;
 
-            clientImage = imageResult.secure_url;
-            clientImagePublicId = imageResult.public_id;
+            clientImagePublicId =
+                imageResult.public_id;
+
+            uploadedClientImagePublicId =
+                imageResult.public_id;
         }
 
-        // ---------------------------------------------
-        // Video
-        // ---------------------------------------------
-
-        let video = "";
-        let videoPublicId = "";
-
-        if (req.files?.video?.[0]) {
-            const videoResult = await new Promise(
-                (resolve, reject) => {
-                    const stream =
-                        cloudinary.uploader.upload_stream(
-                            {
-                                folder: "testimonials/videos",
-                                resource_type: "video",
-                            },
-                            (error, result) => {
-                                if (error) reject(error);
-                                else resolve(result);
-                            }
-                        );
-
-                    stream.end(
-                        req.files.video[0].buffer
-                    );
-                }
-            );
-
-            video = videoResult.secure_url;
-            videoPublicId = videoResult.public_id;
-        }
-
-        // ---------------------------------------------
-        // Order
-        // ---------------------------------------------
+        // =================================================
+        // ORDER
+        // =================================================
 
         const count =
             await Testimonial.countDocuments();
 
-        // ---------------------------------------------
-        // Create
-        // ---------------------------------------------
+        // =================================================
+        // CREATE TESTIMONIAL
+        // =================================================
 
         const testimonial =
             await Testimonial.create({
                 type: type || "text",
 
-                clientName,
-                companyName: companyName || "",
-                position: position || "",
+                clientName:
+                    clientName.trim(),
 
-                // Text only for text testimonials
-                text: type === "text" ? text : "",
+                companyName:
+                    companyName?.trim() || "",
 
-                // Client image only for text testimonials
-                clientImage: type === "text"
-                    ? clientImage
-                    : "",
+                position:
+                    position?.trim() || "",
 
-                clientImagePublicId: type === "text"
-                    ? clientImagePublicId
-                    : "",
+                // Text only
+                text:
+                    type === "text"
+                        ? text?.trim() || ""
+                        : "",
 
-                // Video only for video testimonials
-                video: type === "video"
-                    ? video
-                    : "",
+                // Client image only
+                clientImage:
+                    type === "text"
+                        ? clientImage
+                        : "",
 
-                videoPublicId: type === "video"
-                    ? videoPublicId
-                    : "",
+                clientImagePublicId:
+                    type === "text"
+                        ? clientImagePublicId
+                        : "",
 
-                // Rating only for text testimonials
+                // Video URL from Cloudinary
+                video:
+                    type === "video"
+                        ? video
+                        : "",
+
+                // Video public ID from Cloudinary
+                videoPublicId:
+                    type === "video"
+                        ? videoPublicId || ""
+                        : "",
+
+                // Rating only for text
                 rating:
                     type === "text"
                         ? Number(rating) || 5
@@ -205,15 +243,42 @@ export const addTestimonial = async (req, res) => {
                 order: count,
             });
 
-        res.status(201).json(testimonial);
+        // =================================================
+        // SUCCESS
+        // =================================================
+
+        res.status(201).json(
+            testimonial
+        );
     } catch (error) {
         console.error(
             "❌ addTestimonial error:",
             error
         );
 
+        // =================================================
+        // CLEANUP CLIENT IMAGE IF DB CREATION FAILED
+        // =================================================
+
+        if (
+            uploadedClientImagePublicId
+        ) {
+            try {
+                await cloudinary.uploader.destroy(
+                    uploadedClientImagePublicId
+                );
+            } catch (cleanupError) {
+                console.error(
+                    "❌ Failed to cleanup uploaded client image:",
+                    cleanupError
+                );
+            }
+        }
+
         res.status(500).json({
-            message: error.message,
+            message:
+                error.message ||
+                "Failed to add testimonial",
         });
     }
 };
@@ -234,33 +299,50 @@ export const deleteTestimonial = async (
 
         if (!testimonial) {
             return res.status(404).json({
-                message: "Testimonial not found",
+                message:
+                    "Testimonial not found",
             });
         }
 
-        // Delete client image
-        if (testimonial.clientImagePublicId) {
+        // =================================================
+        // DELETE CLIENT IMAGE
+        // =================================================
+
+        if (
+            testimonial.clientImagePublicId
+        ) {
             await cloudinary.uploader.destroy(
                 testimonial.clientImagePublicId
             );
         }
 
-        // Delete video
-        if (testimonial.videoPublicId) {
+        // =================================================
+        // DELETE VIDEO
+        // =================================================
+
+        if (
+            testimonial.videoPublicId
+        ) {
             await cloudinary.uploader.destroy(
                 testimonial.videoPublicId,
                 {
-                    resource_type: "video",
+                    resource_type:
+                        "video",
                 }
             );
         }
+
+        // =================================================
+        // DELETE DATABASE RECORD
+        // =================================================
 
         await Testimonial.findByIdAndDelete(
             req.params.id
         );
 
         res.json({
-            message: "Testimonial deleted",
+            message:
+                "Testimonial deleted",
         });
     } catch (error) {
         console.error(
@@ -287,12 +369,21 @@ export const reorderTestimonials = async (
 
         if (!Array.isArray(ids)) {
             return res.status(400).json({
-                message: "Invalid IDs array",
+                message:
+                    "Invalid IDs array",
             });
         }
 
-        for (let i = 0; i < ids.length; i++) {
-            if (!mongoose.Types.ObjectId.isValid(ids[i])) {
+        for (
+            let i = 0;
+            i < ids.length;
+            i++
+        ) {
+            if (
+                !mongoose.Types.ObjectId.isValid(
+                    ids[i]
+                )
+            ) {
                 continue;
             }
 
@@ -306,6 +397,7 @@ export const reorderTestimonials = async (
 
         res.json({
             success: true,
+
             message:
                 "Testimonials reordered successfully",
         });

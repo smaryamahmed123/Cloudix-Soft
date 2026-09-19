@@ -14,6 +14,7 @@ import contactRoutes from './routes/ContactRoutes.js';
 import websiteRoutes from "./routes/websiteRoutes.js";
 import servicesRoutes from './routes/servicesRoutes.js'
 import subscriberRoutes from './routes/subscriberRoutes.js';
+import cloudinaryRoutes from "./routes/cloudinaryRoutes.js";
 import contactInfoRoutes from './routes/ContactInfoRoutes.js';
 import testimonialRoutes from "./routes/testimonialRoutes.js";
 import privacyPolicyRoutes from './routes/privacyPolicyRoutes.js';
@@ -75,6 +76,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/about', aboutRoutes);
 app.use("/api/websites", websiteRoutes);
 app.use('/api/services', servicesRoutes);
+app.use("/api/cloudinary", cloudinaryRoutes);
 app.use('/api/newsletter', subscriberRoutes);
 app.use('/api/contact-info', contactInfoRoutes);
 app.use("/api/testimonials", testimonialRoutes);
