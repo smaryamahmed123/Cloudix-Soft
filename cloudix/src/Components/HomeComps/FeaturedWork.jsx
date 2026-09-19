@@ -4,6 +4,7 @@ import {
   Box,
   Container,
   Typography,
+  useTheme
 } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { motion } from "framer-motion";
@@ -17,6 +18,7 @@ const MotionBox = motion(Box);
 
 export default function FeaturedWork() {
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const [website, setWebsite] = useState(null);
   const [logo, setLogo] = useState(null);
@@ -295,8 +297,8 @@ export default function FeaturedWork() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 1,
-                  backgroundColor: "#769914",
-                  color: "#fff",
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.primary.dark,
                   px: 2,
                   py: 0.8,
                   borderRadius: "999px",
