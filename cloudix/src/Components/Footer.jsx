@@ -172,21 +172,21 @@ const Footer = () => {
 
             <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1.5 }}>
               <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                <Phone sx={{ color: "#BBBF19", mr: 1 }} fontSize="small" />
+                <Phone sx={{ color: "#769914", mr: 1 }} fontSize="small" />
                 <Link href={`tel:${info.phone}`} sx={footerItemStyle}>
                   {info.phone}
                 </Link>
               </Box>
 
               <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                <Email sx={{ color: "#BBBF19", mr: 1 }} fontSize="small" />
+                <Email sx={{ color: "#769914", mr: 1 }} fontSize="small" />
                 <Link href={`mailto:${info.email}`} sx={footerItemStyle}>
                   {info.email}
                 </Link>
               </Box>
 
               <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                <LocationOn sx={{ color: "#BBBF19", mr: 1 }} fontSize="small" />
+                <LocationOn sx={{ color: "#769914", mr: 1 }} fontSize="small" />
                 <Typography sx={{ ...footerItemStyle, lineHeight: 1.5 }}>
                   {info.address}
                 </Typography>
