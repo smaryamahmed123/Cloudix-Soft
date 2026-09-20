@@ -132,17 +132,19 @@ export default function AdminTestimonialsManager() {
   // UPLOAD VIDEO DIRECTLY TO CLOUDINARY
   // =====================================================
 
-  const uploadVideoToCloudinary = async (
-    videoFile
+  const uploadToCloudinary = async (
+    file,
+    resourceType
   ) => {
     try {
-      // -----------------------------------------------
-      // GET SIGNATURE FROM YOUR BACKEND
-      // -----------------------------------------------
-
       const signatureResponse =
         await axios.get(
-          CLOUDINARY_SIGNATURE_URL
+          `${backendURL}/api/cloudinary/testimonial-upload-signature`,
+          {
+            params: {
+              resourceType,
+            },
+          }
         );
 
       const {
@@ -153,16 +155,12 @@ export default function AdminTestimonialsManager() {
         apiKey,
       } = signatureResponse.data;
 
-      // -----------------------------------------------
-      // CLOUDINARY FORM DATA
-      // -----------------------------------------------
-
       const cloudinaryFormData =
         new FormData();
 
       cloudinaryFormData.append(
         "file",
-        videoFile
+        file
       );
 
       cloudinaryFormData.append(
@@ -185,52 +183,28 @@ export default function AdminTestimonialsManager() {
         signature
       );
 
-      // -----------------------------------------------
-      // DIRECT CLOUDINARY UPLOAD
-      // -----------------------------------------------
-
       const response =
         await axios.post(
-          `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`,
-          cloudinaryFormData,
-          {
-            onUploadProgress:
-              (progressEvent) => {
-                if (
-                  progressEvent.total
-                ) {
-                  const percent =
-                    Math.round(
-                      (progressEvent.loaded /
-                        progressEvent.total) *
-                        100
-                    );
-
-                  console.log(
-                    `Cloudinary upload: ${percent}%`
-                  );
-                }
-              },
-          }
+          `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`,
+          cloudinaryFormData
         );
 
       return {
-        video:
+        url:
           response.data.secure_url,
 
-        videoPublicId:
+        publicId:
           response.data.public_id,
       };
     } catch (error) {
       console.error(
-        "❌ Cloudinary video upload error:",
+        "❌ Cloudinary upload error:",
         error
       );
 
       throw new Error(
-        error.response?.data?.error
-          ?.message ||
-          "Video upload failed"
+        error.response?.data?.error?.message ||
+        "Cloudinary upload failed"
       );
     }
   };
@@ -242,17 +216,15 @@ export default function AdminTestimonialsManager() {
   const handleUpload = async (e) => {
     e.preventDefault();
 
-    // ===================================================
+    // =================================================
     // VALIDATION
-    // ===================================================
+    // =================================================
 
     if (!form.clientName.trim()) {
       setSnackbar({
         open: true,
-
         message:
           "Please enter client name ⚠️",
-
         severity: "warning",
       });
 
@@ -265,10 +237,8 @@ export default function AdminTestimonialsManager() {
     ) {
       setSnackbar({
         open: true,
-
         message:
           "Please enter client feedback ⚠️",
-
         severity: "warning",
       });
 
@@ -281,10 +251,8 @@ export default function AdminTestimonialsManager() {
     ) {
       setSnackbar({
         open: true,
-
         message:
           "Please select a testimonial video ⚠️",
-
         severity: "warning",
       });
 
@@ -294,11 +262,42 @@ export default function AdminTestimonialsManager() {
     try {
       setLoading(true);
 
-      let videoUrl = "";
+      let clientImage = "";
+      let clientImagePublicId = "";
+
+      let video = "";
       let videoPublicId = "";
 
       // =================================================
-      // VIDEO → DIRECT CLOUDINARY UPLOAD
+      // TEXT TESTIMONIAL → IMAGE TO CLOUDINARY
+      // =================================================
+
+      if (
+        form.type === "text" &&
+        form.clientImage
+      ) {
+        setSnackbar({
+          open: true,
+          message:
+            "Uploading client image to Cloudinary...",
+          severity: "info",
+        });
+
+        const imageResult =
+          await uploadToCloudinary(
+            form.clientImage,
+            "image"
+          );
+
+        clientImage =
+          imageResult.url;
+
+        clientImagePublicId =
+          imageResult.publicId;
+      }
+
+      // =================================================
+      // VIDEO TESTIMONIAL → VIDEO TO CLOUDINARY
       // =================================================
 
       if (
@@ -307,115 +306,75 @@ export default function AdminTestimonialsManager() {
       ) {
         setSnackbar({
           open: true,
-
           message:
-            "Uploading video to Cloudinary...",
-
+            "Uploading testimonial video to Cloudinary...",
           severity: "info",
         });
 
         const videoResult =
-          await uploadVideoToCloudinary(
-            form.video
+          await uploadToCloudinary(
+            form.video,
+            "video"
           );
 
-        videoUrl =
-          videoResult.video;
+        video =
+          videoResult.url;
 
         videoPublicId =
-          videoResult.videoPublicId;
+          videoResult.publicId;
       }
 
       // =================================================
-      // SEND TESTIMONIAL TO BACKEND
+      // SEND ONLY JSON TO BACKEND
       // =================================================
 
-      const formData = new FormData();
+      const payload = {
+        type:
+          form.type,
 
-      formData.append(
-        "type",
-        form.type
-      );
+        clientName:
+          form.clientName,
 
-      formData.append(
-        "clientName",
-        form.clientName
-      );
+        companyName:
+          form.companyName,
 
-      formData.append(
-        "companyName",
-        form.companyName
-      );
+        position:
+          form.position,
 
-      formData.append(
-        "position",
-        form.position
-      );
+        text:
+          form.type === "text"
+            ? form.text
+            : "",
 
-      // =================================================
-      // TEXT TESTIMONIAL
-      // =================================================
+        clientImage,
 
-      if (form.type === "text") {
-        formData.append(
-          "text",
-          form.text
-        );
+        clientImagePublicId,
 
-        formData.append(
-          "rating",
-          form.rating
-        );
+        video,
 
-        if (form.clientImage) {
-          formData.append(
-            "clientImage",
-            form.clientImage
-          );
-        }
-      }
+        videoPublicId,
 
-      // =================================================
-      // VIDEO TESTIMONIAL
-      // =================================================
+        rating:
+          form.type === "text"
+            ? form.rating
+            : 0,
 
-      if (form.type === "video") {
-        formData.append(
-          "video",
-          videoUrl
-        );
+        isPublished:
+          form.isPublished,
 
-        formData.append(
-          "videoPublicId",
-          videoPublicId
-        );
-      }
-
-      // =================================================
-      // PUBLISHED
-      // =================================================
-
-      formData.append(
-        "isPublished",
-        String(form.isPublished)
-      );
-
-      // =================================================
-      // FEATURED
-      // =================================================
-
-      formData.append(
-        "isFeatured",
-        String(form.isFeatured)
-      );
-
-      // =================================================
-      // SEND TO BACKEND
-      // =================================================
+        isFeatured:
+          form.isFeatured,
+      };
 
       await axios.post(
         BASE_URL,
-        formData
+        payload,
+        {
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+        }
       );
 
       // =================================================
@@ -432,10 +391,8 @@ export default function AdminTestimonialsManager() {
 
       setSnackbar({
         open: true,
-
         message:
           "Testimonial added successfully ✅",
-
         severity: "success",
       });
     } catch (error) {
@@ -446,12 +403,10 @@ export default function AdminTestimonialsManager() {
 
       setSnackbar({
         open: true,
-
         message:
           error.message ||
           error.response?.data?.message ||
           "Failed to add testimonial ❌",
-
         severity: "error",
       });
     } finally {

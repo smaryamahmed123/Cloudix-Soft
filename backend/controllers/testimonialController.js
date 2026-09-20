@@ -62,8 +62,6 @@ export const getPublishedTestimonials = async (
 // =====================================================
 
 export const addTestimonial = async (req, res) => {
-    let uploadedClientImagePublicId = "";
-
     try {
         const {
             type,
@@ -71,11 +69,13 @@ export const addTestimonial = async (req, res) => {
             companyName,
             position,
             text,
+            clientImage,
+            clientImagePublicId,
+            video,
+            videoPublicId,
             rating,
             isPublished,
             isFeatured,
-            video,
-            videoPublicId,
         } = req.body;
 
         // =================================================
@@ -84,12 +84,13 @@ export const addTestimonial = async (req, res) => {
 
         if (!clientName?.trim()) {
             return res.status(400).json({
-                message: "Client name is required",
+                message:
+                    "Client name is required",
             });
         }
 
         // =================================================
-        // TEXT TESTIMONIAL
+        // TEXT VALIDATION
         // =================================================
 
         if (
@@ -103,7 +104,7 @@ export const addTestimonial = async (req, res) => {
         }
 
         // =================================================
-        // VIDEO TESTIMONIAL
+        // VIDEO VALIDATION
         // =================================================
 
         if (
@@ -116,61 +117,14 @@ export const addTestimonial = async (req, res) => {
             });
         }
 
-        // =================================================
-        // CLIENT IMAGE
-        // =================================================
-
-        let clientImage = "";
-        let clientImagePublicId = "";
-
         if (
-            req.files?.clientImage?.[0]
+            type === "video" &&
+            !videoPublicId
         ) {
-            const imageResult =
-                await new Promise(
-                    (resolve, reject) => {
-                        const stream =
-                            cloudinary.uploader.upload_stream(
-                                {
-                                    folder:
-                                        "testimonials/clients",
-
-                                    resource_type:
-                                        "image",
-                                },
-
-                                (
-                                    error,
-                                    result
-                                ) => {
-                                    if (error) {
-                                        reject(
-                                            error
-                                        );
-                                    } else {
-                                        resolve(
-                                            result
-                                        );
-                                    }
-                                }
-                            );
-
-                        stream.end(
-                            req.files
-                                .clientImage[0]
-                                .buffer
-                        );
-                    }
-                );
-
-            clientImage =
-                imageResult.secure_url;
-
-            clientImagePublicId =
-                imageResult.public_id;
-
-            uploadedClientImagePublicId =
-                imageResult.public_id;
+            return res.status(400).json({
+                message:
+                    "Testimonial video public ID is required",
+            });
         }
 
         // =================================================
@@ -181,12 +135,13 @@ export const addTestimonial = async (req, res) => {
             await Testimonial.countDocuments();
 
         // =================================================
-        // CREATE TESTIMONIAL
+        // CREATE
         // =================================================
 
         const testimonial =
             await Testimonial.create({
-                type: type || "text",
+                type:
+                    type || "text",
 
                 clientName:
                     clientName.trim(),
@@ -197,55 +152,76 @@ export const addTestimonial = async (req, res) => {
                 position:
                     position?.trim() || "",
 
-                // Text only
+                // -----------------------------------------
+                // TEXT
+                // -----------------------------------------
+
                 text:
                     type === "text"
                         ? text?.trim() || ""
                         : "",
 
-                // Client image only
+                // -----------------------------------------
+                // CLIENT IMAGE
+                // -----------------------------------------
+
                 clientImage:
                     type === "text"
-                        ? clientImage
+                        ? clientImage || ""
                         : "",
 
                 clientImagePublicId:
                     type === "text"
-                        ? clientImagePublicId
+                        ? clientImagePublicId || ""
                         : "",
 
-                // Video URL from Cloudinary
+                // -----------------------------------------
+                // VIDEO
+                // -----------------------------------------
+
                 video:
                     type === "video"
                         ? video
                         : "",
 
-                // Video public ID from Cloudinary
                 videoPublicId:
                     type === "video"
-                        ? videoPublicId || ""
+                        ? videoPublicId
                         : "",
 
-                // Rating only for text
+                // -----------------------------------------
+                // RATING
+                // -----------------------------------------
+
                 rating:
                     type === "text"
                         ? Number(rating) || 5
                         : 0,
 
+                // -----------------------------------------
+                // PUBLISHED
+                // -----------------------------------------
+
                 isPublished:
+                    isPublished === false ||
                     isPublished === "false"
                         ? false
                         : true,
 
+                // -----------------------------------------
+                // FEATURED
+                // -----------------------------------------
+
                 isFeatured:
+                    isFeatured === true ||
                     isFeatured === "true",
+
+                // -----------------------------------------
+                // ORDER
+                // -----------------------------------------
 
                 order: count,
             });
-
-        // =================================================
-        // SUCCESS
-        // =================================================
 
         res.status(201).json(
             testimonial
@@ -255,25 +231,6 @@ export const addTestimonial = async (req, res) => {
             "❌ addTestimonial error:",
             error
         );
-
-        // =================================================
-        // CLEANUP CLIENT IMAGE IF DB CREATION FAILED
-        // =================================================
-
-        if (
-            uploadedClientImagePublicId
-        ) {
-            try {
-                await cloudinary.uploader.destroy(
-                    uploadedClientImagePublicId
-                );
-            } catch (cleanupError) {
-                console.error(
-                    "❌ Failed to cleanup uploaded client image:",
-                    cleanupError
-                );
-            }
-        }
 
         res.status(500).json({
             message:
@@ -326,8 +283,7 @@ export const deleteTestimonial = async (
             await cloudinary.uploader.destroy(
                 testimonial.videoPublicId,
                 {
-                    resource_type:
-                        "video",
+                    resource_type: "video",
                 }
             );
         }

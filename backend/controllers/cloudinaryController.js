@@ -1,19 +1,29 @@
 import cloudinary from "../config/cloudinary.js";
 
 // =====================================================
-// GENERATE SIGNED TESTIMONIAL VIDEO UPLOAD
+// GENERATE SIGNED TESTIMONIAL UPLOAD
 // =====================================================
 
-export const getTestimonialVideoSignature = async (
+export const getTestimonialUploadSignature = async (
     req,
     res
 ) => {
     try {
+        const {
+            resourceType = "image",
+        } = req.query;
+
         const timestamp = Math.round(
             Date.now() / 1000
         );
 
-        const folder = "testimonials/videos";
+        let folder = "";
+
+        if (resourceType === "video") {
+            folder = "testimonials/videos";
+        } else {
+            folder = "testimonials/clients";
+        }
 
         const signature =
             cloudinary.utils.api_sign_request(
@@ -38,6 +48,8 @@ export const getTestimonialVideoSignature = async (
 
             apiKey:
                 process.env.CLOUDINARY_API_KEY,
+
+            resourceType,
         });
     } catch (error) {
         console.error(
@@ -47,6 +59,7 @@ export const getTestimonialVideoSignature = async (
 
         res.status(500).json({
             success: false,
+
             message:
                 "Could not generate Cloudinary upload signature",
         });

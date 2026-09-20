@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 
 const MAX_VIDEO_SIZE =
-  100 * 1024 * 1024; // 100 MB
+  100 * 1024 * 1024;
+
+const MAX_IMAGE_SIZE =
+  5 * 1024 * 1024;
 
 export default function UploadTestimonialForm({
   form,
@@ -59,6 +62,15 @@ export default function UploadTestimonialForm({
 
     if (!file.type.startsWith("image/")) {
       alert("Please select a valid image.");
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      alert(
+        "Image is too large. Maximum size is 5 MB."
+      );
+
+      e.target.value = "";
       return;
     }
 
@@ -402,15 +414,15 @@ export default function UploadTestimonialForm({
             }
             sx={{
               "& .MuiSwitch-switchBase.Mui-checked":
-                {
-                  color: "#769914",
-                },
+              {
+                color: "#769914",
+              },
 
               "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track":
-                {
-                  backgroundColor:
-                    "#769914",
-                },
+              {
+                backgroundColor:
+                  "#769914",
+              },
             }}
           />
         }

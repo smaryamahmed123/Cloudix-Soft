@@ -1,18 +1,18 @@
 import express from "express";
 
 import {
-    getTestimonialVideoSignature,
+    getTestimonialUploadSignature,
 } from "../controllers/cloudinaryController.js";
 
 const router = express.Router();
 
 // =====================================================
-// TESTIMONIAL VIDEO SIGNATURE
+// TESTIMONIAL CLOUDINARY SIGNATURE
 // =====================================================
 
 router.get(
-    "/testimonial-video-signature",
-    getTestimonialVideoSignature
+    "/testimonial-upload-signature",
+    getTestimonialUploadSignature
 );
 
 export default router;
