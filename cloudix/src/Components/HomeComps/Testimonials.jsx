@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  Divider,
 } from "@mui/material";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -116,8 +115,7 @@ const Testimonials = () => {
   /* ============================================================
      SMALLER HOMEPAGE STORIES
 
-     Show only three additional stories on homepage.
-     Remaining stories are available through View All.
+     Show only three additional stories.
   ============================================================ */
 
   const homepageStories = testimonials
@@ -369,7 +367,7 @@ const Testimonials = () => {
 
             gridTemplateColumns: {
               xs: "1fr",
-              md: "1.25fr 0.9fr",
+              md: "1.6fr 0.8fr",
             },
 
             gap: {
@@ -413,17 +411,24 @@ const Testimonials = () => {
         >
           {/* ====================================================
               FEATURED MEDIA
+              
+              IMPORTANT:
+              The original video is vertical.
+              The container is horizontal 16:9.
+              The vertical video stays completely visible
+              in the center while a blurred version fills
+              the horizontal background.
           ==================================================== */}
 
           <Box
             sx={{
               position: "relative",
 
-              minHeight: {
-                xs: 250,
-                sm: 330,
-                md: 420,
-              },
+              width: "100%",
+
+              aspectRatio: "16 / 9",
+
+              minHeight: 0,
 
               borderRadius: {
                 xs: 2.5,
@@ -432,8 +437,9 @@ const Testimonials = () => {
 
               overflow: "hidden",
 
-              background:
-                "linear-gradient(135deg, #111E2C, #26394a)",
+              backgroundColor: "#000",
+
+              alignSelf: "start",
             }}
           >
             {/* ==================================================
@@ -443,19 +449,92 @@ const Testimonials = () => {
             {featuredTestimonial.type ===
               "video" &&
             featuredTestimonial.video ? (
-              <video
-                src={
-                  featuredTestimonial.video
-                }
-                controls
-                preload="metadata"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "block",
-                  objectFit: "cover",
-                }}
-              />
+              <>
+                {/* ==============================================
+                    BLURRED BACKGROUND VIDEO
+                ============================================== */}
+
+                <video
+                  src={
+                    featuredTestimonial.video
+                  }
+                  muted
+                  autoPlay
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+
+                    inset: 0,
+
+                    width: "100%",
+
+                    height: "100%",
+
+                    objectFit: "cover",
+
+                    filter:
+                      "blur(25px)",
+
+                    transform:
+                      "scale(1.15)",
+
+                    opacity: 0.45,
+                  }}
+                />
+
+                {/* ==============================================
+                    DARK OVERLAY
+                ============================================== */}
+
+                <Box
+                  sx={{
+                    position: "absolute",
+
+                    inset: 0,
+
+                    background:
+                      "rgba(0,0,0,0.18)",
+
+                    zIndex: 1,
+
+                    pointerEvents: "none",
+                  }}
+                />
+
+                {/* ==============================================
+                    MAIN VERTICAL VIDEO
+
+                    The complete vertical video remains visible.
+                ============================================== */}
+
+                <video
+                  src={
+                    featuredTestimonial.video
+                  }
+                  controls
+                  playsInline
+                  preload="metadata"
+                  style={{
+                    position: "relative",
+
+                    width: "100%",
+
+                    height: "100%",
+
+                    display: "block",
+
+                    objectFit: "contain",
+
+                    zIndex: 2,
+
+                    backgroundColor:
+                      "transparent",
+                  }}
+                />
+              </>
             ) : featuredTestimonial.clientImage ? (
               /* ==================================================
                  FEATURED TEXT TESTIMONIAL IMAGE
@@ -500,7 +579,7 @@ const Testimonials = () => {
 
                   height: "100%",
 
-                  minHeight: 300,
+                  minHeight: 250,
 
                   display: "flex",
 
@@ -579,7 +658,7 @@ const Testimonials = () => {
 
                 letterSpacing: 0.8,
 
-                zIndex: 3,
+                zIndex: 4,
 
                 pointerEvents: "none",
               }}
@@ -852,9 +931,6 @@ const Testimonials = () => {
 
             {/* ==================================================
                 FEATURED CLIENT
-
-                For video: client name/company only.
-                For text: client image + name/company.
             ================================================== */}
 
             <Box
@@ -1037,10 +1113,14 @@ const Testimonials = () => {
                         }
                         controls
                         preload="metadata"
+                        playsInline
                         style={{
                           width: "100%",
+
                           height: "100%",
+
                           display: "block",
+
                           objectFit: "cover",
                         }}
                       />
@@ -1377,8 +1457,6 @@ const Testimonials = () => {
 
                     {/* ==================================================
                         VIDEO LABEL
-
-                        No image, text or rating for video.
                     ================================================== */}
 
                     {testimonial.type ===
@@ -1445,8 +1523,6 @@ const Testimonials = () => {
                         mt: "auto",
                       }}
                     >
-                      {/* Client image ONLY for text */}
-
                       {testimonial.type !==
                         "video" && (
                         <Avatar
@@ -2101,11 +2177,15 @@ const Testimonials = () => {
                         }
                         controls
                         preload="metadata"
+                        playsInline
                         style={{
                           width: "100%",
+
                           height: "100%",
+
                           display:
                             "block",
+
                           objectFit:
                             "cover",
                         }}
@@ -2293,7 +2373,7 @@ const Testimonials = () => {
                     {/* VIDEO */}
 
                     {testimonial.type ===
-                      "video" ? (
+                    "video" ? (
                       <Box
                         sx={{
                           display:
@@ -2451,8 +2531,6 @@ const Testimonials = () => {
                         gap: 1.2,
                       }}
                     >
-                      {/* No image for videos */}
-
                       {testimonial.type !==
                         "video" && (
                         <Avatar
