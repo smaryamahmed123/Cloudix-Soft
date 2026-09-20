@@ -411,7 +411,7 @@ const Testimonials = () => {
           >
             {featuredTestimonial.type ===
               "video" &&
-            featuredTestimonial.video ? (
+              featuredTestimonial.video ? (
               <>
                 {/* BLURRED BACKGROUND */}
 
@@ -597,7 +597,7 @@ const Testimonials = () => {
               }}
             >
               {featuredTestimonial.type ===
-              "video" ? (
+                "video" ? (
                 <>
                   <PlayCircleOutlineRoundedIcon
                     sx={{
@@ -648,7 +648,7 @@ const Testimonials = () => {
             }}
           >
             {featuredTestimonial.type ===
-            "video" ? (
+              "video" ? (
               <>
                 <PlayCircleOutlineRoundedIcon
                   sx={{
@@ -795,48 +795,48 @@ const Testimonials = () => {
 
                 {featuredTestimonial.rating >
                   0 && (
-                  <Box
-                    sx={{
-                      display: "flex",
-
-                      alignItems: "center",
-
-                      gap: 1,
-
-                      mt: 2.5,
-                    }}
-                  >
-                    <Rating
-                      value={
-                        featuredTestimonial.rating
-                      }
-                      readOnly
-                      size="small"
+                    <Box
                       sx={{
-                        "& .MuiRating-iconFilled":
+                        display: "flex",
+
+                        alignItems: "center",
+
+                        gap: 1,
+
+                        mt: 2.5,
+                      }}
+                    >
+                      <Rating
+                        value={
+                          featuredTestimonial.rating
+                        }
+                        readOnly
+                        size="small"
+                        sx={{
+                          "& .MuiRating-iconFilled":
                           {
                             color: "#BBBF19",
                           },
-                      }}
-                    />
+                        }}
+                      />
 
-                    <Typography
-                      sx={{
-                        color:
-                          "rgba(255,255,255,0.5)",
+                      <Typography
+                        sx={{
+                          color:
+                            "rgba(255,255,255,0.5)",
 
-                        fontSize: "11px",
+                          fontSize: "11px",
 
-                        fontWeight: 700,
-                      }}
-                    >
-                      {
-                        featuredTestimonial.rating
-                      }
-                      /5
-                    </Typography>
-                  </Box>
-                )}
+                          fontWeight: 700,
+                        }}
+                      >
+                        {
+                          featuredTestimonial.rating
+                        }
+                        /5
+                      </Typography>
+                    </Box>
+                  )}
               </>
             )}
 
@@ -855,31 +855,31 @@ const Testimonials = () => {
             >
               {featuredTestimonial.type !==
                 "video" && (
-                <Avatar
-                  src={
-                    featuredTestimonial.clientImage ||
-                    undefined
-                  }
-                  sx={{
-                    width: 50,
+                  <Avatar
+                    src={
+                      featuredTestimonial.clientImage ||
+                      undefined
+                    }
+                    sx={{
+                      width: 50,
 
-                    height: 50,
+                      height: 50,
 
-                    backgroundColor: "#769914",
+                      backgroundColor: "#769914",
 
-                    color: "#fff",
+                      color: "#fff",
 
-                    fontWeight: 800,
+                      fontWeight: 800,
 
-                    border:
-                      "2px solid rgba(187,191,25,0.5)",
-                  }}
-                >
-                  {featuredTestimonial.clientName?.charAt(
-                    0
-                  )}
-                </Avatar>
-              )}
+                      border:
+                        "2px solid rgba(187,191,25,0.5)",
+                    }}
+                  >
+                    {featuredTestimonial.clientName?.charAt(
+                      0
+                    )}
+                  </Avatar>
+                )}
 
               <Box>
                 <Typography
@@ -896,33 +896,33 @@ const Testimonials = () => {
 
                 {(featuredTestimonial.position ||
                   featuredTestimonial.companyName) && (
-                  <Typography
-                    sx={{
-                      color:
-                        "rgba(255,255,255,0.55)",
+                    <Typography
+                      sx={{
+                        color:
+                          "rgba(255,255,255,0.55)",
 
-                      fontSize: "12px",
+                        fontSize: "12px",
 
-                      mt: 0.3,
-                    }}
-                  >
-                    {featuredTestimonial.position}
+                        mt: 0.3,
+                      }}
+                    >
+                      {featuredTestimonial.position}
 
-                    {featuredTestimonial.position &&
-                      featuredTestimonial.companyName &&
-                      " • "}
+                      {featuredTestimonial.position &&
+                        featuredTestimonial.companyName &&
+                        " • "}
 
-                    {featuredTestimonial.companyName}
-                  </Typography>
-                )}
+                      {featuredTestimonial.companyName}
+                    </Typography>
+                  )}
               </Box>
             </Box>
           </Box>
         </Box>
 
         {/* ======================================================
-            SMALLER CLIENT STORIES
-        ====================================================== */}
+    SMALLER CLIENT STORIES
+====================================================== */}
 
         {homepageStories.length > 0 && (
           <Box
@@ -932,84 +932,106 @@ const Testimonials = () => {
               gridTemplateColumns: {
                 xs: "1fr",
                 sm: "repeat(2, 1fr)",
-                lg: "repeat(3, 1fr)",
               },
 
               gap: {
-                xs: 2.5,
-                md: 3,
+                xs: 2,
+                sm: 2,
+                md: 2.5,
               },
 
               mt: {
-                xs: 2.5,
-                md: 3,
+                xs: 2,
+                md: 2.5,
               },
+
+              maxWidth: 900,
             }}
           >
-            {homepageStories.map(
-              (testimonial) => (
-                <Box
-                  key={testimonial._id}
-                  sx={{
-                    borderRadius: 3,
+            {homepageStories.map((testimonial) => (
+              <Box
+                key={testimonial._id}
+                sx={{
+                  height: {
+                    xs: 175,
+                    sm: 168,
+                    md: 172,
+                  },
 
-                    overflow: "hidden",
+                  borderRadius: {
+                    xs: 2.5,
+                    md: 3,
+                  },
 
-                    background:
-                      "linear-gradient(145deg, rgba(20,42,56,0.92), rgba(9,28,39,0.96))",
+                  overflow: "hidden",
 
-                    border:
-                      "1px solid rgba(118,153,20,0.24)",
+                  background:
+                    "linear-gradient(145deg, rgba(20,42,56,0.96), rgba(9,28,39,0.98))",
 
-                    minHeight: {
-                      xs: 360,
-                      md: 390,
-                    },
+                  border:
+                    "1px solid rgba(118,153,20,0.25)",
 
-                    display: "flex",
+                  display: "flex",
 
-                    flexDirection: "column",
+                  flexDirection: "column",
 
-                    transition:
-                      "transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease",
+                  position: "relative",
 
-                    "&:hover": {
-                      transform:
-                        "translateY(-7px)",
+                  transition:
+                    "transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
 
-                      borderColor:
-                        "rgba(169,184,56,0.55)",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
 
-                      boxShadow:
-                        "0 20px 50px rgba(0,0,0,0.28)",
-                    },
-                  }}
-                >
-                  {/* ==================================================
-                      SMALL VIDEO CARD
-                      
-                      SAME DESIGN AS FEATURED TESTIMONIAL
-                  ================================================== */}
+                    borderColor:
+                      "rgba(169,184,56,0.55)",
 
-                  {testimonial.type ===
-                    "video" &&
+                    boxShadow:
+                      "0 15px 40px rgba(0,0,0,0.28)",
+                  },
+                }}
+              >
+                {/* ==================================================
+            VIDEO TESTIMONIAL
+        ================================================== */}
+
+                {testimonial.type === "video" &&
                   testimonial.video ? (
+                  <>
+                    {/* VIDEO AREA */}
+
                     <Box
                       sx={{
                         position: "relative",
 
-                        width: "100%",
-
-                        aspectRatio: "16 / 9",
+                        height: 112,
 
                         flexShrink: 0,
 
                         overflow: "hidden",
 
-                        backgroundColor: "#000",
+                        backgroundColor: "#07151f",
+
+                        cursor: "pointer",
+
+                        "&:hover video": {
+                          transform: "scale(1.04)",
+                        },
+
+                        "&:hover .play-button": {
+                          transform:
+                            "translate(-50%, -50%) scale(1.08)",
+
+                          backgroundColor:
+                            "#8aa91c",
+                        },
                       }}
+
+                      onClick={() =>
+                        handleReadMore(testimonial)
+                      }
                     >
-                      {/* BLURRED VIDEO BACKGROUND */}
+                      {/* VIDEO */}
 
                       <video
                         src={testimonial.video}
@@ -1018,23 +1040,17 @@ const Testimonials = () => {
                         loop
                         playsInline
                         preload="metadata"
-                        aria-hidden="true"
                         style={{
-                          position: "absolute",
-
-                          inset: 0,
-
                           width: "100%",
 
                           height: "100%",
 
+                          display: "block",
+
                           objectFit: "cover",
 
-                          filter: "blur(25px)",
-
-                          transform: "scale(1.15)",
-
-                          opacity: 0.45,
+                          transition:
+                            "transform 0.5s ease",
                         }}
                       />
 
@@ -1047,83 +1063,101 @@ const Testimonials = () => {
                           inset: 0,
 
                           background:
-                            "rgba(0,0,0,0.18)",
-
-                          zIndex: 1,
+                            "linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.35))",
 
                           pointerEvents: "none",
                         }}
                       />
 
-                      {/* MAIN VERTICAL VIDEO */}
-
-                      <video
-                        src={testimonial.video}
-                        controls
-                        playsInline
-                        preload="metadata"
-                        style={{
-                          position: "relative",
-
-                          width: "100%",
-
-                          height: "100%",
-
-                          display: "block",
-
-                          objectFit: "contain",
-
-                          zIndex: 2,
-
-                          backgroundColor:
-                            "transparent",
-                        }}
-                      />
-
-                      {/* VIDEO BADGE */}
+                      {/* CENTER PLAY BUTTON */}
 
                       <Box
+                        className="play-button"
                         sx={{
                           position: "absolute",
 
-                          top: 12,
+                          top: "50%",
 
-                          left: 12,
+                          left: "50%",
+
+                          transform:
+                            "translate(-50%, -50%)",
+
+                          width: 42,
+
+                          height: 42,
+
+                          borderRadius: "50%",
 
                           display: "flex",
 
                           alignItems: "center",
 
-                          gap: 0.6,
+                          justifyContent: "center",
 
-                          px: 1.3,
+                          backgroundColor:
+                            "rgba(118,153,20,0.92)",
 
-                          py: 0.65,
+                          boxShadow:
+                            "0 6px 20px rgba(0,0,0,0.35)",
+
+                          transition:
+                            "all 0.25s ease",
+
+                          zIndex: 2,
+                        }}
+                      >
+                        <PlayCircleOutlineRoundedIcon
+                          sx={{
+                            color: "#ffffff",
+
+                            fontSize: 30,
+                          }}
+                        />
+                      </Box>
+
+                      {/* VIDEO TESTIMONIAL BADGE */}
+
+                      <Box
+                        sx={{
+                          position: "absolute",
+
+                          left: 9,
+
+                          bottom: 8,
+
+                          display: "flex",
+
+                          alignItems: "center",
+
+                          gap: 0.5,
+
+                          px: 0.9,
+
+                          py: 0.45,
 
                           borderRadius: "999px",
 
                           backgroundColor:
-                            "rgba(7,21,31,0.90)",
+                            "rgba(7,21,31,0.88)",
 
                           backdropFilter:
                             "blur(8px)",
 
                           color: "#ffffff",
 
-                          fontSize: "9px",
+                          fontSize: "7.5px",
 
                           fontWeight: 800,
 
-                          letterSpacing: 0.8,
+                          letterSpacing: 0.5,
 
-                          pointerEvents: "none",
-
-                          zIndex: 4,
+                          zIndex: 3,
                         }}
                       >
                         <PlayCircleOutlineRoundedIcon
                           sx={{
-                            fontSize: 16,
+                            fontSize: 12,
 
                             color: "#BBBF19",
                           }}
@@ -1131,330 +1165,92 @@ const Testimonials = () => {
 
                         VIDEO TESTIMONIAL
                       </Box>
-                    </Box>
-                  ) : (
-                    /* ==================================================
-                       TEXT TESTIMONIAL
 
-                       NO LARGE IMAGE
-                    ================================================== */
+                      {/* DURATION */}
 
-                    <Box
-                      sx={{
-                        px: {
-                          xs: 2.5,
-                          md: 3,
-                        },
-
-                        pt: {
-                          xs: 2.8,
-                          md: 3.2,
-                        },
-
-                        pb: 2,
-
-                        flexShrink: 0,
-
-                        minHeight: {
-                          xs: 145,
-                          md: 155,
-                        },
-
-                        display: "flex",
-
-                        alignItems: "flex-start",
-
-                        background:
-                          "linear-gradient(135deg, rgba(17,30,44,0.95), rgba(27,51,66,0.95))",
-
-                        position: "relative",
-
-                        overflow: "hidden",
-                      }}
-                    >
-                      <FormatQuoteRoundedIcon
-                        sx={{
-                          fontSize: {
-                            xs: 55,
-                            md: 62,
-                          },
-
-                          color:
-                            "rgba(187,191,25,0.85)",
-
-                          position: "relative",
-
-                          zIndex: 1,
-                        }}
-                      />
-
-                      {/* DECORATIVE QUOTE */}
-
-                      <FormatQuoteRoundedIcon
-                        sx={{
-                          position: "absolute",
-
-                          right: -5,
-
-                          bottom: -18,
-
-                          fontSize: 105,
-
-                          color:
-                            "rgba(118,153,20,0.08)",
-
-                          transform:
-                            "rotate(180deg)",
-                        }}
-                      />
-                    </Box>
-                  )}
-
-                  {/* ==================================================
-                      CARD CONTENT
-                  ================================================== */}
-
-                  <Box
-                    sx={{
-                      p: {
-                        xs: 2.5,
-                        md: 3,
-                      },
-
-                      display: "flex",
-
-                      flexDirection: "column",
-
-                      flex: 1,
-                    }}
-                  >
-                    {/* TEXT TESTIMONIAL */}
-
-                    {testimonial.type !==
-                      "video" &&
-                      testimonial.text && (
-                        <>
-                          <Typography
-                            sx={{
-                              color:
-                                "rgba(255,255,255,0.78)",
-
-                              fontSize:
-                                "13.5px",
-
-                              lineHeight: 1.75,
-
-                              display:
-                                "-webkit-box",
-
-                              WebkitLineClamp: 3,
-
-                              WebkitBoxOrient:
-                                "vertical",
-
-                              overflow: "hidden",
-
-                              mb: 1.5,
-                            }}
-                          >
-                            “
-                            {testimonial.text}
-                            ”
-                          </Typography>
-
-                          {/* RATING */}
-
-                          {testimonial.rating >
-                            0 && (
-                            <Box
-                              sx={{
-                                display:
-                                  "flex",
-
-                                alignItems:
-                                  "center",
-
-                                gap: 1,
-
-                                mb: 1.8,
-                              }}
-                            >
-                              <Rating
-                                value={
-                                  testimonial.rating
-                                }
-                                readOnly
-                                size="small"
-                                sx={{
-                                  "& .MuiRating-iconFilled":
-                                    {
-                                      color:
-                                        "#BBBF19",
-                                    },
-                                }}
-                              />
-
-                              <Typography
-                                sx={{
-                                  color:
-                                    "rgba(255,255,255,0.45)",
-
-                                  fontSize:
-                                    "11px",
-                                }}
-                              >
-                                {
-                                  testimonial.rating
-                                }
-                                /5
-                              </Typography>
-                            </Box>
-                          )}
-
-                          {/* READ FULL */}
-
-                          <Typography
-                            component="button"
-                            type="button"
-                            onClick={() =>
-                              handleReadMore(
-                                testimonial
-                              )
-                            }
-                            sx={{
-                              alignSelf:
-                                "flex-start",
-
-                              border: 0,
-
-                              background:
-                                "transparent",
-
-                              padding: 0,
-
-                              color: "#A9B838",
-
-                              fontSize:
-                                "12px",
-
-                              fontWeight: 800,
-
-                              cursor: "pointer",
-
-                              fontFamily:
-                                "inherit",
-
-                              mb: 2.5,
-
-                              transition:
-                                "all 0.25s ease",
-
-                              "&:hover": {
-                                color:
-                                  "#BBBF19",
-
-                                transform:
-                                  "translateX(3px)",
-                              },
-                            }}
-                          >
-                            Read Full Feedback →
-                          </Typography>
-                        </>
-                      )}
-
-                    {/* VIDEO LABEL */}
-
-                    {testimonial.type ===
-                      "video" && (
-                      <Box
-                        sx={{
-                          display: "flex",
-
-                          alignItems:
-                            "center",
-
-                          gap: 0.8,
-
-                          mb: 2.5,
-                        }}
-                      >
-                        <PlayCircleOutlineRoundedIcon
+                      {testimonial.duration && (
+                        <Box
                           sx={{
-                            color:
-                              "#A9B838",
+                            position: "absolute",
 
-                            fontSize: 19,
-                          }}
-                        />
+                            right: 9,
 
-                        <Typography
-                          sx={{
-                            color:
-                              "#A9B838",
+                            bottom: 8,
 
-                            fontSize:
-                              "11px",
+                            px: 0.65,
 
-                            fontWeight: 800,
+                            py: 0.3,
 
-                            letterSpacing:
-                              0.7,
+                            borderRadius: 0.7,
 
-                            textTransform:
-                              "uppercase",
+                            backgroundColor:
+                              "rgba(0,0,0,0.72)",
+
+                            color: "#ffffff",
+
+                            fontSize: "8px",
+
+                            fontWeight: 700,
+
+                            zIndex: 3,
                           }}
                         >
-                          Video Testimonial
-                        </Typography>
-                      </Box>
-                    )}
+                          {testimonial.duration}
+                        </Box>
+                      )}
+                    </Box>
 
-                    {/* CLIENT INFORMATION */}
+                    {/* VIDEO CLIENT INFO */}
 
                     <Box
                       sx={{
+                        flex: 1,
+
                         display: "flex",
 
                         alignItems: "center",
 
-                        gap: 1.4,
+                        px: {
+                          xs: 1.5,
+                          md: 1.7,
+                        },
 
-                        mt: "auto",
+                        gap: 1.1,
+
+                        minWidth: 0,
                       }}
                     >
-                      {/* 
-                        Avatar is intentionally removed
-                        from video testimonials because the
-                        video already represents the client.
-                      */}
+                      {/* AVATAR */}
 
-                      {testimonial.type !==
-                        "video" && (
-                        <Avatar
-                          sx={{
-                            width: 44,
+                      <Avatar
+                        src={
+                          testimonial.clientImage ||
+                          undefined
+                        }
+                        sx={{
+                          width: 28,
 
-                            height: 44,
+                          height: 28,
 
-                            backgroundColor:
-                              "#769914",
+                          flexShrink: 0,
 
-                            color: "#fff",
+                          backgroundColor:
+                            "#769914",
 
-                            fontWeight: 800,
+                          color: "#ffffff",
 
-                            fontSize: 15,
+                          fontSize: 11,
 
-                            border:
-                              "2px solid rgba(169,184,56,0.35)",
-                          }}
-                        >
-                          {testimonial.clientName?.charAt(
-                            0
-                          )}
-                        </Avatar>
-                      )}
+                          fontWeight: 800,
+
+                          border:
+                            "1px solid rgba(187,191,25,0.5)",
+                        }}
+                      >
+                        {testimonial.clientName?.charAt(0)}
+                      </Avatar>
+
+                      {/* NAME */}
 
                       <Box
                         sx={{
@@ -1465,18 +1261,17 @@ const Testimonials = () => {
                           sx={{
                             color: "#ffffff",
 
+                            fontSize: "11px",
+
                             fontWeight: 800,
 
-                            fontSize: "14px",
+                            lineHeight: 1.2,
 
-                            whiteSpace:
-                              "nowrap",
+                            whiteSpace: "nowrap",
 
-                            overflow:
-                              "hidden",
+                            overflow: "hidden",
 
-                            textOverflow:
-                              "ellipsis",
+                            textOverflow: "ellipsis",
                           }}
                         >
                           {testimonial.clientName}
@@ -1484,40 +1279,281 @@ const Testimonials = () => {
 
                         {(testimonial.position ||
                           testimonial.companyName) && (
-                          <Typography
-                            sx={{
-                              color:
-                                "rgba(255,255,255,0.48)",
+                            <Typography
+                              sx={{
+                                color:
+                                  "rgba(255,255,255,0.48)",
 
-                              fontSize: "11px",
+                                fontSize: "8.5px",
 
-                              mt: 0.3,
+                                mt: 0.3,
 
-                              whiteSpace:
-                                "nowrap",
+                                lineHeight: 1.2,
 
-                              overflow:
-                                "hidden",
+                                whiteSpace: "nowrap",
 
-                              textOverflow:
-                                "ellipsis",
-                            }}
-                          >
-                            {testimonial.position}
+                                overflow: "hidden",
 
-                            {testimonial.position &&
-                              testimonial.companyName &&
-                              " • "}
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {testimonial.position}
 
-                            {testimonial.companyName}
-                          </Typography>
-                        )}
+                              {testimonial.position &&
+                                testimonial.companyName &&
+                                " • "}
+
+                              {testimonial.companyName}
+                            </Typography>
+                          )}
                       </Box>
                     </Box>
-                  </Box>
-                </Box>
-              )
-            )}
+                  </>
+                ) : (
+                  /* ==================================================
+                     TEXT TESTIMONIAL
+                  ================================================== */
+
+                  <>
+                    {/* TEXT CONTENT */}
+
+                    <Box
+                      sx={{
+                        position: "relative",
+
+                        flex: 1,
+
+                        px: {
+                          xs: 1.7,
+                          md: 2,
+                        },
+
+                        pt: {
+                          xs: 1.4,
+                          md: 1.5,
+                        },
+
+                        pb: 0.5,
+
+                        overflow: "hidden",
+                      }}
+                    >
+                      {/* QUOTE ICON */}
+
+                      <FormatQuoteRoundedIcon
+                        sx={{
+                          fontSize: {
+                            xs: 28,
+                            md: 31,
+                          },
+
+                          color: "#BBBF19",
+
+                          display: "block",
+
+                          mb: 0.1,
+                        }}
+                      />
+
+                      {/* FEEDBACK */}
+
+                      <Typography
+                        sx={{
+                          color:
+                            "rgba(255,255,255,0.76)",
+
+                          fontSize: {
+                            xs: "10.5px",
+                            md: "11px",
+                          },
+
+                          lineHeight: 1.45,
+
+                          display: "-webkit-box",
+
+                          WebkitLineClamp: 3,
+
+                          WebkitBoxOrient: "vertical",
+
+                          overflow: "hidden",
+
+                          pr: 0.5,
+                        }}
+                      >
+                        “{testimonial.text}”
+                      </Typography>
+
+                      {/* RATING */}
+
+                      {testimonial.rating > 0 && (
+                        <Box
+                          sx={{
+                            display: "flex",
+
+                            alignItems: "center",
+
+                            gap: 0.6,
+
+                            mt: 0.7,
+                          }}
+                        >
+                          <Rating
+                            value={testimonial.rating}
+                            readOnly
+                            size="small"
+                            sx={{
+                              fontSize: "13px",
+
+                              "& .MuiRating-iconFilled": {
+                                color: "#BBBF19",
+                              },
+
+                              "& .MuiRating-iconEmpty": {
+                                color:
+                                  "rgba(255,255,255,0.18)",
+                              },
+                            }}
+                          />
+                        </Box>
+                      )}
+
+                      {/* DECORATIVE QUOTE */}
+
+                      <FormatQuoteRoundedIcon
+                        sx={{
+                          position: "absolute",
+
+                          right: -12,
+
+                          bottom: -25,
+
+                          fontSize: 90,
+
+                          color:
+                            "rgba(118,153,20,0.055)",
+
+                          transform: "rotate(180deg)",
+
+                          pointerEvents: "none",
+                        }}
+                      />
+                    </Box>
+
+                    {/* TEXT CLIENT INFO */}
+
+                    <Box
+                      sx={{
+                        display: "flex",
+
+                        alignItems: "center",
+
+                        gap: 1,
+
+                        px: {
+                          xs: 1.7,
+                          md: 2,
+                        },
+
+                        pb: {
+                          xs: 1.4,
+                          md: 1.5,
+                        },
+
+                        pt: 0.5,
+                      }}
+                    >
+                      {/* AVATAR */}
+
+                      <Avatar
+                        src={
+                          testimonial.clientImage ||
+                          undefined
+                        }
+                        sx={{
+                          width: 29,
+
+                          height: 29,
+
+                          flexShrink: 0,
+
+                          backgroundColor:
+                            "#769914",
+
+                          color: "#ffffff",
+
+                          fontSize: 11,
+
+                          fontWeight: 800,
+
+                          border:
+                            "1px solid rgba(187,191,25,0.45)",
+                        }}
+                      >
+                        {testimonial.clientName?.charAt(0)}
+                      </Avatar>
+
+                      {/* CLIENT DETAILS */}
+
+                      <Box
+                        sx={{
+                          minWidth: 0,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#ffffff",
+
+                            fontSize: "10.5px",
+
+                            fontWeight: 800,
+
+                            lineHeight: 1.2,
+
+                            whiteSpace: "nowrap",
+
+                            overflow: "hidden",
+
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {testimonial.clientName}
+                        </Typography>
+
+                        {(testimonial.position ||
+                          testimonial.companyName) && (
+                            <Typography
+                              sx={{
+                                color:
+                                  "rgba(255,255,255,0.45)",
+
+                                fontSize: "8.5px",
+
+                                mt: 0.25,
+
+                                lineHeight: 1.2,
+
+                                whiteSpace: "nowrap",
+
+                                overflow: "hidden",
+
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              {testimonial.position}
+
+                              {testimonial.position &&
+                                testimonial.companyName &&
+                                " • "}
+
+                              {testimonial.companyName}
+                            </Typography>
+                          )}
+                      </Box>
+                    </Box>
+                  </>
+                )}
+              </Box>
+            ))}
           </Box>
         )}
 
@@ -1722,43 +1758,43 @@ const Testimonials = () => {
 
                   {(selectedTestimonial.position ||
                     selectedTestimonial.companyName) && (
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      {
-                        selectedTestimonial.position
-                      }
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                      >
+                        {
+                          selectedTestimonial.position
+                        }
 
-                      {selectedTestimonial.position &&
-                        selectedTestimonial.companyName &&
-                        " • "}
+                        {selectedTestimonial.position &&
+                          selectedTestimonial.companyName &&
+                          " • "}
 
-                      {
-                        selectedTestimonial.companyName
-                      }
-                    </Typography>
-                  )}
+                        {
+                          selectedTestimonial.companyName
+                        }
+                      </Typography>
+                    )}
                 </Box>
               </Box>
 
               {selectedTestimonial.rating >
                 0 && (
-                <Rating
-                  value={
-                    selectedTestimonial.rating
-                  }
-                  readOnly
-                  sx={{
-                    mb: 2,
+                  <Rating
+                    value={
+                      selectedTestimonial.rating
+                    }
+                    readOnly
+                    sx={{
+                      mb: 2,
 
-                    "& .MuiRating-iconFilled":
+                      "& .MuiRating-iconFilled":
                       {
                         color: "#BBBF19",
                       },
-                  }}
-                />
-              )}
+                    }}
+                  />
+                )}
 
               <FormatQuoteRoundedIcon
                 sx={{
@@ -2008,7 +2044,7 @@ const Testimonials = () => {
 
                   {testimonial.type ===
                     "video" &&
-                  testimonial.video ? (
+                    testimonial.video ? (
                     <Box
                       sx={{
                         position: "relative",
@@ -2211,7 +2247,7 @@ const Testimonials = () => {
                     }}
                   >
                     {testimonial.type ===
-                    "video" ? (
+                      "video" ? (
                       <Box
                         sx={{
                           display: "flex",
@@ -2279,23 +2315,23 @@ const Testimonials = () => {
 
                         {testimonial.rating >
                           0 && (
-                          <Rating
-                            value={
-                              testimonial.rating
-                            }
-                            readOnly
-                            size="small"
-                            sx={{
-                              mb: 1.5,
+                            <Rating
+                              value={
+                                testimonial.rating
+                              }
+                              readOnly
+                              size="small"
+                              sx={{
+                                mb: 1.5,
 
-                              "& .MuiRating-iconFilled":
+                                "& .MuiRating-iconFilled":
                                 {
                                   color:
                                     "#BBBF19",
                                 },
-                            }}
-                          />
-                        )}
+                              }}
+                            />
+                          )}
 
                         <Typography
                           component="button"
@@ -2349,25 +2385,25 @@ const Testimonials = () => {
                     >
                       {testimonial.type !==
                         "video" && (
-                        <Avatar
-                          sx={{
-                            width: 42,
+                          <Avatar
+                            sx={{
+                              width: 42,
 
-                            height: 42,
+                              height: 42,
 
-                            backgroundColor:
-                              "#769914",
+                              backgroundColor:
+                                "#769914",
 
-                            fontSize: 14,
+                              fontSize: 14,
 
-                            fontWeight: 800,
-                          }}
-                        >
-                          {testimonial.clientName?.charAt(
-                            0
-                          )}
-                        </Avatar>
-                      )}
+                              fontWeight: 800,
+                            }}
+                          >
+                            {testimonial.clientName?.charAt(
+                              0
+                            )}
+                          </Avatar>
+                        )}
 
                       <Box
                         sx={{
@@ -2399,30 +2435,30 @@ const Testimonials = () => {
 
                         {(testimonial.position ||
                           testimonial.companyName) && (
-                          <Typography
-                            sx={{
-                              color:
-                                "rgba(255,255,255,0.48)",
+                            <Typography
+                              sx={{
+                                color:
+                                  "rgba(255,255,255,0.48)",
 
-                              fontSize:
-                                "10.5px",
+                                fontSize:
+                                  "10.5px",
 
-                              mt: 0.2,
-                            }}
-                          >
-                            {
-                              testimonial.position
-                            }
+                                mt: 0.2,
+                              }}
+                            >
+                              {
+                                testimonial.position
+                              }
 
-                            {testimonial.position &&
-                              testimonial.companyName &&
-                              " • "}
+                              {testimonial.position &&
+                                testimonial.companyName &&
+                                " • "}
 
-                            {
-                              testimonial.companyName
-                            }
-                          </Typography>
-                        )}
+                              {
+                                testimonial.companyName
+                              }
+                            </Typography>
+                          )}
                       </Box>
                     </Box>
                   </Box>
