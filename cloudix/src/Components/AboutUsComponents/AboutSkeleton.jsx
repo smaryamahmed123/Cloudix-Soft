@@ -133,7 +133,7 @@
 
 
 import React from "react";
-import { Box, Skeleton, Container } from "@mui/material";
+import { Box, Skeleton, Grid, Container } from "@mui/material";
 
 const AboutSkeleton = () => {
   return (
