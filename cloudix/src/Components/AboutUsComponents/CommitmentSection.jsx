@@ -104,7 +104,7 @@ import { Box, Typography, useTheme, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import EcoIcon from "@mui/icons-material/Eco";
+import EnergySavingsLeafOutlinedIcon from "@mui/icons-material/EnergySavingsLeafOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import SectionImage from "../SectionImage";
@@ -135,7 +135,7 @@ const CommitmentSection = ({ compliance }) => {
       text: "Always improve.",
     },
     {
-      icon: <EcoIcon />,
+      icon: <EnergySavingsLeafOutlinedIcon />,
       title: "Innovation",
       text: "Think ahead.",
     },
