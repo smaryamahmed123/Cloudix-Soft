@@ -101,134 +101,65 @@
 
 
 import React from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import { motion } from "framer-motion";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import TrackChangesRoundedIcon from "@mui/icons-material/TrackChangesRounded";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SectionImage from "../SectionImage";
 
 const MotionBox = motion(Box);
 
-const VisionMissionCard = ({
-  item,
-  icon,
-  reverse = false,
-}) => {
-  const theme = useTheme();
-
+const VisionMissionCard = ({ item, icon, tagText }) => {
   const imageSrc = item.image?.startsWith("http")
     ? item.image
     : item.image || "";
 
   return (
     <MotionBox
-      initial={{
-        opacity: 0,
-        y: 40,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 0.7,
-      }}
-      viewport={{
-        once: true,
-      }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
       sx={{
         position: "relative",
         display: "grid",
-        gridTemplateColumns: {
-          xs: "1fr",
-          md: "1fr 0.9fr",
-        },
-        gap: { xs: 4, md: 6 },
+        gridTemplateColumns: { xs: "1fr", md: "1.1fr 0.9fr" },
+        gap: { xs: 3, md: 4 },
         alignItems: "center",
-        p: { xs: 3, md: 5 },
-        border: "1px solid rgba(255,255,255,0.16)",
-        borderRadius: "18px",
-        background:
-          "linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015))",
+        p: { xs: 3, md: 4 },
+        border: "1px solid rgba(255, 255, 255, 0.12)",
+        borderRadius: "16px",
+        background: "rgba(11, 20, 33, 0.7)",
         overflow: "hidden",
-        direction: reverse ? "rtl" : "ltr",
       }}
     >
-      {/* Decorative corner */}
-      <Box
-        sx={{
-          position: "absolute",
-          width: 90,
-          height: 90,
-          backgroundColor: theme.palette.primary.main,
-          opacity: 0.18,
-          top: -40,
-          right: reverse ? "auto" : -35,
-          left: reverse ? -35 : "auto",
-          transform: "rotate(25deg)",
-        }}
-      />
-
-      {/* TEXT */}
-      <Box
-        sx={{
-          direction: "ltr",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1.5,
-            mb: 2,
-          }}
-        >
-          <Box
-            sx={{
-              width: 45,
-              height: 45,
-              borderRadius: "12px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: theme.palette.accent.light,
-              backgroundColor: "rgba(169,184,56,0.12)",
-              border:
-                "1px solid rgba(169,184,56,0.3)",
-            }}
-          >
+      {/* Left Text */}
+      <Box>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+          <Box sx={{ color: "#829b1b", display: "flex", "& svg": { fontSize: 22 } }}>
             {icon}
           </Box>
-
           <Typography
             sx={{
-              color: theme.palette.accent.light,
+              color: "#829b1b",
               fontSize: "0.75rem",
               fontWeight: 700,
-              letterSpacing: "0.2em",
+              letterSpacing: "0.18em",
               textTransform: "uppercase",
             }}
           >
-            {item.title}
+            {tagText}
           </Typography>
         </Box>
 
         <Typography
-          component="h2"
+          component="h3"
           sx={{
             color: "#fff",
             fontWeight: 800,
-            fontSize: {
-              xs: "1.8rem",
-              md: "2.4rem",
-            },
-            lineHeight: 1.2,
-            mb: 2,
+            fontSize: { xs: "1.3rem", md: "1.6rem" },
+            lineHeight: 1.25,
+            mb: 1.5,
           }}
         >
           {item.title}
@@ -236,39 +167,32 @@ const VisionMissionCard = ({
 
         <Box
           sx={{
-            width: 50,
+            width: 40,
             height: 3,
-            backgroundColor: theme.palette.secondary.main,
-            borderRadius: 3,
-            mb: 3,
+            backgroundColor: "#829b1b",
+            borderRadius: 2,
+            mb: 2,
           }}
         />
 
         <Typography
           sx={{
-            color: "rgba(255,255,255,0.72)",
-            lineHeight: 1.8,
-            fontSize: "0.92rem",
-            maxWidth: 560,
+            color: "rgba(255, 255, 255, 0.72)",
+            lineHeight: 1.65,
+            fontSize: "0.88rem",
           }}
         >
           {item.description}
         </Typography>
       </Box>
 
-      {/* IMAGE */}
-      <Box
-        sx={{
-          direction: "ltr",
-          position: "relative",
-        }}
-      >
+      {/* Right Image */}
+      <Box sx={{ position: "relative" }}>
         <SectionImage
           src={imageSrc}
           alt={item.title}
-          accentColor={theme.palette.accent.light}
-          direction={reverse ? "left" : "right"}
-          delay={0.2}
+          accentColor="#829b1b"
+          direction="right"
         />
       </Box>
     </MotionBox>
@@ -282,94 +206,55 @@ const VisionMission = ({ vision, mission }) => {
     <Box
       component="section"
       sx={{
+        py: { xs: 8, md: 10 },
+        background: "#07121e",
         position: "relative",
-        py: { xs: 8, md: 12 },
-        background:
-          "linear-gradient(180deg, #08111D 0%, #0B1421 100%)",
         overflow: "hidden",
       }}
     >
-      {/* Background accents */}
+      {/* Decorative Green Skew Corner Accents */}
       <Box
         sx={{
           position: "absolute",
-          width: 300,
-          height: 300,
-          borderRadius: "50%",
-          backgroundColor: "#769914",
-          opacity: 0.04,
-          top: -100,
-          left: -100,
-          filter: "blur(20px)",
+          left: -40,
+          bottom: -40,
+          width: 120,
+          height: 120,
+          background: "#829b1b",
+          transform: "skewX(-20deg)",
+          opacity: 0.8,
         }}
       />
-
       <Box
         sx={{
           position: "absolute",
-          width: 250,
-          height: 250,
-          borderRadius: "50%",
-          backgroundColor: "#BBBF19",
-          opacity: 0.035,
-          bottom: -100,
-          right: -80,
-          filter: "blur(20px)",
+          right: -40,
+          top: -40,
+          width: 120,
+          height: 120,
+          background: "#829b1b",
+          transform: "skewX(-20deg)",
+          opacity: 0.8,
         }}
       />
 
-      <Container
-        maxWidth="lg"
-        sx={{
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <Box sx={{ mb: { xs: 5, md: 7 } }}>
-          <Typography
-            sx={{
-              color: "#A9B838",
-              fontWeight: 700,
-              fontSize: "0.8rem",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              mb: 1,
-            }}
-          >
-            What Drives Us
-          </Typography>
-
-          <Typography
-            component="h2"
-            sx={{
-              color: "#fff",
-              fontWeight: 800,
-              fontSize: {
-                xs: "2rem",
-                md: "3rem",
-              },
-            }}
-          >
-            Purpose With Direction
-          </Typography>
-        </Box>
-
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
             gap: 4,
           }}
         >
           <VisionMissionCard
             item={vision}
-            icon={<VisibilityRoundedIcon />}
+            icon={<VisibilityOutlinedIcon />}
+            tagText="OUR VISION"
           />
-
           <VisionMissionCard
             item={mission}
-            icon={<TrackChangesRoundedIcon />}
-            reverse
+            icon={<TrackChangesOutlinedIcon />}
+            tagText="OUR MISSION"
           />
         </Box>
       </Container>

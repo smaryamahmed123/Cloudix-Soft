@@ -95,13 +95,7 @@
 
 
 import React from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  Button,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, Container, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import SectionImage from "../SectionImage";
@@ -109,8 +103,6 @@ import SectionImage from "../SectionImage";
 const MotionBox = motion(Box);
 
 const TeamSection = ({ teamIntro }) => {
-  const theme = useTheme();
-
   if (!teamIntro) return null;
 
   const imageSrc = teamIntro.image?.startsWith("http")
@@ -120,129 +112,88 @@ const TeamSection = ({ teamIntro }) => {
   return (
     <MotionBox
       component="section"
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
       viewport={{ once: true }}
       sx={{
         position: "relative",
-        background:
-          "linear-gradient(135deg, #0B1725 0%, #111E2C 100%)",
+        background: "#07121e",
         color: "#fff",
-        py: { xs: 8, md: 11 },
+        py: { xs: 8, md: 10 },
         overflow: "hidden",
       }}
     >
-      {/* Decorative shapes */}
+      {/* Decorative Bottom Left Green Shape */}
       <Box
         sx={{
           position: "absolute",
-          left: -80,
-          bottom: -50,
-          width: 200,
-          height: 100,
-          backgroundColor: theme.palette.primary.main,
-          opacity: 0.6,
-          transform: "skewX(-25deg)",
+          left: -50,
+          bottom: -40,
+          width: 140,
+          height: 140,
+          background: "#829b1b",
+          transform: "skewX(-20deg)",
+          opacity: 0.8,
         }}
       />
 
-      <Box
-        sx={{
-          position: "absolute",
-          right: -60,
-          top: 30,
-          width: 160,
-          height: 70,
-          backgroundColor: theme.palette.secondary.main,
-          opacity: 0.35,
-          transform: "skewX(-25deg)",
-        }}
-      />
-
-      <Container
-        maxWidth="lg"
-        sx={{
-          position: "relative",
-          zIndex: 2,
-        }}
-      >
+      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "0.9fr 1.1fr",
-            },
-            gap: { xs: 5, md: 9 },
+            gridTemplateColumns: { xs: "1fr", md: "0.95fr 1.05fr" },
+            gap: { xs: 5, md: 8 },
             alignItems: "center",
           }}
         >
           {/* TEXT */}
-          <MotionBox
-            initial={{
-              opacity: 0,
-              x: -40,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            transition={{
-              duration: 0.7,
-            }}
-            viewport={{
-              once: true,
-            }}
-          >
+          <Box>
             <Typography
               sx={{
-                color: "#A9B838",
+                color: "#829b1b",
                 fontWeight: 700,
-                fontSize: "0.8rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
                 mb: 1,
               }}
             >
-              Our Team
+              OUR TEAM
             </Typography>
 
             <Typography
               component="h2"
               sx={{
                 fontWeight: 800,
-                fontSize: {
-                  xs: "2rem",
-                  md: "3rem",
-                },
+                fontSize: { xs: "2rem", md: "2.8rem" },
                 lineHeight: 1.15,
-                mb: 2,
+                mb: 1.5,
               }}
             >
-              {teamIntro.title}
+              Our Team
             </Typography>
 
             <Box
               sx={{
-                width: 55,
-                height: 4,
-                borderRadius: 3,
-                backgroundColor:
-                  theme.palette.secondary.main,
+                width: 45,
+                height: 3,
+                backgroundColor: "#829b1b",
+                borderRadius: 2,
                 mb: 3,
               }}
             />
 
             <Typography
               sx={{
-                color: "rgba(255,255,255,0.78)",
-                lineHeight: 1.8,
-                maxWidth: 530,
+                color: "rgba(255, 255, 255, 0.78)",
+                lineHeight: 1.7,
+                fontSize: "0.92rem",
                 mb: 4,
               }}
             >
-              {teamIntro.description}
+              {teamIntro.description ||
+                "We are a diverse team of developers, designers, marketers and strategists, working together to turn ideas into powerful digital experiences. With a shared passion for technology and a commitment to excellence, we help businesses grow in the digital world."}
             </Typography>
 
             <Button
@@ -250,57 +201,32 @@ const TeamSection = ({ teamIntro }) => {
               endIcon={<ArrowForwardRoundedIcon />}
               href="#meet-team"
               sx={{
-                backgroundColor:
-                  theme.palette.accent.light,
-                color: theme.palette.primary.dark,
-                borderRadius: "8px",
+                backgroundColor: "#829b1b",
+                color: "#fff",
+                borderRadius: "6px",
                 px: 3,
-                py: 1.3,
+                py: 1.2,
                 fontWeight: 700,
                 textTransform: "none",
+                fontSize: "0.88rem",
                 "&:hover": {
-                  backgroundColor:
-                    theme.palette.secondary.main,
-                  transform: "translateY(-2px)",
+                  backgroundColor: "#96b320",
                 },
-                transition: "all 0.3s ease",
               }}
             >
-              Meet Our Team
+              Work With Us
             </Button>
-          </MotionBox>
+          </Box>
 
-          {/* IMAGE */}
-          <MotionBox
-            initial={{
-              opacity: 0,
-              x: 40,
-            }}
-            whileInView={{
-              opacity: 1,
-              x: 0,
-            }}
-            transition={{
-              duration: 0.7,
-              delay: 0.2,
-            }}
-            viewport={{
-              once: true,
-            }}
-            sx={{
-              position: "relative",
-            }}
-          >
+          {/* RIGHT IMAGE WITH CLOUDIX SOFT BRANDING */}
+          <Box sx={{ position: "relative" }}>
             <SectionImage
               src={imageSrc}
               alt={teamIntro.title || "Cloudix Soft Team"}
-              accentColor={
-                theme.palette.accent.light
-              }
+              accentColor="#829b1b"
               direction="right"
-              delay={0.2}
             />
-          </MotionBox>
+          </Box>
         </Box>
       </Container>
     </MotionBox>

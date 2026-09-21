@@ -100,19 +100,13 @@
 
 
 import React from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useTheme, Container } from "@mui/material";
 import { motion } from "framer-motion";
-
-import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
-import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
-import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
-import WorkspacePremiumRoundedIcon from "@mui/icons-material/WorkspacePremiumRounded";
-
+import ShieldOutlinedIcon from "@mui/icons-material/ShieldOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import EcoOutlinedIcon from "@mui/icons-material/EcoOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import VerifiedUserOutlinedIcon from "@mui/icons-material/VerifiedUserOutlined";
 import SectionImage from "../SectionImage";
 
 const MotionBox = motion(Box);
@@ -123,7 +117,6 @@ const CommitmentSection = ({ compliance }) => {
   if (!compliance) return null;
 
   const backendURL = import.meta.env.VITE_BACKEND_URL || "";
-
   const imageSrc = compliance.image
     ? compliance.image.startsWith("http")
       ? compliance.image
@@ -132,22 +125,22 @@ const CommitmentSection = ({ compliance }) => {
 
   const values = [
     {
-      icon: <VerifiedRoundedIcon />,
+      icon: <ShieldOutlinedIcon />,
       title: "Integrity",
       text: "Do what's right.",
     },
     {
-      icon: <WorkspacePremiumRoundedIcon />,
+      icon: <GroupsOutlinedIcon />,
       title: "Excellence",
       text: "Always improve.",
     },
     {
-      icon: <LightbulbRoundedIcon />,
+      icon: <EcoOutlinedIcon />,
       title: "Innovation",
       text: "Think ahead.",
     },
     {
-      icon: <FavoriteRoundedIcon />,
+      icon: <FavoriteBorderOutlinedIcon />,
       title: "Respect",
       text: "Value people.",
     },
@@ -156,13 +149,13 @@ const CommitmentSection = ({ compliance }) => {
   return (
     <MotionBox
       component="section"
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7 }}
       viewport={{ once: true }}
       sx={{
         py: { xs: 8, md: 12 },
-        backgroundColor: "#fff",
+        backgroundColor: "#ffffff",
         overflow: "hidden",
       }}
     >
@@ -170,11 +163,8 @@ const CommitmentSection = ({ compliance }) => {
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "1fr 1fr",
-            },
-            gap: { xs: 6, md: 9 },
+            gridTemplateColumns: { xs: "1fr", md: "1.05fr 0.95fr" },
+            gap: { xs: 6, md: 8 },
             alignItems: "center",
           }}
         >
@@ -182,202 +172,132 @@ const CommitmentSection = ({ compliance }) => {
           <Box>
             <Typography
               sx={{
-                color: theme.palette.primary.main,
+                color: "#829b1b",
                 fontWeight: 700,
-                fontSize: "0.8rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.2em",
                 textTransform: "uppercase",
                 mb: 1,
               }}
             >
-              Our Values
+              OUR VALUES
             </Typography>
 
             <Typography
               component="h2"
-              variant="h3"
               sx={{
-                color: theme.palette.primary.dark,
+                color: "#08111D",
                 fontWeight: 800,
-                lineHeight: 1.15,
-                mb: 2,
+                fontSize: { xs: "1.8rem", md: "2.4rem" },
+                lineHeight: 1.2,
+                mb: 1.5,
               }}
             >
-              {compliance.title || "Values Driven"}
+              Values Driven
             </Typography>
 
             <Box
               sx={{
-                width: 55,
-                height: 4,
-                borderRadius: 4,
-                backgroundColor:
-                  theme.palette.secondary.main,
+                width: 45,
+                height: 3,
+                backgroundColor: "#829b1b",
+                borderRadius: 2,
                 mb: 3,
               }}
             />
 
             <Typography
               sx={{
-                color: theme.palette.text.primary,
-                lineHeight: 1.8,
-                maxWidth: 570,
+                color: "#4A5568",
+                lineHeight: 1.7,
+                fontSize: "0.95rem",
                 mb: 5,
               }}
             >
-              {compliance.description}
+              {compliance.description ||
+                "Our values guide everything we do — from how we work with clients to how we build our products. We are committed to ethical practices, honest communication and delivering excellence in all that we do."}
             </Typography>
 
-            {/* Values */}
+            {/* 4 Columns Horizontal Values Bar */}
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr 1fr",
-                  sm: "repeat(4, 1fr)",
-                },
+                gridTemplateColumns: "repeat(4, 1fr)",
                 gap: 1,
               }}
             >
-              {values.map((value, index) => (
-                <MotionBox
+              {values.map((val, index) => (
+                <Box
                   key={index}
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    delay: index * 0.08,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
                   sx={{
                     textAlign: "center",
-                    px: 1,
-                    py: 1.5,
-                    borderRight: {
-                      sm:
-                        index !== values.length - 1
-                          ? "1px solid #e5e8eb"
-                          : "none",
-                    },
+                    borderRight: index !== values.length - 1 ? "1px solid #E2E8F0" : "none",
+                    pr: 1,
                   }}
                 >
-                  <Box
-                    sx={{
-                      color: theme.palette.primary.main,
-                      mb: 1,
-                      "& svg": {
-                        fontSize: 27,
-                      },
-                    }}
-                  >
-                    {value.icon}
+                  <Box sx={{ color: "#829b1b", mb: 0.8, "& svg": { fontSize: 26 } }}>
+                    {val.icon}
                   </Box>
-
                   <Typography
                     sx={{
                       fontWeight: 700,
-                      color: theme.palette.primary.dark,
+                      color: "#08111D",
                       fontSize: "0.82rem",
+                      mb: 0.3,
                     }}
                   >
-                    {value.title}
+                    {val.title}
                   </Typography>
-
                   <Typography
                     sx={{
-                      color: theme.palette.text.secondary,
+                      color: "#718096",
                       fontSize: "0.7rem",
-                      mt: 0.5,
                     }}
                   >
-                    {value.text}
+                    {val.text}
                   </Typography>
-                </MotionBox>
+                </Box>
               ))}
             </Box>
           </Box>
 
-          {/* IMAGE */}
-          <Box
-            sx={{
-              position: "relative",
-            }}
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                width: 150,
-                height: 65,
-                right: -25,
-                top: -20,
-                backgroundColor: "#A9B838",
-                opacity: 0.25,
-                transform: "skewX(-25deg)",
-              }}
-            />
-
-            <Box
-              sx={{
-                position: "relative",
-                zIndex: 1,
-              }}
-            >
+          {/* RIGHT IMAGE WITH SHARIAH COMPLIANT BADGE */}
+          <Box sx={{ position: "relative" }}>
+            <Box sx={{ borderRadius: "16px", overflow: "hidden" }}>
               <SectionImage
                 src={imageSrc}
-                alt={
-                  compliance.title ||
-                  "Cloudix Soft values"
-                }
-                accentColor={
-                  theme.palette.primary.dark
-                }
+                alt={compliance.title || "Values Driven"}
+                accentColor="#829b1b"
                 direction="right"
-                delay={0.3}
               />
             </Box>
 
-            {/* Compliance badge */}
+            {/* Shariah Banner on Top Right */}
             <Box
               sx={{
                 position: "absolute",
-                zIndex: 2,
-                right: { xs: 0, md: -20 },
-                bottom: { xs: 15, md: 25 },
-                backgroundColor:
-                  theme.palette.primary.main,
+                top: 20,
+                right: 20,
+                backgroundColor: "#829b1b",
                 color: "#fff",
-                px: 2.5,
-                py: 1.5,
+                px: 2,
+                py: 1.2,
                 borderRadius: "8px",
-                boxShadow:
-                  "0 12px 30px rgba(0,0,0,0.18)",
+                display: "flex",
+                alignItems: "center",
+                gap: 1.2,
+                boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
               }}
             >
-              <Typography
-                sx={{
-                  fontSize: "0.7rem",
-                  fontWeight: 700,
-                }}
-              >
-                Shariah-Compliant
-              </Typography>
-
-              <Typography
-                sx={{
-                  fontSize: "0.65rem",
-                  opacity: 0.85,
-                }}
-              >
-                IT Company
-              </Typography>
+              <VerifiedUserOutlinedIcon sx={{ fontSize: 28, color: "#fff" }} />
+              <Box>
+                <Typography sx={{ fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>
+                  Shariah-Compliant
+                </Typography>
+                <Typography sx={{ fontSize: "0.68rem", opacity: 0.9, lineHeight: 1.2 }}>
+                  IT Company
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>

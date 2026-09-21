@@ -227,23 +227,51 @@ import {
   Stack,
   IconButton,
   Container,
-  useTheme,
 } from "@mui/material";
-
-import {
-  Instagram,
-  LinkedIn,
-  Facebook,
-} from "@mui/icons-material";
-
+import { LinkedIn, GitHub, Twitter, Instagram, Facebook } from "@mui/icons-material";
 import { motion } from "framer-motion";
 
 const MotionBox = motion(Box);
 
 const OurTeam = ({ team }) => {
-  const theme = useTheme();
-
   if (!team || !team.length) return null;
+
+  const renderSocialIcon = (platform, url) => {
+    switch (platform) {
+      case "linkedin":
+        return (
+          <IconButton key={platform} href={url} target="_blank" size="small" sx={socialStyle}>
+            <LinkedIn fontSize="inherit" />
+          </IconButton>
+        );
+      case "github":
+        return (
+          <IconButton key={platform} href={url} target="_blank" size="small" sx={socialStyle}>
+            <GitHub fontSize="inherit" />
+          </IconButton>
+        );
+      case "twitter":
+        return (
+          <IconButton key={platform} href={url} target="_blank" size="small" sx={socialStyle}>
+            <Twitter fontSize="inherit" />
+          </IconButton>
+        );
+      case "instagram":
+        return (
+          <IconButton key={platform} href={url} target="_blank" size="small" sx={socialStyle}>
+            <Instagram fontSize="inherit" />
+          </IconButton>
+        );
+      case "facebook":
+        return (
+          <IconButton key={platform} href={url} target="_blank" size="small" sx={socialStyle}>
+            <Facebook fontSize="inherit" />
+          </IconButton>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <Box
@@ -251,41 +279,32 @@ const OurTeam = ({ team }) => {
       component="section"
       sx={{
         py: { xs: 8, md: 12 },
-        background:
-          "linear-gradient(180deg, #F7F9FB 0%, #FFFFFF 100%)",
+        backgroundColor: "#f8fafc",
       }}
     >
       <Container maxWidth="lg">
-        {/* HEADER */}
-        <Box
-          sx={{
-            textAlign: "center",
-            mb: { xs: 6, md: 8 },
-          }}
-        >
+        {/* Section Header */}
+        <Box sx={{ mb: { xs: 5, md: 7 } }}>
           <Typography
             sx={{
-              color: theme.palette.primary.main,
+              color: "#829b1b",
               fontWeight: 700,
-              fontSize: "0.8rem",
+              fontSize: "0.78rem",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               mb: 1,
             }}
           >
-            Meet The People
+            MEET OUR TEAM
           </Typography>
 
           <Typography
             component="h2"
             sx={{
-              color: theme.palette.primary.dark,
+              color: "#08111D",
               fontWeight: 800,
-              fontSize: {
-                xs: "2rem",
-                md: "3rem",
-              },
-              mb: 2,
+              fontSize: { xs: "2rem", md: "2.8rem" },
+              mb: 1,
             }}
           >
             Meet Our Team
@@ -293,238 +312,101 @@ const OurTeam = ({ team }) => {
 
           <Box
             sx={{
-              width: 55,
-              height: 4,
-              borderRadius: 4,
-              backgroundColor:
-                theme.palette.secondary.main,
-              mx: "auto",
-              mb: 2,
+              width: 45,
+              height: 3,
+              backgroundColor: "#829b1b",
+              borderRadius: 2,
             }}
           />
-
-          <Typography
-            sx={{
-              maxWidth: 600,
-              mx: "auto",
-              color: theme.palette.text.secondary,
-              lineHeight: 1.7,
-            }}
-          >
-            Meet the people behind Cloudix Soft who bring
-            creativity, technology and purpose together.
-          </Typography>
         </Box>
 
-        {/* TEAM */}
-        <Grid
-          container
-          spacing={{ xs: 3, md: 4 }}
-          justifyContent="center"
-        >
+        {/* Team Grid */}
+        <Grid container spacing={4} justifyContent="center">
           {team.map((member, index) => (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              key={index}
-            >
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <MotionBox
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.55,
-                  delay: index * 0.1,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                sx={{
-                  height: "100%",
-                }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                sx={{ height: "100%" }}
               >
                 <Card
                   elevation={0}
                   sx={{
-                    position: "relative",
                     height: "100%",
-                    minHeight: 390,
-                    borderRadius: "18px",
-                    backgroundColor: "#fff",
-                    border:
-                      "1px solid rgba(17,30,44,0.08)",
-                    boxShadow:
-                      "0 12px 35px rgba(17,30,44,0.08)",
-                    overflow: "visible",
-                    transition:
-                      "all 0.35s ease",
+                    borderRadius: "16px",
+                    backgroundColor: "#ffffff",
+                    p: 3,
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.04)",
+                    border: "1px solid #edf2f7",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
                     "&:hover": {
-                      transform:
-                        "translateY(-8px)",
-                      boxShadow:
-                        "0 20px 45px rgba(17,30,44,0.14)",
+                      transform: "translateY(-6px)",
+                      boxShadow: "0 18px 40px rgba(0,0,0,0.08)",
                     },
                   }}
                 >
-                  {/* Green top accent */}
-                  <Box
+                  {/* Round Avatar with Green Border Ring */}
+                  <Avatar
+                    src={member.image}
+                    alt={member.name}
                     sx={{
-                      height: 5,
-                      width: "100%",
-                      borderRadius:
-                        "18px 18px 0 0",
-                      background:
-                        "linear-gradient(90deg, #769914, #BBBF19)",
+                      width: 100,
+                      height: 100,
+                      mb: 2,
+                      border: "3px solid #829b1b",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
                     }}
                   />
 
-                  {/* Avatar */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      mt: 3,
-                    }}
-                  >
-                    <Avatar
-                      src={member.image}
-                      alt={member.name}
-                      sx={{
-                        width: {
-                          xs: 110,
-                          md: 125,
-                        },
-                        height: {
-                          xs: 110,
-                          md: 125,
-                        },
-                        border:
-                          "5px solid #fff",
-                        boxShadow:
-                          "0 8px 25px rgba(0,0,0,0.15)",
-                      }}
-                    />
-                  </Box>
-
-                  <CardContent
-                    sx={{
-                      textAlign: "center",
-                      px: 3,
-                      pb: 3,
-                    }}
-                  >
-                    {/* Name */}
+                  <CardContent sx={{ p: 0, width: "100%", flexGrow: 1 }}>
                     <Typography
                       component="h3"
                       sx={{
-                        color:
-                          theme.palette.primary.dark,
+                        color: "#08111D",
                         fontWeight: 800,
-                        fontSize: "1.05rem",
-                        mt: 1,
+                        fontSize: "1.1rem",
+                        mb: 0.3,
                       }}
                     >
                       {member.name}
                     </Typography>
 
-                    {/* Position */}
                     <Typography
                       sx={{
-                        color:
-                          theme.palette.primary.main,
+                        color: "#829b1b",
                         fontWeight: 600,
-                        fontSize: "0.78rem",
-                        mt: 0.5,
+                        fontSize: "0.8rem",
                         mb: 2,
                       }}
                     >
                       {member.position}
                     </Typography>
 
-                    {/* Description */}
                     <Typography
                       sx={{
-                        color:
-                          theme.palette.text.secondary,
+                        color: "#718096",
                         fontSize: "0.78rem",
-                        lineHeight: 1.7,
-                        maxWidth: 270,
-                        mx: "auto",
-                        display:
-                          "-webkit-box",
-                        WebkitLineClamp: 5,
-                        WebkitBoxOrient:
-                          "vertical",
-                        overflow: "hidden",
+                        lineHeight: 1.6,
+                        mb: 3,
                       }}
                     >
                       {member.description}
                     </Typography>
 
-                    {/* Socials */}
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      justifyContent="center"
-                      sx={{
-                        mt: 3,
-                      }}
-                    >
-                      {member.socials?.instagram && (
-                        <IconButton
-                          href={
-                            member.socials
-                              .instagram
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={iconButtonStyle(
-                            theme
-                          )}
-                        >
-                          <Instagram fontSize="small" />
-                        </IconButton>
-                      )}
-
-                      {member.socials?.linkedin && (
-                        <IconButton
-                          href={
-                            member.socials
-                              .linkedin
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={iconButtonStyle(
-                            theme
-                          )}
-                        >
-                          <LinkedIn fontSize="small" />
-                        </IconButton>
-                      )}
-
-                      {member.socials?.facebook && (
-                        <IconButton
-                          href={
-                            member.socials
-                              .facebook
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          sx={iconButtonStyle(
-                            theme
-                          )}
-                        >
-                          <Facebook fontSize="small" />
-                        </IconButton>
-                      )}
-                    </Stack>
+                    {/* Social Links */}
+                    {member.socials && (
+                      <Stack direction="row" spacing={1} justifyContent="center">
+                        {Object.entries(member.socials).map(([platform, url]) =>
+                          renderSocialIcon(platform, url)
+                        )}
+                      </Stack>
+                    )}
                   </CardContent>
                 </Card>
               </MotionBox>
@@ -536,21 +418,14 @@ const OurTeam = ({ team }) => {
   );
 };
 
-const iconButtonStyle = (theme) => ({
-  width: 34,
-  height: 34,
-  borderRadius: "50%",
-  color: theme.palette.primary.dark,
-  backgroundColor: "#F2F4F5",
-  border: "1px solid #E5E8EB",
-  transition: "all 0.25s ease",
-
+const socialStyle = {
+  color: "#4A5568",
+  fontSize: "1.1rem",
+  transition: "color 0.2s ease",
   "&:hover": {
-    backgroundColor:
-      theme.palette.primary.main,
-    color: "#fff",
-    transform: "translateY(-2px)",
+    color: "#829b1b",
+    backgroundColor: "transparent",
   },
-});
+};
 
 export default OurTeam;

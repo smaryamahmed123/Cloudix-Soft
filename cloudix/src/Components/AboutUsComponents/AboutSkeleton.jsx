@@ -133,433 +133,102 @@
 
 
 import React from "react";
-import {
-  Box,
-  Skeleton,
-  Container,
-} from "@mui/material";
+import { Box, Skeleton, Container } from "@mui/material";
 
 const AboutSkeleton = () => {
   return (
     <Box>
-      {/* HERO */}
-      <Box
-        sx={{
-          minHeight: { xs: 430, md: 560 },
-          backgroundColor: "#101A27",
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+      {/* HERO SKELETON */}
+      <Box sx={{ minHeight: { xs: 450, md: 560 }, backgroundColor: "#07121e", display: "flex", alignItems: "center" }}>
         <Container maxWidth="lg">
-          <Skeleton
-            variant="text"
-            width={100}
-            height={25}
-            sx={{
-              bgcolor:
-                "rgba(255,255,255,0.1)",
-            }}
-          />
-
-          <Skeleton
-            variant="text"
-            width="55%"
-            height={90}
-            sx={{
-              bgcolor:
-                "rgba(255,255,255,0.1)",
-            }}
-          />
-
-          <Skeleton
-            variant="text"
-            width="60%"
-            height={25}
-            sx={{
-              bgcolor:
-                "rgba(255,255,255,0.08)",
-            }}
-          />
-
-          <Skeleton
-            variant="rounded"
-            width={170}
-            height={50}
-            sx={{
-              mt: 3,
-              bgcolor:
-                "rgba(255,255,255,0.1)",
-            }}
-          />
+          <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: "rgba(255,255,255,0.1)" }} />
+          <Skeleton variant="text" width="45%" height={80} sx={{ bgcolor: "rgba(255,255,255,0.1)" }} />
+          <Skeleton variant="rectangular" width={50} height={4} sx={{ bgcolor: "rgba(255,255,255,0.1)", my: 2 }} />
+          <Skeleton variant="text" width="55%" height={25} sx={{ bgcolor: "rgba(255,255,255,0.08)" }} />
         </Container>
       </Box>
 
-      {/* ABOUT */}
-      <Box
-        sx={{
-          py: { xs: 8, md: 12 },
-        }}
-      >
+      {/* FOUNDATION SKELETON */}
+      <Box sx={{ py: 10, backgroundColor: "#fff" }}>
         <Container maxWidth="lg">
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "1fr 1fr",
-              },
-              gap: 8,
-              alignItems: "center",
-            }}
-          >
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 6 }}>
             <Box>
-              <Skeleton
-                variant="text"
-                width={130}
-                height={22}
-              />
-
-              <Skeleton
-                variant="text"
-                width="75%"
-                height={55}
-              />
-
-              <Skeleton
-                variant="text"
-                width="100%"
-                height={20}
-              />
-
-              <Skeleton
-                variant="text"
-                width="95%"
-                height={20}
-              />
-
-              <Skeleton
-                variant="text"
-                width="85%"
-                height={20}
-              />
-
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "1fr 1fr",
-                  gap: 2,
-                  mt: 4,
-                }}
-              >
-                {[1, 2, 3, 4].map((item) => (
-                  <Skeleton
-                    key={item}
-                    variant="rounded"
-                    height={65}
-                  />
+              <Skeleton variant="text" width={120} height={20} />
+              <Skeleton variant="text" width="70%" height={45} />
+              <Skeleton variant="rectangular" width={45} height={3} sx={{ my: 2 }} />
+              <Skeleton variant="text" width="95%" height={20} />
+              <Skeleton variant="text" width="85%" height={20} />
+              <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, mt: 4 }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <Skeleton key={i} variant="rounded" height={50} />
                 ))}
               </Box>
             </Box>
-
-            <Skeleton
-              variant="rounded"
-              width="100%"
-              height={360}
-              sx={{
-                borderRadius: "20px",
-              }}
-            />
+            <Skeleton variant="rounded" height={320} sx={{ borderRadius: "16px" }} />
           </Box>
         </Container>
       </Box>
 
-      {/* VISION / MISSION */}
-      <Box
-        sx={{
-          py: { xs: 8, md: 12 },
-          backgroundColor: "#0B1421",
-        }}
-      >
+      {/* VISION & MISSION SKELETON */}
+      <Box sx={{ py: 10, backgroundColor: "#07121e" }}>
         <Container maxWidth="lg">
-          <Skeleton
-            variant="text"
-            width={180}
-            height={25}
-            sx={{
-              bgcolor:
-                "rgba(255,255,255,0.1)",
-            }}
-          />
-
-          <Skeleton
-            variant="text"
-            width={350}
-            height={55}
-            sx={{
-              mb: 5,
-              bgcolor:
-                "rgba(255,255,255,0.1)",
-            }}
-          />
-
-          {[1, 2].map((item) => (
-            <Box
-              key={item}
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  md: "1fr 1fr",
-                },
-                gap: 5,
-                p: { xs: 3, md: 5 },
-                mb: 3,
-                border:
-                  "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "18px",
-              }}
-            >
-              <Box>
-                <Skeleton
-                  variant="text"
-                  width={150}
-                  height={30}
-                  sx={{
-                    bgcolor:
-                      "rgba(255,255,255,0.1)",
-                  }}
-                />
-
-                <Skeleton
-                  variant="text"
-                  width="70%"
-                  height={50}
-                  sx={{
-                    bgcolor:
-                      "rgba(255,255,255,0.1)",
-                  }}
-                />
-
-                <Skeleton
-                  variant="text"
-                  width="100%"
-                  height={20}
-                  sx={{
-                    bgcolor:
-                      "rgba(255,255,255,0.08)",
-                  }}
-                />
-
-                <Skeleton
-                  variant="text"
-                  width="90%"
-                  height={20}
-                  sx={{
-                    bgcolor:
-                      "rgba(255,255,255,0.08)",
-                  }}
-                />
-              </Box>
-
-              <Skeleton
-                variant="rounded"
-                height={270}
-                sx={{
-                  bgcolor:
-                    "rgba(255,255,255,0.08)",
-                  borderRadius: "15px",
-                }}
-              />
-            </Box>
-          ))}
-        </Container>
-      </Box>
-
-      {/* VALUES */}
-      <Box
-        sx={{
-          py: { xs: 8, md: 12 },
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "1fr 1fr",
-              },
-              gap: 8,
-              alignItems: "center",
-            }}
-          >
-            <Box>
-              <Skeleton
-                variant="text"
-                width={130}
-                height={22}
-              />
-
-              <Skeleton
-                variant="text"
-                width="65%"
-                height={55}
-              />
-
-              {[1, 2, 3].map((item) => (
-                <Skeleton
-                  key={item}
-                  variant="text"
-                  width="100%"
-                  height={20}
-                />
-              ))}
-
-              <Box
-                sx={{
-                  display: "grid",
-                  gridTemplateColumns:
-                    "repeat(4, 1fr)",
-                  mt: 4,
-                  gap: 1,
-                }}
-              >
-                {[1, 2, 3, 4].map((item) => (
-                  <Skeleton
-                    key={item}
-                    variant="rounded"
-                    height={80}
-                  />
-                ))}
-              </Box>
-            </Box>
-
-            <Skeleton
-              variant="rounded"
-              width="100%"
-              height={340}
-              sx={{
-                borderRadius: "20px",
-              }}
-            />
-          </Box>
-        </Container>
-      </Box>
-
-      {/* TEAM INTRO */}
-      <Box
-        sx={{
-          py: { xs: 8, md: 11 },
-          backgroundColor: "#111E2C",
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "1fr 1fr",
-              },
-              gap: 8,
-              alignItems: "center",
-            }}
-          >
-            <Box>
-              <Skeleton
-                variant="text"
-                width={100}
-                height={22}
-                sx={{
-                  bgcolor:
-                    "rgba(255,255,255,0.1)",
-                }}
-              />
-
-              <Skeleton
-                variant="text"
-                width="75%"
-                height={60}
-                sx={{
-                  bgcolor:
-                    "rgba(255,255,255,0.1)",
-                }}
-              />
-
-              <Skeleton
-                variant="text"
-                width="100%"
-                height={20}
-                sx={{
-                  bgcolor:
-                    "rgba(255,255,255,0.08)",
-                }}
-              />
-
-              <Skeleton
-                variant="rounded"
-                width={150}
-                height={48}
-                sx={{
-                  mt: 3,
-                  bgcolor:
-                    "rgba(255,255,255,0.1)",
-                }}
-              />
-            </Box>
-
-            <Skeleton
-              variant="rounded"
-              width="100%"
-              height={340}
-              sx={{
-                bgcolor:
-                  "rgba(255,255,255,0.08)",
-                borderRadius: "20px",
-              }}
-            />
-          </Box>
-        </Container>
-      </Box>
-
-      {/* TEAM CARDS */}
-      <Box
-        sx={{
-          py: { xs: 8, md: 12 },
-        }}
-      >
-        <Container maxWidth="lg">
-          <Skeleton
-            variant="text"
-            width={200}
-            height={55}
-            sx={{ mx: "auto", mb: 5 }}
-          />
-
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, 1fr)",
-                md: "repeat(3, 1fr)",
-              },
-              gap: 4,
-            }}
-          >
-            {[1, 2, 3].map((item) => (
-              <Skeleton
-                key={item}
-                variant="rounded"
-                height={390}
-                sx={{
-                  borderRadius: "18px",
-                }}
-              />
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 4 }}>
+            {[1, 2].map((i) => (
+              <Skeleton key={i} variant="rounded" height={260} sx={{ bgcolor: "rgba(255,255,255,0.08)", borderRadius: "16px" }} />
             ))}
           </Box>
+        </Container>
+      </Box>
+
+      {/* VALUES SKELETON */}
+      <Box sx={{ py: 10, backgroundColor: "#fff" }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 6 }}>
+            <Box>
+              <Skeleton variant="text" width={100} height={20} />
+              <Skeleton variant="text" width="60%" height={45} />
+              <Skeleton variant="rectangular" width={45} height={3} sx={{ my: 2 }} />
+              <Skeleton variant="text" width="90%" height={20} />
+              <Box sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2, mt: 4 }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <Skeleton key={i} variant="rounded" height={60} />
+                ))}
+              </Box>
+            </Box>
+            <Skeleton variant="rounded" height={300} sx={{ borderRadius: "16px" }} />
+          </Box>
+        </Container>
+      </Box>
+
+      {/* TEAM INTRO SKELETON */}
+      <Box sx={{ py: 10, backgroundColor: "#07121e" }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 6 }}>
+            <Box>
+              <Skeleton variant="text" width={100} height={20} sx={{ bgcolor: "rgba(255,255,255,0.1)" }} />
+              <Skeleton variant="text" width="60%" height={45} sx={{ bgcolor: "rgba(255,255,255,0.1)" }} />
+              <Skeleton variant="rectangular" width={45} height={3} sx={{ my: 2, bgcolor: "rgba(255,255,255,0.1)" }} />
+              <Skeleton variant="text" width="90%" height={20} sx={{ bgcolor: "rgba(255,255,255,0.08)" }} />
+              <Skeleton variant="rounded" width={140} height={42} sx={{ mt: 3, bgcolor: "rgba(255,255,255,0.1)" }} />
+            </Box>
+            <Skeleton variant="rounded" height={280} sx={{ bgcolor: "rgba(255,255,255,0.08)", borderRadius: "16px" }} />
+          </Box>
+        </Container>
+      </Box>
+
+      {/* TEAM CARDS SKELETON */}
+      <Box sx={{ py: 10, backgroundColor: "#f8fafc" }}>
+        <Container maxWidth="lg">
+          <Skeleton variant="text" width={120} height={20} />
+          <Skeleton variant="text" width={220} height={40} />
+          <Skeleton variant="rectangular" width={45} height={3} sx={{ my: 2, mb: 5 }} />
+          <Grid container spacing={4}>
+            {[1, 2, 3].map((i) => (
+              <Grid item xs={12} sm={6} md={4} key={i}>
+                <Skeleton variant="rounded" height={320} sx={{ borderRadius: "16px" }} />
+              </Grid>
+            ))}
+          </Grid>
         </Container>
       </Box>
     </Box>
