@@ -107,7 +107,7 @@ import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
 import SectionImage from "../SectionImage";
-import { resolveImage } from "../../utils/resolveImage";
+import { resolveImage } from "../../utils/Resolveimage";
 
 const MotionBox = motion(Box);
 

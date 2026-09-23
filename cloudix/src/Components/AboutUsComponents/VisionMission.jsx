@@ -105,7 +105,7 @@ import { motion } from "framer-motion";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SectionImage from "../SectionImage";
-import { resolveImage } from "../../utils/resolveImage";
+import { resolveImage } from "../../utils/Resolveimage";
 
 const MotionBox = motion(Box);
 

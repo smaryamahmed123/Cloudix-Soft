@@ -99,7 +99,7 @@ import { Box, Typography, Container, Button } from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import SectionImage from "../SectionImage";
-import { resolveImage } from "../../utils/resolveImage";
+import { resolveImage } from "../../utils/Resolveimage";
 
 const MotionBox = motion(Box);
 
