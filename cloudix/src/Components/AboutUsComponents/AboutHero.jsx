@@ -53,7 +53,7 @@ const AboutHero = () => {
       }}
     >
       {/* Skewed Green Accent Shapes (Right Side) */}
-      <Box
+      {/* <Box
         sx={{
           position: "absolute",
           right: -80,
@@ -64,7 +64,8 @@ const AboutHero = () => {
           transform: "skewX(-22deg)",
           opacity: 0.85,
         }}
-      />
+      /> */}
+      <Box sx={{ position: "absolute", left: -40, top: 20, width: 90, height: 120, background: "#829b1b", transform: "skewX(-22deg)", opacity: 0.85 }} />
       <Box
         sx={{
           position: "absolute",

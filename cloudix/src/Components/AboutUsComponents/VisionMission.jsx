@@ -99,163 +99,68 @@
 
 // export default VisionMission;
 
-
 import React from "react";
 import { Box, Typography, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import TrackChangesOutlinedIcon from "@mui/icons-material/TrackChangesOutlined";
 import SectionImage from "../SectionImage";
+import { resolveImage } from "../../utils/resolveImage";
 
 const MotionBox = motion(Box);
 
-const VisionMissionCard = ({ item, icon, tagText }) => {
-  const imageSrc = item.image?.startsWith("http")
-    ? item.image
-    : item.image || "";
+const VisionMissionCard = ({ item, icon, tagText }) => (
+  <MotionBox
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    viewport={{ once: true }}
+    sx={{
+      position: "relative",
+      display: "grid",
+      gridTemplateColumns: { xs: "1fr", md: "1.15fr 0.85fr" },
+      gap: { xs: 3, md: 4 },
+      alignItems: "center",
+      p: { xs: 3, md: 4 },
+      border: "1px solid rgba(255,255,255,0.12)",
+      borderRadius: "16px",
+      background: "rgba(11,20,33,0.7)",
+      overflow: "visible", // lets the image break out of the card
+    }}
+  >
+    <Box>
+      <Box sx={{ color: "#829b1b", display: "flex", mb: 1, "& svg": { fontSize: 34 } }}>{icon}</Box>
+      <Typography sx={{ color: "#829b1b", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", mb: 1 }}>
+        {tagText}
+      </Typography>
+      <Typography component="h3" sx={{ color: "#fff", fontWeight: 800, fontSize: { xs: "1.2rem", md: "1.4rem" }, lineHeight: 1.25, mb: 1.5 }}>
+        {item.title}
+      </Typography>
+      <Box sx={{ width: 40, height: 3, backgroundColor: "#829b1b", borderRadius: 2, mb: 2 }} />
+      <Typography sx={{ color: "rgba(255,255,255,0.72)", lineHeight: 1.65, fontSize: "0.85rem" }}>
+        {item.description}
+      </Typography>
+    </Box>
 
-  return (
-    <MotionBox
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      sx={{
-        position: "relative",
-        display: "grid",
-        gridTemplateColumns: { xs: "1fr", md: "1.1fr 0.9fr" },
-        gap: { xs: 3, md: 4 },
-        alignItems: "center",
-        p: { xs: 3, md: 4 },
-        border: "1px solid rgba(255, 255, 255, 0.12)",
-        borderRadius: "16px",
-        background: "rgba(11, 20, 33, 0.7)",
-        overflow: "hidden",
-      }}
-    >
-      {/* Left Text */}
-      <Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
-          <Box sx={{ color: "#829b1b", display: "flex", "& svg": { fontSize: 22 } }}>
-            {icon}
-          </Box>
-          <Typography
-            sx={{
-              color: "#829b1b",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-            }}
-          >
-            {tagText}
-          </Typography>
-        </Box>
-
-        <Typography
-          component="h3"
-          sx={{
-            color: "#fff",
-            fontWeight: 800,
-            fontSize: { xs: "1.3rem", md: "1.6rem" },
-            lineHeight: 1.25,
-            mb: 1.5,
-          }}
-        >
-          {item.title}
-        </Typography>
-
-        <Box
-          sx={{
-            width: 40,
-            height: 3,
-            backgroundColor: "#829b1b",
-            borderRadius: 2,
-            mb: 2,
-          }}
-        />
-
-        <Typography
-          sx={{
-            color: "rgba(255, 255, 255, 0.72)",
-            lineHeight: 1.65,
-            fontSize: "0.88rem",
-          }}
-        >
-          {item.description}
-        </Typography>
+    <Box sx={{ position: "relative", mr: { md: -6 }, my: { md: -2 } }}>
+      <Box sx={{ position: "absolute", right: -14, bottom: -14, width: 70, height: 70, background: "#829b1b", transform: "skewX(-20deg)", opacity: 0.85 }} />
+      <Box sx={{ position: "relative", borderRadius: "12px", overflow: "hidden", border: "1px solid rgba(255,255,255,0.2)" }}>
+        <SectionImage src={resolveImage(item.image)} alt={item.title} accentColor="#829b1b" direction="right" />
       </Box>
-
-      {/* Right Image */}
-      <Box sx={{ position: "relative" }}>
-        <SectionImage
-          src={imageSrc}
-          alt={item.title}
-          accentColor="#829b1b"
-          direction="right"
-        />
-      </Box>
-    </MotionBox>
-  );
-};
+    </Box>
+  </MotionBox>
+);
 
 const VisionMission = ({ vision, mission }) => {
   if (!vision || !mission) return null;
-
   return (
-    <Box
-      component="section"
-      sx={{
-        py: { xs: 8, md: 10 },
-        background: "#07121e",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Decorative Green Skew Corner Accents */}
-      <Box
-        sx={{
-          position: "absolute",
-          left: -40,
-          bottom: -40,
-          width: 120,
-          height: 120,
-          background: "#829b1b",
-          transform: "skewX(-20deg)",
-          opacity: 0.8,
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          right: -40,
-          top: -40,
-          width: 120,
-          height: 120,
-          background: "#829b1b",
-          transform: "skewX(-20deg)",
-          opacity: 0.8,
-        }}
-      />
-
+    <Box component="section" sx={{ py: { xs: 8, md: 10 }, background: "#07121e", position: "relative", overflow: "hidden" }}>
+      <Box sx={{ position: "absolute", left: -40, bottom: -40, width: 120, height: 120, background: "#829b1b", transform: "skewX(-20deg)", opacity: 0.8 }} />
+      <Box sx={{ position: "absolute", right: -40, top: -40, width: 120, height: 120, background: "#829b1b", transform: "skewX(-20deg)", opacity: 0.8 }} />
       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-            gap: 4,
-          }}
-        >
-          <VisionMissionCard
-            item={vision}
-            icon={<VisibilityOutlinedIcon />}
-            tagText="OUR VISION"
-          />
-          <VisionMissionCard
-            item={mission}
-            icon={<TrackChangesOutlinedIcon />}
-            tagText="OUR MISSION"
-          />
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: { xs: 4, md: 8 } }}>
+          <VisionMissionCard item={vision} icon={<VisibilityOutlinedIcon />} tagText="OUR VISION" />
+          <VisionMissionCard item={mission} icon={<TrackChangesOutlinedIcon />} tagText="OUR MISSION" />
         </Box>
       </Container>
     </Box>
