@@ -1536,6 +1536,13 @@ const ClientInfo = ({ t }) => (
   </Box>
 );
 
+// Cloudinary serves the first frame of a video when the extension is .jpg.
+// Used as the poster and as the blurred backdrop. Non-Cloudinary URLs get none.
+const getVideoPoster = (url) =>
+  url && url.includes("/video/upload/")
+    ? url.replace(/\.[a-zA-Z0-9]+(\?.*)?$/, ".jpg")
+    : undefined;
+
 const FeaturedBadge = ({ sx }) => (
   <Box
     sx={{
@@ -1575,9 +1582,33 @@ const TestimonialCard = ({ t, onReadMore }) => {
   if (t.type === "video" && t.video) {
     return (
       <Box sx={cardShellSx}>
-        <Box sx={{ position: "relative", flex: 1, minHeight: 0, bgcolor: "#000" }}>
+        <Box
+          sx={{
+            position: "relative",
+            flex: 1,
+            minHeight: 0,
+            bgcolor: "#07151f",
+            overflow: "hidden",
+          }}
+        >
+          {/* Blurred backdrop fills the horizontal card behind a vertical video */}
+          {getVideoPoster(t.video) && (
+            <Box
+              aria-hidden
+              sx={{
+                position: "absolute",
+                inset: 0,
+                backgroundImage: `url("${getVideoPoster(t.video)}")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(22px) brightness(0.6)",
+                transform: "scale(1.25)",
+              }}
+            />
+          )}
           <video
             src={t.video}
+            poster={getVideoPoster(t.video)}
             controls
             playsInline
             preload="metadata"
@@ -1587,7 +1618,8 @@ const TestimonialCard = ({ t, onReadMore }) => {
               inset: 0,
               width: "100%",
               height: "100%",
-              objectFit: "cover",
+              objectFit: "contain",
+              background: "transparent",
             }}
           />
           {t.isFeatured && (
