@@ -305,7 +305,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServices } from "../../redux/servicesSlice";
 import { Grid, Container, Typography, Box, Skeleton } from "@mui/material";
-import ServiceCard from "../ServiceCard";
+import ServiceCard from "./ServicesShowcase";
 import { useNavigate } from "react-router-dom";
 import GradientButton from "../GradientButton";
 import { motion } from "framer-motion";
