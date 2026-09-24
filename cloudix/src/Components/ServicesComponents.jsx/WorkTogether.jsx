@@ -94,6 +94,7 @@
 import React from "react";
 import { Box, Container, Typography, Button, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import GradientButton from "../GradientButton";
 import WorkTogetherImg from "../../assets/workTogether.png";
 
 const WorkTogether = () => {
@@ -115,13 +116,17 @@ const WorkTogether = () => {
               Ready to bring your ideas to life? Let's create something amazing together.
               Get in touch today and take the first step towards your digital success.
             </Typography>
-            <Button
+            {/* <Button
               variant="contained"
               onClick={() => navigate("/contact")}
               sx={{ bgcolor: "accent.main", color: "primary.dark", borderRadius: 99, px: 3.5, py: 1.2, boxShadow: "none", "&:hover": { bgcolor: "accent.light", boxShadow: "none" } }}
             >
               Contact us today
-            </Button>
+            </Button> */}
+            <GradientButton
+              text="Contact us Today"
+              onClick={() => navigate("/contact")}
+            />
           </Box>
 
           <Box

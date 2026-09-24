@@ -19,6 +19,8 @@ import { Box, Container, Typography, Button, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import HeroImg from "../../assets/services-bg.webp"; // laptop / desk photo from new design
+import GradientButton from "../GradientButton";
+
 
 const ServicesHero = () => {
   const theme = useTheme();
@@ -69,7 +71,7 @@ const ServicesHero = () => {
             From creative campaigns to powerful digital solutions, we help brands build,
             engage and grow in the digital world.
           </Typography>
-          <Button
+          {/* <Button
             variant="contained"
             onClick={() => document.getElementById("what-we-offer")?.scrollIntoView({ behavior: "smooth" })}
             sx={{
@@ -78,7 +80,11 @@ const ServicesHero = () => {
             }}
           >
             Explore our services
-          </Button>
+          </Button> */}
+          <GradientButton
+          text="Explore our services"
+          onClick={() => document.getElementById("what-we-offer")?.scrollIntoView({ behavior: "smooth" })}
+        />
         </Box>
       </Container>
     </Box>

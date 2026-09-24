@@ -80,6 +80,8 @@
 import React from "react";
 import { Box, Typography, Container, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import GradientButton from "../GradientButton";
+
 
 const MissionSection = () => {
   const navigate = useNavigate();
@@ -95,13 +97,17 @@ const MissionSection = () => {
         <Typography variant="h6" sx={{ color: "text.secondary", fontWeight: 400, mb: 4 }}>
           We are ready to boost your business
         </Typography>
-        <Button
+        {/* <Button
           variant="contained"
           onClick={() => navigate("/contact")}
           sx={{ bgcolor: "accent.main", color: "primary.dark", borderRadius: 99, px: 3.5, py: 1.2, boxShadow: "none", "&:hover": { bgcolor: "accent.light", boxShadow: "none" } }}
         >
           Contact us today
-        </Button>
+        </Button> */}
+        <GradientButton
+          text="Contact Us Today"
+          onClick={() => navigate("/contact")}
+        />
       </Container>
     </Box>
   );
