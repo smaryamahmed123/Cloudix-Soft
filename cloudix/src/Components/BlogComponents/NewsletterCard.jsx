@@ -1,68 +1,207 @@
+// import React, { useState } from "react";
+// import axios from "axios";
+// import {
+//   Box,
+//   Typography,
+//   TextField,
+//   Button,
+//   Alert,
+// } from "@mui/material";
+// import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+
+// const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+// const NewsletterCard = () => {
+//   const [email, setEmail] = useState("");
+//   const [loading, setLoading] = useState(false);
+//   const [message, setMessage] = useState({
+//     type: "",
+//     text: "",
+//   });
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     if (!email.trim()) {
+//       setMessage({
+//         type: "warning",
+//         text: "Please enter your email address.",
+//       });
+//       return;
+//     }
+
+//     if (!/^\S+@\S+\.\S+$/.test(email)) {
+//       setMessage({
+//         type: "warning",
+//         text: "Please enter a valid email address.",
+//       });
+//       return;
+//     }
+
+//     try {
+//       setLoading(true);
+//       setMessage({ type: "", text: "" });
+
+//       await axios.post(
+//         `${backendURL}/api/newsletter/subscribe`,
+//         { email: email.trim().toLowerCase() }
+//       );
+
+//       setEmail("");
+
+//       setMessage({
+//         type: "success",
+//         text: "You're subscribed successfully!",
+//       });
+//     } catch (error) {
+//       setMessage({
+//         type:
+//           error.response?.status === 409
+//             ? "info"
+//             : "error",
+//         text:
+//           error.response?.status === 409
+//             ? "This email is already subscribed."
+//             : "Something went wrong. Please try again.",
+//       });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <Box
+//       sx={{
+//         p: { xs: 3, md: 4 },
+//         borderRadius: "20px",
+//         background:
+//           "linear-gradient(135deg, #111E2C 0%, #1d3448 100%)",
+//         color: "#fff",
+//       }}
+//     >
+//       <Box
+//         sx={{
+//           width: 48,
+//           height: 48,
+//           borderRadius: "14px",
+//           display: "flex",
+//           alignItems: "center",
+//           justifyContent: "center",
+//           backgroundColor: "rgba(118,153,20,0.18)",
+//           color: "#BBBF19",
+//           mb: 2,
+//         }}
+//       >
+//         <EmailOutlinedIcon />
+//       </Box>
+
+//       <Typography
+//         variant="h6"
+//         sx={{ fontWeight: 800 }}
+//       >
+//         Stay in the loop
+//       </Typography>
+
+//       <Typography
+//         sx={{
+//           mt: 1,
+//           color: "rgba(255,255,255,0.7)",
+//           fontSize: "0.9rem",
+//           lineHeight: 1.7,
+//         }}
+//       >
+//         Get practical digital marketing, technology, and
+//         business insights directly in your inbox.
+//       </Typography>
+
+//       <Box
+//         component="form"
+//         onSubmit={handleSubmit}
+//         sx={{ mt: 2.5 }}
+//       >
+//         <TextField
+//           fullWidth
+//           size="small"
+//           placeholder="Your email address"
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//           type="email"
+//           sx={{
+//             "& .MuiOutlinedInput-root": {
+//               backgroundColor: "#fff",
+//               borderRadius: "10px",
+//             },
+//           }}
+//         />
+
+//         <Button
+//           type="submit"
+//           fullWidth
+//           disabled={loading}
+//           sx={{
+//             mt: 1.2,
+//             py: 1,
+//             borderRadius: "10px",
+//             backgroundColor: "#769914",
+//             color: "#fff",
+//             fontWeight: 700,
+//             textTransform: "none",
+//             "&:hover": {
+//               backgroundColor: "#5f7d10",
+//             },
+//           }}
+//         >
+//           {loading ? "Subscribing..." : "Subscribe"}
+//         </Button>
+//       </Box>
+
+//       {message.text && (
+//         <Alert
+//           severity={message.type}
+//           sx={{ mt: 2 }}
+//         >
+//           {message.text}
+//         </Alert>
+//       )}
+//     </Box>
+//   );
+// };
+
+// export default NewsletterCard;
+
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Alert,
-} from "@mui/material";
+import { Alert, Box, Button, InputBase, Typography } from "@mui/material";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const NewsletterCard = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({
-    type: "",
-    text: "",
-  });
+  const [message, setMessage] = useState({ type: "", text: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!email.trim()) {
-      setMessage({
-        type: "warning",
-        text: "Please enter your email address.",
-      });
+    if (!/^\S+@\S+\.\S+$/.test(email.trim())) {
+      setMessage({ type: "warning", text: "Please enter a valid email address." });
       return;
     }
-
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      setMessage({
-        type: "warning",
-        text: "Please enter a valid email address.",
-      });
-      return;
-    }
-
     try {
       setLoading(true);
       setMessage({ type: "", text: "" });
-
-      await axios.post(
-        `${backendURL}/api/newsletter/subscribe`,
-        { email: email.trim().toLowerCase() }
-      );
-
-      setEmail("");
-
-      setMessage({
-        type: "success",
-        text: "You're subscribed successfully!",
+      await axios.post(`${backendURL}/api/newsletter/subscribe`, {
+        email: email.trim().toLowerCase(),
       });
+      setEmail("");
+      setMessage({ type: "success", text: "You're subscribed successfully!" });
     } catch (error) {
+      const dup = error.response?.status === 409;
       setMessage({
-        type:
-          error.response?.status === 409
-            ? "info"
-            : "error",
-        text:
-          error.response?.status === 409
-            ? "This email is already subscribed."
-            : "Something went wrong. Please try again.",
+        type: dup ? "info" : "error",
+        text: dup ? "This email is already subscribed." : "Something went wrong. Please try again.",
       });
     } finally {
       setLoading(false);
@@ -70,99 +209,69 @@ const NewsletterCard = () => {
   };
 
   return (
-    <Box
-      sx={{
-        p: { xs: 3, md: 4 },
-        borderRadius: "20px",
-        background:
-          "linear-gradient(135deg, #111E2C 0%, #1d3448 100%)",
-        color: "#fff",
-      }}
-    >
-      <Box
-        sx={{
-          width: 48,
-          height: 48,
-          borderRadius: "14px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "rgba(118,153,20,0.18)",
-          color: "#BBBF19",
-          mb: 2,
-        }}
-      >
-        <EmailOutlinedIcon />
+    <Box sx={{ p: { xs: 3, md: 4 }, borderRadius: "16px", bgcolor: "primary.dark", color: "#fff", height: "100%" }}>
+      <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+        <Box
+          sx={{
+            width: 46, height: 46, borderRadius: "50%", flexShrink: 0,
+            border: "1.5px solid", borderColor: "primary.main", color: "secondary.main",
+            display: "grid", placeItems: "center",
+          }}
+        >
+          <EmailOutlinedIcon />
+        </Box>
+        <Box>
+          <Typography sx={{ color: "secondary.main", fontSize: "0.7rem", fontWeight: 700, letterSpacing: 1 }}>
+            STAY UPDATED
+          </Typography>
+          <Typography component="h3" sx={{ fontWeight: 700, fontSize: { xs: "1.25rem", md: "1.5rem" }, lineHeight: 1.25 }}>
+            Get Our Latest Articles Straight to Your Inbox
+          </Typography>
+        </Box>
       </Box>
 
-      <Typography
-        variant="h6"
-        sx={{ fontWeight: 800 }}
-      >
-        Stay in the loop
-      </Typography>
-
-      <Typography
-        sx={{
-          mt: 1,
-          color: "rgba(255,255,255,0.7)",
-          fontSize: "0.9rem",
-          lineHeight: 1.7,
-        }}
-      >
-        Get practical digital marketing, technology, and
-        business insights directly in your inbox.
+      <Typography sx={{ mt: 2, color: "rgba(255,255,255,0.75)", fontSize: "0.85rem", lineHeight: 1.7 }}>
+        Join the newsletter and never miss a new post. Marketing tips, resources and updates delivered to your email.
       </Typography>
 
       <Box
         component="form"
         onSubmit={handleSubmit}
-        sx={{ mt: 2.5 }}
+        sx={{ mt: 2.5, display: "flex", bgcolor: "#fff", borderRadius: "10px", overflow: "hidden" }}
       >
-        <TextField
+        <InputBase
           fullWidth
-          size="small"
-          placeholder="Your email address"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              backgroundColor: "#fff",
-              borderRadius: "10px",
-            },
-          }}
+          placeholder="Enter your email address"
+          inputProps={{ "aria-label": "Email address" }}
+          sx={{ px: 2, fontSize: "0.85rem" }}
         />
-
         <Button
           type="submit"
-          fullWidth
           disabled={loading}
+          endIcon={<ArrowForwardIcon />}
           sx={{
-            mt: 1.2,
-            py: 1,
-            borderRadius: "10px",
-            backgroundColor: "#769914",
-            color: "#fff",
-            fontWeight: 700,
-            textTransform: "none",
-            "&:hover": {
-              backgroundColor: "#5f7d10",
-            },
+            px: 2.5, borderRadius: 0, bgcolor: "primary.main", color: "#fff",
+            textTransform: "none", fontWeight: 700, whiteSpace: "nowrap",
+            "&:hover": { bgcolor: "#5f7d10" },
           }}
         >
           {loading ? "Subscribing..." : "Subscribe"}
         </Button>
       </Box>
 
-      {message.text && (
-        <Alert
-          severity={message.type}
-          sx={{ mt: 2 }}
-        >
-          {message.text}
-        </Alert>
-      )}
+      <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 2.5, color: "rgba(255,255,255,0.75)", fontSize: "0.72rem" }}>
+        {["No spam", "Unsubscribe anytime", "Free resources"].map((t) => (
+          <Box key={t} sx={{ display: "flex", alignItems: "center", gap: 0.6 }}>
+            <CheckCircleOutlineIcon sx={{ fontSize: 15, color: "primary.main" }} />
+            {t}
+          </Box>
+        ))}
+      </Box>
+
+      {message.text && <Alert severity={message.type} sx={{ mt: 2 }}>{message.text}</Alert>}
     </Box>
   );
 };
