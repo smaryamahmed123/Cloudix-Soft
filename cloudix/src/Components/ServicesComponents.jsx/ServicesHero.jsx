@@ -18,7 +18,7 @@ import React from "react";
 import { Box, Container, Typography, Button, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import HeroImg from "../../assets/services-hero.webp"; // laptop / desk photo from new design
+import HeroImg from "../../assets/services-bg.webp"; // laptop / desk photo from new design
 
 const ServicesHero = () => {
   const theme = useTheme();
