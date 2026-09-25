@@ -458,27 +458,28 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
         <Grid container rowSpacing={{ xs: 2, md: 3 }} columnSpacing={{ xs: 2, md: 3 }} justifyContent="center">
           {loading
             ? [...Array(limit)].map((_, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
-                  <Skeleton variant="rounded" height={280} sx={{ bgcolor: "rgba(255,255,255,0.08)" }} />
-                </Grid>
-              ))
+              <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
+                <Skeleton
+                  variant="rounded"
+                  height={280}
+                  sx={{ bgcolor: "rgba(255,255,255,0.08)" }}
+                />
+              </Grid>
+            ))
             : displayedServices.map((service) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={3}
-                  key={service._id || service.id}
-                  component={motion.div}
-                  variants={cardVariants}
-                >
-                  <ServiceCard
-                    service={service}
-                    variant="regular"
-                    onOpen={() => navigate("/contact")}
-                  />
-                </Grid>
-              ))}
+              <Grid
+                size={{ xs: 12, sm: 6, md: 3 }}
+                key={service._id || service.id}
+                component={motion.div}
+                variants={cardVariants}
+              >
+                <ServiceCard
+                  service={service}
+                  variant="regular"
+                  onOpen={() => navigate("/contact")}
+                />
+              </Grid>
+            ))}
         </Grid>
       </motion.div>
 
