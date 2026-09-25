@@ -131,8 +131,7 @@
 //   );
 // };
 
-// export default LogoDesignSection;
-import React, { useEffect, useState, useCallback } from "react";
+// export default LogoDesignSection;import React, { useEffect, useState, useCallback } from "react";
 import {
   Box, Typography, Grid, Card, CardMedia,
   Container, Skeleton, useTheme, Stack,
@@ -146,14 +145,14 @@ const MotionBox = motion(Box);
 const cardVariants = {
   hidden: { opacity: 0, scale: 0.9, y: 24 },
   visible: { opacity: 1, scale: 1, y: 0 },
-  hover: { scale: 1.04 },
+  hover: { scale: 1.04, y: -6 },
 };
 
 // Skeleton matching the new flatter card proportions (wider than tall)
 const LogoSkeleton = () => (
   <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
     {[...Array(8)].map((_, i) => (
-      <Grid item xs={6} sm={6} md={3} key={i}>
+      <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
         <Skeleton
           variant="rounded"
           height={140}
@@ -190,8 +189,9 @@ const LogoDesignSection = () => {
     <Box id="logos" sx={{ bgcolor: theme.palette.background.subtle, position: "relative", zIndex: 2 }}>
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
 
-        {/* Header: eyebrow + title + subtitle. No "View All" CTA — this section
-            already renders every logo, so there's nowhere for that link to go. */}
+        {/* Header: eyebrow + title + subtitle. No "View All" CTA — this
+            section already renders every logo, so there's nowhere for
+            that link to go. */}
         <Box sx={{ mb: 5 }}>
           <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
             <Box sx={{ width: 24, height: 2, bgcolor: theme.palette.primary.main }} />
@@ -236,7 +236,7 @@ const LogoDesignSection = () => {
         )}
 
         {!loading && !error && (
-          <Grid container spacing={4} justifyContent="center">
+          <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }} justifyContent="center">
             {logos.map((logo, index) => (
               <Grid
                 item xs={12} sm={6} md={4} lg={3}
@@ -250,7 +250,8 @@ const LogoDesignSection = () => {
                   whileInView="visible"
                   whileHover="hover"
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: index * 0.06 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  sx={{ width: "100%" }}
                 >
                   <Card
                     elevation={0}
@@ -266,7 +267,7 @@ const LogoDesignSection = () => {
                       transition: "border-color 0.25s ease, box-shadow 0.25s ease",
                       "&:hover": {
                         borderColor: theme.palette.primary.main,
-                        boxShadow: `0 6px 16px ${theme.palette.primary.dark}1A`,
+                        boxShadow: `0 12px 24px ${theme.palette.primary.dark}26`,
                       },
                     }}
                   >
@@ -275,7 +276,13 @@ const LogoDesignSection = () => {
                       src={logo.image}
                       alt={logo.title || "Logo design"}
                       loading="lazy"
-                      sx={{ maxWidth: "80%", maxHeight: 70, objectFit: "contain" }}
+                      sx={{
+                        maxWidth: "80%",
+                        maxHeight: 70,
+                        objectFit: "contain",
+                        transition: "transform 0.3s ease",
+                        ".MuiCard-root:hover &": { transform: "scale(1.06)" },
+                      }}
                     />
                   </Card>
                 </MotionBox>

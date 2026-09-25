@@ -6,6 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import GradientButton from "../GradientButton";
 
 const ContactCTA = () => {
   const scrollToForm = () => {
@@ -101,29 +102,7 @@ const ContactCTA = () => {
           Let's discuss your goals and find the right
           digital solution for your business.
         </Typography>
-
-        <Button
-          onClick={scrollToForm}
-          variant="contained"
-          endIcon={<ArrowForwardIcon />}
-          sx={{
-            px: 4,
-            py: 1.5,
-            borderRadius: 2,
-            backgroundColor: "#769914",
-            color: "#fff",
-            fontWeight: 700,
-            textTransform: "none",
-            fontSize: "1rem",
-            "&:hover": {
-              backgroundColor: "#8aa91b",
-              transform: "translateY(-2px)",
-            },
-            transition: "all 0.25s ease",
-          }}
-        >
-          Let's Work Together
-        </Button>
+        <GradientButton text="Let's Work Together" onClick={scrollToForm} />
       </Container>
     </Box>
   );
