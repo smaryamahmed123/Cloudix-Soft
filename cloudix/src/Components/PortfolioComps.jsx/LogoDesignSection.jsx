@@ -259,7 +259,8 @@ const LogoDesignSection = () => {
                     elevation={0}
                     sx={{
                       borderRadius: 2,
-                      height: 140,
+                      width: 220,
+                      height: 220,
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
@@ -279,8 +280,8 @@ const LogoDesignSection = () => {
                       alt={logo.title || "Logo design"}
                       loading="lazy"
                       sx={{
-                        maxWidth: "80%",
-                        maxHeight: 70,
+                        maxWidth: 160,
+                        maxHeight: 160,
                         objectFit: "contain",
                         transition: "transform 0.3s ease",
                         ".MuiCard-root:hover &": { transform: "scale(1.06)" },
