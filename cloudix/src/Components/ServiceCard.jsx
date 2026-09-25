@@ -64,16 +64,6 @@ const ServiceCard = ({ service, variant = "regular", onOpen }) => {
         <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.7, mb: 3 }}>
           {service.description}
         </Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            mt: "auto", alignSelf: "flex-start", fontWeight: 600, color: "primary.dark",
-            display: "inline-flex", alignItems: "center", gap: 0.75,
-            borderBottom: `2px solid ${theme.palette.primary.main}`, pb: 0.25,
-          }}
-        >
-          Explore service <ArrowForwardIcon sx={{ fontSize: 16 }} />
-        </Typography>
       </Box>
     </Box>
   );
