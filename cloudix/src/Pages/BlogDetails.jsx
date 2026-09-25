@@ -150,7 +150,7 @@ const BlogDetails = () => {
 
           <Typography
             component="h1"
-            sx={{ mt: 2, fontWeight: 700, lineHeight: 1.15, fontSize: { xs: "2rem", md: "3rem" } }}
+            sx={{ mt: 2, fontWeight: 700, lineHeight: 1.15, fontSize: { xs: "2rem", md: "3rem" }, color: "#fff", }}
           >
             {blog.title}
           </Typography>

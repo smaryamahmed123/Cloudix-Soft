@@ -131,7 +131,9 @@
 //   );
 // };
 
-// export default LogoDesignSection;import React, { useEffect, useState, useCallback } from "react";
+// export default LogoDesignSection;
+
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Box, Typography, Grid, Card, CardMedia,
   Container, Skeleton, useTheme, Stack,

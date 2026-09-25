@@ -42,6 +42,7 @@ const BlogHero = ({ search, setSearch }) => (
             fontWeight: 700,
             lineHeight: 1.1,
             fontSize: { xs: "2.4rem", md: "3.6rem" },
+            color: "#fff",
           }}
         >
           Ideas That Help Your
