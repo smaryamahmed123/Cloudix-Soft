@@ -1,7 +1,113 @@
-import { Box, Typography, Container, useTheme } from "@mui/material";
+// import { Box, Typography, Container, useTheme } from "@mui/material";
+// import GradientButton from "../GradientButton";
+// import { useNavigate } from "react-router-dom";
+// import { motion as Motion } from "framer-motion";
+
+// const PortfolioSection3 = () => {
+//   const navigate = useNavigate();
+//   const theme = useTheme();
+
+//   return (
+//     <Box
+//       component="section"
+//       role="region"
+//       aria-label="Call to action"
+//       sx={{
+//         bgcolor: theme.palette.primary.dark,
+//         color: theme.palette.common.white,
+//         textAlign: "center",
+//         py: { xs: 6, md: 10 },
+//         position: "relative",
+//         overflow: "hidden",
+//         isolation: "isolate",
+//       }}
+//     >
+//       {/* Animated Background Circle */}
+//       <Motion.div
+//         aria-hidden="true"
+//         initial={{ scale: 0.85, opacity: 0 }}
+//         animate={{ scale: [0.85, 1.1, 0.85], opacity: 0.2 }}
+//         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+//         style={{
+//           position: "absolute",
+//           top: "-120px",
+//           right: "-120px",
+//           width: "300px",
+//           height: "300px",
+//           border: `1px solid ${theme.palette.accent.sectionDivider}33`,
+//           borderRadius: "50%",
+//           zIndex: 0,
+//           willChange: "transform, opacity",
+//         }}
+//       />
+
+//       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
+//         {/* Heading */}
+//         <Motion.div
+//           initial={{ opacity: 0, y: 36 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           viewport={{ once: true }}
+//           transition={{ duration: 0.8 }}
+//         >
+//           <Typography
+//             variant="h2"
+//             sx={{
+//               fontWeight: 800,
+//               letterSpacing: "0.5px",
+//               color: theme.palette.common.white,
+//               // ✅ theme responsiveFontSizes handles size automatically
+//             }}
+//           >
+//             We Are Waiting to Hear From You!
+//           </Typography>
+//         </Motion.div>
+
+//         {/* Subheading */}
+//         <Motion.div
+//           initial={{ opacity: 0, y: 36 }}
+//           whileInView={{ opacity: 1, y: 0 }}
+//           viewport={{ once: true }}
+//           transition={{ duration: 0.8, delay: 0.25 }}
+//         >
+//           <Typography
+//             variant="body1"
+//             sx={{
+//               fontWeight: 600,
+//               mt: 2,
+//               mb: 8,
+//               letterSpacing: "0.4px",
+//               color: theme.palette.accent.light,
+//               // ✅ theme responsiveFontSizes handles size automatically
+//             }}
+//           >
+//             Don't beat around the bush. Tell us about your project.
+//           </Typography>
+//         </Motion.div>
+
+//         {/* Button */}
+//         <Motion.div
+//           initial={{ opacity: 0, scale: 0.9 }}
+//           whileInView={{ opacity: 1, scale: 1 }}
+//           viewport={{ once: true }}
+//           transition={{ duration: 0.7, delay: 0.45 }}
+//         >
+//           <GradientButton
+//             text="Contact Us Today!"
+//             onClick={() => navigate("/contact")}
+//             aria-label="Contact us"
+//           />
+//         </Motion.div>
+//       </Container>
+//     </Box>
+//   );
+// };
+
+// export default PortfolioSection3;
+
+import { Box, Typography, Container, Stack, useTheme } from "@mui/material";
 import GradientButton from "../GradientButton";
-import { useNavigate } from "react-router-dom";
 import { motion as Motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const PortfolioSection3 = () => {
   const navigate = useNavigate();
@@ -15,88 +121,92 @@ const PortfolioSection3 = () => {
       sx={{
         bgcolor: theme.palette.primary.dark,
         color: theme.palette.common.white,
-        textAlign: "center",
-        py: { xs: 6, md: 10 },
+        py: { xs: 6, md: 8 },
         position: "relative",
         overflow: "hidden",
         isolation: "isolate",
       }}
     >
-      {/* Animated Background Circle */}
-      <Motion.div
+      {/* Subtle static glow, replacing the old pulsing circle — the new
+          mockup doesn't show an animated shape here */}
+      <Box
         aria-hidden="true"
-        initial={{ scale: 0.85, opacity: 0 }}
-        animate={{ scale: [0.85, 1.1, 0.85], opacity: 0.2 }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        style={{
+        sx={{
           position: "absolute",
-          top: "-120px",
-          right: "-120px",
-          width: "300px",
-          height: "300px",
-          border: `1px solid ${theme.palette.accent.sectionDivider}33`,
+          top: "-140px",
+          right: "-140px",
+          width: 360,
+          height: 360,
           borderRadius: "50%",
+          background: `radial-gradient(circle, ${theme.palette.accent.sectionDivider}22 0%, transparent 70%)`,
           zIndex: 0,
-          willChange: "transform, opacity",
         }}
       />
 
       <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
-        {/* Heading */}
-        <Motion.div
-          initial={{ opacity: 0, y: 36 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", md: "center" }}
+          spacing={{ xs: 4, md: 3 }}
         >
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: 800,
-              letterSpacing: "0.5px",
-              color: theme.palette.common.white,
-              // ✅ theme responsiveFontSizes handles size automatically
-            }}
+          <Motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
-            We Are Waiting to Hear From You!
-          </Typography>
-        </Motion.div>
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
+              <Box sx={{ width: 24, height: 2, bgcolor: theme.palette.accent.light }} />
+              <Typography
+                variant="overline"
+                sx={{
+                  color: theme.palette.accent.light,
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                }}
+              >
+                LET'S WORK TOGETHER
+              </Typography>
+            </Stack>
 
-        {/* Subheading */}
-        <Motion.div
-          initial={{ opacity: 0, y: 36 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.25 }}
-        >
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 600,
-              mt: 2,
-              mb: 8,
-              letterSpacing: "0.4px",
-              color: theme.palette.accent.light,
-              // ✅ theme responsiveFontSizes handles size automatically
-            }}
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                color: theme.palette.common.white,
+                mb: 1.5,
+              }}
+            >
+              We Are Waiting to Hear From You!
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                color: theme.palette.text.secondary,
+                maxWidth: 480,
+              }}
+            >
+              Have a project in mind? Let's talk. We'd love to help you turn
+              your ideas into reality.
+            </Typography>
+          </Motion.div>
+
+          <Motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ flexShrink: 0 }}
           >
-            Don't beat around the bush. Tell us about your project.
-          </Typography>
-        </Motion.div>
-
-        {/* Button */}
-        <Motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.45 }}
-        >
-          <GradientButton
-            text="Contact Us Today!"
-            onClick={() => navigate("/contact")}
-            aria-label="Contact us"
-          />
-        </Motion.div>
+            <GradientButton
+              text="Send a Message"
+              onClick={() => navigate("/contact")}
+              aria-label="Send a message"
+            />
+          </Motion.div>
+        </Stack>
       </Container>
     </Box>
   );
