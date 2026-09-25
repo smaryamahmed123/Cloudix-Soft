@@ -236,9 +236,14 @@ const LogoDesignSection = () => {
         )}
 
         {!loading && !error && (
-          <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
+          <Grid container spacing={4} justifyContent="center">
             {logos.map((logo, index) => (
-              <Grid item xs={6} sm={6} md={3} key={logo._id || index}>
+              <Grid
+                item xs={12} sm={6} md={4} lg={3}
+                key={logo._id || index}
+                display="flex"
+                justifyContent="center"
+              >
                 <MotionBox
                   variants={cardVariants}
                   initial="hidden"
