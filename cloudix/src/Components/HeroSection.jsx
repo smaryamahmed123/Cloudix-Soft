@@ -35,7 +35,7 @@ const HeroSection = ({
   onButtonClick,
   maxContentWidth = 520,
   decorations,      // optional page-specific decorative shapes, ReactNode(s).
-                     // Rendered inside the hero's own clipped container so
+  children,                   // Rendered inside the hero's own clipped container so
                      // they can't overflow it, same as the built-in lime accent.
 }) => {
   const theme = useTheme();
@@ -199,6 +199,7 @@ const HeroSection = ({
               <GradientButton text={buttonText} onClick={onButtonClick} />
             </MotionBox>
           )}
+          {children}
         </Box>
       </Container>
     </MotionBox>
