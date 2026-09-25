@@ -123,7 +123,6 @@
 //   );
 // }
 
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -135,7 +134,6 @@ import {
   alpha,
 } from "@mui/material";
 import axios from "axios";
-import { Eyebrow } from "./SectionEyebrow";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -181,7 +179,36 @@ export default function OurClients() {
     >
       <Container maxWidth="lg">
         <Box sx={{ textAlign: "center", mb: { xs: 4, md: 5 } }}>
-          <Eyebrow center>Trusted By</Eyebrow>
+          {/* ================= EYEBROW (inline) ================= */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1.5,
+              mb: 1.5,
+            }}
+          >
+            <Box
+              sx={{
+                width: { xs: 28, md: 38 },
+                height: 2,
+                borderRadius: 5,
+                bgcolor: theme.palette.primary.main,
+              }}
+            />
+            <Typography
+              sx={{
+                color: theme.palette.primary.main,
+                fontWeight: 700,
+                fontSize: { xs: "11px", md: "13px" },
+                letterSpacing: 1.8,
+                textTransform: "uppercase",
+              }}
+            >
+              Trusted By
+            </Typography>
+          </Box>
 
           <Typography
             id="our-clients-heading"
