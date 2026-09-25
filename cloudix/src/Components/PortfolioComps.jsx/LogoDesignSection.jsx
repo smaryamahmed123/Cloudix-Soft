@@ -132,8 +132,6 @@
 // };
 
 // export default LogoDesignSection;
-
-
 import React, { useEffect, useState, useCallback } from "react";
 import {
   Box, Typography, Grid, Card, CardMedia,
@@ -141,7 +139,6 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { motion } from "framer-motion";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 const MotionBox = motion(Box);
@@ -154,7 +151,7 @@ const cardVariants = {
 
 // Skeleton matching the new flatter card proportions (wider than tall)
 const LogoSkeleton = () => (
-  <Grid container spacing={3}>
+  <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
     {[...Array(8)].map((_, i) => (
       <Grid item xs={6} sm={6} md={3} key={i}>
         <Skeleton
@@ -193,69 +190,42 @@ const LogoDesignSection = () => {
     <Box id="logos" sx={{ bgcolor: theme.palette.background.subtle, position: "relative", zIndex: 2 }}>
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
 
-        {/* Header row: eyebrow + title on the left, "View All" link on the right */}
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "flex-start", sm: "flex-end" }}
-          spacing={2}
-          sx={{ mb: 5 }}
-        >
-          <Box>
-            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
-              <Box sx={{ width: 24, height: 2, bgcolor: theme.palette.primary.main }} />
-              <Typography
-                variant="overline"
-                sx={{
-                  color: theme.palette.primary.main,
-                  fontWeight: 600,
-                  letterSpacing: "0.08em",
-                }}
-              >
-                LOGO DESIGN
-              </Typography>
-            </Stack>
-
+        {/* Header: eyebrow + title + subtitle. No "View All" CTA — this section
+            already renders every logo, so there's nowhere for that link to go. */}
+        <Box sx={{ mb: 5 }}>
+          <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
+            <Box sx={{ width: 24, height: 2, bgcolor: theme.palette.primary.main }} />
             <Typography
-              variant="h3"
+              variant="overline"
               sx={{
-                fontWeight: 700,
-                color: theme.palette.primary.dark,
-                mb: 1,
+                color: theme.palette.primary.main,
+                fontWeight: 600,
+                letterSpacing: "0.08em",
               }}
             >
-              Logos That Build Brands
+              LOGO DESIGN
             </Typography>
+          </Stack>
 
-            <Typography
-              variant="body1"
-              sx={{ color: theme.palette.text.secondary, maxWidth: 480 }}
-            >
-              Clean, memorable and meaningful logos designed to make your
-              brand stand out.
-            </Typography>
-          </Box>
-
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={0.5}
-            component="a"
-            href="#"
+          <Typography
+            variant="h3"
             sx={{
-              color: theme.palette.primary.main,
-              fontWeight: 600,
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-              "&:hover": { textDecoration: "underline" },
+              fontWeight: 700,
+              color: theme.palette.primary.dark,
+              mb: 1,
             }}
           >
-            <Typography component="span" sx={{ fontWeight: 600 }}>
-              View All Logos
-            </Typography>
-            <ArrowForwardIcon sx={{ fontSize: 18 }} />
-          </Stack>
-        </Stack>
+            Logos That Build Brands
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{ color: theme.palette.text.secondary, maxWidth: 480 }}
+          >
+            Clean, memorable and meaningful logos designed to make your
+            brand stand out.
+          </Typography>
+        </Box>
 
         {loading && <LogoSkeleton />}
 
@@ -266,7 +236,7 @@ const LogoDesignSection = () => {
         )}
 
         {!loading && !error && (
-          <Grid container spacing={3}>
+          <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
             {logos.map((logo, index) => (
               <Grid item xs={6} sm={6} md={3} key={logo._id || index}>
                 <MotionBox
