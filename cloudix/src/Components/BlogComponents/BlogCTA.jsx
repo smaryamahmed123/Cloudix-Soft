@@ -5,6 +5,7 @@ import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
 import ScheduleOutlinedIcon from "@mui/icons-material/ScheduleOutlined";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import GradientButton from "../GradientButton";
 import { useNavigate } from "react-router-dom";
 
 const features = [
@@ -40,16 +41,11 @@ const BlogCTA = () => {
             <Typography sx={{ mt: 2, maxWidth: 460, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, fontSize: "0.92rem" }}>
               Whether you need a website, a brand, or a complete digital strategy, we're here to help you grow.
             </Typography>
-            <Button
-              onClick={() => navigate("/contact")}
-              endIcon={<ArrowForwardIcon />}
-              sx={{
-                mt: 3, px: 3.5, py: 1.1, borderRadius: "10px", bgcolor: "primary.main", color: "#fff",
-                textTransform: "none", fontWeight: 700, "&:hover": { bgcolor: "#5f7d10" },
-              }}
-            >
-              Get Started
-            </Button>
+            
+                        <GradientButton
+                          text="Get Started"
+                          onClick={() => navigate("/contact")}
+                        />
           </Box>
 
           <Box sx={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 3 }}>

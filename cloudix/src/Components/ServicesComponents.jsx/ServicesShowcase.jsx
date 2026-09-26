@@ -55,7 +55,7 @@ const ServicesShowcase = () => {
                   <ServiceCard
                     service={service}
                     variant={variantFor(i, visible.length)}
-                    onOpen={() => navigate("/contact")}
+                    // onOpen={() => navigate("/contact")}
                   />
                 </Box>
               ))}
