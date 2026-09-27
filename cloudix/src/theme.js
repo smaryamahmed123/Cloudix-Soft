@@ -22,7 +22,7 @@ let theme = createTheme({
     secondary: { main: "#BBBF19" },
     accent: { main: "#D4E157", light: "#A9B838", sectionDivider: "#A9B838" },
     background: { default: "#FFFFFF", paper: "#FFFFFF", subtle: "#F7F9FB" },
-    text: { primary: "#373C3F", secondary: "#7A7A7A" },
+    text: { primary: "#373C3F", secondary: "#FFFFFF" },
   },
   typography: {
     fontFamily: `"Poppins", sans-serif`,

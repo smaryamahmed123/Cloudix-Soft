@@ -101,111 +101,111 @@ const Footer = () => {
           py: 6,
         }}
       >
-        <Container maxWidth="lg">   
-        <Grid container spacing={6} justifyContent="space-between">
+        <Container maxWidth="lg">
+          <Grid container spacing={6} justifyContent="space-between">
 
-          {/* About */}
-          <MotionGrid
-            size={{ xs: 12, md: 3 }}
-            variants={fadeUp}
-            custom={1}
-          >
-            <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-              <Logo src={WhiteLogo} size={60} />
-            </Box>
+            {/* About */}
+            <MotionGrid
+              size={{ xs: 12, md: 3 }}
+              variants={fadeUp}
+              custom={1}
+            >
+              <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+                <Logo src={WhiteLogo} size={60} />
+              </Box>
 
-            <Typography
-              variant="body2"
+              <Typography
+                variant="body2"
+                sx={{
+                  mt: 2,
+                  lineHeight: 1.6,
+                  maxWidth: 300,
+                  mx: { xs: "auto", md: 0 },
+                  textAlign: "justify",
+                }}
+              >
+                {info.description}
+              </Typography>
+
+              <Box sx={{ display: { xs: "none", md: "flex" }, mt: 2 }}>
+                <SocialIcons circle={false} size="medium" />
+              </Box>
+            </MotionGrid>
+
+            {/* Links */}
+            <MotionGrid
+              size={{ xs: 12, md: 4 }}
+              variants={fadeUp}
+              custom={2}
               sx={{
-                mt: 2,
-                lineHeight: 1.6,
-                maxWidth: 300,
-                mx: { xs: "auto", md: 0 },
-                textAlign: "justify",
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                justifyContent: "space-between",
+                gap: { xs: 3, md: 8 },
               }}
             >
-              {info.description}
+              <Box component="nav">
+                <Typography variant="h6" sx={footerTitleStyle}>Quick Links</Typography>
+                <Link component={RouterLink} to="/" sx={footerItemStyle}>Home</Link>
+                <Link component={RouterLink} to="/services" sx={footerItemStyle}>Services</Link>
+                <Link component={RouterLink} to="/blogs" sx={footerItemStyle}>Blogs</Link>
+                <Link component={RouterLink} to="/portfolio" sx={footerItemStyle}>Portfolio</Link>
+                <Link component={RouterLink} to="/contact" sx={footerItemStyle}>Contact</Link>
+              </Box>
+
+              <Box component="nav">
+                <Typography variant="h6" sx={footerTitleStyle}>About Us</Typography>
+                <Link component={RouterLink} to="/about" sx={footerItemStyle}>About Us</Link>
+                <Link component={RouterLink} to="/privacy-policy" sx={footerItemStyle}>
+                  Privacy Policy
+                </Link>
+              </Box>
+            </MotionGrid>
+
+            {/* Contact */}
+            <MotionGrid
+              size={{ xs: 12, md: 4 }}
+              variants={fadeUp}
+              custom={3}
+            >
+              <Typography variant="h6" sx={footerTitleStyle}>Contact Us</Typography>
+
+              <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1.5 }}>
+                <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+                  <Phone sx={{ color: "#769914", mr: 1 }} fontSize="small" />
+                  <Link href={`tel:${info.phone}`} sx={footerItemStyle}>
+                    {info.phone}
+                  </Link>
+                </Box>
+
+                <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+                  <Email sx={{ color: "#769914", mr: 1 }} fontSize="small" />
+                  <Link href={`mailto:${info.email}`} sx={footerItemStyle}>
+                    {info.email}
+                  </Link>
+                </Box>
+
+                <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+                  <LocationOn sx={{ color: "#769914", mr: 1 }} fontSize="small" />
+                  <Typography sx={{ ...footerItemStyle, lineHeight: 1.5 }}>
+                    {info.address}
+                  </Typography>
+                </Box>
+              </Box>
+            </MotionGrid>
+          </Grid>
+
+          {/* Bottom */}
+          <MotionBox variants={fadeUp} custom={4} sx={{ mt: 6, pt: 3, borderTop: "1px solid #333" }}>
+            <Box sx={{ display: { xs: "flex", md: "none" }, justifyContent: "center", mb: 2 }}>
+              <SocialIcons circle={false} size="small" />
+            </Box>
+
+            <Typography variant="caption" display="block" align="center">
+              © {new Date().getFullYear()} Cloudix Soft. All rights reserved.
             </Typography>
-
-            <Box sx={{ display: { xs: "none", md: "flex" }, mt: 2 }}>
-              <SocialIcons circle={false} size="medium" />
-            </Box>
-          </MotionGrid>
-
-          {/* Links */}
-          <MotionGrid
-            size={{ xs: 12, md: 4 }}
-            variants={fadeUp}
-            custom={2}
-            sx={{
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-              justifyContent: "space-between",
-              gap: { xs: 3, md: 8 },
-            }}
-          >
-            <Box component="nav">
-              <Typography variant="h6" sx={footerTitleStyle}>Quick Links</Typography>
-              <Link component={RouterLink} to="/" sx={footerItemStyle}>Home</Link>
-              <Link component={RouterLink} to="/services" sx={footerItemStyle}>Services</Link>
-              <Link component={RouterLink} to="/blogs" sx={footerItemStyle}>Blogs</Link>
-              <Link component={RouterLink} to="/portfolio" sx={footerItemStyle}>Portfolio</Link>
-              <Link component={RouterLink} to="/contact" sx={footerItemStyle}>Contact</Link>
-            </Box>
-
-            <Box component="nav">
-              <Typography variant="h6" sx={footerTitleStyle}>About Us</Typography>
-              <Link component={RouterLink} to="/about" sx={footerItemStyle}>About Us</Link>
-              <Link component={RouterLink} to="/privacy-policy" sx={footerItemStyle}>
-                Privacy Policy
-              </Link>
-            </Box>
-          </MotionGrid>
-
-          {/* Contact */}
-          <MotionGrid
-            size={{ xs: 12, md: 4 }}
-            variants={fadeUp}
-            custom={3}
-          >
-            <Typography variant="h6" sx={footerTitleStyle}>Contact Us</Typography>
-
-            <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1.5 }}>
-              <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                <Phone sx={{ color: "#769914", mr: 1 }} fontSize="small" />
-                <Link href={`tel:${info.phone}`} sx={footerItemStyle}>
-                  {info.phone}
-                </Link>
-              </Box>
-
-              <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                <Email sx={{ color: "#769914", mr: 1 }} fontSize="small" />
-                <Link href={`mailto:${info.email}`} sx={footerItemStyle}>
-                  {info.email}
-                </Link>
-              </Box>
-
-              <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                <LocationOn sx={{ color: "#769914", mr: 1 }} fontSize="small" />
-                <Typography sx={{ ...footerItemStyle, lineHeight: 1.5 }}>
-                  {info.address}
-                </Typography>
-              </Box>
-            </Box>
-          </MotionGrid>
-        </Grid>
-
-        {/* Bottom */}
-        <MotionBox variants={fadeUp} custom={4} sx={{ mt: 6, pt: 3, borderTop: "1px solid #333" }}>
-          <Box sx={{ display: { xs: "flex", md: "none" }, justifyContent: "center", mb: 2 }}>
-            <SocialIcons circle={false} size="small" />
-          </Box>
-
-          <Typography variant="caption" display="block" align="center">
-            © {new Date().getFullYear()} Cloudix Soft. All rights reserved.
-          </Typography>
-        </MotionBox>
-          </Container> 
+          </MotionBox>
+        </Container>
       </Box>
     </MotionBox>
   );
