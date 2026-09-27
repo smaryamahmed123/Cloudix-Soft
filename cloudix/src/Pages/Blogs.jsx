@@ -93,6 +93,21 @@ const BlogPage = () => {
         />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://cloudixsoft.com/blogs" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            name: "Cloudix Soft Blog",
+            url: "https://cloudixsoft.com/blogs",
+            ...(blogs.length > 0 && {
+              blogPost: blogs.slice(0, 10).map((b) => ({
+                "@type": "BlogPosting",
+                headline: b.title,
+                url: `https://cloudixsoft.com/blogs/${b.slug || b._id}`,
+              })),
+            }),
+          })}
+        </script>
       </Helmet>
 
       <BlogHero

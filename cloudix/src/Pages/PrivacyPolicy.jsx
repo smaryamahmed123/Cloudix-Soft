@@ -115,6 +115,14 @@ const PrivacyPolicyUser = () => {
           rel="canonical"
           href="https://cloudixsoft.com/privacy-policy"
         />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Privacy Policy | Cloudix Soft",
+            url: "https://cloudixsoft.com/privacy-policy",
+          })}
+        </script>
       </Helmet>
 
       {/* =========================================================

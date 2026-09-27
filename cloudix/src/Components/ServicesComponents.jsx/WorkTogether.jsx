@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Container, Typography, Button, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import GradientButton from "../GradientButton";
-import WorkTogetherImg from "../../assets/workTogether.png";
+import WorkTogetherImg from "../../assets/workTogether.webp";
 
 const WorkTogether = () => {
   const theme = useTheme();

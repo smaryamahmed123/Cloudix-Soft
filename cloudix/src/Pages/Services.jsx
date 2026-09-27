@@ -22,6 +22,16 @@ const Services = () => (
         content="Custom web development, mobile apps, e-commerce, and digital marketing services."
       />
       <link rel="canonical" href="https://cloudixsoft.com/services" />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Cloudix Soft Services",
+          url: "https://cloudixsoft.com/services",
+          description:
+            "Custom web development, mobile app development, e-commerce solutions, and digital marketing services offered by Cloudix Soft.",
+        })}
+      </script>
     </Helmet>
 
     <ServicesHero />

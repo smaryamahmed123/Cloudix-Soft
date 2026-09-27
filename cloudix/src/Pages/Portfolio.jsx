@@ -49,6 +49,16 @@ export default function MarketingAgencyPortfolio() {
           content="Real-world digital solutions: website development, branding, and graphic design showcase."
         />
         <link rel="canonical" href="https://cloudixsoft.com/portfolio" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Cloudix Soft Portfolio",
+            url: "https://cloudixsoft.com/portfolio",
+            description:
+              "A showcase of Cloudix Soft's web design, e-commerce, branding, and graphic design work.",
+          })}
+        </script>
       </Helmet>
 
       <PortfolioHero />
