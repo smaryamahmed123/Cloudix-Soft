@@ -162,7 +162,7 @@ function HeroSection() {
         <>
           <DiagonalStrip
             texts={["Development", "Branding", "Animation", "E-Commerce", "Editing"]}
-            bgColor={theme.palette.accent.main}
+            bgColor={theme.palette.secondary.main}
             borderColor={theme.palette.primary.dark}
             textColor={theme.palette.primary.dark}
             angle={40}

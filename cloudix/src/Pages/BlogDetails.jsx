@@ -130,6 +130,23 @@ const BlogDetails = () => {
         <meta property="og:description" content={seoDescription} />
         <meta property="og:type" content="article" />
         {cover && <meta property="og:image" content={cover} />}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: seoTitle,
+            description: seoDescription,
+            image: cover || "https://cloudixsoft.com/og-image.jpg",
+            author: { "@type": "Person", name: blog.author || "Cloudix Team" },
+            publisher: {
+              "@type": "Organization",
+              name: "Cloudix Soft",
+              logo: { "@type": "ImageObject", url: "https://cloudixsoft.com/logo.png" },
+            },
+            datePublished: blog.createdAt,
+            mainEntityOfPage: `https://cloudixsoft.com/blogs/${blog.slug || slug}`,
+          })}
+        </script>
       </Helmet>
 
       {/* Header */}
