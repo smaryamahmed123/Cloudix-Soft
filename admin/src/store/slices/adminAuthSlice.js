@@ -6,7 +6,7 @@ export const loginAdmin = createAsyncThunk(
   'adminAuth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('http://localhost:8000/api/auth/login', credentials);
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, credentials)
       localStorage.setItem('token', data.token);
       return data;
     } catch (err) {
