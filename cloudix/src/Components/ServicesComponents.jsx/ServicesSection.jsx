@@ -72,7 +72,7 @@ const ServicesSection = ({ limit = 4, sx = {} }) => {
                 <ServiceCard
                   service={service}
                   variant="regular"
-                  onOpen={() => navigate("/contact")}
+                  onOpen={() => navigate("/services")}
                 />
               </Grid>
             ))}

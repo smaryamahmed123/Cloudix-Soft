@@ -1,79 +1,58 @@
-// frontend/src/Admin/Dashboard.jsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
 import {
   Box,
   Grid,
-  Paper,
-  Typography,
-  Stack,
-  Divider,
   CircularProgress,
+  Stack,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
+
 import {
   Article as ArticleIcon,
   Message as MessageIcon,
   Work as WorkIcon,
-  Widgets as WidgetsIcon,
+  Visibility as VisibilityIcon,
 } from "@mui/icons-material";
-import { BarChart, LineChart } from "@mui/x-charts";
-import { useTheme } from "@mui/material/styles";
-import { useNavigate } from 'react-router-dom';
-// ===== Backend URLs =====
-const backendURL = import.meta.env.VITE_BACKEND_URL;
-const LOGOS_URL = `${backendURL}/api/logos`; 
-const SERVICES_URL = `${backendURL}/api/services`;
-const ADMIN_BLOG_URL = `${backendURL}/api/blogs`;
-const ADMIN_CONTACT_MSG_URL = `${backendURL}/api/contact`;
-const ABOUT_BASE_URL = `${backendURL}/api/about`;
-// ===== Reusable Stat Card =====
-const StatCard = ({ title, value, icon, bg, color, to, navigate }) => (
-  <Paper
-    elevation={3}
-    onClick={() => to && navigate(to)}
-    sx={{
-      p: 3,
-      borderRadius: 2,
-      minHeight: 110,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      transition: "transform 0.2s ease",
-      cursor: to ? "pointer" : "default",
-      "&:hover": { transform: to ? "translateY(-4px)" : "none" },
-    }}
-  >
-    <Stack direction="row" alignItems="center" justifyContent="space-between">
-      <Box>
-        <Typography variant="subtitle2" sx={{ color: "#2C3E50", fontWeight: 700 }}>
-          {title}
-        </Typography>
-        <Typography variant="h5" sx={{ color: "#2C3E50", fontWeight: 800 }}>
-          {value}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          width: 56,
-          height: 56,
-          borderRadius: 2,
-          display: "grid",
-          placeItems: "center",
-          background: bg,
-          color,
-        }}
-      >
-        {icon}
-      </Box>
-    </Stack>
-  </Paper>
-);
 
+import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+
+// Dashboard Components
+import DashboardHeader from "../components/Dashboard/DashboardHeader";
+import DashboardStatCard from "../components/Dashboard/DashboardStatCard";
+import DashboardCharts from "../components/Dashboard/DashboardCharts";
+import RecentActivity from "../components/Dashboard/RecentActivity";
+
+// ======================================================
+// BACKEND URLS
+// ======================================================
+
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+const LOGOS_URL = `${backendURL} /api/logos`;
+const SERVICES_URL = `${backendURL} /api/services`;
+const ADMIN_BLOG_URL = `${backendURL} /api/blogs`;
+const ADMIN_CONTACT_MSG_URL = `${backendURL} /api/contact`;
+const ABOUT_BASE_URL = `${backendURL} /api/about`;
+
+// ======================================================
+// DASHBOARD
+// ======================================================
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+
+  const isMobile = useMediaQuery(
+    theme.breakpoints.down("sm")
+  );
+
   const [loading, setLoading] = useState(true);
+
   const [counts, setCounts] = useState({
     services: 0,
     blogs: 0,
@@ -81,22 +60,32 @@ const Dashboard = () => {
     messages: 0,
     visits: 0,
   });
+
   const [recentBlogs, setRecentBlogs] = useState([]);
   const [recentMessages, setRecentMessages] = useState([]);
+
   const [chartData, setChartData] = useState({
     months: [],
     lineData: [],
     barData: [],
   });
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  // ======================================================
+  // FETCH DASHBOARD DATA
+  // ======================================================
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
-        const [services, blogs, messages, logos, about] = await Promise.allSettled([
+
+        const [
+          services,
+          blogs,
+          messages,
+          logos,
+          about,
+        ] = await Promise.allSettled([
           axios.get(SERVICES_URL),
           axios.get(ADMIN_BLOG_URL),
           axios.get(ADMIN_CONTACT_MSG_URL),
@@ -104,52 +93,155 @@ const Dashboard = () => {
           axios.get(ABOUT_BASE_URL),
         ]);
 
-        const servicesCount = services.value?.data?.length || 0;
-        const blogsData = blogs.value?.data || [];
-        const msgsData = messages.value?.data || [];
-        const logosCount = logos.value?.data?.length || 0;
-        let visitsCount = about.value?.data?.analytics?.visits || 0;
+        // -----------------------------------------------
+        // DATA
+        // -----------------------------------------------
 
-        // fallback if analytics not available
+        const servicesData =
+          services.status === "fulfilled"
+            ? services.value?.data || []
+            : [];
+
+        const blogsData =
+          blogs.status === "fulfilled"
+            ? blogs.value?.data || []
+            : [];
+
+        const messagesData =
+          messages.status === "fulfilled"
+            ? messages.value?.data || []
+            : [];
+
+        const logosData =
+          logos.status === "fulfilled"
+            ? logos.value?.data || []
+            : [];
+
+        const aboutData =
+          about.status === "fulfilled"
+            ? about.value?.data || {}
+            : {};
+
+        // -----------------------------------------------
+        // VISITS
+        // -----------------------------------------------
+
+        let visitsCount =
+          aboutData?.analytics?.visits || 0;
+
+        // Fallback
         if (!visitsCount) {
-          visitsCount = blogsData.reduce((acc, b) => acc + (b.views || 0), 0);
+          visitsCount = blogsData.reduce(
+            (total, blog) =>
+              total + (blog.views || 0),
+            0
+          );
         }
 
+        // -----------------------------------------------
+        // COUNTS
+        // -----------------------------------------------
+
         setCounts({
-          services: servicesCount,
+          services: servicesData.length,
           blogs: blogsData.length,
-          portfolio: logosCount,
-          messages: msgsData.length,
+          portfolio: logosData.length,
+          messages: messagesData.length,
           visits: visitsCount,
         });
 
-        // ===== Prepare Monthly Data =====
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        // ==================================================
+        // MONTHLY CHART DATA
+        // ==================================================
 
-        const getMonthlyCounts = (items = [], dateField = "createdAt") => {
-          const counts = new Array(12).fill(0);
-          items.forEach((it) => {
-            const d = new Date(it[dateField] || it.date);
-            if (!isNaN(d)) counts[d.getMonth()]++;
+        const months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ];
+
+        const getMonthlyCounts = (
+          items = [],
+          dateField = "createdAt"
+        ) => {
+          const monthlyCounts =
+            new Array(12).fill(0);
+
+          items.forEach((item) => {
+            const rawDate =
+              item?.[dateField] ||
+              item?.date;
+
+            if (!rawDate) return;
+
+            const date = new Date(rawDate);
+
+            if (!isNaN(date.getTime())) {
+              monthlyCounts[
+                date.getMonth()
+              ]++;
+            }
           });
-          return counts;
+
+          return monthlyCounts;
         };
 
         setChartData({
           months,
-          lineData: getMonthlyCounts(blogsData),
-          barData: getMonthlyCounts(msgsData),
+          lineData:
+            getMonthlyCounts(blogsData),
+          barData:
+            getMonthlyCounts(messagesData),
         });
 
-        // ===== Recent Activity =====
-        setRecentBlogs(
-          blogsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5)
-        );
-        setRecentMessages(
-          msgsData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5)
-        );
+        // ==================================================
+        // RECENT BLOGS
+        // ==================================================
+
+        const sortedBlogs = [...blogsData]
+          .sort(
+            (a, b) =>
+              new Date(
+                b.createdAt || b.date
+              ) -
+              new Date(
+                a.createdAt || a.date
+              )
+          )
+          .slice(0, 5);
+
+        // ==================================================
+        // RECENT MESSAGES
+        // ==================================================
+
+        const sortedMessages = [...messagesData]
+          .sort(
+            (a, b) =>
+              new Date(
+                b.createdAt || b.date
+              ) -
+              new Date(
+                a.createdAt || a.date
+              )
+          )
+          .slice(0, 5);
+
+        setRecentBlogs(sortedBlogs);
+        setRecentMessages(sortedMessages);
       } catch (error) {
-        console.error("Dashboard error:", error);
+        console.error(
+          "Dashboard error:",
+          error
+        );
       } finally {
         setLoading(false);
       }
@@ -158,162 +250,175 @@ const Dashboard = () => {
     fetchDashboardData();
   }, []);
 
+  // ======================================================
+  // LOADING
+  // ======================================================
+
   if (loading) {
     return (
-      <Box sx={{ display: "grid", placeItems: "center", minHeight: "60vh" }}>
-        <CircularProgress />
+      <Box
+        sx={{
+          minHeight: "80vh",
+          display: "grid",
+          placeItems: "center",
+          backgroundColor: "#F5F7F9",
+        }}
+      >
+        <Stack
+          alignItems="center"
+          spacing={2}
+        >
+          <CircularProgress
+            size={38}
+            thickness={4}
+            sx={{
+              color: "#18BC9C",
+            }}
+          />
+
+          <Typography
+            sx={{
+              color: "#7A8793",
+              fontSize: "13px",
+              fontWeight: 600,
+            }}
+          >
+            Loading dashboard...
+          </Typography>
+        </Stack>
       </Box>
     );
   }
 
-  return (
-    <Box sx={{ background: "#ECF0F1", minHeight: "100vh", p: { xs: 2, md: 4 } }}>
-      <Typography variant={isMobile ? "h5" : "h4"} sx={{ color: "#2C3E50", fontWeight: 800, mb: 3 }}>
-        Admin Dashboard
-      </Typography>
+  // ======================================================
+  // PAGE
+  // ======================================================
 
-      {/* ===== Stats Section ===== */}
-      {/* <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard title="Total Visits" value={counts.visits} icon={<WidgetsIcon />} bg="#2C3E50" color="#fff" />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard title="Services" value={counts.services} icon={<WorkIcon />} bg="#18BC9C" color="#fff" />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard title="Blog Posts" value={counts.blogs} icon={<ArticleIcon />} bg="#E74C3C" color="#fff" />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard title="Messages" value={counts.messages} icon={<MessageIcon />} bg="#2C3E50" color="#fff" />
-        </Grid>
-      </Grid> */}
-       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+  return (
+    <Box
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "#F5F7F9",
+        p: {
+          xs: 2,
+          sm: 2.5,
+          md: 3.5,
+          lg: 4,
+        },
+      }}
+    >
+      {/* HEADER */}
+
+      <DashboardHeader />
+
+      {/* ==================================================
+          STAT CARDS
+      ================================================== */}
+
+      <Grid
+        container
+        spacing={2.2}
+        sx={{ mb: 3 }}
+      >
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          lg={3}
+        >
+          <DashboardStatCard
             title="Total Visits"
             value={counts.visits}
-            icon={<WidgetsIcon />}
-            bg="#2C3E50"
-            color="#fff"
+            icon={
+              <VisibilityIcon />
+            }
+            iconBg="#EAF3FC"
+            iconColor="#4A90E2"
+            trendText="Website traffic"
             to="/admin/visits"
             navigate={navigate}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          lg={3}
+        >
+          <DashboardStatCard
             title="Services"
             value={counts.services}
-            icon={<WorkIcon />}
-            bg="#18BC9C"
-            color="#fff"
+            icon={
+              <WorkIcon />
+            }
+            iconBg="#E8F8F5"
+            iconColor="#18BC9C"
+            trendText="Active services"
             to="/admin/services"
             navigate={navigate}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          lg={3}
+        >
+          <DashboardStatCard
             title="Blog Posts"
             value={counts.blogs}
-            icon={<ArticleIcon />}
-            bg="#E74C3C"
-            color="#fff"
+            icon={
+              <ArticleIcon />
+            }
+            iconBg="#F2ECFA"
+            iconColor="#8E6BBE"
+            trendText="Published content"
             to="/admin/blogs"
             navigate={navigate}
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <StatCard
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          lg={3}
+        >
+          <DashboardStatCard
             title="Messages"
             value={counts.messages}
-            icon={<MessageIcon />}
-            bg="#2C3E50"
-            color="#fff"
+            icon={
+              <MessageIcon />
+            }
+            iconBg="#FDECEA"
+            iconColor="#E74C3C"
+            trendText="Contact inquiries"
             to="/admin/messages"
             navigate={navigate}
           />
         </Grid>
       </Grid>
 
-      <Grid container spacing={3}>
-        {/* ===== Charts ===== */}
-        <Grid item xs={12} md={8}>
-          <Paper sx={{ p: 2, borderRadius: 2 }}>
-            <Typography variant="h6" sx={{ color: "#2C3E50", fontWeight: 700, mb: 1 }}>
-              Monthly Overview (Blogs)
-            </Typography>
-            <LineChart
-              xAxis={[{ data: chartData.months, label: "Month" }]}
-              series={[{ data: chartData.lineData, label: "Blogs", color: "#18BC9C" }]}
-              height={300}
-              grid={{ vertical: true, horizontal: true }}
-              sx={{ width: "100%" }}
-            />
-          </Paper>
-        </Grid>
+      {/* ==================================================
+          CHARTS
+      ================================================== */}
 
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 2, borderRadius: 2 }}>
-            <Typography variant="h6" sx={{ color: "#2C3E50", fontWeight: 700, mb: 1 }}>
-              Messages per Month
-            </Typography>
-            <BarChart
-              xAxis={[{ data: chartData.months, scaleType: "band" }]}
-              series={[{ data: chartData.barData, label: "Messages", color: "#E74C3C" }]}
-              height={300}
-              grid={{ vertical: true, horizontal: true }}
-              sx={{ width: "100%" }}
-            />
-          </Paper>
-        </Grid>
+      <DashboardCharts
+        chartData={chartData}
+        isMobile={isMobile}
+      />
 
-        {/* ===== Recent Activity ===== */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2, borderRadius: 2 }}>
-            <Typography variant="h6" sx={{ color: "#2C3E50", fontWeight: 700 }}>
-              Recent Activity
-            </Typography>
-            <Divider sx={{ my: 1 }} />
+      {/* ==================================================
+          RECENT ACTIVITY
+      ================================================== */}
 
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-                  Latest Blogs
-                </Typography>
-                {recentBlogs.length ? (
-                  recentBlogs.map((b, i) => (
-                    <Box key={i} sx={{ mb: 1 }}>
-                      <Typography sx={{ fontWeight: 600 }}>{b.title || "Untitled"}</Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {new Date(b.createdAt).toLocaleString()}
-                      </Typography>
-                    </Box>
-                  ))
-                ) : (
-                  <Typography>No blogs yet</Typography>
-                )}
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-                  Latest Messages
-                </Typography>
-                {recentMessages.length ? (
-                  recentMessages.map((m, i) => (
-                    <Box key={i} sx={{ mb: 1 }}>
-                      <Typography sx={{ fontWeight: 600 }}>{m.name || m.email}</Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {m.message?.slice(0, 80) || ""}
-                      </Typography>
-                    </Box>
-                  ))
-                ) : (
-                  <Typography>No messages yet</Typography>
-                )}
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-      </Grid>
+      <RecentActivity
+        recentBlogs={recentBlogs}
+        recentMessages={recentMessages}
+        navigate={navigate}
+      />
     </Box>
   );
 };
