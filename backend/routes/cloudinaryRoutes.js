@@ -3,6 +3,7 @@ import express from "express";
 import {
     getTestimonialUploadSignature,
 } from "../controllers/cloudinaryController.js";
+import { verifyAdmin } from '../middelware/authMiddelware.js';
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.get(
     "/testimonial-upload-signature",
+    verifyAdmin,
     getTestimonialUploadSignature
 );
 

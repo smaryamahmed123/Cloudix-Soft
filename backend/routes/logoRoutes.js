@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import { verifyAdmin } from '../middelware/authMiddelware.js';
 import { getLogos, addLogo, deleteLogo, reorderLogos } from "../controllers/logoController.js";
 
 const router = express.Router();
@@ -10,8 +11,8 @@ const upload = multer({ storage });
 
 // Routes
 router.get("/", getLogos);
-router.post("/", upload.single("image"), addLogo);
-router.put("/reorder", reorderLogos);
-router.delete("/:id", deleteLogo);
+router.post("/", verifyAdmin, upload.single("image"), addLogo);
+router.put("/reorder", verifyAdmin, reorderLogos);
+router.delete("/:id", verifyAdmin, deleteLogo);
 
 export default router;

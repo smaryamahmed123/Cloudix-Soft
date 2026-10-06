@@ -27,10 +27,17 @@ const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 min
   max: 5, // max 5 requests
 });
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  limit: 10, // max 10 login attempts per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.set('trust proxy', 1);
 
 const allowedOrigins = [
   "https://cloudix-soft-admin.netlify.app",
@@ -65,6 +72,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/about', aboutRoutes);
 app.use("/api/websites", websiteRoutes);
+app.use('/api/auth/login', loginLimiter);
 app.use('/api/services', servicesRoutes);
 app.use("/api/cloudinary", cloudinaryRoutes);
 app.use('/api/newsletter', subscriberRoutes);

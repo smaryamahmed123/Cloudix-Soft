@@ -12,6 +12,7 @@ import {
 import {
   uploadBlogImage,
 } from "../controllers/blogImageController.js";
+import { verifyAdmin } from '../middelware/authMiddelware.js';
 
 const router = express.Router();
 
@@ -45,6 +46,7 @@ router.get("/", getAllBlogs);
 
 router.post(
   "/upload-image",
+  verifyAdmin,
   upload.single("image"),
   uploadBlogImage
 );
@@ -53,23 +55,27 @@ router.get("/:slug", getBlogBySlug);
 
 router.post(
   "/",
+  verifyAdmin,
   upload.single("coverImage"),
   createBlog
 );
 
 router.put(
   "/reorder",
+  verifyAdmin,
   reorderBlogs
 );
 
 router.put(
   "/:id",
+  verifyAdmin,
   upload.single("coverImage"),
   updateBlog
 );
 
 router.delete(
   "/:id",
+  verifyAdmin,
   deleteBlog
 );
 

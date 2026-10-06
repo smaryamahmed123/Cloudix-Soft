@@ -7,6 +7,7 @@ import {
     deleteTestimonial,
     reorderTestimonials,
 } from "../controllers/testimonialController.js";
+import { verifyAdmin } from '../middelware/authMiddelware.js';
 
 const router = express.Router();
 
@@ -21,33 +22,25 @@ router.get(
 
 router.get(
     "/",
+    verifyAdmin,
     getTestimonials
 );
 
-// =====================================================
-// ADD
-// =====================================================
-
 router.post(
     "/",
+    verifyAdmin,
     addTestimonial
 );
 
-// =====================================================
-// REORDER
-// =====================================================
-
 router.put(
     "/reorder",
+    verifyAdmin,
     reorderTestimonials
 );
 
-// =====================================================
-// DELETE
-// =====================================================
-
 router.delete(
     "/:id",
+    verifyAdmin,
     deleteTestimonial
 );
 
