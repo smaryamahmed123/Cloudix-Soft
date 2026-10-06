@@ -3,8 +3,6 @@ dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import passport from 'passport';
-import session from 'express-session';
 import logoRoute from './routes/logoRoutes.js'
 import authRoutes from './routes/authRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
@@ -34,14 +32,6 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
 const allowedOrigins = [
   "https://cloudix-soft-admin.netlify.app",
   "https://cloudix-soft.netlify.app",
@@ -58,7 +48,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true,
+    credentials: false,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })

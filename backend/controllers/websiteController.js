@@ -3,8 +3,6 @@ import cloudinary from "../config/cloudinary.js"
 // ➕ Add Website (Admin)
 export const addWebsite = async (req, res) => {
   try {
-    console.log("FILE:", req.file);
-console.log("BODY:", req.body);
     if (!req.file) {
       return res.status(400).json({ message: "Image is required" });
     }
@@ -19,24 +17,24 @@ console.log("BODY:", req.body);
       );
       stream.end(req.file.buffer);
     });
-const count = await Website.countDocuments();
+    const count = await Website.countDocuments();
     const website = await Website.create({
       title: req.body.title,
       link: req.body.link,
       category: req.body.category,
       image: result.secure_url,
-      order: count, 
+      order: count,
     });
 
     res.status(201).json(website);
   } catch (error) {
     console.error("❌ addWebsite error:", error);
     console.error("❌ addWebsite error:", {
-    message: error.message,
-    stack: error.stack,
-    body: req.body,
-    user: req.adminId,
-  });
+      message: error.message,
+      stack: error.stack,
+      body: req.body,
+      user: req.adminId,
+    });
     res.status(500).json({ message: error.message });
   }
 };
@@ -48,11 +46,11 @@ export const getWebsites = async (req, res) => {
     res.json(websites);
   } catch (error) {
     console.error("❌ addWebsite error:", {
-    message: error.message,
-    stack: error.stack,
-    body: req.body,
-    user: req.adminId,
-  });
+      message: error.message,
+      stack: error.stack,
+      body: req.body,
+      user: req.adminId,
+    });
     res.status(500).json({ message: error.message });
   }
 };
@@ -64,11 +62,11 @@ export const deleteWebsite = async (req, res) => {
     res.json({ message: "Website deleted" });
   } catch (error) {
     console.error("❌ addWebsite error:", {
-    message: error.message,
-    stack: error.stack,
-    body: req.body,
-    user: req.adminId,
-  });
+      message: error.message,
+      stack: error.stack,
+      body: req.body,
+      user: req.adminId,
+    });
     res.status(500).json({ message: error.message });
   }
 };

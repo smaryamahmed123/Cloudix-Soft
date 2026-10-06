@@ -1,0 +1,271 @@
+diff --git a/backend/routes/aboutRoute.js b/backend/routes/aboutRoute.js
+index ee98aa8..d46b540 100644
+--- a/backend/routes/aboutRoute.js
++++ b/backend/routes/aboutRoute.js
+@@ -2,11 +2,12 @@ import express from "express";
+ import multer from "multer";
+ import { getAbout, createAbout, updateAbout } from "../controllers/aboutController.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ const upload = multer({ storage: multer.memoryStorage() });
+ 
+ router.get("/", getAbout);
+-router.post("/", upload.any(), createAbout);
+-router.put("/:id", upload.any(), updateAbout);
++router.post("/", verifyAdmin, upload.any(), createAbout);
++router.put("/:id", verifyAdmin, upload.any(), updateAbout);
+ 
+ export default router;
+diff --git a/backend/routes/blogRoutes.js b/backend/routes/blogRoutes.js
+index e61704a..1cccc59 100644
+--- a/backend/routes/blogRoutes.js
++++ b/backend/routes/blogRoutes.js
+@@ -13,6 +13,7 @@ import {
+   uploadBlogImage,
+ } from "../controllers/blogImageController.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ /* ---------------------------------------
+@@ -45,6 +46,7 @@ router.get("/", getAllBlogs);
+ 
+ router.post(
+   "/upload-image",
++  verifyAdmin,
+   upload.single("image"),
+   uploadBlogImage
+ );
+@@ -53,23 +55,27 @@ router.get("/:slug", getBlogBySlug);
+ 
+ router.post(
+   "/",
++  verifyAdmin,
+   upload.single("coverImage"),
+   createBlog
+ );
+ 
+ router.put(
+   "/reorder",
++  verifyAdmin,
+   reorderBlogs
+ );
+ 
+ router.put(
+   "/:id",
++  verifyAdmin,
+   upload.single("coverImage"),
+   updateBlog
+ );
+ 
+ router.delete(
+   "/:id",
++  verifyAdmin,
+   deleteBlog
+ );
+ 
+diff --git a/backend/routes/cloudinaryRoutes.js b/backend/routes/cloudinaryRoutes.js
+index eb06c01..3d6013f 100644
+--- a/backend/routes/cloudinaryRoutes.js
++++ b/backend/routes/cloudinaryRoutes.js
+@@ -4,6 +4,7 @@ import {
+     getTestimonialUploadSignature,
+ } from "../controllers/cloudinaryController.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ // =====================================================
+@@ -12,6 +13,7 @@ const router = express.Router();
+ 
+ router.get(
+     "/testimonial-upload-signature",
++    verifyAdmin,
+     getTestimonialUploadSignature
+ );
+ 
+diff --git a/backend/routes/logoRoutes.js b/backend/routes/logoRoutes.js
+index 7973a59..ae4c3af 100644
+--- a/backend/routes/logoRoutes.js
++++ b/backend/routes/logoRoutes.js
+@@ -2,6 +2,7 @@ import express from "express";
+ import multer from "multer";
+ import { getLogos, addLogo, deleteLogo, reorderLogos } from "../controllers/logoController.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ // 🧠 Multer with memory storage (for Cloudinary)
+@@ -10,8 +11,8 @@ const upload = multer({ storage });
+ 
+ // Routes
+ router.get("/", getLogos);
+-router.post("/", upload.single("image"), addLogo);
+-router.put("/reorder", reorderLogos);
+-router.delete("/:id", deleteLogo);
++router.post("/", verifyAdmin, upload.single("image"), addLogo);
++router.put("/reorder", verifyAdmin, reorderLogos);
++router.delete("/:id", verifyAdmin, deleteLogo);
+ 
+ export default router;
+diff --git a/backend/routes/postRoutes.js b/backend/routes/postRoutes.js
+index 6f7e1b8..a4d62a2 100644
+--- a/backend/routes/postRoutes.js
++++ b/backend/routes/postRoutes.js
+@@ -7,6 +7,7 @@ import {
+      reorderPosts 
+     } from "../controllers/postController.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ // Multer memory storage
+@@ -14,8 +15,8 @@ const storage = multer.memoryStorage();
+ const upload = multer({ storage });
+ 
+ router.get("/", getPosts);
+-router.put("/reorder", reorderPosts);
+-router.post("/", upload.single("image"), addPost);
+-router.delete("/:id", deletePost);
++router.put("/reorder", verifyAdmin, reorderPosts);
++router.post("/", verifyAdmin, upload.single("image"), addPost);
++router.delete("/:id", verifyAdmin, deletePost);
+ 
+ export default router;
+diff --git a/backend/routes/privacyPolicyRoutes.js b/backend/routes/privacyPolicyRoutes.js
+index 015cb30..e62fb80 100644
+--- a/backend/routes/privacyPolicyRoutes.js
++++ b/backend/routes/privacyPolicyRoutes.js
+@@ -2,10 +2,11 @@
+ import express from 'express';
+ import { getPolicy, updatePolicy, deletePolicy } from '../controllers/privacyPolicyController.js';
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ router.get('/', getPolicy);              // GET privacy policy
+-router.post('/update', updatePolicy);    // POST update privacy policy
+-router.delete('/', deletePolicy);       // DELETE privacy policy (optional)
++router.post('/update', verifyAdmin, updatePolicy);    // POST update privacy policy
++router.delete('/', verifyAdmin, deletePolicy);       // DELETE privacy policy (optional)
+ 
+ export default router;
+diff --git a/backend/routes/servicesRoutes.js b/backend/routes/servicesRoutes.js
+index 073ed18..5eaf491 100644
+--- a/backend/routes/servicesRoutes.js
++++ b/backend/routes/servicesRoutes.js
+@@ -10,13 +10,14 @@ import {
+ } from "../controllers/servicesControllers.js";
+ import { upload } from "../middelware/upload.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ router.get("/", getAllServices);
+-router.post("/", upload.single("iconImage"), createService);
+-router.put("/reorder", reorderServices);
+-router.put("/:id", upload.single("iconImage"), updateService);
+-router.delete("/:id", deleteService);
+-router.put("/:id/visibility", updateVisibility); // 👈 add this line
++router.post("/", verifyAdmin, upload.single("iconImage"), createService);
++router.put("/reorder", verifyAdmin, reorderServices);
++router.put("/:id", verifyAdmin, upload.single("iconImage"), updateService);
++router.delete("/:id", verifyAdmin, deleteService);
++router.put("/:id/visibility", verifyAdmin, updateVisibility);
+ 
+ export default router;
+diff --git a/backend/routes/subscriberRoutes.js b/backend/routes/subscriberRoutes.js
+index 9298d32..528a625 100644
+--- a/backend/routes/subscriberRoutes.js
++++ b/backend/routes/subscriberRoutes.js
+@@ -1,9 +1,10 @@
+ import express from 'express';
+ import { subscribe, unsubscribe, getSubscribers } from '../controllers/subscriberController.js';
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+-router.get('/', getSubscribers);
++router.get('/', verifyAdmin, getSubscribers);
+ router.post('/subscribe', subscribe);
+ router.post('/unsubscribe', unsubscribe);
+ 
+diff --git a/backend/routes/testimonialRoutes.js b/backend/routes/testimonialRoutes.js
+index 049aea5..8f0ffb9 100644
+--- a/backend/routes/testimonialRoutes.js
++++ b/backend/routes/testimonialRoutes.js
+@@ -8,6 +8,7 @@ import {
+     reorderTestimonials,
+ } from "../controllers/testimonialController.js";
+ 
++import { verifyAdmin } from '../middelware/authMiddelware.js';
+ const router = express.Router();
+ 
+ // =====================================================
+@@ -21,6 +22,7 @@ router.get(
+ 
+ router.get(
+     "/",
++    verifyAdmin,
+     getTestimonials
+ );
+ 
+@@ -30,6 +32,7 @@ router.get(
+ 
+ router.post(
+     "/",
++    verifyAdmin,
+     addTestimonial
+ );
+ 
+@@ -39,6 +42,7 @@ router.post(
+ 
+ router.put(
+     "/reorder",
++    verifyAdmin,
+     reorderTestimonials
+ );
+ 
+@@ -48,6 +52,7 @@ router.put(
+ 
+ router.delete(
+     "/:id",
++    verifyAdmin,
+     deleteTestimonial
+ );
+ 
+diff --git a/backend/server.js b/backend/server.js
+index c2a58f7..489df36 100644
+--- a/backend/server.js
++++ b/backend/server.js
+@@ -29,13 +29,20 @@ const contactLimiter = rateLimit({
+   windowMs: 15 * 60 * 1000, // 15 min
+   max: 5, // max 5 requests
+ });
++const loginLimiter = rateLimit({
++  windowMs: 15 * 60 * 1000, // 15 min
++  limit: 10, // max 10 login attempts per IP
++  standardHeaders: true,
++  legacyHeaders: false,
++});
+ const __filename = fileURLToPath(import.meta.url);
+ const __dirname = path.dirname(__filename);
+ 
+ const app = express();
++app.set('trust proxy', 1);
+ 
+ app.use(session({
+-  secret: 'your-secret-key',
++  secret: process.env.SESSION_SECRET || process.env.JWT_SECRET,
+   resave: false,
+   saveUninitialized: false,
+ }));
+@@ -69,6 +76,7 @@ app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
+ 
+ 
+ 
++app.use('/api/auth/login', loginLimiter);
+ app.use('/api/auth', authRoutes);
+ app.use("/api/logos", logoRoute);
+ app.use('/api/blogs', blogRoutes);

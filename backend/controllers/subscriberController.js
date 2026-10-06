@@ -30,12 +30,14 @@ export const unsubscribe = async (req, res) => {
   }
 };
 
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 export const getSubscribers = async (req, res) => {
   try {
     const { page = 1, limit = 10, search = "" } = req.query;
 
     const query = {
-      email: { $regex: search, $options: "i" },
+      email: { $regex: escapeRegex(search), $options: "i" },
     };
 
     const subscribers = await Subscriber.find(query)
