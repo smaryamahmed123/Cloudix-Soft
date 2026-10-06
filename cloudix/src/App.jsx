@@ -16,6 +16,7 @@ const Contact = lazyWithRetry(() => import("./Pages/Contact"));
 const PrivacyPolicy = lazyWithRetry(() => import("./Pages/PrivacyPolicy"));
 const Blogs = lazyWithRetry(() => import("./Pages/Blogs"));
 const BlogDetails = lazyWithRetry(() => import("./Pages/BlogDetails"));
+const Unsubscribe = lazyWithRetry(() => import("./Pages/Unsubscribe"));
 
 
 // Route Fallback Loader
@@ -45,12 +46,13 @@ function AnimatedRoutes() {
       <Routes location={location}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:slug" element={<BlogDetails />} />
+        <Route path="/unsubscribe" element={<Unsubscribe />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       </Routes>
     </Suspense>
   );

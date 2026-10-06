@@ -1,4 +1,5 @@
 import Subscriber from '../models/Subscriber.js';
+import { verifyUnsubscribeToken } from '../utils/unsubscribeToken.js';
 
 export const subscribe = async (req, res) => {
   try {
@@ -19,12 +20,37 @@ export const subscribe = async (req, res) => {
   }
 };
 
-export const unsubscribe = async (req, res) => {
+export const adminRemoveSubscriber = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) return res.status(400).json({ message: 'Email is required' });
     await Subscriber.findOneAndDelete({ email });
     res.json({ message: 'Unsubscribed successfully.' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export const unsubscribeByToken = async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ message: 'Unsubscribe token is required' });
+    }
+
+    let email;
+    try {
+      email = verifyUnsubscribeToken(token);
+    } catch {
+      return res.status(400).json({ message: 'This unsubscribe link is invalid or has expired.' });
+    }
+
+    const result = await Subscriber.findOneAndDelete({ email });
+    if (!result) {
+      return res.json({ message: 'You are unsubscribed.', email });
+    }
+
+    res.json({ message: 'You have been unsubscribed successfully.', email });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

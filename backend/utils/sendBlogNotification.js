@@ -1,6 +1,7 @@
 import mailerSend from '../config/mailer.js';
 import { EmailParams, Sender, Recipient } from 'mailersend';
 import Subscriber from '../models/Subscriber.js';
+import { createUnsubscribeToken } from './unsubscribeToken.js';
 
 export const sendBlogNotification = async (blog) => {
   try {
