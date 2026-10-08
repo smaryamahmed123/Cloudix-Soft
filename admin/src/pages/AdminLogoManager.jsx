@@ -1,40 +1,91 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { Box, Grid, Typography, Modal, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import ImageIcon from "@mui/icons-material/Image";
 
-import UploadLogoForm from "../components/UploadLogoForm";
-import PostCard from "../components/PostCard";
-import FloatingAddButton from "../components/FloatingAddButton";
+import DashboardTopBar from "../components/Dashboard/DashboardTopBar";
+import LogoFilters from "../components/Logo/LogoFilters";
+import LogoStatCard from "../components/Logo/LogoStatCard";
+import LogoTable from "../components/Logo/LogoTable";
+import LogoFormModal from "../components/Logo/LogoFormModal";
+
 import SnackbarAlert from "../components/SnackbarAlert";
 import LoadingBackdrop from "../components/LoadingBackdrop";
 
-const backendURL = import.meta.env.VITE_BACKEND_URL;
-const BASE_URL = `${backendURL}/api/logos`;
-const REORDER_URL = `${backendURL}/api/logos/reorder`; // 👈 Make sure this exists in backend
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/logos`;
 
-export default function LogoManager() {
+const getImage = (logo) =>
+  logo?.image ||
+  logo?.imageUrl ||
+  logo?.url ||
+  logo?.logo ||
+  "";
+
+const getVisible = (logo) => logo?.visible !== false;
+
+const emptyForm = {
+  title: "",
+  imageFile: null,
+  currentImage: "",
+};
+
+export default function AdminLogos() {
   const [logos, setLogos] = useState([]);
-  const [file, setFile] = useState(null);
-  const [title, setTitle] = useState("");
-  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
-  const [loading, setLoading] = useState(false);
+
+  const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("all");
+  const [dateRange, setDateRange] = useState("");
+
+  const [selected, setSelected] = useState([]);
+
   const [openModal, setOpenModal] = useState(false);
+  const [editingLogo, setEditingLogo] = useState(null);
+  const [form, setForm] = useState(emptyForm);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [loading, setLoading] = useState(false);
 
-  // 📥 Fetch Logos
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const showMessage = (message, severity = "success") => {
+    setSnackbar({
+      open: true,
+      message,
+      severity,
+    });
+  };
+
   const fetchLogos = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(BASE_URL);
-      // Sort logos by order (if your schema has `order` field)
-      const sorted = res.data.sort((a, b) => a.order - b.order);
-      setLogos(sorted);
-    } catch {
-      setSnackbar({ open: true, message: "Failed to fetch logos ❌", severity: "error" });
+
+      const response = await axios.get(BASE_URL);
+
+      const data = Array.isArray(response.data)
+        ? response.data
+        : response.data?.logos || [];
+
+      setLogos(
+        [...data].sort(
+          (a, b) => (a.order ?? 0) - (b.order ?? 0)
+        )
+      );
+    } catch (error) {
+      console.error(error);
+      showMessage("Failed to load logos", "error");
     } finally {
       setLoading(false);
     }
@@ -44,160 +95,457 @@ export default function LogoManager() {
     fetchLogos();
   }, []);
 
-  // 📤 Upload Logo
-  const handleUpload = async () => {
-    if (!title || !file) {
-      setSnackbar({ open: true, message: "Please fill all fields", severity: "warning" });
+  const filteredLogos = useMemo(() => {
+    let result = [...logos];
+
+    if (search.trim()) {
+      const query = search.toLowerCase();
+
+      result = result.filter((logo) =>
+        String(logo.title || "")
+          .toLowerCase()
+          .includes(query)
+      );
+    }
+
+    if (status === "active") {
+      result = result.filter(getVisible);
+    }
+
+    if (status === "hidden") {
+      result = result.filter((logo) => !getVisible(logo));
+    }
+
+    if (dateRange) {
+      const now = new Date();
+
+      result = result.filter((logo) => {
+        if (!logo.createdAt) return false;
+
+        const date = new Date(logo.createdAt);
+
+        if (dateRange === "today") {
+          return date.toDateString() === now.toDateString();
+        }
+
+        if (dateRange === "7days") {
+          const sevenDaysAgo = new Date();
+          sevenDaysAgo.setDate(now.getDate() - 7);
+          return date >= sevenDaysAgo;
+        }
+
+        if (dateRange === "30days") {
+          const thirtyDaysAgo = new Date();
+          thirtyDaysAgo.setDate(now.getDate() - 30);
+          return date >= thirtyDaysAgo;
+        }
+
+        return true;
+      });
+    }
+
+    return result;
+  }, [logos, search, status, dateRange]);
+
+  const totalLogos = logos.length;
+
+  const activeLogos = logos.filter(getVisible).length;
+
+  const hiddenLogos = logos.filter(
+    (logo) => !getVisible(logo)
+  ).length;
+
+  const recentLogos = logos.filter((logo) => {
+    if (!logo.createdAt) return false;
+
+    const created = new Date(logo.createdAt);
+    const now = new Date();
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(now.getDate() - 30);
+
+    return created >= thirtyDaysAgo;
+  }).length;
+
+  const openAddModal = () => {
+    setEditingLogo(null);
+    setForm(emptyForm);
+    setOpenModal(true);
+  };
+
+  const openEditModal = (logo) => {
+    setEditingLogo(logo);
+
+    setForm({
+      title: logo.title || "",
+      imageFile: null,
+      currentImage: getImage(logo),
+    });
+
+    setOpenModal(true);
+  };
+
+  const closeModal = () => {
+    if (loading) return;
+
+    setOpenModal(false);
+    setEditingLogo(null);
+    setForm(emptyForm);
+  };
+
+  const handleSave = async () => {
+    if (!form.title.trim()) {
+      showMessage("Please enter a logo title", "error");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("image", file);
+    if (!editingLogo && !form.imageFile) {
+      showMessage("Please select a logo image", "error");
+      return;
+    }
 
     try {
       setLoading(true);
-      await axios.post(BASE_URL, formData);
-      setTitle("");
-      setFile(null);
-      setOpenModal(false);
-      fetchLogos();
-      setSnackbar({ open: true, message: "Logo uploaded successfully ✅", severity: "success" });
-    } catch {
-      setSnackbar({ open: true, message: "Failed to upload logo ❌", severity: "error" });
+
+      const formData = new FormData();
+
+      formData.append("title", form.title.trim());
+
+      if (form.imageFile) {
+        formData.append("image", form.imageFile);
+      }
+
+      if (editingLogo) {
+        await axios.put(
+          `${BASE_URL}/${editingLogo._id}`,
+          formData
+        );
+
+        showMessage("Logo updated successfully");
+      } else {
+        await axios.post(BASE_URL, formData);
+
+        showMessage("Logo added successfully");
+      }
+
+      closeModal();
+      await fetchLogos();
+    } catch (error) {
+      console.error(error);
+      showMessage(
+        error.response?.data?.message || "Something went wrong",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  // 🗑️ Delete Logo
-  const handleDelete = async (id) => {
+  const handleDelete = async (logo) => {
+    const confirmed = window.confirm(
+      `Delete "${logo.title || "this logo"}"?`
+    );
+
+    if (!confirmed) return;
+
     try {
       setLoading(true);
-      await axios.delete(`${BASE_URL}/${id}`);
-      fetchLogos();
-      setSnackbar({ open: true, message: "Logo deleted 🗑️", severity: "success" });
-    } catch {
-      setSnackbar({ open: true, message: "Failed to delete logo ❌", severity: "error" });
+
+      await axios.delete(`${BASE_URL}/${logo._id}`);
+
+      setSelected((prev) =>
+        prev.filter((id) => id !== logo._id)
+      );
+
+      showMessage("Logo deleted successfully");
+
+      await fetchLogos();
+    } catch (error) {
+      console.error(error);
+      showMessage("Failed to delete logo", "error");
     } finally {
       setLoading(false);
     }
   };
 
-  // ✨ Reorder Logos
-  const handleDragEnd = async (result) => {
-    if (!result.destination) return;
+  const handleBulkDelete = async () => {
+    if (!selected.length) return;
 
-    const reordered = Array.from(logos);
-    const [moved] = reordered.splice(result.source.index, 1);
-    reordered.splice(result.destination.index, 0, moved);
+    const confirmed = window.confirm(
+      `Delete ${selected.length} selected logo(s)?`
+    );
 
-    setLogos(reordered);
+    if (!confirmed) return;
 
     try {
-      const ids = reordered.map((item) => item._id);
-      await axios.put(REORDER_URL, { ids });
-      setSnackbar({ open: true, message: "Logo order updated ✅", severity: "success" });
-    } catch {
-      setSnackbar({ open: true, message: "Failed to reorder ❌", severity: "error" });
+      setLoading(true);
+
+      await Promise.all(
+        selected.map((id) =>
+          axios.delete(`${BASE_URL}/${id}`)
+        )
+      );
+
+      setSelected([]);
+
+      showMessage("Selected logos deleted successfully");
+
+      await fetchLogos();
+    } catch (error) {
+      console.error(error);
+      showMessage("Some logos could not be deleted", "error");
+      await fetchLogos();
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleCloseSnackbar = () => setSnackbar((prev) => ({ ...prev, open: false }));
+  const handleReorder = async (newLogos) => {
+    setLogos(newLogos);
+
+    try {
+      await axios.put(`${BASE_URL}/reorder`, {
+        ids: newLogos.map((logo) => logo._id),
+      });
+    } catch (error) {
+      console.error(error);
+      showMessage("Failed to save new order", "error");
+      await fetchLogos();
+    }
+  };
+
+  const allFilteredSelected =
+    filteredLogos.length > 0 &&
+    filteredLogos.every((logo) =>
+      selected.includes(logo._id)
+    );
+
+  const handleSelectAll = () => {
+    if (allFilteredSelected) {
+      setSelected((prev) =>
+        prev.filter(
+          (id) =>
+            !filteredLogos.some(
+              (logo) => logo._id === id
+            )
+        )
+      );
+    } else {
+      setSelected((prev) => [
+        ...new Set([
+          ...prev,
+          ...filteredLogos.map((logo) => logo._id),
+        ]),
+      ]);
+    }
+  };
+
+  const handleSelect = (id) => {
+    setSelected((prev) =>
+      prev.includes(id)
+        ? prev.filter((item) => item !== id)
+        : [...prev, id]
+    );
+  };
 
   return (
-    <Box sx={{ p: isMobile ? 2 : 4, bgcolor: theme.palette.background.default, minHeight: "100vh" }}>
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: "bold",
-          mb: 4,
-          color: theme.palette.primary.main,
-          textAlign: "center",
-        }}
-      >
-        Logo Manager (Admin)
-      </Typography>
+    <Box sx={{ minHeight: "100vh", bgcolor: "dash.page" }}>
+      <DashboardTopBar />
 
-      {/* 🖼 Upload Section - Desktop */}
-      {!isMobile && (
-        <Box sx={{ mb: 5 }}>
-          <UploadLogoForm
-            title={title}
-            setTitle={setTitle}
-            file={file}
-            setFile={setFile}
-            handleUpload={handleUpload}
-            loading={loading}
-            isMobile={isMobile}
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        {/* Header */}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          justifyContent="space-between"
+          alignItems={{ xs: "flex-start", md: "center" }}
+          spacing={2}
+          mb={4}
+        >
+          <Box>
+            <Typography
+              variant="overline"
+              sx={{
+                color: "dash.green",
+                fontWeight: 800,
+                letterSpacing: 1.5,
+              }}
+            >
+              BRAND ASSETS
+            </Typography>
+
+            <Typography
+              variant="h4"
+              fontWeight={800}
+              sx={{ color: "dash.navy", mt: 0.5 }}
+            >
+              Logo Management
+            </Typography>
+
+            <Typography
+              sx={{
+                color: "dash.muted",
+                mt: 0.7,
+              }}
+            >
+              Manage, organize and reorder your website logos.
+            </Typography>
+          </Box>
+
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={openAddModal}
+            sx={{
+              bgcolor: "dash.green",
+              borderRadius: 2,
+              px: 2.5,
+              py: 1.25,
+              fontWeight: 700,
+              "&:hover": {
+                bgcolor: "dash.greenDark",
+              },
+            }}
+          >
+            Add New Logo
+          </Button>
+        </Stack>
+
+        {/* Stats */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
+            gap: 2,
+            mb: 3,
+          }}
+        >
+          <LogoStatCard
+            title="Total Logos"
+            value={totalLogos}
+            icon={<ImageIcon />}
+            tint="green"
+          />
+
+          <LogoStatCard
+            title="Active Logos"
+            value={activeLogos}
+            icon={<ImageIcon />}
+            tint="blue"
+          />
+
+          <LogoStatCard
+            title="Hidden Logos"
+            value={hiddenLogos}
+            icon={<ImageIcon />}
+            tint="orange"
+          />
+
+          <LogoStatCard
+            title="Added Recently"
+            value={recentLogos}
+            icon={<ImageIcon />}
+            tint="purple"
           />
         </Box>
-      )}
 
-      {/* 🧭 Drag & Drop Logo Grid */}
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="logos">
-          {(provided) => (
-            <Grid
-              container
-              spacing={3}
-              justifyContent="center"
-              alignItems="stretch"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {logos.map((logo, index) => (
-                <Draggable key={logo._id} draggableId={logo._id} index={index}>
-                  {(provided) => (
-                    <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      md={4}
-                      lg={3}
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      sx={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <PostCard post={logo} onDelete={handleDelete} loading={loading} />
-                    </Grid>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </Grid>
-          )}
-        </Droppable>
-      </DragDropContext>
+        {/* Filters */}
+        <LogoFilters
+          search={search}
+          setSearch={setSearch}
+          status={status}
+          setStatus={setStatus}
+          dateRange={dateRange}
+          setDateRange={setDateRange}
+          onReset={() => {
+            setSearch("");
+            setStatus("all");
+            setDateRange("");
+          }}
+        />
 
-      {/* ➕ Mobile Floating Add */}
-      {isMobile && (
-        <>
-          <FloatingAddButton onClick={() => setOpenModal(true)} disabled={loading} />
-          <Modal
-            open={openModal}
-            onClose={() => setOpenModal(false)}
-            sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        {/* Bulk actions */}
+        {selected.length > 0 && (
+          <Paper
+            sx={{
+              mt: 2,
+              p: 1.5,
+              borderRadius: 2.5,
+              border: "1px solid",
+              borderColor: "dash.border",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 2,
+            }}
           >
-            <UploadLogoForm
-              title={title}
-              setTitle={setTitle}
-              file={file}
-              setFile={setFile}
-              handleUpload={handleUpload}
-              loading={loading}
-              isMobile={isMobile}
-            />
-          </Modal>
-        </>
-      )}
+            <Stack direction="row" alignItems="center">
+              <Checkbox
+                checked={allFilteredSelected}
+                onChange={handleSelectAll}
+              />
+
+              <Typography fontWeight={700}>
+                {selected.length} selected
+              </Typography>
+            </Stack>
+
+            <Button
+              color="error"
+              startIcon={<DeleteOutlineIcon />}
+              onClick={handleBulkDelete}
+            >
+              Delete Selected
+            </Button>
+          </Paper>
+        )}
+
+        {/* Table */}
+        <Paper
+          sx={{
+            mt: 2,
+            borderRadius: 3,
+            border: "1px solid",
+            borderColor: "dash.border",
+            overflow: "hidden",
+          }}
+        >
+          <LogoTable
+            logos={filteredLogos}
+            selected={selected}
+            onSelect={handleSelect}
+            onSelectAll={handleSelectAll}
+            allSelected={allFilteredSelected}
+            onEdit={openEditModal}
+            onDelete={handleDelete}
+            onReorder={handleReorder}
+          />
+        </Paper>
+      </Container>
+
+      <LogoFormModal
+        open={openModal}
+        form={form}
+        setForm={setForm}
+        editingLogo={editingLogo}
+        onClose={closeModal}
+        onSave={handleSave}
+        loading={loading}
+      />
 
       <SnackbarAlert
         open={snackbar.open}
-        onClose={handleCloseSnackbar}
-        severity={snackbar.severity}
         message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() =>
+          setSnackbar((prev) => ({
+            ...prev,
+            open: false,
+          }))
+        }
       />
 
       <LoadingBackdrop open={loading} />
