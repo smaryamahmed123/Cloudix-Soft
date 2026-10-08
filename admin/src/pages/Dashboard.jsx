@@ -595,7 +595,7 @@ const Dashboard = () => {
         alignItems="stretch"
         sx={{ mb: 2.5 }}
       >
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={8} sx={{ minWidth: 0 }}>
           <DashboardOverview
             chartData={chartData}
             isMobile={isMobile}
