@@ -201,7 +201,7 @@ const Sidebar = () => {
             width: 40,
             height: 40,
             mr: 1.4,
-            borderRadius: "50%",
+            // borderRadius: "50%", r;el;fvl,gv0
             background: `linear-gradient(135deg, ${palette.lime}, ${palette.olive})`,
             display: "flex",
             alignItems: "center",
