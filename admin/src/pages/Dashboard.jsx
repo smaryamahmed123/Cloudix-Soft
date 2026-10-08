@@ -1026,7 +1026,7 @@ const Dashboard = () => {
           <QuickActions
             onAddBlog={() =>
               navigate(
-                "/admin/create-blog"
+                "/admin/blog"
               )
             }
 
