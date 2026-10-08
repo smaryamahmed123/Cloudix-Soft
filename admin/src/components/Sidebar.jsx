@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import {
   Box,
-  Button,
   Drawer,
   List,
   ListItem,
@@ -18,7 +17,7 @@ import {
 } from "@mui/material";
 
 import {
-  DashboardOutlined,
+  HomeRounded,
   WorkOutline,
   EmailOutlined,
   ArticleOutlined,
@@ -31,22 +30,36 @@ import {
   LogoutOutlined,
   AddToPhotosOutlined,
   RateReviewOutlined,
+  ImageOutlined,
+  WorkOutlineOutlined,
+  GridViewOutlined,
+  StarBorderOutlined,
+  PersonOutlineOutlined,
+  ShieldOutlined,
 } from "@mui/icons-material";
 
-import {
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
-
 
 // ============================================================
 // CONSTANTS
 // ============================================================
 
-const drawerWidth = 220;
+const drawerWidth = 240;
 
+const palette = {
+  bgTop: "#102640",
+  bgBottom: "#0A1A2C",
+  text: "#D5DEE8",
+  muted: "#8FA1B5",
+  lime: "#A6C23A",
+  olive: "#5F7D22",
+  oliveDark: "#3E5618",
+  border: "rgba(255,255,255,0.16)",
+  hover: "rgba(255,255,255,0.06)",
+  red: "#FF8A8A",
+};
 
 // ============================================================
 // SIDEBAR
@@ -54,134 +67,77 @@ const drawerWidth = 220;
 
 const Sidebar = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
-
   const theme = useTheme();
 
-  const isMobile = useMediaQuery(
-    theme.breakpoints.down("md")
-  );
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const [open, setOpen] =
-    useState(false);
-
-  const colors = theme.dashboard || {
-    navy: "#18344F",
-    navyDark: "#102A40",
-    teal: "#18B6A5",
-    tealDark: "#0E8F82",
-    tealLight: "#E7F8F5",
-    pageBackground: "#F5F8FA",
-    border: "#E4EBEF",
-    muted: "#718398",
-    red: "#E85B5B",
-    redLight: "#FDEEEE",
-  };
-
+  const [open, setOpen] = useState(false);
 
   // ==========================================================
-  // NAVIGATION ITEMS
+  // NAVIGATION ITEMS  (paths are unchanged)
   // ==========================================================
 
   const items = [
-    {
-      text: "Dashboard",
-      icon: <DashboardOutlined />,
-      path: "/admin/dashboard",
-    },
-
-    {
-      text: "Services",
-      icon: <WorkOutline />,
-      path: "/admin/services",
-    },
-
-    {
-      text: "Subscribers",
-      icon: <EmailOutlined />,
-      path: "/admin/subscribers",
-    },
-
-    {
-      text: "Blogs",
-      icon: <ArticleOutlined />,
-      path: "/admin/blogs",
-    },
-
-    {
-      text: "Messages",
-      icon: <MessageOutlined />,
-      path: "/admin/messages",
-    },
-
-    {
-      text: "Portfolio",
-      icon: <CollectionsOutlined />,
-      path: "/admin/portfolio",
-    },
-
-    {
-      text: "Posts",
-      icon: <ArticleOutlined />,
-      path: "/admin/post-design",
-    },
-
-    {
-      text: "Edit Contact",
-      icon: <ContactPhoneOutlined />,
-      path: "/admin/edit-contact",
-    },
-
-    {
-      text: "About Us",
-      icon: <InfoOutlined />,
-      path: "/admin/about",
-    },
-
-    {
-      text: "Add Website",
-      icon: <AddToPhotosOutlined />,
-      path: "/admin/addWebsite",
-    },
-
-    {
-      text: "Privacy Policy",
-      icon: <PolicyOutlined />,
-      path: "/admin/privacy-policy",
-    },
-
-    {
-      text: "Testimonials",
-      icon: <RateReviewOutlined />,
-      path: "/admin/testimonials",
-    },
+    { text: "Dashboard", icon: <HomeRounded />, path: "/admin/dashboard" },
+    { text: "Services", icon: <GridViewOutlined />, path: "/admin/services" },
+    { text: "Subscribers", icon: <EmailOutlined />, path: "/admin/subscribers" },
+    { text: "Blog", icon: <ArticleOutlined />, path: "/admin/blogs" },
+    { text: "Contact Messages", icon: <MessageOutlined />, path: "/admin/messages" },
+    { text: "Portfolio / Websites", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
+    { text: "Posts", icon: <ImageOutlined />, path: "/admin/post-design" },
+    { text: "Edit Contact", icon: <ContactPhoneOutlined />, path: "/admin/edit-contact" },
+    { text: "About", icon: <PersonOutlineOutlined />, path: "/admin/about" },
+    { text: "Add Website", icon: <AddToPhotosOutlined />, path: "/admin/addWebsite" },
+    { text: "Privacy Policy", icon: <ShieldOutlined />, path: "/admin/privacy-policy" },
+    { text: "Testimonials", icon: <StarBorderOutlined />, path: "/admin/testimonials" },
   ];
 
-
   // ==========================================================
-  // HANDLE NAVIGATION
+  // HANDLERS
   // ==========================================================
 
   const handleNavigation = (path) => {
     navigate(path);
-
-    if (isMobile) {
-      setOpen(false);
-    }
+    if (isMobile) setOpen(false);
   };
-
-
-  // ==========================================================
-  // LOGOUT
-  // ==========================================================
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-
     navigate("/login");
   };
 
+  // ==========================================================
+  // SHARED ITEM STYLES
+  // ==========================================================
+
+  const itemSx = (isActive) => ({
+    minHeight: 44,
+    px: 1.6,
+    borderRadius: "10px",
+    color: isActive ? "#FFFFFF" : palette.text,
+    background: isActive
+      ? `linear-gradient(90deg, ${palette.olive} 0%, ${palette.oliveDark} 100%)`
+      : "transparent",
+    border: isActive
+      ? "1px solid rgba(166,194,58,0.55)"
+      : "1px solid transparent",
+    boxShadow: isActive ? "0 4px 14px rgba(95,125,34,0.30)" : "none",
+    transition: "background 0.2s ease, color 0.2s ease",
+    "&:hover": {
+      background: isActive
+        ? `linear-gradient(90deg, ${palette.olive} 0%, ${palette.oliveDark} 100%)`
+        : palette.hover,
+      color: "#FFFFFF",
+    },
+  });
+
+  const iconSx = (isActive) => ({
+    minWidth: 36,
+    color: isActive ? palette.lime : palette.muted,
+    "& svg": { fontSize: 20 },
+    ".MuiListItemButton-root:hover &": { color: palette.lime },
+  });
 
   // ==========================================================
   // DRAWER CONTENT
@@ -190,68 +146,74 @@ const Sidebar = () => {
   const drawerContent = (
     <Box
       sx={{
+        position: "relative",
         width: drawerWidth,
-
         height: "100%",
-
         display: "flex",
-
         flexDirection: "column",
-
-        backgroundColor:
-          "#ECF1F3",
-
+        background: `linear-gradient(180deg, ${palette.bgTop} 0%, ${palette.bgBottom} 100%)`,
         overflow: "hidden",
       }}
     >
+      {/* ---------- Decorative diagonal stripes (bottom) ---------- */}
+      <Box
+        aria-hidden
+        sx={{
+          position: "absolute",
+          left: -40,
+          bottom: -30,
+          width: 190,
+          height: 230,
+          background: `linear-gradient(160deg, ${palette.lime} 0%, ${palette.olive} 45%, transparent 100%)`,
+          opacity: 0.55,
+          clipPath: "polygon(0 100%, 55% 0, 85% 0, 30% 100%)",
+          pointerEvents: "none",
+        }}
+      />
+      <Box
+        aria-hidden
+        sx={{
+          position: "absolute",
+          left: 60,
+          bottom: -30,
+          width: 150,
+          height: 170,
+          background: `linear-gradient(160deg, ${palette.lime} 0%, ${palette.olive} 50%, transparent 100%)`,
+          opacity: 0.35,
+          clipPath: "polygon(0 100%, 50% 0, 70% 0, 20% 100%)",
+          pointerEvents: "none",
+        }}
+      />
 
-      {/* ====================================================
-          BRAND
-      ==================================================== */}
-
+      {/* ---------- Brand ---------- */}
       <Box
         sx={{
-          height: 72,
-
+          height: 84,
           display: "flex",
-
           alignItems: "center",
-
-          px: 2.2,
-
+          px: 2.4,
           flexShrink: 0,
+          position: "relative",
         }}
       >
         <Box
           sx={{
-            width: 38,
-            height: 38,
-
-            borderRadius: "11px",
-
-            backgroundColor:
-              colors.teal,
-
+            width: 40,
+            height: 40,
+            mr: 1.4,
+            borderRadius: "50%",
+            background: `linear-gradient(135deg, ${palette.lime}, ${palette.olive})`,
             display: "flex",
-
             alignItems: "center",
-
             justifyContent: "center",
-
-            mr: 1.3,
-
-            boxShadow:
-              "0 6px 14px rgba(24,182,165,0.20)",
+            flexShrink: 0,
           }}
         >
           <Typography
             sx={{
-              color: "#FFFFFF",
-
+              color: palette.bgBottom,
               fontWeight: 900,
-
-              fontSize: 17,
-
+              fontSize: 22,
               lineHeight: 1,
             }}
           >
@@ -259,254 +221,110 @@ const Sidebar = () => {
           </Typography>
         </Box>
 
-        <Box
-          sx={{
-            minWidth: 0,
-          }}
-        >
+        <Box sx={{ minWidth: 0 }}>
           <Typography
             sx={{
-              color: colors.navy,
-
-              fontSize: 15,
-
+              color: "#FFFFFF",
+              fontSize: 19,
               fontWeight: 800,
-
               lineHeight: 1.1,
+              letterSpacing: "-0.2px",
             }}
           >
-            Cloudix
+            Cloudix{" "}
+            <Box component="span" sx={{ color: palette.lime }}>
+              Soft
+            </Box>
           </Typography>
 
           <Typography
             sx={{
-              color: colors.muted,
-
-              fontSize: 10,
-
-              fontWeight: 600,
-
-              mt: 0.25,
+              color: palette.muted,
+              fontSize: 10.5,
+              fontWeight: 500,
+              mt: 0.3,
             }}
           >
-            ADMIN PANEL
+            Ideas to Impact
           </Typography>
         </Box>
       </Box>
 
-
-      <Divider
-        sx={{
-          borderColor:
-            colors.border,
-        }}
-      />
-
-
-      {/* ====================================================
-          NAVIGATION
-      ==================================================== */}
-
+      {/* ---------- Navigation ---------- */}
       <Box
         sx={{
           flex: 1,
-
+          position: "relative",
           overflowY: "auto",
-
           overflowX: "hidden",
-
-          px: 1.5,
-
-          py: 1.5,
-
-          "&::-webkit-scrollbar": {
-            width: 4,
-          },
-
+          px: 1.6,
+          py: 1,
+          "&::-webkit-scrollbar": { width: 4 },
           "&::-webkit-scrollbar-thumb": {
-            backgroundColor:
-              "#CBD5DA",
-
+            backgroundColor: "rgba(255,255,255,0.18)",
             borderRadius: 10,
           },
         }}
       >
-        <List
-          disablePadding
-        >
+        <List disablePadding>
           {items.map((item) => {
-
             const isActive =
-              location.pathname ===
-              item.path ||
-              location.pathname.startsWith(
-                `${item.path}/`
-              );
+              location.pathname === item.path ||
+              location.pathname.startsWith(`${item.path}/`);
 
             return (
-              <ListItem
-                key={item.text}
-                disablePadding
-                sx={{
-                  mb: 0.45,
-                }}
-              >
+              <ListItem key={item.text} disablePadding sx={{ mb: 0.6 }}>
                 <ListItemButton
-                  onClick={() =>
-                    handleNavigation(
-                      item.path
-                    )
-                  }
-                  sx={{
-                    minHeight: 42,
-
-                    px: 1.35,
-
-                    borderRadius: "10px",
-
-                    color: isActive
-                      ? "#FFFFFF"
-                      : colors.navy,
-
-                    backgroundColor:
-                      isActive
-                        ? colors.teal
-                        : "transparent",
-
-                    transition:
-                      "all 0.2s ease",
-
-                    "&:hover": {
-                      backgroundColor:
-                        isActive
-                          ? colors.tealDark
-                          : colors.tealLight,
-
-                      color: isActive
-                        ? "#FFFFFF"
-                        : colors.tealDark,
-                    },
-                  }}
+                  onClick={() => handleNavigation(item.path)}
+                  sx={itemSx(isActive)}
                 >
+                  <ListItemIcon sx={iconSx(isActive)}>{item.icon}</ListItemIcon>
 
-                  {/* Icon */}
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 34,
-
-                      color: "inherit",
-
-                      display: "flex",
-
-                      alignItems: "center",
-
-                      "& svg": {
-                        fontSize: 20,
-                      },
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-
-
-                  {/* Text */}
                   <ListItemText
-                    primary={
-                      item.text
-                    }
+                    primary={item.text}
                     primaryTypographyProps={{
-                      fontSize: 12.5,
-
-                      fontWeight:
-                        isActive
-                          ? 700
-                          : 500,
-
-                      whiteSpace:
-                        "nowrap",
+                      fontSize: 13,
+                      fontWeight: isActive ? 700 : 500,
+                      whiteSpace: "nowrap",
                     }}
                   />
-
                 </ListItemButton>
               </ListItem>
             );
           })}
         </List>
-      </Box>
 
+        <Divider sx={{ borderColor: palette.border, my: 1.4 }} />
 
-      {/* ====================================================
-          LOGOUT
-      ==================================================== */}
-
-      <Box
-        sx={{
-          px: 1.5,
-
-          pt: 1,
-
-          pb: 1.5,
-
-          flexShrink: 0,
-
-          borderTop:
-            `1px solid ${colors.border}`,
-        }}
-      >
-        <Button
-          variant="outlined"
-
-          startIcon={
-            <LogoutOutlined
+        {/* Bottom slot (Settings position in the reference) – Logout */}
+        <List disablePadding>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={handleLogout}
               sx={{
-                fontSize: 19,
+                ...itemSx(false),
+                "&:hover": { background: "rgba(255,138,138,0.10)", color: palette.red },
               }}
-            />
-          }
+            >
+              <ListItemIcon
+                sx={{
+                  ...iconSx(false),
+                  ".MuiListItemButton-root:hover &": { color: palette.red },
+                }}
+              >
+                <LogoutOutlined />
+              </ListItemIcon>
 
-          fullWidth
-
-          onClick={
-            handleLogout
-          }
-
-          sx={{
-            minHeight: 42,
-
-            borderRadius: "10px",
-
-            textTransform: "none",
-
-            fontSize: 12.5,
-
-            fontWeight: 700,
-
-            color: colors.red,
-
-            borderColor:
-              "rgba(232,91,91,0.55)",
-
-            backgroundColor:
-              "rgba(255,255,255,0.35)",
-
-            "&:hover": {
-              color: "#D94747",
-
-              borderColor:
-                colors.red,
-
-              backgroundColor:
-                colors.redLight,
-            },
-          }}
-        >
-          Logout
-        </Button>
+              <ListItemText
+                primary="Logout"
+                primaryTypographyProps={{ fontSize: 13, fontWeight: 500 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        </List>
       </Box>
-
     </Box>
   );
-
 
   // ==========================================================
   // RENDER
@@ -514,110 +332,56 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* ====================================================
-          MOBILE APP BAR
-      ==================================================== */}
-
+      {/* ---------- Mobile app bar ---------- */}
       {isMobile && (
         <AppBar
           position="fixed"
           elevation={0}
           sx={{
-            backgroundColor:
-              "#FFFFFF",
-
-            color: colors.navy,
-
-            borderBottom:
-              `1px solid ${colors.border}`,
-
-            zIndex:
-              theme.zIndex.drawer + 1,
+            backgroundColor: palette.bgTop,
+            color: "#FFFFFF",
+            borderBottom: `1px solid ${palette.border}`,
+            zIndex: theme.zIndex.drawer + 1,
           }}
         >
-          <Toolbar
-            sx={{
-              minHeight:
-                "62px !important",
-
-              px: 2,
-            }}
-          >
-
+          <Toolbar sx={{ minHeight: "62px !important", px: 2 }}>
             <IconButton
               edge="start"
-              onClick={() =>
-                setOpen(true)
-              }
-              sx={{
-                color:
-                  colors.navy,
-
-                mr: 1,
-              }}
+              onClick={() => setOpen(true)}
+              sx={{ color: "#FFFFFF", mr: 1 }}
             >
               <MenuIcon />
             </IconButton>
 
-
             <Box>
-              <Typography
-                sx={{
-                  fontSize: 15,
-
-                  fontWeight: 800,
-
-                  lineHeight: 1.1,
-                }}
-              >
-                Cloudix Admin
+              <Typography sx={{ fontSize: 15, fontWeight: 800, lineHeight: 1.1 }}>
+                Cloudix{" "}
+                <Box component="span" sx={{ color: palette.lime }}>
+                  Soft
+                </Box>
               </Typography>
 
-              <Typography
-                sx={{
-                  fontSize: 10,
-
-                  color:
-                    colors.muted,
-
-                  mt: 0.2,
-                }}
-              >
-                Marketing dashboard
+              <Typography sx={{ fontSize: 10, color: palette.muted, mt: 0.2 }}>
+                Ideas to Impact
               </Typography>
             </Box>
-
           </Toolbar>
         </AppBar>
       )}
 
-
-      {/* ====================================================
-          DESKTOP SIDEBAR
-      ==================================================== */}
-
+      {/* ---------- Desktop sidebar ---------- */}
       {!isMobile && (
         <Drawer
           variant="permanent"
           open
           sx={{
             width: drawerWidth,
-
             flexShrink: 0,
-
             "& .MuiDrawer-paper": {
               width: drawerWidth,
-
               boxSizing: "border-box",
-
               border: "none",
-
-              borderRight:
-                `1px solid ${colors.border}`,
-
-              backgroundColor:
-                "#ECF1F3",
-
+              background: palette.bgBottom,
               overflow: "hidden",
             },
           }}
@@ -626,47 +390,27 @@ const Sidebar = () => {
         </Drawer>
       )}
 
-
-      {/* ====================================================
-          MOBILE DRAWER
-      ==================================================== */}
-
+      {/* ---------- Mobile drawer ---------- */}
       {isMobile && (
         <Drawer
           variant="temporary"
-
           open={open}
-
-          onClose={() =>
-            setOpen(false)
-          }
-
-          ModalProps={{
-            keepMounted: true,
-          }}
-
+          onClose={() => setOpen(false)}
+          ModalProps={{ keepMounted: true }}
           sx={{
             "& .MuiDrawer-paper": {
-              width:
-                drawerWidth,
-
-              boxSizing:
-                "border-box",
-
+              width: drawerWidth,
+              boxSizing: "border-box",
               border: "none",
-
-              backgroundColor:
-                "#ECF1F3",
+              background: palette.bgBottom,
             },
           }}
         >
           {drawerContent}
         </Drawer>
       )}
-
     </>
   );
 };
-
 
 export default Sidebar;

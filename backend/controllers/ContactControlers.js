@@ -5,6 +5,14 @@ const mailer = new MailerSend({
   apiKey: process.env.MAILERSEND_API_KEY,
 });
 
+const escapeHtml = (str = "") =>
+  String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 export const createMessage = async (req, res) => {
 
   const {
@@ -45,26 +53,20 @@ export const createMessage = async (req, res) => {
       status: "pending",
     });
 
-    // MailerSend sender
+    // MailerSend sender (same "from" address for both emails)
     const sentFrom = new Sender(
       process.env.MAILERSEND_FROM_EMAIL,
       process.env.MAILERSEND_FROM_NAME
     );
 
-    // Admin recipient
-    const recipients = [
-      new Recipient(
-        process.env.ADMIN_EMAIL,
-        "Admin"
-      ),
-    ];
-
-    // Email
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setSubject(`New Contact Message from ${name}`)
-      .setText(`
+    // --- Email 1: notify the admin ---
+    try {
+      const adminEmail = new EmailParams()
+        .setFrom(sentFrom)
+        .setTo([new Recipient(process.env.ADMIN_EMAIL, "Admin")])
+        .setReplyTo(new Sender(email, name)) // hitting "Reply" answers the visitor
+        .setSubject(`New Contact Message from ${name}`)
+        .setText(`
 New Contact Form Submission
 ============================
 
@@ -78,9 +80,49 @@ ${message}
 
 ============================
 Cloudix Soft Contact Form
-      `);
+        `);
 
-    await mailer.email.send(emailParams);
+      await mailer.email.send(adminEmail);
+    } catch (adminEmailError) {
+      // The message is already saved in the database, so a failed email
+      // should not make the visitor see an error.
+      console.error("Admin notification email failed:", adminEmailError?.body || adminEmailError?.message || adminEmailError);
+    }
+
+    // --- Email 2: confirmation back to the person who sent the form ---
+    try {
+      const safeName = escapeHtml(name);
+      const safeMessage = escapeHtml(message);
+
+      const visitorEmail = new EmailParams()
+        .setFrom(sentFrom)
+        .setTo([new Recipient(email, name)])
+        .setSubject("We've received your message - Cloudix Soft")
+        .setHtml(`
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; border: 1px solid #e5e7eb; border-radius: 8px;">
+            <h2 style="color: #111E2C;">Thanks for reaching out, ${safeName}!</h2>
+            <p style="color: #374151; line-height: 1.6;">
+              We've received your message and the Cloudix Soft team will get back to you shortly.
+            </p>
+            <div style="background: #F7F9FB; border-radius: 6px; padding: 16px; margin: 20px 0;">
+              <p style="margin: 0 0 8px; color: #6b7280; font-size: 13px;">YOUR MESSAGE</p>
+              <p style="margin: 0; color: #111827; white-space: pre-wrap;">${safeMessage}</p>
+            </div>
+            <p style="color: #6b7280; font-size: 13px;">
+              If you didn't send this message, you can safely ignore this email.
+            </p>
+            <hr style="margin-top: 24px; border-color: #e5e7eb;" />
+            <p style="font-size: 12px; color: #9ca3af;">Cloudix Soft - cloudixsoft.com</p>
+          </div>
+        `)
+        .setText(
+          `Thanks for reaching out, ${name}!\n\nWe've received your message and the Cloudix Soft team will get back to you shortly.\n\nYour message:\n${message}\n\nIf you didn't send this message, you can ignore this email.\n\nCloudix Soft - cloudixsoft.com`
+        );
+
+      await mailer.email.send(visitorEmail);
+    } catch (visitorEmailError) {
+      console.error("Visitor confirmation email failed:", visitorEmailError?.body || visitorEmailError?.message || visitorEmailError);
+    }
 
     res.status(200).json({
       message: "Message sent successfully",
