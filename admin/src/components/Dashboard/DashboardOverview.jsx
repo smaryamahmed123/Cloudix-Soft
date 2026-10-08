@@ -1,372 +1,134 @@
 import React from "react";
-
-import {
-    Box,
-    Card,
-    CardContent,
-    Chip,
-    Typography,
-    useTheme,
-} from "@mui/material";
-
+import { Box, Card, CardContent, MenuItem, Select, Typography } from "@mui/material";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { dash, cardSx } from "./dashboardPalette";
 
+const SERIES_COLORS = {
+    blogs: dash.green,
+    portfolio: dash.navy,
+    messages: dash.lime,
+};
 
-// ============================================================
-// COMPONENT
-// ============================================================
+const Legend = ({ color, label }) => (
+    <Box sx={{ display: "flex", alignItems: "center", gap: 0.8 }}>
+        <Box sx={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: color }} />
+        <Typography sx={{ color: dash.muted, fontSize: 11 }}>{label}</Typography>
+    </Box>
+);
 
-const DashboardOverview = ({ chartData = [], isMobile }) => {
-    const theme = useTheme();
+const DashboardOverview = ({
+    chartData = [],
+    isMobile,
+    range = "7d",
+    onRangeChange = () => { },
+    rangeOptions = {},
+}) => {
+    const data = Array.isArray(chartData) ? chartData : [];
 
-    const colors = theme.dashboard;
+    const labels = data.map((d) => d?.month || "");
+    const blogs = data.map((d) => Number(d?.blogs) || 0);
+    const portfolio = data.map((d) => Number(d?.portfolio) || 0);
+    const messages = data.map((d) => Number(d?.messages) || 0);
 
-    // ----------------------------------------------------------
-    // Make absolutely sure chartData is an array
-    // ----------------------------------------------------------
-
-    const safeChartData = Array.isArray(chartData)
-        ? chartData
-        : [];
-
-    // ----------------------------------------------------------
-    // Chart values
-    // ----------------------------------------------------------
-
-    const months = safeChartData.map(
-        (item) => item?.month || ""
-    );
-
-    const blogs = safeChartData.map(
-        (item) => Number(item?.blogs) || 0
-    );
-
-    const portfolio = safeChartData.map(
-        (item) => Number(item?.portfolio) || 0
-    );
-
-    const messages = safeChartData.map(
-        (item) => Number(item?.messages) || 0
-    );
-
-
-    // ==========================================================
-    // RENDER
-    // ==========================================================
+    // Avoid unreadable x-axis on the 30-day view
+    const step = data.length > 14 ? 5 : 1;
 
     return (
-        <Card
-            sx={{
-                height: "100%",
-                minWidth: 0,
-                overflow: "hidden",
-            }}
-        >
-            <CardContent
-                sx={{
-                    p: {
-                        xs: 2,
-                        sm: 2.5,
-                        md: 2.75,
-                    },
-
-                    "&:last-child": {
-                        pb: {
-                            xs: 2,
-                            sm: 2.5,
-                            md: 2.75,
-                        },
-                    },
-                }}
-            >
-
-                {/* ==================================================
-            HEADER
-        ================================================== */}
-
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        gap: 2,
-                        mb: 2,
-                    }}
-                >
-                    <Box sx={{ minWidth: 0 }}>
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontWeight: 800,
-                                color: colors.navy,
-                                lineHeight: 1.2,
-                            }}
-                        >
+        <Card elevation={0} sx={{ ...cardSx, minWidth: 0, overflow: "hidden" }}>
+            <CardContent sx={{ p: { xs: 2, md: 2.5 }, "&:last-child": { pb: { xs: 2, md: 2.5 } } }}>
+                <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2, mb: 1 }}>
+                    <Box>
+                        <Typography sx={{ color: dash.navy, fontSize: 18, fontWeight: 800 }}>
                             Website Overview
                         </Typography>
-
-                        <Typography
-                            variant="body2"
-                            sx={{
-                                color: colors.muted,
-                                mt: 0.5,
-                                fontSize: 12,
-                            }}
-                        >
-                            Your website content activity
+                        <Typography sx={{ color: dash.muted, fontSize: 12.5, mt: 0.4 }}>
+                            Total content across your website
                         </Typography>
                     </Box>
 
-                    <Chip
-                        label="Last 12 months"
+                    <Select
                         size="small"
-                        variant="outlined"
+                        value={range}
+                        onChange={(e) => onRangeChange(e.target.value)}
                         sx={{
-                            flexShrink: 0,
-
-                            height: 30,
-
-                            borderColor:
-                                colors.border,
-
-                            color: colors.muted,
-
-                            fontSize: 11,
-
-                            fontWeight: 600,
-
-                            backgroundColor:
-                                "#FFFFFF",
-
-                            "& .MuiChip-label": {
-                                px: 1.25,
-                            },
+                            height: 36,
+                            fontSize: 12,
+                            color: dash.navy,
+                            borderRadius: "8px",
+                            "& fieldset": { borderColor: dash.border },
                         }}
-                    />
+                    >
+                        {Object.entries(rangeOptions).map(([key, label]) => (
+                            <MenuItem key={key} value={key} sx={{ fontSize: 12 }}>
+                                {label}
+                            </MenuItem>
+                        ))}
+                    </Select>
                 </Box>
 
-
-                {/* ==================================================
-            LEGEND
-        ================================================== */}
-
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: {
-                            xs: 1.5,
-                            sm: 2,
-                        },
-
-                        flexWrap: "wrap",
-
-                        mb: 1,
-                    }}
-                >
-                    <Legend
-                        color={colors.teal}
-                        label="Blogs"
-                    />
-
-                    <Legend
-                        color={colors.blue}
-                        label="Portfolio"
-                    />
-
-                    <Legend
-                        color={colors.purple}
-                        label="Messages"
-                    />
+                <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2.2, mb: 0.5 }}>
+                    <Legend color={SERIES_COLORS.blogs} label="Blogs" />
+                    <Legend color={SERIES_COLORS.portfolio} label="Websites" />
+                    <Legend color={SERIES_COLORS.messages} label="Messages" />
                 </Box>
 
-
-                {/* ==================================================
-            CHART
-        ================================================== */}
-
-                <Box
-                    sx={{
-                        width: "100%",
-                        minWidth: 0,
-
-                        height: {
-                            xs: 250,
-                            sm: 280,
-                            md: 300,
-                        },
-
-                        position: "relative",
-
-                        overflow: "hidden",
-                    }}
-                >
+                <Box sx={{ width: "100%", minWidth: 0, overflow: "hidden" }}>
                     <LineChart
                         xAxis={[
                             {
                                 scaleType: "point",
-
-                                data: months,
-
-                                tickLabelStyle: {
-                                    fontSize: 10,
-                                    fill: colors.muted,
-                                },
+                                data: labels,
+                                tickInterval: (_, index) => index % step === 0,
+                                tickLabelStyle: { fontSize: 10, fill: dash.muted },
                             },
                         ]}
-
-                        yAxis={[
-                            {
-                                min: 0,
-
-                                tickLabelStyle: {
-                                    fontSize: 10,
-                                    fill: colors.muted,
-                                },
-                            },
-                        ]}
-
+                        yAxis={[{ min: 0, tickLabelStyle: { fontSize: 10, fill: dash.muted } }]}
                         series={[
                             {
+                                id: "blogs",
                                 data: blogs,
-
                                 label: "Blogs",
-
-                                color: colors.teal,
-
+                                color: SERIES_COLORS.blogs,
                                 curve: "linear",
-
+                                area: true,
                                 showMark: true,
                             },
-
                             {
+                                id: "portfolio",
                                 data: portfolio,
-
-                                label: "Portfolio",
-
-                                color: colors.blue,
-
+                                label: "Websites",
+                                color: SERIES_COLORS.portfolio,
                                 curve: "linear",
-
+                                area: true,
                                 showMark: true,
                             },
-
                             {
+                                id: "messages",
                                 data: messages,
-
                                 label: "Messages",
-
-                                color: colors.purple,
-
+                                color: SERIES_COLORS.messages,
                                 curve: "linear",
-
+                                area: true,
                                 showMark: true,
                             },
                         ]}
-
-                        height={
-                            isMobile
-                                ? 245
-                                : 285
-                        }
-
-                        margin={{
-                            left: 35,
-                            right: 10,
-                            top: 10,
-                            bottom: 30,
-                        }}
-
-                        grid={{
-                            horizontal: true,
-                        }}
-
-                        slotProps={{
-                            legend: {
-                                hidden: true,
-                            },
-                        }}
-
+                        height={isMobile ? 240 : 270}
+                        margin={{ left: 35, right: 14, top: 10, bottom: 30 }}
+                        grid={{ horizontal: true, vertical: true }}
+                        slotProps={{ legend: { hidden: true } }}
                         sx={{
                             width: "100%",
-
-                            "& .MuiChartsAxis-line": {
-                                stroke: colors.border,
-                            },
-
-                            "& .MuiChartsAxis-tick": {
-                                stroke: colors.border,
-                            },
-
-                            "& .MuiChartsGrid-line": {
-                                stroke: colors.border,
-                                strokeDasharray: "3 3",
-                            },
-
-                            "& .MuiChartsAxis-tickLabel": {
-                                fill: colors.muted,
-                                fontSize: 10,
-                            },
-
-                            "& .MuiLineElement-root": {
-                                strokeWidth: 2,
-                            },
-
-                            "& .MuiMarkElement-root": {
-                                strokeWidth: 2,
-                            },
+                            "& .MuiChartsAxis-line, & .MuiChartsAxis-tick": { stroke: dash.border },
+                            "& .MuiChartsGrid-line": { stroke: dash.border, strokeDasharray: "3 3" },
+                            "& .MuiLineElement-root": { strokeWidth: 2 },
+                            "& .MuiAreaElement-root": { fillOpacity: 0.1 },
+                            "& .MuiMarkElement-root": { strokeWidth: 2, fill: "#fff" },
                         }}
                     />
                 </Box>
-
             </CardContent>
         </Card>
     );
 };
-
-
-// ============================================================
-// LEGEND
-// ============================================================
-
-const Legend = ({
-    color,
-    label,
-}) => {
-    return (
-        <Box
-            sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 0.7,
-            }}
-        >
-            <Box
-                sx={{
-                    width: 7,
-                    height: 7,
-
-                    borderRadius: "50%",
-
-                    backgroundColor: color,
-
-                    flexShrink: 0,
-                }}
-            />
-
-            <Typography
-                variant="caption"
-                sx={{
-                    color: "#718398",
-                    fontSize: 10.5,
-                    fontWeight: 500,
-                }}
-            >
-                {label}
-            </Typography>
-        </Box>
-    );
-};
-
 
 export default DashboardOverview;

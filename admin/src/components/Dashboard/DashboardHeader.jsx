@@ -1,282 +1,160 @@
 import React from "react";
-import {
-    Box,
-    Button,
-    Grid,
-    Paper,
-    Stack,
-    Typography,
-} from "@mui/material";
-
-import {
-    ArrowForwardRounded,
-    CalendarMonthOutlined,
-    TrendingUpRounded,
-} from "@mui/icons-material";
-
-import { useTheme } from "@mui/material/styles";
+import { Box, Grid, Paper, Typography } from "@mui/material";
+import { CalendarMonthOutlined } from "@mui/icons-material";
+import { dash, cardSx } from "./dashboardPalette";
 
 const DashboardHeader = () => {
-    const theme = useTheme();
-    const colors = theme.dashboard;
-
     const now = new Date();
+    const hour = now.getHours();
+    const greeting = hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
 
-    const greeting = (() => {
-        const hour = now.getHours();
-
-        if (hour < 12) return "Good Morning";
-        if (hour < 17) return "Good Afternoon";
-
-        return "Good Evening";
-    })();
-
-    const date = now.toLocaleDateString("en-US", {
+    const date = now.toLocaleDateString("en-GB", {
         weekday: "short",
         day: "numeric",
         month: "short",
         year: "numeric",
     });
 
-    const time = now.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-    });
+    const time = now.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 
     return (
-        <Grid container spacing={2.5} sx={{ mb: 3 }}>
-            {/* Greeting */}
-            <Grid item xs={12} md={5}>
-                <Box sx={{ pt: 0.5 }}>
-                    <Typography
-                        sx={{
-                            color: colors.navy,
-                            fontSize: {
-                                xs: 23,
-                                md: 28,
-                            },
-                            fontWeight: 800,
-                            letterSpacing: "-0.7px",
-                        }}
-                    >
-                        {greeting},
-                    </Typography>
-
-                    <Typography
-                        sx={{
-                            color: colors.navy,
-                            fontSize: {
-                                xs: 30,
-                                md: 38,
-                            },
-                            fontWeight: 800,
-                            lineHeight: 1.05,
-                            letterSpacing: "-1.2px",
-                        }}
-                    >
-                        Admin{" "}
-                        <Box
-                            component="span"
-                            sx={{
-                                fontSize: {
-                                    xs: 25,
-                                    md: 31,
-                                },
-                            }}
-                        >
-                            👋
-                        </Box>
-                    </Typography>
-
-                    <Typography
-                        sx={{
-                            color: colors.muted,
-                            fontSize: 13,
-                            mt: 1,
-                            maxWidth: 430,
-                        }}
-                    >
-                        Here's what's happening with your
-                        marketing agency website today.
-                    </Typography>
-                </Box>
-            </Grid>
-
-            {/* Marketing Banner */}
-            <Grid item xs={12} md={5}>
+        <Grid container spacing={2.5} sx={{ mb: 2.5 }}>
+            {/* ---------- Greeting banner ---------- */}
+            <Grid item xs={12} lg={9}>
                 <Paper
                     elevation={0}
                     sx={{
-                        height: "100%",
-                        minHeight: 145,
-                        p: {
-                            xs: 2.5,
-                            md: 3,
-                        },
+                        ...cardSx,
                         position: "relative",
                         overflow: "hidden",
-                        background:
-                            "linear-gradient(135deg, #EAF9F6 0%, #D9F3EF 100%)",
-                        border: "1px solid #CFECE7",
+                        minHeight: 160,
+                        display: "flex",
+                        alignItems: "center",
+                        px: { xs: 2.5, md: 3 },
+                        py: 2.5,
+                        background: "linear-gradient(90deg, #F3F8E9 0%, #EAF2DA 100%)",
+                    }}
+                >
+                    {/* Diagonal stripes */}
+                    <Box
+                        aria-hidden
+                        sx={{
+                            display: { xs: "none", md: "block" },
+                            position: "absolute",
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: 260,
+                            background: `linear-gradient(135deg, ${dash.lime} 0%, ${dash.green} 70%)`,
+                            clipPath: "polygon(55% 0, 100% 0, 100% 100%, 0 100%)",
+                            opacity: 0.9,
+                            pointerEvents: "none",
+                        }}
+                    />
+                    <Box
+                        aria-hidden
+                        sx={{
+                            display: { xs: "none", md: "block" },
+                            position: "absolute",
+                            right: 210,
+                            top: 0,
+                            bottom: 0,
+                            width: 120,
+                            background: "rgba(255,255,255,0.55)",
+                            clipPath: "polygon(60% 0, 100% 0, 40% 100%, 0 100%)",
+                            pointerEvents: "none",
+                        }}
+                    />
+
+                    {/* Laptop mockup */}
+                    <Box
+                        aria-hidden
+                        sx={{
+                            display: { xs: "none", md: "block" },
+                            position: "absolute",
+                            right: 70,
+                            bottom: 16,
+                            width: 190,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                height: 112,
+                                p: 1.6,
+                                borderRadius: "8px 8px 0 0",
+                                backgroundColor: "#0F2236",
+                                border: "4px solid #1E2F42",
+                                borderBottom: "none",
+                            }}
+                        >
+                            <Typography sx={{ color: "#fff", fontSize: 11, fontWeight: 700, lineHeight: 1.35 }}>
+                                Your Vision
+                                <br />
+                                Our Strategy
+                                <br />
+                                <Box component="span" sx={{ color: dash.lime }}>
+                                    Real Growth
+                                </Box>
+                            </Typography>
+                        </Box>
+                        <Box sx={{ height: 8, borderRadius: "0 0 10px 10px", backgroundColor: "#C9D1D8" }} />
+                    </Box>
+
+                    <Box sx={{ position: "relative", zIndex: 2 }}>
+                        <Typography sx={{ color: dash.navy, fontSize: { xs: 22, md: 26 }, fontWeight: 400 }}>
+                            {greeting},
+                        </Typography>
+                        <Typography
+                            sx={{
+                                color: dash.navy,
+                                fontSize: { xs: 30, md: 38 },
+                                fontWeight: 800,
+                                lineHeight: 1.1,
+                                letterSpacing: "-0.8px",
+                            }}
+                        >
+                            Admin <Box component="span">👋</Box>
+                        </Typography>
+                        <Typography sx={{ color: dash.green, fontSize: 13, mt: 1, maxWidth: 360 }}>
+                            Here's what's happening with your marketing agency website today.
+                        </Typography>
+                    </Box>
+                </Paper>
+            </Grid>
+
+            {/* ---------- Date card ---------- */}
+            <Grid item xs={12} lg={3}>
+                <Paper
+                    elevation={0}
+                    sx={{
+                        ...cardSx,
+                        p: 2.4,
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 1.6,
                     }}
                 >
                     <Box
                         sx={{
-                            position: "absolute",
-                            width: 180,
-                            height: 180,
-                            borderRadius: "50%",
-                            backgroundColor: "#BDEDE7",
-                            right: -70,
-                            top: -100,
-                        }}
-                    />
-
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        sx={{
-                            position: "relative",
-                            zIndex: 2,
-                            height: "100%",
+                            width: 44,
+                            height: 44,
+                            borderRadius: "12px",
+                            display: "grid",
+                            placeItems: "center",
+                            backgroundColor: dash.greenLight,
+                            color: dash.green,
+                            flexShrink: 0,
                         }}
                     >
-                        <Box>
-                            <Typography
-                                sx={{
-                                    color: colors.navy,
-                                    fontSize: {
-                                        xs: 18,
-                                        md: 21,
-                                    },
-                                    fontWeight: 800,
-                                    lineHeight: 1.15,
-                                }}
-                            >
-                                Better Marketing
-                                <br />
-                                Bigger Results
-                            </Typography>
+                        <CalendarMonthOutlined />
+                    </Box>
 
-                            <Typography
-                                sx={{
-                                    color: colors.muted,
-                                    fontSize: 11,
-                                    mt: 0.7,
-                                }}
-                            >
-                                Strategic. Creative.
-                                Results-driven.
-                            </Typography>
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                        <Typography sx={{ color: dash.muted, fontSize: 12 }}>Today</Typography>
+                        <Typography sx={{ color: dash.muted, fontSize: 12.5, mt: 0.4 }}>{date}</Typography>
+                    </Box>
 
-                            <Button
-                                size="small"
-                                variant="contained"
-                                endIcon={<ArrowForwardRounded />}
-                                onClick={() =>
-                                    window.open(
-                                        "https://cloudixsoft.com",
-                                        "_blank"
-                                    )
-                                }
-                                sx={{
-                                    mt: 1.6,
-                                }}
-                            >
-                                View Website
-                            </Button>
-                        </Box>
-
-                        <Box
-                            sx={{
-                                display: {
-                                    xs: "none",
-                                    sm: "grid",
-                                },
-                                width: 95,
-                                height: 70,
-                                borderRadius: 2,
-                                backgroundColor: colors.navy,
-                                transform: "rotate(-4deg)",
-                                placeItems: "center",
-                                boxShadow:
-                                    "0 12px 25px rgba(24,52,79,.15)",
-                            }}
-                        >
-                            <TrendingUpRounded
-                                sx={{
-                                    color: colors.teal,
-                                    fontSize: 45,
-                                }}
-                            />
-                        </Box>
-                    </Stack>
-                </Paper>
-            </Grid>
-
-            {/* Date */}
-            <Grid item xs={12} md={2}>
-                <Paper
-                    elevation={0}
-                    sx={{
-                        minHeight: 145,
-                        p: 2.5,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="flex-start"
-                    >
-                        <Box
-                            sx={{
-                                width: 42,
-                                height: 42,
-                                borderRadius: 2,
-                                display: "grid",
-                                placeItems: "center",
-                                backgroundColor: colors.tealLight,
-                                color: colors.teal,
-                            }}
-                        >
-                            <CalendarMonthOutlined />
-                        </Box>
-
-                        <Typography
-                            sx={{
-                                color: colors.navy,
-                                fontSize: 11,
-                                fontWeight: 700,
-                            }}
-                        >
-                            Today
-                        </Typography>
-                    </Stack>
-
-                    <Typography
-                        sx={{
-                            color: colors.navy,
-                            fontSize: 13,
-                            fontWeight: 700,
-                            mt: 1.5,
-                        }}
-                    >
-                        {date}
-                    </Typography>
-
-                    <Typography
-                        sx={{
-                            color: colors.muted,
-                            fontSize: 12,
-                            mt: 0.3,
-                        }}
-                    >
-                        {time}
-                    </Typography>
+                    <Typography sx={{ color: dash.navy, fontSize: 12, fontWeight: 600 }}>{time}</Typography>
                 </Paper>
             </Grid>
         </Grid>

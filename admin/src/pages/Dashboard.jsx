@@ -1,79 +1,46 @@
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  Stack,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
-
+import { Box, CircularProgress, Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
 import { useNavigate } from "react-router-dom";
-
 import {
   ArticleOutlined,
   MailOutlineRounded,
+  WorkOutlineRounded,
+  StarBorderRounded,
 } from "@mui/icons-material";
 
+import DashboardTopBar from "../components/Dashboard/DashboardTopBar";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 import DashboardStatCard from "../components/Dashboard/DashboardStatCard";
 import DashboardOverview from "../components/Dashboard/DashboardOverview";
 import RecentActivity from "../components/Dashboard/RecentActivity";
 import QuickActions from "../components/Dashboard/QuickActions";
 import GrowthCard from "../components/Dashboard/GrowthCard";
-
+import { dash } from "../components/Dashboard/dashboardPalette";
 
 // ============================================================
 // API
 // ============================================================
 
-const backendURL =
-  import.meta.env.VITE_BACKEND_URL;
+const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-const LOGOS_URL =
-  `${backendURL}/api/logos`;
-
-const SERVICES_URL =
-  `${backendURL}/api/services`;
-
-const ADMIN_BLOG_URL =
-  `${backendURL}/api/blogs`;
-
-const ADMIN_CONTACT_MSG_URL =
-  `${backendURL}/api/contact`;
-
-const ABOUT_BASE_URL =
-  `${backendURL}/api/about`;
-
+const LOGOS_URL = `${backendURL}/api/logos`;
+const ADMIN_BLOG_URL = `${backendURL}/api/blogs`;
+const ADMIN_CONTACT_MSG_URL = `${backendURL}/api/contact`;
+const TESTIMONIALS_URL = `${backendURL}/api/testimonials`; // ASSUMED endpoint – adjust if different
 
 // ============================================================
 // CONSTANTS
 // ============================================================
 
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+const RANGE_OPTIONS = {
+  "7d": "Last 7 days",
+  "30d": "Last 30 days",
+  "12m": "Last 12 months",
+};
 
 // ============================================================
 // HELPERS
@@ -81,615 +48,212 @@ const MONTHS = [
 
 const getArrayData = (response) => {
   const data = response?.data;
-
-  if (Array.isArray(data)) {
-    return data;
-  }
-
-  if (Array.isArray(data?.data)) {
-    return data.data;
-  }
-
-  if (Array.isArray(data?.items)) {
-    return data.items;
-  }
-
-  if (Array.isArray(data?.results)) {
-    return data.results;
-  }
-
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.data)) return data.data;
+  if (Array.isArray(data?.items)) return data.items;
+  if (Array.isArray(data?.results)) return data.results;
   return [];
 };
 
-
-// ------------------------------------------------------------
-// Get date
-// ------------------------------------------------------------
-
 const getDate = (item) => {
-  const rawDate =
-    item?.createdAt ||
-    item?.date ||
-    item?.updatedAt;
-
-  if (!rawDate) {
-    return null;
-  }
-
-  const date = new Date(rawDate);
-
-  if (Number.isNaN(date.getTime())) {
-    return null;
-  }
-
-  return date;
+  const raw = item?.createdAt || item?.date || item?.updatedAt;
+  if (!raw) return null;
+  const d = new Date(raw);
+  return Number.isNaN(d.getTime()) ? null : d;
 };
 
+const formatRelativeTime = (date) => {
+  if (!date) return "Recently";
+  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diff < 60) return "Just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
+  if (diff < 604800) return `${Math.floor(diff / 86400)} days ago`;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+};
 
-// ------------------------------------------------------------
-// Monthly counts
-// ------------------------------------------------------------
+// Buckets: each has a label and an exclusive end time
+const getBuckets = (range) => {
+  const now = new Date();
+  const buckets = [];
 
-const getMonthlyCounts = (
-  items = []
-) => {
-  const counts =
-    new Array(12).fill(0);
-
-  if (!Array.isArray(items)) {
-    return counts;
-  }
-
-  items.forEach((item) => {
-    const date = getDate(item);
-
-    if (!date) {
-      return;
+  if (range === "12m") {
+    for (let i = 11; i >= 0; i--) {
+      const start = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      const end = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+      buckets.push({ label: MONTHS[start.getMonth()], end: end.getTime() });
     }
+    return buckets;
+  }
 
-    const month =
-      date.getMonth();
-
-    counts[month] += 1;
-  });
-
-  return counts;
+  const days = range === "30d" ? 30 : 7;
+  for (let i = days - 1; i >= 0; i--) {
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+    const end = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i + 1);
+    buckets.push({
+      label: start.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+      end: end.getTime(),
+    });
+  }
+  return buckets;
 };
 
+// Cumulative total of items created up to the end of each bucket
+const cumulativeSeries = (items, buckets) => {
+  const times = (Array.isArray(items) ? items : [])
+    .map((item) => getDate(item)?.getTime())
+    .filter(Number.isFinite);
 
-// ------------------------------------------------------------
-// Format relative time
-// ------------------------------------------------------------
-
-const formatRelativeTime = (
-  date
-) => {
-  if (!date) {
-    return "Recently";
-  }
-
-  const now =
-    new Date();
-
-  const difference = Math.floor(
-    (
-      now.getTime() -
-      date.getTime()
-    ) / 1000
-  );
-
-  if (difference < 60) {
-    return "Just now";
-  }
-
-  if (difference < 3600) {
-    return `${Math.floor(
-      difference / 60
-    )} min ago`;
-  }
-
-  if (difference < 86400) {
-    return `${Math.floor(
-      difference / 3600
-    )} hr ago`;
-  }
-
-  if (difference < 604800) {
-    return `${Math.floor(
-      difference / 86400
-    )} day ago`;
-  }
-
-  return date.toLocaleDateString(
-    "en-US",
-    {
-      month: "short",
-      day: "numeric",
-    }
-  );
+  return buckets.map((b) => times.filter((t) => t < b.end).length);
 };
 
-
-// ============================================================
-// INITIAL CHART DATA
-// ============================================================
-
-const createEmptyChartData = () => {
-  return MONTHS.map(
-    (month) => ({
-      month,
-      blogs: 0,
-      portfolio: 0,
-      messages: 0,
-    })
-  );
+// Month-over-month growth label from a 12-month cumulative series
+const getTrendLabel = (series) => {
+  const last = series[series.length - 1] || 0;
+  const prev = series[series.length - 2] || 0;
+  if (prev === 0) return last > 0 ? "New" : "0%";
+  return `${Math.round(((last - prev) / prev) * 100)}%`;
 };
-
 
 // ============================================================
 // PAGE
 // ============================================================
 
 const Dashboard = () => {
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const theme =
-    useTheme();
-
-  const isMobile =
-    useMediaQuery(
-      theme.breakpoints.down("sm")
-    );
-
-  const colors =
-    theme.dashboard;
-
+  const [loading, setLoading] = useState(true);
+  const [range, setRange] = useState("7d");
+  const [raw, setRaw] = useState({
+    blogs: [],
+    portfolio: [],
+    messages: [],
+    testimonials: [],
+  });
 
   // ==========================================================
-  // STATE
-  // ==========================================================
-
-  const [loading, setLoading] =
-    useState(true);
-
-  const [counts, setCounts] =
-    useState({
-      services: 0,
-      blogs: 0,
-      portfolio: 0,
-      messages: 0,
-      visits: 0,
-    });
-
-  const [
-    recentBlogs,
-    setRecentBlogs,
-  ] = useState([]);
-
-  const [
-    recentMessages,
-    setRecentMessages,
-  ] = useState([]);
-
-
-  // IMPORTANT:
-  // chartData MUST be an ARRAY
-  //
-  // Previously this was an object:
-  //
-  // {
-  //   months: [],
-  //   blogs: [],
-  //   portfolio: [],
-  //   messages: []
-  // }
-  //
-  // DashboardOverview uses chartData.map(),
-  // so the state must be an array.
-
-  const [
-    chartData,
-    setChartData,
-  ] = useState(
-    createEmptyChartData()
-  );
-
-
-  // ==========================================================
-  // FETCH DASHBOARD DATA
+  // FETCH
   // ==========================================================
 
   useEffect(() => {
     let mounted = true;
 
-    const fetchDashboardData =
-      async () => {
-        try {
-          setLoading(true);
+    const load = async () => {
+      try {
+        setLoading(true);
 
-          const [
-            services,
-            blogs,
-            messages,
-            logos,
-            about,
-          ] =
-            await Promise.allSettled([
-              axios.get(
-                SERVICES_URL
-              ),
+        const [blogs, messages, logos, testimonials] = await Promise.allSettled([
+          axios.get(ADMIN_BLOG_URL),
+          axios.get(ADMIN_CONTACT_MSG_URL),
+          axios.get(LOGOS_URL),
+          axios.get(TESTIMONIALS_URL),
+        ]);
 
-              axios.get(
-                ADMIN_BLOG_URL
-              ),
+        if (!mounted) return;
 
-              axios.get(
-                ADMIN_CONTACT_MSG_URL
-              ),
+        const pick = (r) => (r.status === "fulfilled" ? getArrayData(r.value) : []);
 
-              axios.get(
-                LOGOS_URL
-              ),
+        setRaw({
+          blogs: pick(blogs),
+          messages: pick(messages),
+          portfolio: pick(logos),
+          testimonials: pick(testimonials),
+        });
+      } catch (error) {
+        console.error("Dashboard error:", error);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
 
-              axios.get(
-                ABOUT_BASE_URL
-              ),
-            ]);
-
-
-          // --------------------------------------------------
-          // Stop if component was unmounted
-          // --------------------------------------------------
-
-          if (!mounted) {
-            return;
-          }
-
-
-          // --------------------------------------------------
-          // Extract API arrays safely
-          // --------------------------------------------------
-
-          const servicesData =
-            services.status ===
-              "fulfilled"
-              ? getArrayData(
-                services.value
-              )
-              : [];
-
-
-          const blogsData =
-            blogs.status ===
-              "fulfilled"
-              ? getArrayData(
-                blogs.value
-              )
-              : [];
-
-
-          const messagesData =
-            messages.status ===
-              "fulfilled"
-              ? getArrayData(
-                messages.value
-              )
-              : [];
-
-
-          const logosData =
-            logos.status ===
-              "fulfilled"
-              ? getArrayData(
-                logos.value
-              )
-              : [];
-
-
-          const aboutData =
-            about.status ===
-              "fulfilled"
-              ? (
-                about.value?.data ||
-                {}
-              )
-              : {};
-
-
-          // ==================================================
-          // VISITS
-          // ==================================================
-
-          let visitsCount =
-            Number(
-              aboutData?.analytics?.visits
-            ) || 0;
-
-
-          // Fallback to blog views
-          if (!visitsCount) {
-            visitsCount =
-              blogsData.reduce(
-                (
-                  total,
-                  blog
-                ) => {
-                  return (
-                    total +
-                    (
-                      Number(
-                        blog?.views
-                      ) || 0
-                    )
-                  );
-                },
-                0
-              );
-          }
-
-
-          // ==================================================
-          // COUNTS
-          // ==================================================
-
-          setCounts({
-            services:
-              servicesData.length,
-
-            blogs:
-              blogsData.length,
-
-            portfolio:
-              logosData.length,
-
-            messages:
-              messagesData.length,
-
-            visits:
-              visitsCount,
-          });
-
-
-          // ==================================================
-          // MONTHLY CHART DATA
-          // ==================================================
-
-          const blogCounts =
-            getMonthlyCounts(
-              blogsData
-            );
-
-          const portfolioCounts =
-            getMonthlyCounts(
-              logosData
-            );
-
-          const messageCounts =
-            getMonthlyCounts(
-              messagesData
-            );
-
-
-          // IMPORTANT:
-          // Convert everything into ONE ARRAY
-          // of 12 objects.
-
-          const newChartData =
-            MONTHS.map(
-              (
-                month,
-                index
-              ) => ({
-                month,
-
-                blogs:
-                  blogCounts[
-                  index
-                  ] || 0,
-
-                portfolio:
-                  portfolioCounts[
-                  index
-                  ] || 0,
-
-                messages:
-                  messageCounts[
-                  index
-                  ] || 0,
-              })
-            );
-
-
-          setChartData(
-            newChartData
-          );
-
-
-          // ==================================================
-          // RECENT BLOGS
-          // ==================================================
-
-          const sortedBlogs =
-            [...blogsData]
-              .sort(
-                (a, b) =>
-                  (
-                    getDate(b)
-                      ?.getTime() ||
-                    0
-                  ) -
-                  (
-                    getDate(a)
-                      ?.getTime() ||
-                    0
-                  )
-              )
-              .slice(0, 4);
-
-
-          // ==================================================
-          // RECENT MESSAGES
-          // ==================================================
-
-          const sortedMessages =
-            [...messagesData]
-              .sort(
-                (a, b) =>
-                  (
-                    getDate(b)
-                      ?.getTime() ||
-                    0
-                  ) -
-                  (
-                    getDate(a)
-                      ?.getTime() ||
-                    0
-                  )
-              )
-              .slice(0, 4);
-
-
-          setRecentBlogs(
-            sortedBlogs
-          );
-
-          setRecentMessages(
-            sortedMessages
-          );
-
-        } catch (error) {
-          console.error(
-            "Dashboard error:",
-            error
-          );
-        } finally {
-          if (mounted) {
-            setLoading(false);
-          }
-        }
-      };
-
-
-    fetchDashboardData();
-
-
+    load();
     return () => {
       mounted = false;
     };
   }, []);
 
-
   // ==========================================================
-  // RECENT ACTIVITY
+  // DERIVED DATA
   // ==========================================================
 
-  const activities =
-    useMemo(() => {
+  const chartData = useMemo(() => {
+    const buckets = getBuckets(range);
+    const blogs = cumulativeSeries(raw.blogs, buckets);
+    const portfolio = cumulativeSeries(raw.portfolio, buckets);
+    const messages = cumulativeSeries(raw.messages, buckets);
 
-      const blogs =
-        Array.isArray(
-          recentBlogs
-        )
-          ? recentBlogs.map(
-            (blog) => ({
-              date:
-                getDate(
-                  blog
-                ),
+    return buckets.map((b, i) => ({
+      month: b.label,
+      blogs: blogs[i],
+      portfolio: portfolio[i],
+      messages: messages[i],
+    }));
+  }, [raw, range]);
 
-              title:
-                "New blog published",
+  // Sparklines + trends always use the 12-month view
+  const stats = useMemo(() => {
+    const buckets = getBuckets("12m");
+    const build = (items) => {
+      const series = cumulativeSeries(items, buckets);
+      return { series, trend: getTrendLabel(series) };
+    };
 
-              subtitle:
-                blog?.title ||
-                "Blog post published",
+    return {
+      blogs: build(raw.blogs),
+      portfolio: build(raw.portfolio),
+      testimonials: build(raw.testimonials),
+      messages: build(raw.messages),
+    };
+  }, [raw]);
 
-              icon: (
-                <ArticleOutlined
-                  sx={{
-                    fontSize: 19,
-                  }}
-                />
-              ),
+  const activities = useMemo(() => {
+    const latest = (items, n = 3) =>
+      [...items]
+        .sort((a, b) => (getDate(b)?.getTime() || 0) - (getDate(a)?.getTime() || 0))
+        .slice(0, n);
 
-              iconBackground:
-                colors.purpleLight,
-            })
-          )
-          : [];
+    const icon = (Icon) => <Icon sx={{ fontSize: 20 }} />;
 
+    const list = [
+      ...latest(raw.testimonials).map((t) => ({
+        date: getDate(t),
+        title: "New testimonial added",
+        subtitle:
+          [t?.name || t?.clientName, t?.company].filter(Boolean).join(" from ") ||
+          "Client feedback received",
+        icon: icon(StarBorderRounded),
+        iconBackground: dash.limeLight,
+      })),
+      ...latest(raw.messages).map((m) => ({
+        date: getDate(m),
+        title: "New contact message",
+        subtitle: m?.email ? `From: ${m.email}` : m?.name || "Client inquiry received",
+        icon: icon(MailOutlineRounded),
+        iconBackground: dash.blueLight,
+      })),
+      ...latest(raw.blogs).map((b) => ({
+        date: getDate(b),
+        title: "New blog published",
+        subtitle: b?.title || "Blog post published",
+        icon: icon(ArticleOutlined),
+        iconBackground: dash.greenLight,
+      })),
+      ...latest(raw.portfolio).map((p) => ({
+        date: getDate(p),
+        title: "Portfolio updated",
+        subtitle: p?.title || p?.name || "New portfolio item added",
+        icon: icon(WorkOutlineRounded),
+        iconBackground: "#EEF1F4",
+      })),
+    ];
 
-      const messages =
-        Array.isArray(
-          recentMessages
-        )
-          ? recentMessages.map(
-            (message) => ({
-              date:
-                getDate(
-                  message
-                ),
-
-              title:
-                "New contact message",
-
-              subtitle:
-                message?.name ||
-                message?.email ||
-                "Client inquiry received",
-
-              icon: (
-                <MailOutlineRounded
-                  sx={{
-                    fontSize: 19,
-                  }}
-                />
-              ),
-
-              iconBackground:
-                colors.redLight,
-            })
-          )
-          : [];
-
-
-      return [
-        ...blogs,
-        ...messages,
-      ]
-        .sort(
-          (a, b) =>
-            (
-              b.date
-                ?.getTime() ||
-              0
-            ) -
-            (
-              a.date
-                ?.getTime() ||
-              0
-            )
-        )
-        .slice(0, 5)
-        .map(
-          (item) => ({
-            ...item,
-
-            time:
-              formatRelativeTime(
-                item.date
-              ),
-          })
-        );
-
-    }, [
-      recentBlogs,
-      recentMessages,
-      colors.purpleLight,
-      colors.redLight,
-    ]);
-
+    return list
+      .sort((a, b) => (b.date?.getTime() || 0) - (a.date?.getTime() || 0))
+      .slice(0, 5)
+      .map((item) => ({ ...item, time: formatRelativeTime(item.date) }));
+  }, [raw]);
 
   // ==========================================================
   // LOADING
@@ -697,38 +261,10 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <Box
-        sx={{
-          minHeight: "80vh",
-
-          display: "grid",
-
-          placeItems:
-            "center",
-
-          backgroundColor:
-            colors.pageBackground,
-        }}
-      >
-        <Stack
-          alignItems="center"
-          spacing={1.5}
-        >
-          <CircularProgress
-            size={38}
-            thickness={4}
-          />
-
-          <Typography
-            sx={{
-              color:
-                colors.muted,
-
-              fontSize: 13,
-
-              fontWeight: 600,
-            }}
-          >
+      <Box sx={{ minHeight: "80vh", display: "grid", placeItems: "center", backgroundColor: dash.page }}>
+        <Stack alignItems="center" spacing={1.5}>
+          <CircularProgress size={38} thickness={4} sx={{ color: dash.green }} />
+          <Typography sx={{ color: dash.muted, fontSize: 13, fontWeight: 600 }}>
             Loading dashboard...
           </Typography>
         </Stack>
@@ -736,344 +272,116 @@ const Dashboard = () => {
     );
   }
 
-
   // ==========================================================
   // PAGE
   // ==========================================================
 
   return (
-    <Box
-      sx={{
-        minHeight: "100%",
+    <Box sx={{ minHeight: "100%", backgroundColor: dash.page }}>
+      <DashboardTopBar />
 
-        backgroundColor:
-          colors.pageBackground,
+      <Box sx={{ p: { xs: 2, sm: 2.5, md: 3.5 } }}>
+        <DashboardHeader />
 
-        p: {
-          xs: 2,
-          sm: 2.5,
-          md: 3.5,
-          lg: 4,
-        },
-      }}
-    >
-
-      {/* ====================================================
-          HEADER
-      ==================================================== */}
-
-      <DashboardHeader />
-
-
-      {/* ====================================================
-          STATISTICS
-      ==================================================== */}
-
-      <Grid
-        container
-        spacing={2.2}
-        sx={{
-          mb: 3,
-        }}
-      >
-
-        {/* Total Visits */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          lg={3}
-        >
-          <DashboardStatCard
-            title="Total Visits"
-            value={counts.visits}
-
-            icon={
-              <Typography
-                sx={{
-                  fontWeight: 800,
-                  fontSize: 20,
-                }}
-              >
-                ↗
-              </Typography>
-            }
-
-            iconBackground={
-              colors.blueLight
-            }
-
-            iconColor={
-              colors.blue
-            }
-
-            trend="Website traffic"
-
-            onClick={() =>
-              navigate(
-                "/admin/visits"
-              )
-            }
-          />
-        </Grid>
-
-
-        {/* Services */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          lg={3}
-        >
-          <DashboardStatCard
-            title="Services"
-            value={counts.services}
-
-            icon={
-              <Typography
-                sx={{
-                  fontWeight: 800,
-                  fontSize: 20,
-                }}
-              >
-                ◆
-              </Typography>
-            }
-
-            iconBackground={
-              colors.tealLight
-            }
-
-            iconColor={
-              colors.teal
-            }
-
-            trend="Active services"
-
-            onClick={() =>
-              navigate(
-                "/admin/services"
-              )
-            }
-          />
-        </Grid>
-
-
-        {/* Blog Posts */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          lg={3}
-        >
-          <DashboardStatCard
-            title="Blog Posts"
-            value={counts.blogs}
-
-            icon={
-              <ArticleOutlined />
-            }
-
-            iconBackground={
-              colors.purpleLight
-            }
-
-            iconColor={
-              colors.purple
-            }
-
-            trend="Published content"
-
-            onClick={() =>
-              navigate(
-                "/admin/blogs"
-              )
-            }
-          />
-        </Grid>
-
-
-        {/* Messages */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          lg={3}
-        >
-          <DashboardStatCard
-            title="Contact Messages"
-            value={
-              counts.messages
-            }
-
-            icon={
-              <MailOutlineRounded />
-            }
-
-            iconBackground={
-              colors.redLight
-            }
-
-            iconColor={
-              colors.red
-            }
-
-            trend="Client inquiries"
-
-            onClick={() =>
-              navigate(
-                "/admin/messages"
-              )
-            }
-          />
-        </Grid>
-
-      </Grid>
-
-
-      {/* ====================================================
-          WEBSITE OVERVIEW + RECENT ACTIVITY
-      ==================================================== */}
-
-      <Grid
-        container
-        spacing={2.5}
-        alignItems="stretch"
-        sx={{
-          mb: 2.5,
-        }}
-      >
-
-        {/* Website Overview */}
-        <Grid
-          item
-          xs={12}
-          lg={8}
-          sx={{
-            minWidth: 0,
-            display: "flex",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              minWidth: 0,
-            }}
-          >
-            <DashboardOverview
-              chartData={
-                chartData
-              }
-              isMobile={
-                isMobile
-              }
+        {/* ---------- Stat cards ---------- */}
+        <Grid container spacing={2.2} sx={{ mb: 2.5 }}>
+          <Grid item xs={12} sm={6} lg={3}>
+            <DashboardStatCard
+              id="blogs"
+              title="Total Blogs"
+              value={raw.blogs.length}
+              icon={<ArticleOutlined />}
+              iconBackground={dash.green}
+              sparkColor={dash.green}
+              sparkData={stats.blogs.series}
+              trend={stats.blogs.trend}
+              onClick={() => navigate("/admin/blogs")}
             />
-          </Box>
-        </Grid>
+          </Grid>
 
-
-        {/* Recent Activity */}
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          sx={{
-            display: "flex",
-            minWidth: 0,
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              minWidth: 0,
-            }}
-          >
-            <RecentActivity
-              activities={
-                activities
-              }
-
-              onViewAll={() =>
-                navigate(
-                  "/admin/messages"
-                )
-              }
+          <Grid item xs={12} sm={6} lg={3}>
+            <DashboardStatCard
+              id="portfolio"
+              title="Portfolio"
+              value={raw.portfolio.length}
+              icon={<WorkOutlineRounded />}
+              iconBackground={dash.navy}
+              sparkColor={dash.navy}
+              sparkData={stats.portfolio.series}
+              trend={stats.portfolio.trend}
+              onClick={() => navigate("/admin/portfolio")}
             />
-          </Box>
+          </Grid>
+
+          <Grid item xs={12} sm={6} lg={3}>
+            <DashboardStatCard
+              id="testimonials"
+              title="Testimonials"
+              value={raw.testimonials.length}
+              icon={<StarBorderRounded />}
+              iconBackground={dash.lime}
+              sparkColor={dash.lime}
+              sparkData={stats.testimonials.series}
+              trend={stats.testimonials.trend}
+              onClick={() => navigate("/admin/testimonials")}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6} lg={3}>
+            <DashboardStatCard
+              id="messages"
+              title="Contact Messages"
+              value={raw.messages.length}
+              icon={<MailOutlineRounded />}
+              iconBackground={dash.indigo}
+              sparkColor={dash.indigo}
+              sparkData={stats.messages.series}
+              trend={stats.messages.trend}
+              onClick={() => navigate("/admin/messages")}
+            />
+          </Grid>
         </Grid>
 
-      </Grid>
+        {/* ---------- Main area ---------- */}
+        <Grid container spacing={2.5} alignItems="stretch">
+          {/* Left: overview + quick actions */}
+          <Grid item xs={12} lg={8} sx={{ minWidth: 0 }}>
+            <Stack spacing={2.5}>
+              <DashboardOverview
+                chartData={chartData}
+                isMobile={isMobile}
+                range={range}
+                onRangeChange={setRange}
+                rangeOptions={RANGE_OPTIONS}
+              />
 
+              <QuickActions
+                onAddBlog={() => navigate("/admin/blog")}
+                onAddWebsite={() => navigate("/admin/addWebsite")}
+                onAddTestimonial={() => navigate("/admin/testimonials")}
+                onAddLogo={() => navigate("/admin/post-design")}
+                onAddService={() => navigate("/admin/services")}
+                onViewAll={() => navigate("/admin/dashboard")}
+              />
+            </Stack>
+          </Grid>
 
-      {/* ====================================================
-          QUICK ACTIONS + GROWTH
-      ==================================================== */}
-
-      <Grid
-        container
-        spacing={2.5}
-      >
-
-        {/* Quick Actions */}
-        <Grid
-          item
-          xs={12}
-          lg={8}
-          sx={{
-            minWidth: 0,
-          }}
-        >
-          <QuickActions
-            onAddBlog={() =>
-              navigate(
-                "/admin/blog"
-              )
-            }
-
-            onAddWebsite={() =>
-              navigate(
-                "/admin/addWebsite"
-              )
-            }
-
-            onMessages={() =>
-              navigate(
-                "/admin/messages"
-              )
-            }
-
-            onServices={() =>
-              navigate(
-                "/admin/services"
-              )
-            }
-
-            onSettings={() =>
-              navigate(
-                "/admin/settings"
-              )
-            }
-          />
+          {/* Right: recent activity + growth card */}
+          <Grid item xs={12} lg={4} sx={{ minWidth: 0 }}>
+            <Stack spacing={2.5} sx={{ height: "100%" }}>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <RecentActivity
+                  activities={activities}
+                  onViewAll={() => navigate("/admin/messages")}
+                />
+              </Box>
+              <GrowthCard />
+            </Stack>
+          </Grid>
         </Grid>
-
-
-        {/* Growth Card */}
-        <Grid
-          item
-          xs={12}
-          lg={4}
-          sx={{
-            minWidth: 0,
-          }}
-        >
-          <GrowthCard />
-        </Grid>
-
-      </Grid>
-
+      </Box>
     </Box>
   );
 };
-
 
 export default Dashboard;
