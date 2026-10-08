@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
     Box,
     Card,
@@ -7,50 +8,98 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
-import {
-    LineChart,
-} from "@mui/x-charts/LineChart";
+
+import { LineChart } from "@mui/x-charts/LineChart";
+
+
+// ============================================================
+// COMPONENT
+// ============================================================
 
 const DashboardOverview = ({ chartData = [], isMobile }) => {
     const theme = useTheme();
 
-    const months = chartData.map((item) => item.month);
+    const colors = theme.dashboard;
 
-    const blogs = chartData.map((item) => item.blogs);
-    const portfolio = chartData.map((item) => item.portfolio);
-    const messages = chartData.map((item) => item.messages);
+    // ----------------------------------------------------------
+    // Make absolutely sure chartData is an array
+    // ----------------------------------------------------------
+
+    const safeChartData = Array.isArray(chartData)
+        ? chartData
+        : [];
+
+    // ----------------------------------------------------------
+    // Chart values
+    // ----------------------------------------------------------
+
+    const months = safeChartData.map(
+        (item) => item?.month || ""
+    );
+
+    const blogs = safeChartData.map(
+        (item) => Number(item?.blogs) || 0
+    );
+
+    const portfolio = safeChartData.map(
+        (item) => Number(item?.portfolio) || 0
+    );
+
+    const messages = safeChartData.map(
+        (item) => Number(item?.messages) || 0
+    );
+
+
+    // ==========================================================
+    // RENDER
+    // ==========================================================
 
     return (
         <Card
             sx={{
                 height: "100%",
                 minWidth: 0,
+                overflow: "hidden",
             }}
         >
             <CardContent
                 sx={{
-                    p: { xs: 2, sm: 2.5 },
+                    p: {
+                        xs: 2,
+                        sm: 2.5,
+                        md: 2.75,
+                    },
+
                     "&:last-child": {
-                        pb: { xs: 2, sm: 2.5 },
+                        pb: {
+                            xs: 2,
+                            sm: 2.5,
+                            md: 2.75,
+                        },
                     },
                 }}
             >
-                {/* Header */}
+
+                {/* ==================================================
+            HEADER
+        ================================================== */}
+
                 <Box
                     sx={{
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "flex-start",
-                        mb: 2,
                         gap: 2,
+                        mb: 2,
                     }}
                 >
-                    <Box>
+                    <Box sx={{ minWidth: 0 }}>
                         <Typography
                             variant="h6"
                             sx={{
                                 fontWeight: 800,
-                                color: theme.dashboard.navy,
+                                color: colors.navy,
+                                lineHeight: 1.2,
                             }}
                         >
                             Website Overview
@@ -59,8 +108,9 @@ const DashboardOverview = ({ chartData = [], isMobile }) => {
                         <Typography
                             variant="body2"
                             sx={{
-                                color: theme.dashboard.muted,
-                                mt: 0.3,
+                                color: colors.muted,
+                                mt: 0.5,
+                                fontSize: 12,
                             }}
                         >
                             Your website content activity
@@ -72,132 +122,251 @@ const DashboardOverview = ({ chartData = [], isMobile }) => {
                         size="small"
                         variant="outlined"
                         sx={{
-                            borderColor: theme.dashboard.border,
-                            color: theme.dashboard.muted,
                             flexShrink: 0,
+
+                            height: 30,
+
+                            borderColor:
+                                colors.border,
+
+                            color: colors.muted,
+
+                            fontSize: 11,
+
+                            fontWeight: 600,
+
+                            backgroundColor:
+                                "#FFFFFF",
+
+                            "& .MuiChip-label": {
+                                px: 1.25,
+                            },
                         }}
                     />
                 </Box>
 
-                {/* Legend */}
+
+                {/* ==================================================
+            LEGEND
+        ================================================== */}
+
                 <Box
                     sx={{
                         display: "flex",
-                        gap: 2,
+                        alignItems: "center",
+                        gap: {
+                            xs: 1.5,
+                            sm: 2,
+                        },
+
                         flexWrap: "wrap",
+
                         mb: 1,
                     }}
                 >
                     <Legend
-                        color={theme.dashboard.teal}
+                        color={colors.teal}
                         label="Blogs"
                     />
 
                     <Legend
-                        color={theme.dashboard.blue}
+                        color={colors.blue}
                         label="Portfolio"
                     />
 
                     <Legend
-                        color={theme.dashboard.purple}
+                        color={colors.purple}
                         label="Messages"
                     />
                 </Box>
 
-                {/* IMPORTANT: chart wrapper */}
+
+                {/* ==================================================
+            CHART
+        ================================================== */}
+
                 <Box
                     sx={{
                         width: "100%",
                         minWidth: 0,
+
                         height: {
-                            xs: 260,
-                            sm: 290,
-                            md: 310,
+                            xs: 250,
+                            sm: 280,
+                            md: 300,
                         },
+
                         position: "relative",
+
+                        overflow: "hidden",
                     }}
                 >
                     <LineChart
                         xAxis={[
                             {
                                 scaleType: "point",
+
                                 data: months,
+
+                                tickLabelStyle: {
+                                    fontSize: 10,
+                                    fill: colors.muted,
+                                },
                             },
                         ]}
+
+                        yAxis={[
+                            {
+                                min: 0,
+
+                                tickLabelStyle: {
+                                    fontSize: 10,
+                                    fill: colors.muted,
+                                },
+                            },
+                        ]}
+
                         series={[
                             {
                                 data: blogs,
+
                                 label: "Blogs",
-                                color: theme.dashboard.teal,
+
+                                color: colors.teal,
+
+                                curve: "linear",
+
+                                showMark: true,
                             },
+
                             {
                                 data: portfolio,
+
                                 label: "Portfolio",
-                                color: theme.dashboard.blue,
+
+                                color: colors.blue,
+
+                                curve: "linear",
+
+                                showMark: true,
                             },
+
                             {
                                 data: messages,
+
                                 label: "Messages",
-                                color: theme.dashboard.purple,
+
+                                color: colors.purple,
+
+                                curve: "linear",
+
+                                showMark: true,
                             },
                         ]}
-                        height={300}
+
+                        height={
+                            isMobile
+                                ? 245
+                                : 285
+                        }
+
                         margin={{
                             left: 35,
                             right: 10,
                             top: 10,
                             bottom: 30,
                         }}
+
                         grid={{
                             horizontal: true,
                         }}
+
+                        slotProps={{
+                            legend: {
+                                hidden: true,
+                            },
+                        }}
+
                         sx={{
-                            width: "100% !important",
+                            width: "100%",
+
                             "& .MuiChartsAxis-line": {
-                                stroke: theme.dashboard.border,
+                                stroke: colors.border,
                             },
+
                             "& .MuiChartsAxis-tick": {
-                                stroke: theme.dashboard.border,
+                                stroke: colors.border,
                             },
+
+                            "& .MuiChartsGrid-line": {
+                                stroke: colors.border,
+                                strokeDasharray: "3 3",
+                            },
+
                             "& .MuiChartsAxis-tickLabel": {
-                                fill: theme.dashboard.muted,
-                                fontSize: 11,
+                                fill: colors.muted,
+                                fontSize: 10,
+                            },
+
+                            "& .MuiLineElement-root": {
+                                strokeWidth: 2,
+                            },
+
+                            "& .MuiMarkElement-root": {
+                                strokeWidth: 2,
                             },
                         }}
                     />
                 </Box>
+
             </CardContent>
         </Card>
     );
 };
 
-const Legend = ({ color, label }) => (
-    <Box
-        sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 0.7,
-        }}
-    >
+
+// ============================================================
+// LEGEND
+// ============================================================
+
+const Legend = ({
+    color,
+    label,
+}) => {
+    return (
         <Box
             sx={{
-                width: 7,
-                height: 7,
-                borderRadius: "50%",
-                backgroundColor: color,
-            }}
-        />
-
-        <Typography
-            variant="caption"
-            sx={{
-                color: "#718398",
-                fontSize: 11,
+                display: "flex",
+                alignItems: "center",
+                gap: 0.7,
             }}
         >
-            {label}
-        </Typography>
-    </Box>
-);
+            <Box
+                sx={{
+                    width: 7,
+                    height: 7,
+
+                    borderRadius: "50%",
+
+                    backgroundColor: color,
+
+                    flexShrink: 0,
+                }}
+            />
+
+            <Typography
+                variant="caption"
+                sx={{
+                    color: "#718398",
+                    fontSize: 10.5,
+                    fontWeight: 500,
+                }}
+            >
+                {label}
+            </Typography>
+        </Box>
+    );
+};
+
 
 export default DashboardOverview;
