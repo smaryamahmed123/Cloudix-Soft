@@ -84,7 +84,7 @@ const Sidebar = () => {
     { text: "Subscribers", icon: <EmailOutlined />, path: "/admin/subscribers" },
     { text: "Blog", icon: <ArticleOutlined />, path: "/admin/blogs" },
     { text: "Contact Messages", icon: <MessageOutlined />, path: "/admin/messages" },
-    { text: "Portfolio / Websites", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
+    { text: "Portfolio", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
     { text: "Posts", icon: <ImageOutlined />, path: "/admin/post-design" },
     { text: "Edit Contact", icon: <ContactPhoneOutlined />, path: "/admin/edit-contact" },
     { text: "About", icon: <PersonOutlineOutlined />, path: "/admin/about" },

@@ -1,91 +1,90 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import { Box, Breadcrumbs, Button, Grid, InputBase, Link, Paper, Typography } from "@mui/material";
 import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ImageIcon from "@mui/icons-material/Image";
-
-import DashboardTopBar from "../components/Dashboard/DashboardTopBar";
-import LogoFilters from "../components/Logo/LogoFilters";
-import LogoStatCard from "../components/Logo/LogoStatCard";
-import LogoTable from "../components/Logo/LogoTable";
-import LogoFormModal from "../components/Logo/LogoFormModal";
+  AddRounded,
+  ImageOutlined,
+  CalendarMonthOutlined,
+  TrendingUpRounded,
+  NavigateNextRounded,
+  SearchRounded,
+} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 import SnackbarAlert from "../components/SnackbarAlert";
 import LoadingBackdrop from "../components/LoadingBackdrop";
+import DashboardTopBar from "../components/Dashboard/DashboardTopBar";
+import BlogStatCard from "../components/Blog/BlogStatCard"; // reused stat card
+import LogoTable from "../components/Logo/LogoTable";
+import LogoUploadModal from "../components/Logo/LogoUploadModal";
+import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
 
-const BASE_URL = `${import.meta.env.VITE_BACKEND_URL}/api/logos`;
+const backendURL = import.meta.env.VITE_BACKEND_URL;
+const BASE_URL = `${backendURL}/api/logos`;
+const REORDER_URL = `${backendURL}/api/logos/reorder`;
 
-const getImage = (logo) =>
-  logo?.image ||
-  logo?.imageUrl ||
-  logo?.url ||
-  logo?.logo ||
-  "";
+// ============================================================
+// HELPERS (stats)
+// ============================================================
 
-const getVisible = (logo) => logo?.visible !== false;
-
-const emptyForm = {
-  title: "",
-  imageFile: null,
-  currentImage: "",
+const timeOf = (item) => {
+  const d = item?.createdAt ? new Date(item.createdAt) : null;
+  return d && !Number.isNaN(d.getTime()) ? d.getTime() : null;
 };
 
-export default function AdminLogos() {
-  const [logos, setLogos] = useState([]);
-
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
-  const [dateRange, setDateRange] = useState("");
-
-  const [selected, setSelected] = useState([]);
-
-  const [openModal, setOpenModal] = useState(false);
-  const [editingLogo, setEditingLogo] = useState(null);
-  const [form, setForm] = useState(emptyForm);
-
-  const [loading, setLoading] = useState(false);
-
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
+// Last 12 calendar months: [start, end) in ms
+const monthRanges = () => {
+  const now = new Date();
+  return Array.from({ length: 12 }, (_, i) => {
+    const back = 11 - i;
+    return {
+      start: new Date(now.getFullYear(), now.getMonth() - back, 1).getTime(),
+      end: new Date(now.getFullYear(), now.getMonth() - back + 1, 1).getTime(),
+    };
   });
+};
 
-  const showMessage = (message, severity = "success") => {
-    setSnackbar({
-      open: true,
-      message,
-      severity,
-    });
-  };
+const perMonth = (times) =>
+  monthRanges().map((r) => times.filter((t) => t >= r.start && t < r.end).length);
+
+const cumulative = (times) => monthRanges().map((r) => times.filter((t) => t < r.end).length);
+
+const trendFrom = (prev, last) => {
+  if (prev === 0) return { label: last > 0 ? "New" : "0%", dir: "up" };
+  const pct = Math.round(((last - prev) / prev) * 100);
+  return { label: `${Math.abs(pct)}%`, dir: pct < 0 ? "down" : "up" };
+};
+
+const trendOfSeries = (series) => trendFrom(series[series.length - 2] || 0, series[series.length - 1] || 0);
+
+// ============================================================
+// PAGE
+// ============================================================
+
+export default function LogoManager() {
+  const navigate = useNavigate();
+
+  const [logos, setLogos] = useState([]);
+  const [file, setFile] = useState(null);
+  const [title, setTitle] = useState("");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+
+  const notify = (message, severity = "success") => setSnackbar({ open: true, message, severity });
+
+  // ---------------------------------------
+  // Fetch
+  // ---------------------------------------
 
   const fetchLogos = async () => {
     try {
       setLoading(true);
-
-      const response = await axios.get(BASE_URL);
-
-      const data = Array.isArray(response.data)
-        ? response.data
-        : response.data?.logos || [];
-
-      setLogos(
-        [...data].sort(
-          (a, b) => (a.order ?? 0) - (b.order ?? 0)
-        )
-      );
-    } catch (error) {
-      console.error(error);
-      showMessage("Failed to load logos", "error");
+      const res = await axios.get(BASE_URL);
+      setLogos([...res.data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+    } catch {
+      notify("Failed to fetch logos ❌", "error");
     } finally {
       setLoading(false);
     }
@@ -95,457 +94,302 @@ export default function AdminLogos() {
     fetchLogos();
   }, []);
 
-  const filteredLogos = useMemo(() => {
-    let result = [...logos];
+  // ---------------------------------------
+  // Derived data
+  // ---------------------------------------
 
-    if (search.trim()) {
-      const query = search.toLowerCase();
+  const query = search.trim().toLowerCase();
 
-      result = result.filter((logo) =>
-        String(logo.title || "")
-          .toLowerCase()
-          .includes(query)
-      );
-    }
+  const visibleLogos = useMemo(
+    () => (query ? logos.filter((l) => (l.title || "").toLowerCase().includes(query)) : logos),
+    [logos, query]
+  );
 
-    if (status === "active") {
-      result = result.filter(getVisible);
-    }
-
-    if (status === "hidden") {
-      result = result.filter((logo) => !getVisible(logo));
-    }
-
-    if (dateRange) {
-      const now = new Date();
-
-      result = result.filter((logo) => {
-        if (!logo.createdAt) return false;
-
-        const date = new Date(logo.createdAt);
-
-        if (dateRange === "today") {
-          return date.toDateString() === now.toDateString();
-        }
-
-        if (dateRange === "7days") {
-          const sevenDaysAgo = new Date();
-          sevenDaysAgo.setDate(now.getDate() - 7);
-          return date >= sevenDaysAgo;
-        }
-
-        if (dateRange === "30days") {
-          const thirtyDaysAgo = new Date();
-          thirtyDaysAgo.setDate(now.getDate() - 30);
-          return date >= thirtyDaysAgo;
-        }
-
-        return true;
-      });
-    }
-
-    return result;
-  }, [logos, search, status, dateRange]);
-
-  const totalLogos = logos.length;
-
-  const activeLogos = logos.filter(getVisible).length;
-
-  const hiddenLogos = logos.filter(
-    (logo) => !getVisible(logo)
-  ).length;
-
-  const recentLogos = logos.filter((logo) => {
-    if (!logo.createdAt) return false;
-
-    const created = new Date(logo.createdAt);
+  const stats = useMemo(() => {
+    const times = logos.map(timeOf).filter((t) => t !== null);
     const now = new Date();
 
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(now.getDate() - 30);
+    const monthly = perMonth(times);
+    const totalSeries = cumulative(times);
 
-    return created >= thirtyDaysAgo;
-  }).length;
+    const thisYearStart = new Date(now.getFullYear(), 0, 1).getTime();
+    const lastYearStart = new Date(now.getFullYear() - 1, 0, 1).getTime();
+    const thisYear = times.filter((t) => t >= thisYearStart).length;
+    const lastYear = times.filter((t) => t >= lastYearStart && t < thisYearStart).length;
 
-  const openAddModal = () => {
-    setEditingLogo(null);
-    setForm(emptyForm);
-    setOpenModal(true);
-  };
+    return {
+      total: { value: logos.length, series: totalSeries, trend: trendOfSeries(totalSeries) },
+      month: {
+        value: monthly[monthly.length - 1],
+        series: monthly,
+        trend: trendOfSeries(monthly),
+      },
+      year: { value: thisYear, series: monthly, trend: trendFrom(lastYear, thisYear) },
+    };
+  }, [logos]);
 
-  const openEditModal = (logo) => {
-    setEditingLogo(logo);
-
-    setForm({
-      title: logo.title || "",
-      imageFile: null,
-      currentImage: getImage(logo),
-    });
-
-    setOpenModal(true);
-  };
+  // ---------------------------------------
+  // Upload
+  // ---------------------------------------
 
   const closeModal = () => {
     if (loading) return;
-
     setOpenModal(false);
-    setEditingLogo(null);
-    setForm(emptyForm);
+    setTitle("");
+    setFile(null);
   };
 
-  const handleSave = async () => {
-    if (!form.title.trim()) {
-      showMessage("Please enter a logo title", "error");
-      return;
-    }
+  const handleUpload = async () => {
+    if (!title.trim() || !file) return notify("Please fill all fields", "warning");
 
-    if (!editingLogo && !form.imageFile) {
-      showMessage("Please select a logo image", "error");
-      return;
-    }
+    const formData = new FormData();
+    formData.append("title", title.trim());
+    formData.append("image", file);
 
     try {
       setLoading(true);
-
-      const formData = new FormData();
-
-      formData.append("title", form.title.trim());
-
-      if (form.imageFile) {
-        formData.append("image", form.imageFile);
-      }
-
-      if (editingLogo) {
-        await axios.put(
-          `${BASE_URL}/${editingLogo._id}`,
-          formData
-        );
-
-        showMessage("Logo updated successfully");
-      } else {
-        await axios.post(BASE_URL, formData);
-
-        showMessage("Logo added successfully");
-      }
-
-      closeModal();
+      await axios.post(BASE_URL, formData);
+      setOpenModal(false);
+      setTitle("");
+      setFile(null);
       await fetchLogos();
-    } catch (error) {
-      console.error(error);
-      showMessage(
-        error.response?.data?.message || "Something went wrong",
-        "error"
-      );
+      notify("Logo uploaded successfully ✅");
+    } catch {
+      notify("Failed to upload logo ❌", "error");
     } finally {
       setLoading(false);
     }
   };
+
+  // ---------------------------------------
+  // Delete
+  // ---------------------------------------
 
   const handleDelete = async (logo) => {
-    const confirmed = window.confirm(
-      `Delete "${logo.title || "this logo"}"?`
-    );
-
-    if (!confirmed) return;
+    if (!window.confirm(`Delete "${logo.title || "this logo"}"? This can't be undone.`)) return;
 
     try {
       setLoading(true);
-
       await axios.delete(`${BASE_URL}/${logo._id}`);
-
-      setSelected((prev) =>
-        prev.filter((id) => id !== logo._id)
-      );
-
-      showMessage("Logo deleted successfully");
-
       await fetchLogos();
-    } catch (error) {
-      console.error(error);
-      showMessage("Failed to delete logo", "error");
+      notify("Logo deleted 🗑️");
+    } catch {
+      notify("Failed to delete logo ❌", "error");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleBulkDelete = async () => {
-    if (!selected.length) return;
+  // ---------------------------------------
+  // Reorder (only while the list isn't filtered)
+  // ---------------------------------------
 
-    const confirmed = window.confirm(
-      `Delete ${selected.length} selected logo(s)?`
-    );
-
-    if (!confirmed) return;
-
-    try {
-      setLoading(true);
-
-      await Promise.all(
-        selected.map((id) =>
-          axios.delete(`${BASE_URL}/${id}`)
-        )
-      );
-
-      setSelected([]);
-
-      showMessage("Selected logos deleted successfully");
-
-      await fetchLogos();
-    } catch (error) {
-      console.error(error);
-      showMessage("Some logos could not be deleted", "error");
-      await fetchLogos();
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleReorder = async (newLogos) => {
-    setLogos(newLogos);
+  const handleReorder = async (fromIndex, toIndex) => {
+    const reordered = [...logos];
+    const [moved] = reordered.splice(fromIndex, 1);
+    reordered.splice(toIndex, 0, moved);
+    setLogos(reordered);
 
     try {
-      await axios.put(`${BASE_URL}/reorder`, {
-        ids: newLogos.map((logo) => logo._id),
-      });
-    } catch (error) {
-      console.error(error);
-      showMessage("Failed to save new order", "error");
+      await axios.put(REORDER_URL, { ids: reordered.map((l) => l._id) });
+      notify("Logo order updated ✅");
+    } catch {
       await fetchLogos();
+      notify("Failed to reorder ❌", "error");
     }
   };
 
-  const allFilteredSelected =
-    filteredLogos.length > 0 &&
-    filteredLogos.every((logo) =>
-      selected.includes(logo._id)
-    );
-
-  const handleSelectAll = () => {
-    if (allFilteredSelected) {
-      setSelected((prev) =>
-        prev.filter(
-          (id) =>
-            !filteredLogos.some(
-              (logo) => logo._id === id
-            )
-        )
-      );
-    } else {
-      setSelected((prev) => [
-        ...new Set([
-          ...prev,
-          ...filteredLogos.map((logo) => logo._id),
-        ]),
-      ]);
-    }
-  };
-
-  const handleSelect = (id) => {
-    setSelected((prev) =>
-      prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id]
-    );
-  };
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "dash.page" }}>
-      <DashboardTopBar />
+    <Box sx={{ minHeight: "100vh", backgroundColor: dash.page }}>
+      <DashboardTopBar placeholder="Search logos..." />
 
-      <Container maxWidth="xl" sx={{ py: 4 }}>
-        {/* Header */}
-        <Stack
-          direction={{ xs: "column", md: "row" }}
-          justifyContent="space-between"
-          alignItems={{ xs: "flex-start", md: "center" }}
-          spacing={2}
-          mb={4}
+      <Box sx={{ p: { xs: 2, sm: 2.5, md: 3.5 } }}>
+        {/* ---------- Heading ---------- */}
+        <Breadcrumbs
+          separator={<NavigateNextRounded sx={{ fontSize: 16 }} />}
+          sx={{ fontSize: 12.5, mb: 1, color: dash.muted }}
+        >
+          <Link
+            component="button"
+            underline="hover"
+            onClick={() => navigate("/admin/dashboard")}
+            sx={{ fontSize: 12.5, color: dash.muted }}
+          >
+            Dashboard
+          </Link>
+          <Typography sx={{ fontSize: 12.5, color: dash.muted }}>Logos</Typography>
+        </Breadcrumbs>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+            gap: 2,
+            mb: 3,
+          }}
         >
           <Box>
             <Typography
-              variant="overline"
               sx={{
-                color: "dash.green",
+                color: dash.navy,
+                fontSize: { xs: 28, md: 34 },
                 fontWeight: 800,
-                letterSpacing: 1.5,
+                letterSpacing: "-0.8px",
+                lineHeight: 1.15,
               }}
-            >
-              BRAND ASSETS
-            </Typography>
-
-            <Typography
-              variant="h4"
-              fontWeight={800}
-              sx={{ color: "dash.navy", mt: 0.5 }}
             >
               Logo Management
             </Typography>
-
-            <Typography
-              sx={{
-                color: "dash.muted",
-                mt: 0.7,
-              }}
-            >
-              Manage, organize and reorder your website logos.
+            <Typography sx={{ color: dash.muted, fontSize: 14, mt: 0.8 }}>
+              Upload, organise and manage the logos shown on your website. Drag rows to change their order.
             </Typography>
           </Box>
 
           <Button
             variant="contained"
-            startIcon={<AddIcon />}
-            onClick={openAddModal}
+            startIcon={<AddRounded />}
+            onClick={() => setOpenModal(true)}
+            disabled={loading}
             sx={{
-              bgcolor: "dash.green",
-              borderRadius: 2,
-              px: 2.5,
-              py: 1.25,
+              height: 44,
+              px: 2.6,
+              textTransform: "none",
               fontWeight: 700,
-              "&:hover": {
-                bgcolor: "dash.greenDark",
-              },
+              fontSize: 14,
+              borderRadius: "10px",
+              boxShadow: "none",
+              backgroundColor: dash.green,
+              "&:hover": { backgroundColor: dash.greenDark, boxShadow: "none" },
             }}
           >
             Add New Logo
           </Button>
-        </Stack>
-
-        {/* Stats */}
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "repeat(2, 1fr)",
-              lg: "repeat(4, 1fr)",
-            },
-            gap: 2,
-            mb: 3,
-          }}
-        >
-          <LogoStatCard
-            title="Total Logos"
-            value={totalLogos}
-            icon={<ImageIcon />}
-            tint="green"
-          />
-
-          <LogoStatCard
-            title="Active Logos"
-            value={activeLogos}
-            icon={<ImageIcon />}
-            tint="blue"
-          />
-
-          <LogoStatCard
-            title="Hidden Logos"
-            value={hiddenLogos}
-            icon={<ImageIcon />}
-            tint="orange"
-          />
-
-          <LogoStatCard
-            title="Added Recently"
-            value={recentLogos}
-            icon={<ImageIcon />}
-            tint="purple"
-          />
         </Box>
 
-        {/* Filters */}
-        <LogoFilters
-          search={search}
-          setSearch={setSearch}
-          status={status}
-          setStatus={setStatus}
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-          onReset={() => {
-            setSearch("");
-            setStatus("all");
-            setDateRange("");
-          }}
-        />
+        {/* ---------- Stat cards ---------- */}
+        <Grid container spacing={2.2} sx={{ mb: 3 }}>
+          <Grid item xs={12} sm={6} lg={4}>
+            <BlogStatCard
+              id="logo-total"
+              title="Total Logos"
+              value={stats.total.value}
+              icon={<ImageOutlined />}
+              color={dash.green}
+              tint="#EEF4DE"
+              trend={stats.total.trend}
+              sparkData={stats.total.series}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={4}>
+            <BlogStatCard
+              id="logo-month"
+              title="Added This Month"
+              value={stats.month.value}
+              icon={<CalendarMonthOutlined />}
+              color="#7C6FD0"
+              tint="#F0EEFB"
+              trend={stats.month.trend}
+              sparkData={stats.month.series}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={4}>
+            <BlogStatCard
+              id="logo-year"
+              title="Added This Year"
+              value={stats.year.value}
+              icon={<TrendingUpRounded />}
+              color="#E3A81C"
+              tint="#FDF6DC"
+              trend={stats.year.trend}
+              sparkData={stats.year.series}
+            />
+          </Grid>
+        </Grid>
 
-        {/* Bulk actions */}
-        {selected.length > 0 && (
-          <Paper
-            sx={{
-              mt: 2,
-              p: 1.5,
-              borderRadius: 2.5,
-              border: "1px solid",
-              borderColor: "dash.border",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 2,
-            }}
-          >
-            <Stack direction="row" alignItems="center">
-              <Checkbox
-                checked={allFilteredSelected}
-                onChange={handleSelectAll}
+        {/* ---------- Search + list ---------- */}
+        <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.5, mb: 2.5 }}>
+            <Box
+              sx={{
+                flex: "1 1 260px",
+                maxWidth: 480,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                px: 1.5,
+                height: 42,
+                borderRadius: "10px",
+                border: `1px solid ${dash.border}`,
+                backgroundColor: "#F8FAFB",
+              }}
+            >
+              <SearchRounded sx={{ color: dash.muted, fontSize: 20 }} />
+              <InputBase
+                fullWidth
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search logos by title..."
+                sx={{ fontSize: 13, color: dash.navy }}
               />
-
-              <Typography fontWeight={700}>
-                {selected.length} selected
-              </Typography>
-            </Stack>
+            </Box>
 
             <Button
-              color="error"
-              startIcon={<DeleteOutlineIcon />}
-              onClick={handleBulkDelete}
+              variant="outlined"
+              onClick={() => setSearch("")}
+              sx={{
+                height: 42,
+                px: 2.5,
+                textTransform: "none",
+                fontWeight: 600,
+                fontSize: 13,
+                borderRadius: "10px",
+                color: dash.navy,
+                borderColor: dash.border,
+                "&:hover": { borderColor: dash.green, backgroundColor: dash.greenLight },
+              }}
             >
-              Delete Selected
+              Reset
             </Button>
-          </Paper>
-        )}
 
-        {/* Table */}
-        <Paper
-          sx={{
-            mt: 2,
-            borderRadius: 3,
-            border: "1px solid",
-            borderColor: "dash.border",
-            overflow: "hidden",
-          }}
-        >
+            <Typography sx={{ color: dash.muted, fontSize: 12.5, ml: { md: "auto" } }}>
+              Showing {visibleLogos.length} of {logos.length} logos
+            </Typography>
+          </Box>
+
           <LogoTable
-            logos={filteredLogos}
-            selected={selected}
-            onSelect={handleSelect}
-            onSelectAll={handleSelectAll}
-            allSelected={allFilteredSelected}
-            onEdit={openEditModal}
-            onDelete={handleDelete}
+            logos={visibleLogos}
+            hasAnyLogos={logos.length > 0}
+            dragEnabled={!query}
             onReorder={handleReorder}
+            onDelete={handleDelete}
+            onAdd={() => setOpenModal(true)}
+            disabled={loading}
           />
         </Paper>
-      </Container>
+      </Box>
 
-      <LogoFormModal
+      <LogoUploadModal
         open={openModal}
-        form={form}
-        setForm={setForm}
-        editingLogo={editingLogo}
         onClose={closeModal}
-        onSave={handleSave}
+        title={title}
+        setTitle={setTitle}
+        file={file}
+        setFile={setFile}
+        onSubmit={handleUpload}
         loading={loading}
       />
 
       <SnackbarAlert
         open={snackbar.open}
-        message={snackbar.message}
+        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
         severity={snackbar.severity}
-        onClose={() =>
-          setSnackbar((prev) => ({
-            ...prev,
-            open: false,
-          }))
-        }
+        message={snackbar.message}
       />
 
       <LoadingBackdrop open={loading} />
