@@ -18,24 +18,21 @@ import {
 
 import {
   HomeRounded,
-  WorkOutline,
-  EmailOutlined,
-  ArticleOutlined,
-  MessageOutlined,
-  CollectionsOutlined,
-  ContactPhoneOutlined,
-  InfoOutlined,
-  PolicyOutlined,
-  Menu as MenuIcon,
-  LogoutOutlined,
-  AddToPhotosOutlined,
-  RateReviewOutlined,
-  ImageOutlined,
+  DescriptionOutlined,
   WorkOutlineOutlined,
   GridViewOutlined,
   StarBorderOutlined,
+  ImageOutlined,
   PersonOutlineOutlined,
   ShieldOutlined,
+  EmailOutlined,
+  SettingsOutlined,
+  GroupOutlined,
+  CollectionsOutlined,
+  ContactPhoneOutlined,
+  AddToPhotosOutlined,
+  LogoutOutlined,
+  Menu as MenuIcon,
 } from "@mui/icons-material";
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -47,6 +44,9 @@ import { useTheme } from "@mui/material/styles";
 // ============================================================
 
 const drawerWidth = 240;
+
+// TODO: set this to the real route of your Logo Manager page
+const LOGOS_PATH = "/admin/logos";
 
 const palette = {
   bgTop: "#102640",
@@ -60,6 +60,69 @@ const palette = {
   hover: "rgba(255,255,255,0.06)",
   red: "#FF8A8A",
 };
+
+// ------------------------------------------------------------
+// Items in the same order and wording as the design
+// ------------------------------------------------------------
+const mainItems = [
+  { text: "Dashboard", icon: <HomeRounded />, path: "/admin/dashboard" },
+  { text: "Blog", icon: <DescriptionOutlined />, path: "/admin/blogs" },
+  { text: "Portfolio / Websites", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
+  { text: "Services", icon: <GridViewOutlined />, path: "/admin/services" },
+  { text: "Testimonials", icon: <StarBorderOutlined />, path: "/admin/testimonials" },
+  { text: "Logos", icon: <ImageOutlined />, path: LOGOS_PATH },
+  { text: "About", icon: <PersonOutlineOutlined />, path: "/admin/about" },
+  { text: "Privacy Policy", icon: <ShieldOutlined />, path: "/admin/privacy-policy" },
+  { text: "Contact Messages", icon: <EmailOutlined />, path: "/admin/messages" },
+];
+
+// ------------------------------------------------------------
+// Existing routes that are NOT in the design. Kept so no link is
+// lost – delete any you don't want in the menu.
+// ------------------------------------------------------------
+const extraItems = [
+  { text: "Subscribers", icon: <GroupOutlined />, path: "/admin/subscribers" },
+  { text: "Posts", icon: <CollectionsOutlined />, path: "/admin/post-design" },
+  { text: "Edit Contact", icon: <ContactPhoneOutlined />, path: "/admin/edit-contact" },
+  { text: "Add Website", icon: <AddToPhotosOutlined />, path: "/admin/addWebsite" },
+];
+
+const settingsItem = {
+  text: "Settings",
+  icon: <SettingsOutlined />,
+  path: "/admin/settings",
+};
+
+// ============================================================
+// BRAND MARK (placeholder – swap for your real logo image)
+// ============================================================
+
+const BrandMark = () => (
+  <Box sx={{ width: 42, height: 42, mr: 1.3, flexShrink: 0 }}>
+    <svg viewBox="0 0 48 48" width="42" height="42" aria-hidden>
+      <defs>
+        <linearGradient id="brandMarkGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#C4DB55" />
+          <stop offset="100%" stopColor="#5F7D22" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M37 13.5 A17 17 0 1 0 37 34.5"
+        fill="none"
+        stroke="url(#brandMarkGrad)"
+        strokeWidth="7"
+        strokeLinecap="round"
+      />
+      <path
+        d="M13 31 L35 19"
+        fill="none"
+        stroke="#FFFFFF"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+    </svg>
+  </Box>
+);
 
 // ============================================================
 // SIDEBAR
@@ -75,25 +138,6 @@ const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
   // ==========================================================
-  // NAVIGATION ITEMS  (paths are unchanged)
-  // ==========================================================
-
-  const items = [
-    { text: "Dashboard", icon: <HomeRounded />, path: "/admin/dashboard" },
-    { text: "Services", icon: <GridViewOutlined />, path: "/admin/services" },
-    { text: "Subscribers", icon: <EmailOutlined />, path: "/admin/subscribers" },
-    { text: "Blog", icon: <ArticleOutlined />, path: "/admin/blogs" },
-    { text: "Contact Messages", icon: <MessageOutlined />, path: "/admin/messages" },
-    { text: "Portfolio", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
-    { text: "Posts", icon: <ImageOutlined />, path: "/admin/post-design" },
-    { text: "Edit Contact", icon: <ContactPhoneOutlined />, path: "/admin/edit-contact" },
-    { text: "About", icon: <PersonOutlineOutlined />, path: "/admin/about" },
-    { text: "Add Website", icon: <AddToPhotosOutlined />, path: "/admin/addWebsite" },
-    { text: "Privacy Policy", icon: <ShieldOutlined />, path: "/admin/privacy-policy" },
-    { text: "Testimonials", icon: <StarBorderOutlined />, path: "/admin/testimonials" },
-  ];
-
-  // ==========================================================
   // HANDLERS
   // ==========================================================
 
@@ -107,27 +151,26 @@ const Sidebar = () => {
     navigate("/login");
   };
 
+  const isActivePath = (path) =>
+    location.pathname === path || location.pathname.startsWith(`${path}/`);
+
   // ==========================================================
   // SHARED ITEM STYLES
   // ==========================================================
+
+  const activeBg = `linear-gradient(90deg, ${palette.olive} 0%, ${palette.oliveDark} 100%)`;
 
   const itemSx = (isActive) => ({
     minHeight: 44,
     px: 1.6,
     borderRadius: "10px",
     color: isActive ? "#FFFFFF" : palette.text,
-    background: isActive
-      ? `linear-gradient(90deg, ${palette.olive} 0%, ${palette.oliveDark} 100%)`
-      : "transparent",
-    border: isActive
-      ? "1px solid rgba(166,194,58,0.55)"
-      : "1px solid transparent",
+    background: isActive ? activeBg : "transparent",
+    border: isActive ? "1px solid rgba(166,194,58,0.55)" : "1px solid transparent",
     boxShadow: isActive ? "0 4px 14px rgba(95,125,34,0.30)" : "none",
     transition: "background 0.2s ease, color 0.2s ease",
     "&:hover": {
-      background: isActive
-        ? `linear-gradient(90deg, ${palette.olive} 0%, ${palette.oliveDark} 100%)`
-        : palette.hover,
+      background: isActive ? activeBg : palette.hover,
       color: "#FFFFFF",
     },
   });
@@ -138,6 +181,26 @@ const Sidebar = () => {
     "& svg": { fontSize: 20 },
     ".MuiListItemButton-root:hover &": { color: palette.lime },
   });
+
+  const renderItem = (item) => {
+    const isActive = isActivePath(item.path);
+
+    return (
+      <ListItem key={item.text} disablePadding sx={{ mb: 0.6 }}>
+        <ListItemButton onClick={() => handleNavigation(item.path)} sx={itemSx(isActive)}>
+          <ListItemIcon sx={iconSx(isActive)}>{item.icon}</ListItemIcon>
+          <ListItemText
+            primary={item.text}
+            primaryTypographyProps={{
+              fontSize: 13,
+              fontWeight: isActive ? 700 : 500,
+              whiteSpace: "nowrap",
+            }}
+          />
+        </ListItemButton>
+      </ListItem>
+    );
+  };
 
   // ==========================================================
   // DRAWER CONTENT
@@ -155,35 +218,29 @@ const Sidebar = () => {
         overflow: "hidden",
       }}
     >
-      {/* ---------- Decorative diagonal stripes (bottom) ---------- */}
-      <Box
-        aria-hidden
-        sx={{
-          position: "absolute",
-          left: -40,
-          bottom: -30,
-          width: 190,
-          height: 230,
-          background: `linear-gradient(160deg, ${palette.lime} 0%, ${palette.olive} 45%, transparent 100%)`,
-          opacity: 0.55,
-          clipPath: "polygon(0 100%, 55% 0, 85% 0, 30% 100%)",
-          pointerEvents: "none",
-        }}
-      />
-      <Box
-        aria-hidden
-        sx={{
-          position: "absolute",
-          left: 60,
-          bottom: -30,
-          width: 150,
-          height: 170,
-          background: `linear-gradient(160deg, ${palette.lime} 0%, ${palette.olive} 50%, transparent 100%)`,
-          opacity: 0.35,
-          clipPath: "polygon(0 100%, 50% 0, 70% 0, 20% 100%)",
-          pointerEvents: "none",
-        }}
-      />
+      {/* ---------- Diagonal bands (bottom-left → up-right) ---------- */}
+      {[
+        { left: -34, width: 78, height: 380, opacity: 0.85 },
+        { left: 66, width: 30, height: 300, opacity: 0.55 },
+        { left: 118, width: 14, height: 240, opacity: 0.35 },
+      ].map((band, i) => (
+        <Box
+          key={i}
+          aria-hidden
+          sx={{
+            position: "absolute",
+            left: band.left,
+            bottom: -70,
+            width: band.width,
+            height: band.height,
+            transform: "rotate(36deg)",
+            transformOrigin: "bottom left",
+            background: `linear-gradient(to top, ${palette.olive} 0%, ${palette.lime} 55%, rgba(166,194,58,0) 100%)`,
+            opacity: band.opacity,
+            pointerEvents: "none",
+          }}
+        />
+      ))}
 
       {/* ---------- Brand ---------- */}
       <Box
@@ -196,30 +253,7 @@ const Sidebar = () => {
           position: "relative",
         }}
       >
-        <Box
-          sx={{
-            width: 40,
-            height: 40,
-            mr: 1.4,
-            // borderRadius: "50%", r;el;fvl,gv0
-            background: `linear-gradient(135deg, ${palette.lime}, ${palette.olive})`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          <Typography
-            sx={{
-              color: palette.bgBottom,
-              fontWeight: 900,
-              fontSize: 22,
-              lineHeight: 1,
-            }}
-          >
-            C
-          </Typography>
-        </Box>
+        <BrandMark />
 
         <Box sx={{ minWidth: 0 }}>
           <Typography
@@ -237,14 +271,7 @@ const Sidebar = () => {
             </Box>
           </Typography>
 
-          <Typography
-            sx={{
-              color: palette.muted,
-              fontSize: 10.5,
-              fontWeight: 500,
-              mt: 0.3,
-            }}
-          >
+          <Typography sx={{ color: palette.muted, fontSize: 10.5, fontWeight: 500, mt: 0.3 }}>
             Ideas to Impact
           </Typography>
         </Box>
@@ -267,37 +294,16 @@ const Sidebar = () => {
         }}
       >
         <List disablePadding>
-          {items.map((item) => {
-            const isActive =
-              location.pathname === item.path ||
-              location.pathname.startsWith(`${item.path}/`);
-
-            return (
-              <ListItem key={item.text} disablePadding sx={{ mb: 0.6 }}>
-                <ListItemButton
-                  onClick={() => handleNavigation(item.path)}
-                  sx={itemSx(isActive)}
-                >
-                  <ListItemIcon sx={iconSx(isActive)}>{item.icon}</ListItemIcon>
-
-                  <ListItemText
-                    primary={item.text}
-                    primaryTypographyProps={{
-                      fontSize: 13,
-                      fontWeight: isActive ? 700 : 500,
-                      whiteSpace: "nowrap",
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
+          {mainItems.map(renderItem)}
+          {extraItems.map(renderItem)}
         </List>
 
-        <Divider sx={{ borderColor: palette.border, my: 1.4 }} />
+        <Divider sx={{ borderColor: palette.border, my: 1.4, mx: 0.6 }} />
 
-        {/* Bottom slot (Settings position in the reference) – Logout */}
         <List disablePadding>
+          {renderItem(settingsItem)}
+
+          {/* Logout (not in the design, but needed) */}
           <ListItem disablePadding>
             <ListItemButton
               onClick={handleLogout}
@@ -314,7 +320,6 @@ const Sidebar = () => {
               >
                 <LogoutOutlined />
               </ListItemIcon>
-
               <ListItemText
                 primary="Logout"
                 primaryTypographyProps={{ fontSize: 13, fontWeight: 500 }}
@@ -345,11 +350,7 @@ const Sidebar = () => {
           }}
         >
           <Toolbar sx={{ minHeight: "62px !important", px: 2 }}>
-            <IconButton
-              edge="start"
-              onClick={() => setOpen(true)}
-              sx={{ color: "#FFFFFF", mr: 1 }}
-            >
+            <IconButton edge="start" onClick={() => setOpen(true)} sx={{ color: "#FFFFFF", mr: 1 }}>
               <MenuIcon />
             </IconButton>
 
@@ -360,7 +361,6 @@ const Sidebar = () => {
                   Soft
                 </Box>
               </Typography>
-
               <Typography sx={{ fontSize: 10, color: palette.muted, mt: 0.2 }}>
                 Ideas to Impact
               </Typography>
