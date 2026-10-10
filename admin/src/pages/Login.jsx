@@ -18,7 +18,7 @@ import {
   VisibilityOutlined,
 } from "@mui/icons-material";
 
-import LoginBrandPanel, { BrandMark } from "../components/Auth/LoginBrandPanel";
+import LoginBrandPanel, { LOGO_SRC } from "../components/Auth/LoginBrandPanel";
 import GoogleIcon from "../components/Auth/GoogleIcon";
 import { dash } from "../components/Dashboard/dashboardPalette";
 
@@ -130,12 +130,25 @@ const Login = () => {
         }}
       >
         <Box sx={{ width: "100%", maxWidth: 420 }}>
-          {/* Brand (mobile only – desktop shows it in the left panel) */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", gap: 1.2, mb: 4 }}>
-            <BrandMark size={40} />
-            <Typography sx={{ color: dash.navy, fontSize: 20, fontWeight: 800 }}>
-              Cloudix <Box component="span" sx={{ color: dash.green }}>Soft</Box>
-            </Typography>
+          {/* Brand (mobile only – desktop shows it in the left panel).
+              The logo is white, so it sits on a dark rounded bar. */}
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              alignItems: "center",
+              justifyContent: "center",
+              mb: 4,
+              py: 1.6,
+              borderRadius: "14px",
+              background: "linear-gradient(180deg, #102640 0%, #0A1A2C 100%)",
+            }}
+          >
+            <Box
+              component="img"
+              src={LOGO_SRC}
+              alt="Cloudix Soft"
+              sx={{ display: "block", height: 40, maxWidth: "80%", objectFit: "contain" }}
+            />
           </Box>
 
           <Typography

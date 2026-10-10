@@ -67,7 +67,7 @@ const palette = {
 const mainItems = [
   { text: "Dashboard", icon: <HomeRounded />, path: "/admin/dashboard" },
   { text: "Blog", icon: <DescriptionOutlined />, path: "/admin/blogs" },
-  { text: "Portfolio / Websites", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
+  { text: "logo", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
   { text: "Services", icon: <GridViewOutlined />, path: "/admin/services" },
   { text: "Testimonials", icon: <StarBorderOutlined />, path: "/admin/testimonials" },
   { text: "Logos", icon: <ImageOutlined />, path: LOGOS_PATH },
@@ -94,35 +94,10 @@ const settingsItem = {
 };
 
 // ============================================================
-// BRAND MARK (placeholder – swap for your real logo image)
+// LOGO  (file lives in /public, so it is served from the site root)
 // ============================================================
 
-const BrandMark = () => (
-  <Box sx={{ width: 42, height: 42, mr: 1.3, flexShrink: 0 }}>
-    <svg viewBox="0 0 48 48" width="42" height="42" aria-hidden>
-      <defs>
-        <linearGradient id="brandMarkGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#C4DB55" />
-          <stop offset="100%" stopColor="#5F7D22" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M37 13.5 A17 17 0 1 0 37 34.5"
-        fill="none"
-        stroke="url(#brandMarkGrad)"
-        strokeWidth="7"
-        strokeLinecap="round"
-      />
-      <path
-        d="M13 31 L35 19"
-        fill="none"
-        stroke="#FFFFFF"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
-    </svg>
-  </Box>
-);
+const LOGO_SRC = `${import.meta.env.BASE_URL}logo_white-removebg-preview-removebg-preview.webp`;
 
 // ============================================================
 // SIDEBAR
@@ -253,28 +228,17 @@ const Sidebar = () => {
           position: "relative",
         }}
       >
-        <BrandMark />
-
-        <Box sx={{ minWidth: 0 }}>
-          <Typography
-            sx={{
-              color: "#FFFFFF",
-              fontSize: 19,
-              fontWeight: 800,
-              lineHeight: 1.1,
-              letterSpacing: "-0.2px",
-            }}
-          >
-            Cloudix{" "}
-            <Box component="span" sx={{ color: palette.lime }}>
-              Soft
-            </Box>
-          </Typography>
-
-          <Typography sx={{ color: palette.muted, fontSize: 10.5, fontWeight: 500, mt: 0.3 }}>
-            Ideas to Impact
-          </Typography>
-        </Box>
+        <Box
+          component="img"
+          src={LOGO_SRC}
+          alt="Cloudix Soft – Ideas to Impact"
+          sx={{
+            display: "block",
+            height: 48,
+            maxWidth: "100%",
+            objectFit: "contain",
+          }}
+        />
       </Box>
 
       {/* ---------- Navigation ---------- */}
@@ -354,17 +318,12 @@ const Sidebar = () => {
               <MenuIcon />
             </IconButton>
 
-            <Box>
-              <Typography sx={{ fontSize: 15, fontWeight: 800, lineHeight: 1.1 }}>
-                Cloudix{" "}
-                <Box component="span" sx={{ color: palette.lime }}>
-                  Soft
-                </Box>
-              </Typography>
-              <Typography sx={{ fontSize: 10, color: palette.muted, mt: 0.2 }}>
-                Ideas to Impact
-              </Typography>
-            </Box>
+            <Box
+              component="img"
+              src={LOGO_SRC}
+              alt="Cloudix Soft"
+              sx={{ display: "block", height: 34, maxWidth: "100%", objectFit: "contain" }}
+            />
           </Toolbar>
         </AppBar>
       )}
