@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Box, Button, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { CloudUploadOutlined, DeleteOutline } from "@mui/icons-material";
 import { dash } from "../Dashboard/dashboardPalette";
-import { fieldSx, useFilePreview } from "./aboutShared";
+import { fieldSx, useFilePreview } from "./AboutShared";
 
 const PLATFORMS = ["instagram", "linkedin", "facebook"];
 

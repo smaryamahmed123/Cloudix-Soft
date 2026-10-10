@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import { CloudUploadOutlined, ImageOutlined } from "@mui/icons-material";
 import { dash } from "../Dashboard/dashboardPalette";
-import { useFilePreview } from "./aboutShared";
+import { useFilePreview } from "./AboutShared";
 
 const AboutImageField = ({ value, onChange }) => {
     const preview = useFilePreview(value);
