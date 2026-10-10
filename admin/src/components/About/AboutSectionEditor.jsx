@@ -2,7 +2,7 @@ import React from "react";
 import { Box, TextField, Typography } from "@mui/material";
 import { dash, cardSx } from "../Dashboard/dashboardPalette";
 import AboutImageField from "./AboutImageField";
-import { fieldSx } from "./aboutShared";
+import { fieldSx } from "./AboutShared";
 
 const AboutSectionEditor = ({ label, hint, data = {}, onChange }) => (
     <Box sx={{ ...cardSx, p: { xs: 2, md: 3 } }}>
