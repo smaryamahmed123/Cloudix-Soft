@@ -28,7 +28,7 @@ import LoadingBackdrop from "../components/LoadingBackdrop";
 import DashboardTopBar from "../components/Dashboard/DashboardTopBar";
 import BlogStatCard from "../components/Blog/BlogStatCard"; // reused stat card
 import TestimonialTable from "../components/Testimonial/TestimonialTable";
-import TestimonialFormModal from "../components/Testimonial/TestimonialFormModal";
+import TestimonialFormModal from "../components/Testimonial//TestimonialFormModal";
 import TestimonialPreviewDialog from "../components/Testimonial/TestimonialPreviewDialog";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
 
