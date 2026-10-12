@@ -5,7 +5,7 @@ import { dash, cardSx } from "./dashboardPalette";
 
 const SERIES_COLORS = {
     blogs: dash.green,
-    portfolio: dash.navy,
+    website: dash.navy,
     messages: dash.lime,
 };
 
@@ -27,7 +27,7 @@ const DashboardOverview = ({
 
     const labels = data.map((d) => d?.month || "");
     const blogs = data.map((d) => Number(d?.blogs) || 0);
-    const portfolio = data.map((d) => Number(d?.portfolio) || 0);
+    const website = data.map((d) => Number(d?.website) || 0);
     const messages = data.map((d) => Number(d?.messages) || 0);
 
     // Avoid unreadable x-axis on the 30-day view
@@ -68,7 +68,7 @@ const DashboardOverview = ({
 
                 <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2.2, mb: 0.5 }}>
                     <Legend color={SERIES_COLORS.blogs} label="Blogs" />
-                    <Legend color={SERIES_COLORS.portfolio} label="Websites" />
+                    <Legend color={SERIES_COLORS.website} label="Websites" />
                     <Legend color={SERIES_COLORS.messages} label="Messages" />
                 </Box>
 
@@ -94,10 +94,10 @@ const DashboardOverview = ({
                                 showMark: true,
                             },
                             {
-                                id: "portfolio",
-                                data: portfolio,
+                                id: "website",
+                                data: website,
                                 label: "Websites",
-                                color: SERIES_COLORS.portfolio,
+                                color: SERIES_COLORS.website,
                                 curve: "linear",
                                 area: true,
                                 showMark: true,
