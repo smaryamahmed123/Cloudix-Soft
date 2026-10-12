@@ -302,7 +302,7 @@ const Dashboard = () => {
           <Grid item xs={12} sm={6} lg={3}>
             <DashboardStatCard
               id="portfolio"
-              title="Websites / Portfolio"
+              title="Total Logos"
               value={raw.portfolio.length}
               icon={<WorkOutlineRounded />}
               iconBackground={dash.navy}
@@ -316,7 +316,7 @@ const Dashboard = () => {
           <Grid item xs={12} sm={6} lg={3}>
             <DashboardStatCard
               id="testimonials"
-              title="Testimonials"
+              title="Total Testimonials"
               value={raw.testimonials.length}
               icon={<StarBorderRounded />}
               iconBackground={dash.lime}
@@ -330,7 +330,7 @@ const Dashboard = () => {
           <Grid item xs={12} sm={6} lg={3}>
             <DashboardStatCard
               id="messages"
-              title="Contact Messages"
+              title="Total Messages"
               value={raw.messages.length}
               icon={<MailOutlineRounded />}
               iconBackground={dash.indigo}

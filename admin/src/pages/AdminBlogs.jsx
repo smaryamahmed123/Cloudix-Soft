@@ -19,6 +19,7 @@ import BlogFilters from "../components/Blog/BlogFilters";
 import BlogTable from "../components/Blog/BlogTable";
 import BlogFormModal from "../components/Blog/BlogFormModal";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 const ADMIN_BLOG_URL = import.meta.env.VITE_ADMIN_BLOG_URL;
 
@@ -125,8 +126,8 @@ export default function AdminBlogs() {
 
   const fetchBlogs = async () => {
     try {
-      const res = await axios.get(ADMIN_BLOG_URL);
-      setBlogs([...res.data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+      const res = await axios.get(`${ADMIN_BLOG_URL}/admin/all`);
+      setBlogs(withCreatedAt([...res.data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))));
     } catch (error) {
       console.error("Fetch blogs error:", error);
       notify("Failed to load blogs ❌", "error");

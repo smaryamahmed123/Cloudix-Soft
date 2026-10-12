@@ -31,6 +31,7 @@ import ContactMessagesTable from "../components/Contact/ContactMessagesTable";
 import MessageDetailDialog from "../components/Contact/MessageDetailDialog";
 import ConfirmDeleteDialog from "../components/Contact/ConfirmDeleteDialog";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 const ADMIN_CONTACT_MSG_URL = `${import.meta.env.VITE_ADMIN_CONTACT_MSG_URL}`;
 
@@ -93,7 +94,7 @@ const AdminContactMessages = () => {
     try {
       setLoading(true);
       const res = await axios.get(ADMIN_CONTACT_MSG_URL, { headers: authHeader() });
-      const list = Array.isArray(res.data) ? res.data : [];
+      const list = withCreatedAt(Array.isArray(res.data) ? res.data : []);
 
       // Newest first (messages without a date keep their original order)
       setMessages([...list].sort((a, b) => (timeOf(b) ?? 0) - (timeOf(a) ?? 0)));

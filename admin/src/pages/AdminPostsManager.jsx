@@ -18,6 +18,7 @@ import BlogStatCard from "../components/Blog/BlogStatCard"; // reused stat card
 import PostTable from "../components/Post/PostTable";
 import PostUploadModal from "../components/Post/PostUploadModal";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 const BASE_URL = `${backendURL}/api/posts`;
@@ -82,7 +83,7 @@ export default function AdminPostsManager() {
     try {
       setLoading(true);
       const res = await axios.get(BASE_URL);
-      setPosts(Array.isArray(res.data) ? res.data : []);
+      setPosts(withCreatedAt(Array.isArray(res.data) ? res.data : []));
     } catch {
       notify("Failed to fetch posts ❌", "error");
     } finally {

@@ -11,7 +11,7 @@ const Sparkline = ({ data = [], color, id }) => {
 
     const points = values.map((v, i) => [
         (i / (values.length - 1)) * 100,
-        max === min ? 36 : 36 - ((v - min) / range) * 32,
+        max === min ? 20 : 36 - ((v - min) / range) * 32,
     ]);
     const line = points.map(([x, y]) => `${x},${y}`).join(" ");
 

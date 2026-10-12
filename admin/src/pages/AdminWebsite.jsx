@@ -30,6 +30,7 @@ import BlogStatCard from "../components/Blog/BlogStatCard"; // reused stat card
 import WebsiteTable from "../components/Website/WebsiteTable";
 import WebsiteUploadModal from "../components/Website/WebsiteUploadModal";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 const emptyForm = { title: "", link: "", category: "", image: null };
 
@@ -88,7 +89,7 @@ export default function AdminWebsitesManager() {
         try {
             setLoading(true);
             const res = await api.get("/api/websites");
-            setWebsites(Array.isArray(res.data) ? res.data : []);
+            setWebsites(withCreatedAt(Array.isArray(res.data) ? res.data : []));
         } catch {
             notify("Failed to fetch websites ❌", "error");
         } finally {

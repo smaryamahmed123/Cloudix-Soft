@@ -40,6 +40,7 @@ import BlogStatCard from "../components/Blog/BlogStatCard"; // reused stat card
 import ServiceForm from "../components/Service/ServiceForm";
 import ServiceTable from "../components/Service/ServiceTable";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 const emptyForm = { iconImage: "", title: "", description: "" };
 
@@ -99,7 +100,7 @@ export default function AdminServicesManager() {
     try {
       setLoading(true);
       const res = await fetchServices();
-      setServices(Array.isArray(res.data) ? res.data : []);
+      setServices(withCreatedAt(Array.isArray(res.data) ? res.data : []));
     } catch (error) {
       console.error("Error loading services:", error);
       notify("Failed to load services ❌", "error");

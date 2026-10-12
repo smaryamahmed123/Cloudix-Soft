@@ -18,6 +18,7 @@ import BlogStatCard from "../components/Blog/BlogStatCard"; // reused stat card
 import LogoTable from "../components/Logo/LogoTable";
 import LogoUploadModal from "../components/Logo/LogoUploadModal";
 import { dash, cardSx } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 const BASE_URL = `${backendURL}/api/logos`;
@@ -82,7 +83,7 @@ export default function LogoManager() {
     try {
       setLoading(true);
       const res = await axios.get(BASE_URL);
-      setLogos([...res.data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)));
+      setLogos(withCreatedAt([...res.data].sort((a, b) => (a.order ?? 0) - (b.order ?? 0))));
     } catch {
       notify("Failed to fetch logos ❌", "error");
     } finally {
