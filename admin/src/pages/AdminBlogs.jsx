@@ -462,7 +462,7 @@ export default function AdminBlogs() {
         </Box>
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 3 }}>
+        {/* <Grid container spacing={2.2} sx={{ mb: 3 }}>
           <Grid item xs={12} sm={6} lg={3}>
             <BlogStatCard
               id="total"
@@ -511,7 +511,62 @@ export default function AdminBlogs() {
               sparkData={stats.categories.series}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
+
+        {/* ---------- Stat cards ---------- */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: 2.2,
+            mb: 3,
+            width: "100%",
+          }}
+        >
+          <BlogStatCard
+            id="total"
+            title="Total Posts"
+            value={stats.total.value}
+            icon={<ArticleOutlined />}
+            color={dash.green}
+            tint="#EEF4DE"
+            trend={stats.total.trend}
+            sparkData={stats.total.series}
+          />
+
+          <BlogStatCard
+            id="published"
+            title="Published"
+            value={stats.published.value}
+            icon={<VisibilityOutlined />}
+            color="#7C6FD0"
+            tint="#F0EEFB"
+            trend={stats.published.trend}
+            sparkData={stats.published.series}
+          />
+
+          <BlogStatCard
+            id="drafts"
+            title="Drafts"
+            value={stats.drafts.value}
+            icon={<AccessTimeRounded />}
+            color="#E3A81C"
+            tint="#FDF6DC"
+            trend={stats.drafts.trend}
+            sparkData={stats.drafts.series}
+          />
+
+          <BlogStatCard
+            id="categories"
+            title="Categories"
+            value={stats.categories.value}
+            icon={<FolderOutlined />}
+            color="#4A90C2"
+            tint="#E9F3FA"
+            trend={stats.categories.trend}
+            sparkData={stats.categories.series}
+          />
+        </Box>
 
         {/* ---------- Filters + table ---------- */}
         <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>
