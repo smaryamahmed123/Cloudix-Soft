@@ -1,41 +1,91 @@
-import fs from "fs";
-import path from "path";
 import mongoose from "mongoose";
 import Service from "../models/services.js";
 import cloudinary from "../config/cloudinary.js";
 
-// backend/controllers/servicesControllers.js
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
+
+/* ---------------------------------------
+   GET (public): visible services only, in drag-and-drop order
+   ({ $ne: false } so older documents without a `visible` field still show up)
+--------------------------------------- */
+export const getAllServices = async (req, res) => {
+  try {
+    const services = await Service.find({ visible: { $ne: false } }).sort({
+      order: 1,
+      createdAt: 1,
+    });
+    res.json(services);
+  } catch (err) {
+    console.error("❌ Get services error:", err);
+    res.status(500).json({ message: "Failed to fetch services" });
+  }
+};
+
+/* ---------------------------------------
+   GET (admin): everything, including hidden
+--------------------------------------- */
+export const getAllServicesAdmin = async (req, res) => {
+  try {
+    const services = await Service.find().sort({ order: 1, createdAt: 1 });
+    res.json(services);
+  } catch (err) {
+    console.error("❌ Get admin services error:", err);
+    res.status(500).json({ message: "Failed to fetch services" });
+  }
+};
+
+/* ---------------------------------------
+   VISIBILITY
+--------------------------------------- */
 export const updateVisibility = async (req, res) => {
   try {
     const { id } = req.params;
-    const { visible } = req.body;
 
-    const updated = await Service.findByIdAndUpdate(
-      id,
-      { visible },
-      { new: true }
-    );
+    if (!isValidId(id)) {
+      return res.status(400).json({ message: "Invalid service ID" });
+    }
+
+    // FormData / JSON can both arrive as strings
+    const visible = req.body.visible === true || req.body.visible === "true";
+
+    const updated = await Service.findByIdAndUpdate(id, { visible }, { new: true });
 
     if (!updated) {
-      return res.status(404).json({ error: "Service not found" });
+      return res.status(404).json({ message: "Service not found" });
     }
 
     res.status(200).json(updated);
   } catch (error) {
     console.error("❌ Visibility update error:", error);
-    res.status(500).json({ error: "Failed to update visibility" });
+    res.status(500).json({ message: "Failed to update visibility" });
   }
 };
 
+/* ---------------------------------------
+   CREATE
+--------------------------------------- */
 export const createService = async (req, res) => {
   try {
     const { title, description } = req.body;
 
-    // createService controller
-    const iconImage = req.file ? req.file.path : null;  // ✅ Cloudinary URL
-    const iconImagePublicId = req.file?.filename; // ✅ Cloudinary public ID
+    if (!title?.trim() || !description?.trim()) {
+      return res.status(400).json({ message: "Title and description are required" });
+    }
 
-    const newService = new Service({ title, description, iconImage, iconImagePublicId });
+    const iconImage = req.file ? req.file.path : null; // Cloudinary URL
+    const iconImagePublicId = req.file?.filename; // Cloudinary public ID
+
+    // New services go to the end of the list (otherwise they sort to the top)
+    const last = await Service.findOne().sort({ order: -1 });
+    const order = last ? (last.order || 0) + 1 : 0;
+
+    const newService = new Service({
+      title: title.trim(),
+      description: description.trim(),
+      iconImage,
+      iconImagePublicId,
+      order,
+    });
     await newService.save();
 
     res.status(201).json(newService);
@@ -45,31 +95,39 @@ export const createService = async (req, res) => {
   }
 };
 
+/* ---------------------------------------
+   UPDATE
+--------------------------------------- */
 export const updateService = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!isValidId(id)) {
+      return res.status(400).json({ message: "Invalid service ID" });
+    }
+
     const service = await Service.findById(id);
     if (!service) return res.status(404).json({ message: "Service not found" });
 
-    let iconImage = service.iconImage;
-    let iconImagePublicId = service.iconImagePublicId;
+    const update = {};
+    if (req.body.title?.trim()) update.title = req.body.title.trim();
+    if (req.body.description?.trim()) update.description = req.body.description.trim();
 
-    // If new image uploaded
+    // New image was already uploaded by the upload middleware
     if (req.file) {
-      // Delete old image from Cloudinary
-      if (iconImagePublicId) {
-        await cloudinary.uploader.destroy(iconImagePublicId);
+      if (service.iconImagePublicId) {
+        try {
+          await cloudinary.uploader.destroy(service.iconImagePublicId);
+        } catch (error) {
+          console.error("Old icon deletion failed:", error.message);
+        }
       }
 
-      iconImage = req.file.path;
-      iconImagePublicId = req.file.filename;
+      update.iconImage = req.file.path;
+      update.iconImagePublicId = req.file.filename;
     }
 
-    const updated = await Service.findByIdAndUpdate(
-      id,
-      { title: req.body.title, description: req.body.description, iconImage, iconImagePublicId },
-      { new: true }
-    );
+    const updated = await Service.findByIdAndUpdate(id, update, { new: true });
 
     res.json(updated);
   } catch (err) {
@@ -78,15 +136,27 @@ export const updateService = async (req, res) => {
   }
 };
 
+/* ---------------------------------------
+   DELETE
+--------------------------------------- */
 export const deleteService = async (req, res) => {
   try {
     const { id } = req.params;
+
+    if (!isValidId(id)) {
+      return res.status(400).json({ message: "Invalid service ID" });
+    }
+
     const service = await Service.findById(id);
     if (!service) return res.status(404).json({ message: "Service not found" });
 
-    // Delete from Cloudinary
+    // A Cloudinary hiccup must not stop the service from being deleted
     if (service.iconImagePublicId) {
-      await cloudinary.uploader.destroy(service.iconImagePublicId);
+      try {
+        await cloudinary.uploader.destroy(service.iconImagePublicId);
+      } catch (error) {
+        console.error("Cloudinary deletion failed:", error.message);
+      }
     }
 
     await Service.findByIdAndDelete(id);
@@ -97,114 +167,31 @@ export const deleteService = async (req, res) => {
   }
 };
 
-
-export const getAllServices = async (req, res) => {
-  const services = await Service.find();
-  res.json(services);
-};
-
-// export const createService = async (req, res) => {
-//   try {
-//     const { title, description } = req.body;
-//     const iconImage = req.file ? `/uploads/services/${req.file.filename}` : null;
-
-//     const newService = new Service({ iconImage, title, description });
-//     await newService.save();
-//     res.status(201).json(newService);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// export const updateService = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const service = await Service.findById(id);
-
-//     if (!service) return res.status(404).json({ message: "Service not found" });
-
-//     // If a new image is uploaded, delete old one
-//     // if (req.file && service.iconImage) {
-//     //   const oldPath = path.join(process.cwd(), service.iconImage);
-//     //   if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-//     // }
-//     if (req.file && service.iconImage) {
-//       const oldPath = path.join(process.cwd(), service.iconImage);
-//       if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-//     }
-
-//     const updated = await Service.findByIdAndUpdate(
-//       id,
-//       {
-//         title: req.body.title,
-//         description: req.body.description,
-//         iconImage: req.file ? `/uploads/services/${req.file.filename}` : service.iconImage,
-//       },
-//       { new: true }
-//     );
-
-//     res.json(updated);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-// export const deleteService = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const service = await Service.findById(id);
-
-//     if (!service) return res.status(404).json({ message: "Service not found" });
-
-//     // Delete the image file
-//     if (service.iconImage) {
-//       const imagePath = path.join(process.cwd(), service.iconImage);
-//       if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
-//     }
-
-//     await Service.findByIdAndDelete(id);
-//     res.json({ message: "Service and image deleted" });
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
-
+/* ---------------------------------------
+   REORDER (one bulk write instead of one query per service)
+--------------------------------------- */
 export const reorderServices = async (req, res) => {
   try {
     const { ids } = req.body;
 
-    if (!ids || !Array.isArray(ids)) {
-      return res.status(400).json({ error: "Invalid IDs array" });
+    if (!Array.isArray(ids)) {
+      return res.status(400).json({ message: "Invalid IDs array" });
     }
 
-    for (let i = 0; i < ids.length; i++) {
-      const id = ids[i];
+    const operations = ids
+      .map((id, index) => ({ id, index }))
+      .filter(({ id }) => isValidId(id))
+      .map(({ id, index }) => ({
+        updateOne: { filter: { _id: id }, update: { $set: { order: index } } },
+      }));
 
-      // ✅ Validate ID before updating
-      if (!mongoose.Types.ObjectId.isValid(id)) {
-        console.error(`❌ Invalid ObjectId: ${id}`);
-        continue; // ⬅ skip invalid ID instead of crashing
-      }
-
-      try {
-        const updated = await Service.findByIdAndUpdate(id, { order: i });
-        if (!updated) {
-          console.error(`❌ No service found with ID: ${id}`);
-        }
-      } catch (err) {
-        console.error(`❌ Failed to update order for ID ${id}:`, err);
-        return res.status(500).json({
-          error: `Failed to update ID ${id}`,
-          details: err.message
-        });
-      }
-
+    if (operations.length) {
+      await Service.bulkWrite(operations);
     }
 
     res.status(200).json({ success: true, message: "Services reordered successfully" });
   } catch (err) {
     console.error("❌ Reorder error:", err);
-    res.status(500).json({ error: "Internal Server Error", details: err.message });
+    res.status(500).json({ message: "Failed to reorder services" });
   }
 };

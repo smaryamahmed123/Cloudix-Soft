@@ -66,7 +66,39 @@ const createUniqueSlug = async (title, existingId = null) => {
 };
 
 /* ---------------------------------------
-   GET ALL BLOGS
+   Helper: keep SEO fallbacks inside the schema limits (60 / 160 chars).
+   Falling back to the full title / excerpt can exceed them, and
+   blog.save() then throws a ValidationError (which used to surface as a 500).
+--------------------------------------- */
+
+const clip = (value, max) => (value || "").slice(0, max);
+
+/* ---------------------------------------
+   Helper: turn Mongoose / Mongo errors into proper status codes
+--------------------------------------- */
+
+const sendSaveError = (res, err, fallbackMessage) => {
+  if (err.name === "ValidationError") {
+    return res.status(400).json({
+      message: Object.values(err.errors)
+        .map((e) => e.message)
+        .join(", "),
+    });
+  }
+
+  if (err.code === 11000) {
+    return res.status(409).json({
+      message: "That slug is already in use",
+    });
+  }
+
+  return res.status(500).json({
+    message: err.message || fallbackMessage,
+  });
+};
+
+/* ---------------------------------------
+   GET ALL BLOGS  (public: published only)
 --------------------------------------- */
 
 export const getAllBlogs = async (req, res) => {
@@ -81,6 +113,27 @@ export const getAllBlogs = async (req, res) => {
     res.json(blogs);
   } catch (err) {
     console.error("Get blogs error:", err);
+
+    res.status(500).json({
+      message: "Failed to fetch blogs",
+    });
+  }
+};
+
+/* ---------------------------------------
+   GET ALL BLOGS  (admin: includes drafts)
+--------------------------------------- */
+
+export const getAllBlogsAdmin = async (req, res) => {
+  try {
+    const blogs = await Blog.find().sort({
+      order: 1,
+      createdAt: -1,
+    });
+
+    res.json(blogs);
+  } catch (err) {
+    console.error("Get admin blogs error:", err);
 
     res.status(500).json({
       message: "Failed to fetch blogs",
@@ -198,11 +251,13 @@ export const createBlog = async (req, res) => {
       excerpt: excerpt?.trim() || "",
       category: category.trim(),
       author: author?.trim() || "Cloudix Soft Team",
-      seoTitle: seoTitle?.trim() || title.trim(),
-      seoDescription:
+      seoTitle: clip(seoTitle?.trim() || title.trim(), 60),
+      seoDescription: clip(
         seoDescription?.trim() ||
         excerpt?.trim() ||
         title.trim(),
+        160
+      ),
       coverImage,
       coverImagePublicId,
       visible:
@@ -214,24 +269,24 @@ export const createBlog = async (req, res) => {
 
     const savedBlog = await blog.save();
 
-    /* Email notification */
+    /* Email notification – only for published posts (a draft must not email subscribers) */
 
-    try {
-      await sendBlogNotification(savedBlog);
-    } catch (emailError) {
-      console.error(
-        "Blog notification failed:",
-        emailError.message
-      );
+    if (savedBlog.visible) {
+      try {
+        await sendBlogNotification(savedBlog);
+      } catch (emailError) {
+        console.error(
+          "Blog notification failed:",
+          emailError.message
+        );
+      }
     }
 
     res.status(201).json(savedBlog);
   } catch (err) {
     console.error("Create blog error:", err);
 
-    res.status(500).json({
-      message: err.message || "Failed to create blog",
-    });
+    sendSaveError(res, err, "Failed to create blog");
   }
 };
 
@@ -269,14 +324,16 @@ export const updateBlog = async (req, res) => {
       visible,
     } = req.body;
 
-    /* Update slug if title/slug changed */
+    /* Slug
+       Only change it when the admin typed a different slug.
+       Editing the title no longer rewrites the URL (that broke existing links). */
 
     let slug = blog.slug;
 
     if (requestedSlug && requestedSlug !== blog.slug) {
       slug = await createUniqueSlug(requestedSlug, id);
-    } else if (title && title !== blog.title) {
-      slug = await createUniqueSlug(title, id);
+    } else if (!blog.slug) {
+      slug = await createUniqueSlug(title || blog.title, id);
     }
 
     /* Update fields */
@@ -290,26 +347,40 @@ export const updateBlog = async (req, res) => {
       category?.trim() || blog.category;
     blog.author =
       author?.trim() || blog.author;
-    blog.seoTitle =
-      seoTitle?.trim() || blog.title;
-    blog.seoDescription =
+    blog.seoTitle = clip(
+      seoTitle?.trim() || blog.title,
+      60
+    );
+    blog.seoDescription = clip(
       seoDescription?.trim() ||
       blog.excerpt ||
-      blog.title;
+      blog.title,
+      160
+    );
 
     if (visible !== undefined) {
       blog.visible =
         visible === "true" || visible === true;
     }
 
-    /* Replace cover image */
+    /* Replace cover image
+       Upload the new one FIRST, delete the old one after, so a failed
+       upload can't leave the post with no image at all. */
 
     if (req.file) {
-      if (blog.coverImagePublicId) {
+      const result = await uploadToCloudinary(
+        req.file.buffer,
+        "blogs/covers"
+      );
+
+      const oldPublicId = blog.coverImagePublicId;
+
+      blog.coverImage = result.secure_url;
+      blog.coverImagePublicId = result.public_id;
+
+      if (oldPublicId) {
         try {
-          await cloudinary.uploader.destroy(
-            blog.coverImagePublicId
-          );
+          await cloudinary.uploader.destroy(oldPublicId);
         } catch (error) {
           console.error(
             "Old cover image deletion failed:",
@@ -317,14 +388,6 @@ export const updateBlog = async (req, res) => {
           );
         }
       }
-
-      const result = await uploadToCloudinary(
-        req.file.buffer,
-        "blogs/covers"
-      );
-
-      blog.coverImage = result.secure_url;
-      blog.coverImagePublicId = result.public_id;
     }
 
     const updatedBlog = await blog.save();
@@ -333,9 +396,7 @@ export const updateBlog = async (req, res) => {
   } catch (err) {
     console.error("Update blog error:", err);
 
-    res.status(500).json({
-      message: err.message || "Failed to update blog",
-    });
+    sendSaveError(res, err, "Failed to update blog");
   }
 };
 

@@ -145,7 +145,7 @@ const Dashboard = () => {
         setLoading(true);
 
         const [blogs, messages, logos, testimonials] = await Promise.allSettled([
-          axios.get(ADMIN_BLOG_URL),
+          axios.get(`${ADMIN_BLOG_URL}/admin/all`), // admin list includes drafts
           axios.get(ADMIN_CONTACT_MSG_URL),
           axios.get(LOGOS_URL),
           axios.get(TESTIMONIALS_URL),
@@ -302,7 +302,7 @@ const Dashboard = () => {
           <Grid item xs={12} sm={6} lg={3}>
             <DashboardStatCard
               id="portfolio"
-              title="Portfolio"
+              title="Websites / Portfolio"
               value={raw.portfolio.length}
               icon={<WorkOutlineRounded />}
               iconBackground={dash.navy}
@@ -356,12 +356,11 @@ const Dashboard = () => {
               />
 
               <QuickActions
-                onAddBlog={() => navigate("/admin/blog")}
+                onAddBlog={() => navigate("/admin/blogs")}
                 onAddWebsite={() => navigate("/admin/addWebsite")}
                 onAddTestimonial={() => navigate("/admin/testimonials")}
-                onAddLogo={() => navigate("/admin/post-design")}
+                onAddLogo={() => navigate("/admin/portfolio")}
                 onAddService={() => navigate("/admin/services")}
-                onViewAll={() => navigate("/admin/dashboard")}
               />
             </Stack>
           </Grid>

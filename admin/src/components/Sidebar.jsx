@@ -26,11 +26,9 @@ import {
   PersonOutlineOutlined,
   ShieldOutlined,
   EmailOutlined,
-  SettingsOutlined,
   GroupOutlined,
   CollectionsOutlined,
   ContactPhoneOutlined,
-  AddToPhotosOutlined,
   LogoutOutlined,
   Menu as MenuIcon,
 } from "@mui/icons-material";
@@ -44,9 +42,6 @@ import { useTheme } from "@mui/material/styles";
 // ============================================================
 
 const drawerWidth = 240;
-
-// TODO: set this to the real route of your Logo Manager page
-const LOGOS_PATH = "/admin/logos";
 
 const palette = {
   bgTop: "#102640",
@@ -67,10 +62,10 @@ const palette = {
 const mainItems = [
   { text: "Dashboard", icon: <HomeRounded />, path: "/admin/dashboard" },
   { text: "Blog", icon: <DescriptionOutlined />, path: "/admin/blogs" },
-  { text: "logo", icon: <WorkOutlineOutlined />, path: "/admin/portfolio" },
+  { text: "Websites", icon: <WorkOutlineOutlined />, path: "/admin/addWebsite" },
   { text: "Services", icon: <GridViewOutlined />, path: "/admin/services" },
   { text: "Testimonials", icon: <StarBorderOutlined />, path: "/admin/testimonials" },
-  { text: "Logos", icon: <ImageOutlined />, path: LOGOS_PATH },
+  { text: "Logos", icon: <ImageOutlined />, path: "/admin/portfolio" },
   { text: "About", icon: <PersonOutlineOutlined />, path: "/admin/about" },
   { text: "Privacy Policy", icon: <ShieldOutlined />, path: "/admin/privacy-policy" },
   { text: "Contact Messages", icon: <EmailOutlined />, path: "/admin/messages" },
@@ -84,14 +79,7 @@ const extraItems = [
   { text: "Subscribers", icon: <GroupOutlined />, path: "/admin/subscribers" },
   { text: "Posts", icon: <CollectionsOutlined />, path: "/admin/post-design" },
   { text: "Edit Contact", icon: <ContactPhoneOutlined />, path: "/admin/edit-contact" },
-  { text: "Add Website", icon: <AddToPhotosOutlined />, path: "/admin/addWebsite" },
 ];
-
-const settingsItem = {
-  text: "Settings",
-  icon: <SettingsOutlined />,
-  path: "/admin/settings",
-};
 
 // ============================================================
 // LOGO  (file lives in /public, so it is served from the site root)
@@ -265,8 +253,6 @@ const Sidebar = () => {
         <Divider sx={{ borderColor: palette.border, my: 1.4, mx: 0.6 }} />
 
         <List disablePadding>
-          {renderItem(settingsItem)}
-
           {/* Logout (not in the design, but needed) */}
           <ListItem disablePadding>
             <ListItemButton

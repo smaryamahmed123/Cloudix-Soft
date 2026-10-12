@@ -2,18 +2,24 @@
 import express from "express";
 import {
   getAllServices,
+  getAllServicesAdmin,
   createService,
   updateService,
   deleteService,
   reorderServices,
-  updateVisibility
+  updateVisibility,
 } from "../controllers/servicesControllers.js";
 import { upload } from "../middelware/upload.js";
-import { verifyAdmin } from '../middelware/authMiddelware.js';
+import { verifyAdmin } from "../middelware/authMiddelware.js";
 
 const router = express.Router();
 
+// Public website: visible services only
 router.get("/", getAllServices);
+
+// Admin page: everything, including hidden services
+router.get("/admin/all", verifyAdmin, getAllServicesAdmin);
+
 router.post("/", verifyAdmin, upload.single("iconImage"), createService);
 router.put("/reorder", verifyAdmin, reorderServices);
 router.put("/:id", verifyAdmin, upload.single("iconImage"), updateService);
