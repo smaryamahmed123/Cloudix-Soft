@@ -43,17 +43,6 @@ const BlogStatCard = ({ id, title, value, icon, color, tint, trend, sparkData })
     const Arrow = down ? ArrowDownwardRounded : ArrowUpwardRounded;
 
     return (
-        // <Paper
-        //     elevation={0}
-        //     sx={{
-        //         ...cardSx,
-        //         position: "relative",
-        //         overflow: "hidden",
-        //         p: 2.4,
-        //         minHeight: 136,
-        //         background: `linear-gradient(135deg, ${tint} 0%, #FFFFFF 100%)`,
-        //     }}
-        // >
         <Paper
             elevation={0}
             sx={{

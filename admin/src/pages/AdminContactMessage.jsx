@@ -281,44 +281,48 @@ const AdminContactMessages = () => {
         </Box>
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="msg-total"
-              title="Total Messages"
-              value={stats.total.value}
-              icon={<MailOutlineRounded />}
-              color={dash.green}
-              tint="#EEF4DE"
-              trend={stats.total.trend}
-              sparkData={stats.total.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="msg-verified"
-              title="Verified"
-              value={stats.verified.value}
-              icon={<CheckCircleOutline />}
-              color="#7C6FD0"
-              tint="#F0EEFB"
-              trend={stats.verified.trend}
-              sparkData={stats.verified.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="msg-pending"
-              title="Pending"
-              value={stats.pending.value}
-              icon={<PendingActionsOutlined />}
-              color="#E3A81C"
-              tint="#FDF6DC"
-              trend={stats.pending.trend}
-              sparkData={stats.pending.series}
-            />
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: 2.2,
+            mb: 3,
+            width: "100%",
+          }}
+        >
+          <BlogStatCard
+            id="msg-total"
+            title="Total Messages"
+            value={stats.total.value}
+            icon={<MailOutlineRounded />}
+            color={dash.green}
+            tint="#EEF4DE"
+            trend={stats.total.trend}
+            sparkData={stats.total.series}
+          />
+
+          <BlogStatCard
+            id="msg-verified"
+            title="Verified"
+            value={stats.verified.value}
+            icon={<CheckCircleOutline />}
+            color="#7C6FD0"
+            tint="#F0EEFB"
+            trend={stats.verified.trend}
+            sparkData={stats.verified.series}
+          />
+
+          <BlogStatCard
+            id="msg-pending"
+            title="Pending"
+            value={stats.pending.value}
+            icon={<PendingActionsOutlined />}
+            color="#E3A81C"
+            tint="#FDF6DC"
+            trend={stats.pending.trend}
+            sparkData={stats.pending.series}
+          />
+        </Box>
 
         {/* ---------- Filters + table ---------- */}
         <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>

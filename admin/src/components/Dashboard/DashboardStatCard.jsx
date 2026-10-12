@@ -65,6 +65,9 @@ const DashboardStatCard = ({
         onClick={onClick}
         sx={{
             ...cardSx,
+            width: "100%",
+            height: "100%",
+            boxSizing: "border-box",
             position: "relative",
             overflow: "hidden",
             p: 2.4,
@@ -72,7 +75,10 @@ const DashboardStatCard = ({
             cursor: onClick ? "pointer" : "default",
             transition: "transform 0.2s ease, box-shadow 0.2s ease",
             "&:hover": onClick
-                ? { transform: "translateY(-3px)", boxShadow: "0 8px 22px rgba(16,38,64,0.09)" }
+                ? {
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 8px 22px rgba(16,38,64,0.09)",
+                }
                 : {},
         }}
     >

@@ -393,56 +393,56 @@ export default function AdminTestimonialsManager() {
         </Box>
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} lg={3}>
-            <BlogStatCard
-              id="tm-total"
-              title="Total Testimonials"
-              value={stats.total.value}
-              icon={<FormatQuoteRounded />}
-              color={dash.green}
-              tint="#EEF4DE"
-              trend={stats.total.trend}
-              sparkData={stats.total.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <BlogStatCard
-              id="tm-published"
-              title="Published"
-              value={stats.published.value}
-              icon={<CheckCircleOutline />}
-              color="#7C6FD0"
-              tint="#F0EEFB"
-              trend={stats.published.trend}
-              sparkData={stats.published.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <BlogStatCard
-              id="tm-featured"
-              title="Featured"
-              value={stats.featured.value}
-              icon={<StarRounded />}
-              color="#E3A81C"
-              tint="#FDF6DC"
-              trend={stats.featured.trend}
-              sparkData={stats.featured.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={3}>
-            <BlogStatCard
-              id="tm-video"
-              title="Video"
-              value={stats.video.value}
-              icon={<PlayCircleOutline />}
-              color="#4A90C2"
-              tint="#E9F3FA"
-              trend={stats.video.trend}
-              sparkData={stats.video.series}
-            />
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: 2.2,
+            mb: 3,
+            width: "100%",
+          }}
+        >
+          <BlogStatCard
+            id="tm-total"
+            title="Total Testimonials"
+            value={stats.total.value}
+            icon={<FormatQuoteRounded />}
+            color={dash.green}
+            tint="#EEF4DE"
+            trend={stats.total.trend}
+            sparkData={stats.total.series}
+          />
+          <BlogStatCard
+            id="tm-published"
+            title="Published"
+            value={stats.published.value}
+            icon={<CheckCircleOutline />}
+            color="#7C6FD0"
+            tint="#F0EEFB"
+            trend={stats.published.trend}
+            sparkData={stats.published.series}
+          />
+          <BlogStatCard
+            id="tm-featured"
+            title="Featured"
+            value={stats.featured.value}
+            icon={<StarRounded />}
+            color="#E3A81C"
+            tint="#FDF6DC"
+            trend={stats.featured.trend}
+            sparkData={stats.featured.series}
+          />
+          <BlogStatCard
+            id="tm-video"
+            title="Video"
+            value={stats.video.value}
+            icon={<PlayCircleOutline />}
+            color="#4A90C2"
+            tint="#E9F3FA"
+            trend={stats.video.trend}
+            sparkData={stats.video.series}
+          />
+        </Box>
 
         {/* ---------- Filters + table ---------- */}
         <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>
@@ -572,6 +572,6 @@ export default function AdminTestimonialsManager() {
       />
 
       <LoadingBackdrop open={loading} />
-    </Box>
+    </Box >
   );
 }

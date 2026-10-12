@@ -274,44 +274,46 @@ export default function LogoManager() {
         </Box>
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="logo-total"
-              title="Total Logos"
-              value={stats.total.value}
-              icon={<ImageOutlined />}
-              color={dash.green}
-              tint="#EEF4DE"
-              trend={stats.total.trend}
-              sparkData={stats.total.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="logo-month"
-              title="Added This Month"
-              value={stats.month.value}
-              icon={<CalendarMonthOutlined />}
-              color="#7C6FD0"
-              tint="#F0EEFB"
-              trend={stats.month.trend}
-              sparkData={stats.month.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="logo-year"
-              title="Added This Year"
-              value={stats.year.value}
-              icon={<TrendingUpRounded />}
-              color="#E3A81C"
-              tint="#FDF6DC"
-              trend={stats.year.trend}
-              sparkData={stats.year.series}
-            />
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: 2.2,
+            mb: 3,
+            width: "100%",
+          }}
+        >
+          <BlogStatCard
+            id="logo-total"
+            title="Total Logos"
+            value={stats.total.value}
+            icon={<ImageOutlined />}
+            color={dash.green}
+            tint="#EEF4DE"
+            trend={stats.total.trend}
+            sparkData={stats.total.series}
+          />
+          <BlogStatCard
+            id="logo-month"
+            title="Added This Month"
+            value={stats.month.value}
+            icon={<CalendarMonthOutlined />}
+            color="#7C6FD0"
+            tint="#F0EEFB"
+            trend={stats.month.trend}
+            sparkData={stats.month.series}
+          />
+          <BlogStatCard
+            id="logo-year"
+            title="Added This Year"
+            value={stats.year.value}
+            icon={<TrendingUpRounded />}
+            color="#E3A81C"
+            tint="#FDF6DC"
+            trend={stats.year.trend}
+            sparkData={stats.year.series}
+          />
+        </Box>
 
         {/* ---------- Search + list ---------- */}
         <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>

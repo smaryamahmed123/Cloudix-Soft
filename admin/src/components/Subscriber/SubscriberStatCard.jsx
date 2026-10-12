@@ -7,11 +7,24 @@ import { dash, cardSx } from "../Dashboard/dashboardPalette";
 const SubscriberStatCard = ({ title, value, caption, icon, color, tint }) => (
     <Paper
         elevation={0}
+        onClick={onClick}
         sx={{
             ...cardSx,
+            width: "100%",
+            height: "100%",
+            boxSizing: "border-box",
+            position: "relative",
+            overflow: "hidden",
             p: 2.4,
-            minHeight: 116,
-            background: `linear-gradient(135deg, ${tint} 0%, #FFFFFF 100%)`,
+            minHeight: 150,
+            cursor: onClick ? "pointer" : "default",
+            transition: "transform 0.2s ease, box-shadow 0.2s ease",
+            "&:hover": onClick
+                ? {
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 8px 22px rgba(16,38,64,0.09)",
+                }
+                : {},
         }}
     >
         <Stack direction="row" spacing={1.6} alignItems="flex-start">

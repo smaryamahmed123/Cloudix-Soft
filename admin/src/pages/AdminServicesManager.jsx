@@ -345,44 +345,46 @@ export default function AdminServicesManager() {
         </Box>
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="svc-total"
-              title="Total Services"
-              value={stats.total.value}
-              icon={<DesignServicesOutlined />}
-              color={dash.green}
-              tint="#EEF4DE"
-              trend={stats.total.trend}
-              sparkData={stats.total.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="svc-visible"
-              title="Visible"
-              value={stats.visible.value}
-              icon={<VisibilityOutlined />}
-              color="#7C6FD0"
-              tint="#F0EEFB"
-              trend={stats.visible.trend}
-              sparkData={stats.visible.series}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <BlogStatCard
-              id="svc-hidden"
-              title="Hidden"
-              value={stats.hidden.value}
-              icon={<VisibilityOffOutlined />}
-              color="#E3A81C"
-              tint="#FDF6DC"
-              trend={stats.hidden.trend}
-              sparkData={stats.hidden.series}
-            />
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gap: 2.2,
+            mb: 3,
+            width: "100%",
+          }}
+        >
+          <BlogStatCard
+            id="svc-total"
+            title="Total Services"
+            value={stats.total.value}
+            icon={<DesignServicesOutlined />}
+            color={dash.green}
+            tint="#EEF4DE"
+            trend={stats.total.trend}
+            sparkData={stats.total.series}
+          />
+          <BlogStatCard
+            id="svc-visible"
+            title="Visible"
+            value={stats.visible.value}
+            icon={<VisibilityOutlined />}
+            color="#7C6FD0"
+            tint="#F0EEFB"
+            trend={stats.visible.trend}
+            sparkData={stats.visible.series}
+          />
+          <BlogStatCard
+            id="svc-hidden"
+            title="Hidden"
+            value={stats.hidden.value}
+            icon={<VisibilityOffOutlined />}
+            color="#E3A81C"
+            tint="#FDF6DC"
+            trend={stats.hidden.trend}
+            sparkData={stats.hidden.series}
+          />
+        </Box>
 
         {/* ---------- Filters + table ---------- */}
         <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>

@@ -300,44 +300,46 @@ export default function AdminWebsitesManager() {
                 </Box>
 
                 {/* ---------- Stat cards ---------- */}
-                <Grid container spacing={2.2} sx={{ mb: 3 }}>
-                    <Grid item xs={12} sm={6} lg={4}>
-                        <BlogStatCard
-                            id="web-total"
-                            title="Total Websites"
-                            value={stats.total.value}
-                            icon={<LanguageOutlined />}
-                            color={dash.green}
-                            tint="#EEF4DE"
-                            trend={stats.total.trend}
-                            sparkData={stats.total.series}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} lg={4}>
-                        <BlogStatCard
-                            id="web-static"
-                            title="Static"
-                            value={stats.static.value}
-                            icon={<WebOutlined />}
-                            color="#7C6FD0"
-                            tint="#F0EEFB"
-                            trend={stats.static.trend}
-                            sparkData={stats.static.series}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} lg={4}>
-                        <BlogStatCard
-                            id="web-ecommerce"
-                            title="E-commerce"
-                            value={stats.ecommerce.value}
-                            icon={<ShoppingCartOutlined />}
-                            color="#E3A81C"
-                            tint="#FDF6DC"
-                            trend={stats.ecommerce.trend}
-                            sparkData={stats.ecommerce.series}
-                        />
-                    </Grid>
-                </Grid>
+                <Box
+                    sx={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                        gap: 2.2,
+                        mb: 3,
+                        width: "100%",
+                    }}
+                >
+                    <BlogStatCard
+                        id="web-total"
+                        title="Total Websites"
+                        value={stats.total.value}
+                        icon={<LanguageOutlined />}
+                        color={dash.green}
+                        tint="#EEF4DE"
+                        trend={stats.total.trend}
+                        sparkData={stats.total.series}
+                    />
+                    <BlogStatCard
+                        id="web-static"
+                        title="Static"
+                        value={stats.static.value}
+                        icon={<WebOutlined />}
+                        color="#7C6FD0"
+                        tint="#F0EEFB"
+                        trend={stats.static.trend}
+                        sparkData={stats.static.series}
+                    />
+                    <BlogStatCard
+                        id="web-ecommerce"
+                        title="E-commerce"
+                        value={stats.ecommerce.value}
+                        icon={<ShoppingCartOutlined />}
+                        color="#E3A81C"
+                        tint="#FDF6DC"
+                        trend={stats.ecommerce.trend}
+                        sparkData={stats.ecommerce.series}
+                    />
+                </Box>
 
                 {/* ---------- Filters + table ---------- */}
                 <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>

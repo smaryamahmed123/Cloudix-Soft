@@ -285,63 +285,69 @@ const Dashboard = () => {
         <DashboardHeader />
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 2.5 }}>
-          <Grid item xs={12} sm={6} lg={3}>
-            <DashboardStatCard
-              id="blogs"
-              title="Total Blogs"
-              value={raw.blogs.length}
-              icon={<ArticleOutlined />}
-              iconBackground={dash.green}
-              sparkColor={dash.green}
-              sparkData={stats.blogs.series}
-              trend={stats.blogs.trend}
-              onClick={() => navigate("/admin/blogs")}
-            />
-          </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+            gap: 2.2,
+            mb: 2.5,
+            width: "100%",
+            "@media (max-width: 1200px)": {
+              gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            },
+            "@media (max-width: 600px)": {
+              gridTemplateColumns: "1fr",
+            },
+          }}
+        >
+          <DashboardStatCard
+            id="blogs"
+            title="Total Blogs"
+            value={raw.blogs.length}
+            icon={<ArticleOutlined />}
+            iconBackground={dash.green}
+            sparkColor={dash.green}
+            sparkData={stats.blogs.series}
+            trend={stats.blogs.trend}
+            onClick={() => navigate("/admin/blogs")}
+          />
 
-          <Grid item xs={12} sm={6} lg={3}>
-            <DashboardStatCard
-              id="portfolio"
-              title="Total Logos"
-              value={raw.portfolio.length}
-              icon={<WorkOutlineRounded />}
-              iconBackground={dash.navy}
-              sparkColor={dash.navy}
-              sparkData={stats.portfolio.series}
-              trend={stats.portfolio.trend}
-              onClick={() => navigate("/admin/portfolio")}
-            />
-          </Grid>
+          <DashboardStatCard
+            id="portfolio"
+            title="Total Logos"
+            value={raw.portfolio.length}
+            icon={<WorkOutlineRounded />}
+            iconBackground={dash.navy}
+            sparkColor={dash.navy}
+            sparkData={stats.portfolio.series}
+            trend={stats.portfolio.trend}
+            onClick={() => navigate("/admin/portfolio")}
+          />
 
-          <Grid item xs={12} sm={6} lg={3}>
-            <DashboardStatCard
-              id="testimonials"
-              title="Total Testimonials"
-              value={raw.testimonials.length}
-              icon={<StarBorderRounded />}
-              iconBackground={dash.lime}
-              sparkColor={dash.lime}
-              sparkData={stats.testimonials.series}
-              trend={stats.testimonials.trend}
-              onClick={() => navigate("/admin/testimonials")}
-            />
-          </Grid>
+          <DashboardStatCard
+            id="testimonials"
+            title="Total Testimonials"
+            value={raw.testimonials.length}
+            icon={<StarBorderRounded />}
+            iconBackground={dash.lime}
+            sparkColor={dash.lime}
+            sparkData={stats.testimonials.series}
+            trend={stats.testimonials.trend}
+            onClick={() => navigate("/admin/testimonials")}
+          />
 
-          <Grid item xs={12} sm={6} lg={3}>
-            <DashboardStatCard
-              id="messages"
-              title="Total Messages"
-              value={raw.messages.length}
-              icon={<MailOutlineRounded />}
-              iconBackground={dash.indigo}
-              sparkColor={dash.indigo}
-              sparkData={stats.messages.series}
-              trend={stats.messages.trend}
-              onClick={() => navigate("/admin/messages")}
-            />
-          </Grid>
-        </Grid>
+          <DashboardStatCard
+            id="messages"
+            title="Total Messages"
+            value={raw.messages.length}
+            icon={<MailOutlineRounded />}
+            iconBackground={dash.indigo}
+            sparkColor={dash.indigo}
+            sparkData={stats.messages.series}
+            trend={stats.messages.trend}
+            onClick={() => navigate("/admin/messages")}
+          />
+        </Box>
 
         {/* ---------- Main area ---------- */}
         <Grid container spacing={2.5} alignItems="stretch">

@@ -211,38 +211,48 @@ const Subscribers = () => {
         </Box>
 
         {/* ---------- Stat cards ---------- */}
-        <Grid container spacing={2.2} sx={{ mb: 3 }}>
-          <Grid item xs={12} sm={6} lg={4}>
-            <SubscriberStatCard
-              title="Total Subscribers"
-              value={grandTotal === null ? "—" : grandTotal.toLocaleString()}
-              caption="All newsletter sign-ups"
-              icon={<GroupOutlined />}
-              color={dash.green}
-              tint="#EEF4DE"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <SubscriberStatCard
-              title={hasSearch ? "Search Results" : "Showing"}
-              value={total.toLocaleString()}
-              caption={hasSearch ? `Matching “${debouncedSearch}”` : "No search filter applied"}
-              icon={<ManageSearchRounded />}
-              color="#7C6FD0"
-              tint="#F0EEFB"
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} lg={4}>
-            <SubscriberStatCard
-              title="Active on this page"
-              value={`${activeOnPage} / ${subscribers.length}`}
-              caption={`Page ${page} of ${totalPages}`}
-              icon={<CheckCircleOutlineRounded />}
-              color="#E3A81C"
-              tint="#FDF6DC"
-            />
-          </Grid>
-        </Grid>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+            gap: 2.2,
+            mb: 3,
+            width: "100%",
+            "@media (max-width: 900px)": {
+              gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            },
+            "@media (max-width: 600px)": {
+              gridTemplateColumns: "1fr",
+            },
+          }}
+        >
+          <SubscriberStatCard
+            title="Total Subscribers"
+            value={grandTotal === null ? "—" : grandTotal.toLocaleString()}
+            caption="All newsletter sign-ups"
+            icon={<GroupOutlined />}
+            color={dash.green}
+            tint="#EEF4DE"
+          />
+
+          <SubscriberStatCard
+            title={hasSearch ? "Search Results" : "Showing"}
+            value={total.toLocaleString()}
+            caption={hasSearch ? `Matching “${debouncedSearch}”` : "No search filter applied"}
+            icon={<ManageSearchRounded />}
+            color="#7C6FD0"
+            tint="#F0EEFB"
+          />
+
+          <SubscriberStatCard
+            title="Active on this page"
+            value={`${activeOnPage} / ${subscribers.length}`}
+            caption={`Page ${page} of ${totalPages}`}
+            icon={<CheckCircleOutlineRounded />}
+            color="#E3A81C"
+            tint="#FDF6DC"
+          />
+        </Box>
 
         {/* ---------- Search + table ---------- */}
         <Paper elevation={0} sx={{ ...cardSx, p: { xs: 2, md: 2.5 } }}>
