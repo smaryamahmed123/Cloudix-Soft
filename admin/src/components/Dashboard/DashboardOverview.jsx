@@ -25,7 +25,7 @@ const DashboardOverview = ({
 }) => {
     const data = Array.isArray(chartData) ? chartData : [];
 
-    const labels = data.map((d) => d?.month || "");
+    const labels = data.map((d) => d?.month || `Point ${index + 1}`);
     const blogs = data.map((d) => Number(d?.blogs) || 0);
     const website = data.map((d) => Number(d?.website) || 0);
     const messages = data.map((d) => Number(d?.messages) || 0);
