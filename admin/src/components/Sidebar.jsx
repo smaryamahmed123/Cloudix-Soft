@@ -241,7 +241,7 @@ const Sidebar = () => {
           "&::-webkit-scrollbar": { width: 4 },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: "rgba(255,255,255,0.18)",
-            borderRadius: 0,
+            borderRadius: 10,
           },
         }}
       >
@@ -326,6 +326,7 @@ const Sidebar = () => {
               width: drawerWidth,
               boxSizing: "border-box",
               border: "none",
+              borderRadius: 0,
               background: palette.bgBottom,
               overflow: "hidden",
             },
@@ -347,6 +348,7 @@ const Sidebar = () => {
               width: drawerWidth,
               boxSizing: "border-box",
               border: "none",
+              borderRadius: 0,
               background: palette.bgBottom,
             },
           }}

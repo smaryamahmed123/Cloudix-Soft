@@ -142,7 +142,7 @@ import { dash, cardSx } from "./dashboardPalette";
 
 const SERIES_COLORS = {
     blogs: dash.green,
-    portfolio: dash.navy,
+    Websites: dash.navy,
     messages: dash.lime,
 };
 
@@ -176,8 +176,8 @@ const DashboardOverview = ({
     );
 
     const blogs = data.map((item) => Number(item?.blogs) || 0);
-    const portfolio = data.map(
-        (item) => Number(item?.portfolio ?? item?.website) || 0
+    const Websites = data.map(
+        (item) => Number(item?.website) || 0
     );
     const messages = data.map((item) => Number(item?.messages) || 0);
 
@@ -188,7 +188,7 @@ const DashboardOverview = ({
     const maxValue = Math.max(
         0,
         ...blogs,
-        ...portfolio,
+        ...Websites,
         ...messages
     );
 
@@ -241,7 +241,7 @@ const DashboardOverview = ({
                                 mt: 0.4,
                             }}
                         >
-                            Blogs, portfolio websites and messages over time
+                            Blogs, Websites and messages over time
                         </Typography>
                     </Box>
 
@@ -286,7 +286,7 @@ const DashboardOverview = ({
                     }}
                 >
                     <Legend color={SERIES_COLORS.blogs} label="Blogs" />
-                    <Legend color={SERIES_COLORS.portfolio} label="Portfolio Websites" />
+                    <Legend color={SERIES_COLORS.Websites} label="Websites" />
                     <Legend color={SERIES_COLORS.messages} label="Messages" />
                 </Box>
 
@@ -325,10 +325,10 @@ const DashboardOverview = ({
                                     showMark: true,
                                 },
                                 {
-                                    id: "portfolio",
-                                    data: portfolio,
-                                    label: "Portfolio Websites",
-                                    color: SERIES_COLORS.portfolio,
+                                    id: "Websites",
+                                    data: Websites,
+                                    label: "Websites",
+                                    color: SERIES_COLORS.Websites,
                                     curve: "linear",
                                     showMark: true,
                                 },
