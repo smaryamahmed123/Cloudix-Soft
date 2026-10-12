@@ -126,7 +126,6 @@ const Sidebar = () => {
   const itemSx = (isActive) => ({
     minHeight: 44,
     px: 1.6,
-    borderRadius: "10px",
     color: isActive ? "#FFFFFF" : palette.text,
     background: isActive ? activeBg : "transparent",
     border: isActive ? "1px solid rgba(166,194,58,0.55)" : "1px solid transparent",

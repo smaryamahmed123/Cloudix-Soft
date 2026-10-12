@@ -18,6 +18,7 @@ import RecentActivity from "../components/Dashboard/RecentActivity";
 import QuickActions from "../components/Dashboard/QuickActions";
 import GrowthCard from "../components/Dashboard/GrowthCard";
 import { dash } from "../components/Dashboard/dashboardPalette";
+import { withCreatedAt } from "../utils/dates";
 
 // ============================================================
 // API
@@ -153,7 +154,7 @@ const Dashboard = () => {
 
         if (!mounted) return;
 
-        const pick = (r) => (r.status === "fulfilled" ? getArrayData(r.value) : []);
+        const pick = (r) => (r.status === "fulfilled" ? withCreatedAt(getArrayData(r.value)) : []);
 
         setRaw({
           blogs: pick(blogs),
