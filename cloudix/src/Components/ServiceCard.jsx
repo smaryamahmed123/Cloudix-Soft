@@ -14,18 +14,38 @@ const ServiceCard = ({ service, variant = "regular", onOpen }) => {
   const banner = service.bannerImage || service.image; // optional photo from API
 
   return (
+    // <Box
+    //   component={motion.article}
+    //   whileHover={{ y: -4 }}
+    //   transition={{ duration: 0.2 }}
+    //   onClick={onOpen}
+    //   sx={{
+    //     position: "relative", overflow: "hidden", cursor: "pointer", height: "100%",
+    //     bgcolor: "background.paper", borderRadius: 2, p: 3,
+    //     boxShadow: "0 4px 18px rgba(17,30,44,0.07)",
+    //     border: "1px solid",
+    //     borderColor: variant === "featured" ? theme.palette.accent.main : "transparent",
+    //     display: "flex", flexDirection: "column", minHeight: featured ? 240 : 280,
+    //   }}
+    // >
     <Box
       component={motion.article}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2 }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       onClick={onOpen}
       sx={{
-        position: "relative", overflow: "hidden", cursor: "pointer", height: "100%",
+        position: "relative", overflow: "hidden", height: "100%",
+        cursor: onOpen ? "pointer" : "default",
         bgcolor: "background.paper", borderRadius: 2, p: 3,
         boxShadow: "0 4px 18px rgba(17,30,44,0.07)",
         border: "1px solid",
         borderColor: variant === "featured" ? theme.palette.accent.main : "transparent",
         display: "flex", flexDirection: "column", minHeight: featured ? 240 : 280,
+        transition: "border-color 0.3s ease, box-shadow 0.3s ease",
+        "&:hover": {
+          borderColor: "#769914",
+          boxShadow: "0 15px 40px rgba(17,30,44,0.09)",
+        },
       }}
     >
       {variant === "featured" && (
