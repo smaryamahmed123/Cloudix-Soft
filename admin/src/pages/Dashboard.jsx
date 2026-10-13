@@ -28,6 +28,7 @@ const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const LOGOS_URL = `${backendURL}/api/logos`;
 const ADMIN_BLOG_URL = `${backendURL}/api/blogs`;
+const WEBSITES_URL = `${backendURL}/api/websites`
 const ADMIN_CONTACT_MSG_URL = `${backendURL}/api/contact`;
 const TESTIMONIALS_URL = `${backendURL}/api/testimonials`; // ASSUMED endpoint – adjust if different
 
@@ -145,11 +146,12 @@ const Dashboard = () => {
       try {
         setLoading(true);
 
-        const [blogs, messages, logos, testimonials] = await Promise.allSettled([
+        const [blogs, messages, logos, testimonials, websites] = await Promise.allSettled([
           axios.get(`${ADMIN_BLOG_URL}/admin/all`), // admin list includes drafts
           axios.get(ADMIN_CONTACT_MSG_URL),
           axios.get(LOGOS_URL),
           axios.get(TESTIMONIALS_URL),
+          axios.get(WEBSITES_URL),
         ]);
 
         if (!mounted) return;
@@ -182,14 +184,16 @@ const Dashboard = () => {
   const chartData = useMemo(() => {
     const buckets = getBuckets(range);
     const blogs = cumulativeSeries(raw.blogs, buckets);
-    const portfolio = cumulativeSeries(raw.portfolio, buckets);
     const messages = cumulativeSeries(raw.messages, buckets);
+    const websites = cumulativeSeries(raw.websites, buckets);
+    const portfolio = cumulativeSeries(raw.portfolio, buckets);
 
     return buckets.map((b, i) => ({
       month: b.label,
       blogs: blogs[i],
-      portfolio: portfolio[i],
+      website: websites[i],
       messages: messages[i],
+      portfolio: portfolio[i],
     }));
   }, [raw, range]);
 
