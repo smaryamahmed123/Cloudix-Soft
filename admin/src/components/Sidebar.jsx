@@ -125,7 +125,7 @@ const Sidebar = () => {
   const itemSx = (isActive) => ({
     minHeight: 44,
     px: 1.6,
-    borderRadius: 4,
+    borderRadius: 2,
     color: isActive ? "#FFFFFF" : palette.text,
     background: isActive ? activeBg : "transparent",
     border: isActive ? "1px solid rgba(166,194,58,0.55)" : "1px solid transparent",
@@ -240,7 +240,7 @@ const Sidebar = () => {
           "&::-webkit-scrollbar": { width: 4 },
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: "rgba(255,255,255,0.18)",
-            borderRadius: 10,
+            borderRadius: 5,
           },
         }}
       >
