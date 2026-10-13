@@ -130,8 +130,9 @@ const Dashboard = () => {
   const [range, setRange] = useState("7d");
   const [raw, setRaw] = useState({
     blogs: [],
-    portfolio: [],
     messages: [],
+    websites: [],
+    portfolio: [],
     testimonials: [],
   });
 
@@ -160,8 +161,9 @@ const Dashboard = () => {
 
         setRaw({
           blogs: pick(blogs),
-          messages: pick(messages),
           portfolio: pick(logos),
+          websites: pick(websites),
+          messages: pick(messages),
           testimonials: pick(testimonials),
         });
       } catch (error) {
@@ -354,9 +356,16 @@ const Dashboard = () => {
         </Box>
 
         {/* ---------- Main area ---------- */}
-        <Grid container spacing={2.5} alignItems="stretch">
+        <Box
+          sx={{
+            display: "grid",
+            gap: 2.5,
+            alignItems: "stretch",
+            gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(0, 2fr) minmax(0, 1fr)" },
+          }}
+        >
           {/* Left: overview + quick actions */}
-          <Grid item xs={12} lg={8} sx={{ minWidth: 0 }}>
+          <Box sx={{ minWidth: 0 }}>
             <Stack spacing={2.5}>
               <DashboardOverview
                 chartData={chartData}
@@ -374,10 +383,10 @@ const Dashboard = () => {
                 onAddService={() => navigate("/admin/services")}
               />
             </Stack>
-          </Grid>
+          </Box>
 
           {/* Right: recent activity + growth card */}
-          <Grid item xs={12} lg={4} sx={{ minWidth: 0 }}>
+          <Box sx={{ minWidth: 0 }}>
             <Stack spacing={2.5} sx={{ height: "100%" }}>
               <Box sx={{ flex: 1, minWidth: 0 }}>
                 <RecentActivity
@@ -387,8 +396,8 @@ const Dashboard = () => {
               </Box>
               <GrowthCard />
             </Stack>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
