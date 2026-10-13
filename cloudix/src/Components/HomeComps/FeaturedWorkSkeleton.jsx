@@ -403,6 +403,106 @@ const FeaturedWorkSkeleton = () => {
   );
 };
 
+const PortfolioTile = ({ image, alt, label, title, description, delay = 0, onClick }) => (
+  <MotionBox
+    component="button"
+    type="button"
+    onClick={onClick}
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.7, delay }}
+    sx={{
+      width: "100%",
+      height: { xs: 330, sm: 380, md: 390 },
+      display: "flex",
+      flexDirection: "column",
+      p: 0,
+      border: 0,
+      borderRadius: 4,
+      overflow: "hidden",
+      cursor: "pointer",
+      textAlign: "left",
+      font: "inherit",
+      background: "linear-gradient(145deg, rgba(20,42,56,0.96), rgba(9,28,39,0.98))",
+      boxShadow: "0 12px 35px rgba(17,30,44,0.14)",
+      "&:hover .tile-image": { transform: "scale(1.04)" },
+    }}
+  >
+    {/* Image area: blurred backdrop + contained image, same as video cards */}
+    <Box
+      sx={{
+        position: "relative",
+        flex: 1,
+        minHeight: 0,
+        bgcolor: "#07151f",
+        overflow: "hidden",
+      }}
+    >
+      <Box
+        aria-hidden
+        sx={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `url("${image}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(22px) brightness(0.6)",
+          transform: "scale(1.25)",
+        }}
+      />
+      <Box
+        className="tile-image"
+        component="img"
+        src={image}
+        alt={alt}
+        loading="lazy"
+        sx={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          transition: "transform 0.6s ease",
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          top: 16,
+          left: 16,
+          px: 2,
+          py: 0.8,
+          borderRadius: "999px",
+          backgroundColor: "rgba(17,30,44,0.8)",
+          border: "1px solid rgba(255,255,255,0.35)",
+          backdropFilter: "blur(8px)",
+          pointerEvents: "none",
+        }}
+      >
+        <Typography
+          sx={{ color: "#fff", fontSize: "11px", fontWeight: 800, letterSpacing: 1 }}
+        >
+          {label}
+        </Typography>
+      </Box>
+    </Box>
+
+    {/* Footer strip: caption no longer covers the image */}
+    <Box sx={{ px: 2.75, py: 2, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+      <Typography
+        component="h3"
+        sx={{ color: "#fff", fontWeight: 800, fontSize: { xs: "20px", sm: "22px" }, mb: 0.4 }}
+      >
+        {title}
+      </Typography>
+      <Typography sx={{ color: "rgba(255,255,255,0.72)", fontSize: "13px" }}>
+        {description}
+      </Typography>
+    </Box>
+  </MotionBox>
+);
+
 /* ============================================================
    FEATURED WORK
 ============================================================ */
@@ -772,283 +872,29 @@ export default function FeaturedWork() {
           {/* ================= LOGO ================= */}
 
           {logo && (
-            <MotionBox
-              component="button"
-              type="button"
-              onClick={() =>
-                navigate("/portfolio#logos")
-              }
-              initial={{
-                opacity: 0,
-                y: 50,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.1,
-              }}
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: {
-                  xs: 330,
-                  sm: 380,
-                  md: 390,
-                },
-                border: 0,
-                padding: 0,
-                borderRadius: 4,
-                overflow: "hidden",
-                cursor: "pointer",
-                textAlign: "left",
-                background: "none",
-                boxShadow:
-                  "0 12px 35px rgba(17,30,44,0.14)",
-
-                "&:hover .portfolio-image": {
-                  transform: "scale(1.06)",
-                },
-              }}
-            >
-              <Box
-                className="portfolio-image"
-                component="img"
-                src={logo.image}
-                alt={
-                  logo.title ||
-                  "Logo design"
-                }
-                loading="lazy"
-                sx={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  transition:
-                    "transform 0.6s ease",
-                }}
-              />
-
-              <Box
-                sx={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0.05) 25%, rgba(8,18,32,0.94) 100%)",
-                }}
-              />
-
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 20,
-                  left: 20,
-                  px: 2,
-                  py: 0.8,
-                  borderRadius: "999px",
-                  backgroundColor:
-                    "rgba(17,30,44,0.8)",
-                  border:
-                    "1px solid rgba(255,255,255,0.35)",
-                  backdropFilter:
-                    "blur(8px)",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "#fff",
-                    fontSize: "11px",
-                    fontWeight: 800,
-                    letterSpacing: 1,
-                  }}
-                >
-                  LOGO DESIGN
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 22,
-                  left: 22,
-                  right: 22,
-                }}
-              >
-                <Typography
-                  component="h3"
-                  sx={{
-                    color: "#fff",
-                    fontWeight: 800,
-                    fontSize: {
-                      xs: "22px",
-                      sm: "25px",
-                    },
-                    mb: 0.8,
-                  }}
-                >
-                  Logo Design
-                </Typography>
-
-                <Typography
-                  sx={{
-                    color:
-                      "rgba(255,255,255,0.72)",
-                    fontSize: "13px",
-                  }}
-                >
-                  Creative identity for your
-                  brand.
-                </Typography>
-              </Box>
-            </MotionBox>
+            <PortfolioTile
+              image={logo.image}
+              alt={logo.title || "Logo design"}
+              label="LOGO DESIGN"
+              title="Logo Design"
+              description="Creative identity for your brand."
+              delay={0.1}
+              onClick={() => navigate("/portfolio#logos")}
+            />
           )}
 
           {/* ================= POST ================= */}
 
           {post && (
-            <MotionBox
-              component="button"
-              type="button"
-              onClick={() =>
-                navigate("/portfolio#posts")
-              }
-              initial={{
-                opacity: 0,
-                y: 50,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: 0.2,
-              }}
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: {
-                  xs: 330,
-                  sm: 380,
-                  md: 390,
-                },
-                border: 0,
-                padding: 0,
-                borderRadius: 4,
-                overflow: "hidden",
-                cursor: "pointer",
-                textAlign: "left",
-                background: "none",
-                boxShadow:
-                  "0 12px 35px rgba(17,30,44,0.14)",
-
-                "&:hover .portfolio-image": {
-                  transform: "scale(1.06)",
-                },
-              }}
-            >
-              <Box
-                className="portfolio-image"
-                component="img"
-                src={post.image}
-                alt={
-                  post.title ||
-                  "Post design"
-                }
-                loading="lazy"
-                sx={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  transition:
-                    "transform 0.6s ease",
-                }}
-              />
-
-              <Box
-                sx={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0.05) 25%, rgba(8,18,32,0.94) 100%)",
-                }}
-              />
-
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 20,
-                  left: 20,
-                  px: 2,
-                  py: 0.8,
-                  borderRadius: "999px",
-                  backgroundColor:
-                    "rgba(17,30,44,0.8)",
-                  border:
-                    "1px solid rgba(255,255,255,0.35)",
-                  backdropFilter:
-                    "blur(8px)",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "#fff",
-                    fontSize: "11px",
-                    fontWeight: 800,
-                    letterSpacing: 1,
-                  }}
-                >
-                  POST DESIGN
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 22,
-                  left: 22,
-                  right: 22,
-                }}
-              >
-                <Typography
-                  component="h3"
-                  sx={{
-                    color: "#fff",
-                    fontWeight: 800,
-                    fontSize: {
-                      xs: "22px",
-                      sm: "25px",
-                    },
-                    mb: 0.8,
-                  }}
-                >
-                  Post Design
-                </Typography>
-
-                <Typography
-                  sx={{
-                    color:
-                      "rgba(255,255,255,0.72)",
-                    fontSize: "13px",
-                  }}
-                >
-                  Engaging designs for social
-                  media.
-                </Typography>
-              </Box>
-            </MotionBox>
+            <PortfolioTile
+              image={post.image}
+              alt={post.title || "Post design"}
+              label="POST DESIGN"
+              title="Post Design"
+              description="Engaging designs for social media."
+              delay={0.2}
+              onClick={() => navigate("/portfolio#posts")}
+            />
           )}
         </Box>
 
