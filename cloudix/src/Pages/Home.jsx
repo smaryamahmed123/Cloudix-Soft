@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, useEffect, useState } from "react";
+import Defer from "../Components/Defer";
 import axios from "axios";
 import { Box } from "@mui/material";
 import { Helmet } from "react-helmet-async";
-import useDevice from "../hooks/useDevice";
 import HeroSection from "../Components/HomeComps/HomeHero";
-import WhyChooseUs from "../Components/HomeComps/WhyChoose";
-import OurClients from "../Components/HomeComps/OurClients";
-import Testimonials from "../Components/HomeComps/Testimonials";
-import FeaturedWork from "../Components/HomeComps/FeaturedWork";
-import AboutContent from "../Components/AboutUsComponents/AboutContent";
-import ServicesSection from "../Components/ServicesComponents.jsx/ServicesSection";
+
+const OurClients = lazy(() => import("../Components/HomeComps/OurClients"));
+const WhyChooseUs = lazy(() => import("../Components/HomeComps/WhyChoose"));
+const FeaturedWork = lazy(() => import("../Components/HomeComps/FeaturedWork"));
+const Testimonials = lazy(() => import("../Components/HomeComps/Testimonials"));
+const AboutContent = lazy(() => import("../Components/AboutUsComponents/AboutContent"));
+const ServicesSection = lazy(() => import("../Components/ServicesComponents.jsx/ServicesSection"));
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
 const Home = () => {
-  const { isLandscapeMobile } = useDevice();
   const [intro, setIntro] = useState(null);
 
   useEffect(() => {
@@ -55,17 +55,17 @@ const Home = () => {
         </script>
       </Helmet>
 
-      <Box sx={{ position: "relative", overflow: "hidden", backgroundColor: "#f9f9f9" }}>
+      <Box component="main" sx={{ position: "relative", overflow: "hidden", backgroundColor: "#f9f9f9" }}>
         <Box sx={{ position: "relative", zIndex: 1 }}>
           <HeroSection />
-          <AboutContent intro={intro} />
+          <Defer minHeight={500}><AboutContent intro={intro} /></Defer>
           <Box sx={{ backgroundColor: "#111E2C", p: 2 }}>
-            <ServicesSection limit={4} />
+            <Defer minHeight={600}><ServicesSection limit={4} /></Defer>
           </Box>
-          <FeaturedWork />
-          <WhyChooseUs />
-          <Testimonials />
-          <OurClients />
+          <Defer minHeight={1100}><FeaturedWork /></Defer>
+          <Defer minHeight={600}><WhyChooseUs /></Defer>
+          <Defer minHeight={600}><Testimonials /></Defer>
+          <Defer minHeight={400}><OurClients /></Defer>
         </Box>
       </Box>
     </>

@@ -8,11 +8,9 @@ import {
   Typography,
   Link, Container
 } from "@mui/material";
-import {
-  Phone,
-  Email,
-  LocationOn
-} from "@mui/icons-material";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import Logo from "./Logo";
 import SocialIcons from "./SocialIcons";
@@ -172,21 +170,21 @@ const Footer = () => {
 
               <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1.5 }}>
                 <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                  <Phone sx={{ color: "#769914", mr: 1 }} fontSize="small" />
+                  <PhoneIcon sx={{ color: "#769914", mr: 1 }} fontSize="small" />
                   <Link href={`tel:${info.phone}`} sx={footerItemStyle}>
                     {info.phone}
                   </Link>
                 </Box>
 
                 <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                  <Email sx={{ color: "#769914", mr: 1 }} fontSize="small" />
+                  <EmailIcon sx={{ color: "#769914", mr: 1 }} fontSize="small" />
                   <Link href={`mailto:${info.email}`} sx={footerItemStyle}>
                     {info.email}
                   </Link>
                 </Box>
 
                 <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
-                  <LocationOn sx={{ color: "#769914", mr: 1 }} fontSize="small" />
+                  <LocationOnIcon sx={{ color: "#769914", mr: 1 }} fontSize="small" />
                   <Typography sx={{ ...footerItemStyle, lineHeight: 1.5 }}>
                     {info.address}
                   </Typography>
