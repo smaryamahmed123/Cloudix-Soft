@@ -2,13 +2,14 @@ import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 
+import Home from "./Pages/Home";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import ScrollRestoration from "./Components/ScrollRestoration";
 import { lazyWithRetry } from "./utils/lazyWithRetry";
 
 // Safe Lazy Loaded Pages
-const Home = lazyWithRetry(() => import("./Pages/Home"));
+// const Home = lazyWithRetry(() => import("./Pages/Home"));
 const About = lazyWithRetry(() => import("./Pages/About"));
 const Services = lazyWithRetry(() => import("./Pages/Services"));
 const Portfolio = lazyWithRetry(() => import("./Pages/Portfolio"));
