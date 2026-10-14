@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { getContactInfo } from "../utils/contactInfo";
 import { motion } from "framer-motion";
 import { Link as RouterLink } from "react-router-dom";
 import {
@@ -51,36 +51,19 @@ const footerItemStyle = {
   },
 };
 
-const backendURL = import.meta.env.VITE_BACKEND_URL;
-
 const Footer = () => {
   const [info, setInfo] = useState(null);
 
   useEffect(() => {
-    if (!backendURL) {
-      console.error("VITE_BACKEND_URL is not defined");
-      return;
-    }
-
-    const controller = new AbortController();
-
-    const fetchInfo = async () => {
-      try {
-        const res = await axios.get(
-          `${backendURL}/api/contact-info`,
-          { signal: controller.signal }
-        );
-        setInfo(res.data);
-      } catch (err) {
-        if (err.name !== "CanceledError") {
-          console.error("Footer API error:", err);
-        }
-      }
+    let active = true;
+    getContactInfo()
+      .then((data) => {
+        if (active) setInfo(data);
+      })
+      .catch((err) => console.error("Footer API error:", err));
+    return () => {
+      active = false;
     };
-
-    fetchInfo();
-
-    return () => controller.abort();
   }, []);
 
   if (!info) return null;
@@ -143,7 +126,7 @@ const Footer = () => {
               }}
             >
               <Box component="nav">
-                <Typography variant="h6" sx={footerTitleStyle}>Quick Links</Typography>
+                <Typography variant="h6" component="h2" sx={footerTitleStyle}>Quick Links</Typography>
                 <Link component={RouterLink} to="/" sx={footerItemStyle}>Home</Link>
                 <Link component={RouterLink} to="/services" sx={footerItemStyle}>Services</Link>
                 <Link component={RouterLink} to="/blogs" sx={footerItemStyle}>Blogs</Link>
@@ -152,7 +135,7 @@ const Footer = () => {
               </Box>
 
               <Box component="nav">
-                <Typography variant="h6" sx={footerTitleStyle}>About Us</Typography>
+                <Typography variant="h6" component="h2" sx={footerTitleStyle}>About Us</Typography>
                 <Link component={RouterLink} to="/about" sx={footerItemStyle}>About Us</Link>
                 <Link component={RouterLink} to="/privacy-policy" sx={footerItemStyle}>
                   Privacy Policy
@@ -166,7 +149,7 @@ const Footer = () => {
               variants={fadeUp}
               custom={3}
             >
-              <Typography variant="h6" sx={footerTitleStyle}>Contact Us</Typography>
+              <Typography variant="h6" component="h2" sx={footerTitleStyle}>Contact Us</Typography>
 
               <Box sx={{ mt: 2, display: "flex", flexDirection: "column", gap: 1.5 }}>
                 <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>

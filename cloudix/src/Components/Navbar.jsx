@@ -11,8 +11,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import GradientButton from "./GradientButton";
 import Logo from "./Logo";
-import WhiteLogo from "../../public/logo_white-removebg-preview-removebg-preview.webp";
-import BlackLogo from "../../public/logo.webp";
+import WhiteLogo from "/logo_white-removebg-preview-removebg-preview.webp";
+import BlackLogo from "/logo.webp";
 import SocialIcons from "./SocialIcons";
 
 const navItems = ["Home", "Services", "Portfolio", "About", "Contact"];
@@ -30,7 +30,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -129,6 +129,8 @@ const Navbar = () => {
             {/* Mobile hamburger */}
             {isMobile && (
               <IconButton
+                aria-label={drawerOpen ? "Close menu" : "Open menu"}
+                aria-expanded={drawerOpen}
                 onClick={() => setDrawerOpen(!drawerOpen)}
                 sx={{ color: scrolled ? theme.palette.primary.dark : "#fff" }}
               >

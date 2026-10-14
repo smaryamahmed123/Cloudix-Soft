@@ -4,6 +4,11 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { HelmetProvider } from "react-helmet-async";
+import "@fontsource/poppins/latin-400.css";
+import "@fontsource/poppins/latin-500.css";
+import "@fontsource/poppins/latin-600.css";
+import "@fontsource/poppins/latin-700.css";
+import "@fontsource/poppins/latin-800.css";
 import theme from "./theme";
 import { store } from "./redux/store";
 

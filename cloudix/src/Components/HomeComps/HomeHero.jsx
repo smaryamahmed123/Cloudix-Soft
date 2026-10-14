@@ -114,6 +114,7 @@ function HeroSection() {
         >
           <Typography
             variant="h3"
+            component="h1"
             sx={{
               ...(isLandscapeMobile && { fontSize: "1.2rem" }),
               lineHeight: 1.25,
