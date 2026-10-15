@@ -44,7 +44,7 @@ const allowedOrigins = [
   "https://cloudix-soft.netlify.app",
   "https://cloudixsoft.com",
   "https://www.cloudixsoft.com",
-  "https://admin.cloudixsoft.com/"
+  "https://admin.cloudixsoft.com"
 ];
 
 app.use(
