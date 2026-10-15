@@ -7,7 +7,7 @@ import { dash, cardSx } from "../Dashboard/dashboardPalette";
 const SubscriberStatCard = ({ title, value, caption, icon, color, tint }) => (
     <Paper
         elevation={0}
-        onClick={onClick}
+        // onClick={onClick}
         sx={{
             ...cardSx,
             width: "100%",
