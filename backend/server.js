@@ -51,7 +51,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, false);   // instead of: callback(new Error("Not allowed by CORS"))
       }
     },
     credentials: false,
@@ -59,6 +59,10 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+app.use((req, res, next) => {
+  res.vary("Origin");
+  next();
+});
 app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
