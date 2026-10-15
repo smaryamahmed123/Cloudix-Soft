@@ -40,8 +40,6 @@ const app = express();
 app.set('trust proxy', 1);
 
 const allowedOrigins = [
-  "https://cloudix-soft-admin.netlify.app",
-  "https://cloudix-soft.netlify.app",
   "https://cloudixsoft.com",
   "https://www.cloudixsoft.com",
   "https://admin.cloudixsoft.com"
