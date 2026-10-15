@@ -210,18 +210,18 @@ const Dashboard = () => {
   // Sparklines + trends always use the 12-month view
   const stats = useMemo(() => {
     const buckets = getBuckets("12m");
+
     const build = (items) => {
       const series = cumulativeSeries(items, buckets);
-      return { series, trend: getTrendLabel(series) };
+      return { series, trend: getTrend(series) }; // inside build
     };
 
-    // return {
-    //   blogs: build(raw.blogs),
-    //   portfolio: build(raw.portfolio),
-    //   testimonials: build(raw.testimonials),
-    //   messages: build(raw.messages),
-    // };
-    return { series, trend: getTrend(series) };
+    return {
+      blogs: build(raw.blogs),
+      portfolio: build(raw.portfolio),
+      testimonials: build(raw.testimonials),
+      messages: build(raw.messages),
+    };
   }, [raw]);
 
   const activities = useMemo(() => {
