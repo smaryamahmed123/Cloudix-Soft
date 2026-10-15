@@ -54,6 +54,13 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+app.disable("etag"); // no more 304 "Not Modified" replies
+
+app.use("/api", (req, res, next) => {
+  res.set("Cache-Control", "no-store");
+  next();
+});
 app.use((req, res, next) => {
   res.vary("Origin");
   next();
@@ -86,6 +93,7 @@ app.get('/', (req, res) => res.send('Backend running ✅'));
 const createDefaultAdmin = async () => {
   const adminEmail = process.env.ADMIN_EMAIL;
   const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminEmail || !adminPassword) return;
 
   const existingAdmin = await User.findOne({ email: adminEmail });
   if (!existingAdmin) {
@@ -93,6 +101,7 @@ const createDefaultAdmin = async () => {
     await User.create({
       email: adminEmail,
       password: hashedPassword,
+      isAdmin: true,
     });
     console.log('✅ Admin user created');
   }
