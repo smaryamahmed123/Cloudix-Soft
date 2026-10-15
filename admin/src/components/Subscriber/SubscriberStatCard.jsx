@@ -4,10 +4,10 @@ import { dash, cardSx } from "../Dashboard/dashboardPalette";
 
 // Simple stat card (no sparkline – the subscribers API is paginated,
 // so there's no full history to chart)
-const SubscriberStatCard = ({ title, value, caption, icon, color, tint }) => (
+const SubscriberStatCard = ({ title, value, caption, icon, color, tint, onClick }) => (
     <Paper
         elevation={0}
-        // onClick={onClick}
+        onClick={onClick}
         sx={{
             ...cardSx,
             width: "100%",
