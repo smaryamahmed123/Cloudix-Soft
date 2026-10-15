@@ -110,11 +110,19 @@ const cumulativeSeries = (items, buckets) => {
 };
 
 // Month-over-month growth label from a 12-month cumulative series
-const getTrendLabel = (series) => {
+// Month-over-month change from a 12-month cumulative series
+const getTrend = (series) => {
   const last = series[series.length - 1] || 0;
   const prev = series[series.length - 2] || 0;
-  if (prev === 0) return last > 0 ? "New" : "0%";
-  return `${Math.round(((last - prev) / prev) * 100)}%`;
+
+  if (last === prev) return { label: "0%", direction: "flat" };
+  if (prev === 0) return { label: "New", direction: "up" };
+
+  const pct = Math.round(((last - prev) / prev) * 100);
+  return {
+    label: `${pct > 0 ? "+" : ""}${pct}%`,
+    direction: pct > 0 ? "up" : "down",
+  };
 };
 
 // ============================================================
@@ -207,12 +215,13 @@ const Dashboard = () => {
       return { series, trend: getTrendLabel(series) };
     };
 
-    return {
-      blogs: build(raw.blogs),
-      portfolio: build(raw.portfolio),
-      testimonials: build(raw.testimonials),
-      messages: build(raw.messages),
-    };
+    // return {
+    //   blogs: build(raw.blogs),
+    //   portfolio: build(raw.portfolio),
+    //   testimonials: build(raw.testimonials),
+    //   messages: build(raw.messages),
+    // };
+    return { series, trend: getTrend(series) };
   }, [raw]);
 
   const activities = useMemo(() => {
