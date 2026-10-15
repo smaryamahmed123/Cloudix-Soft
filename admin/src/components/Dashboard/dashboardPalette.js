@@ -1,10 +1,10 @@
 // Shared design tokens for the dashboard (replaces theme.dashboard for these components)
 export const dash = {
     navy: "#12263D",
-    muted: "#6B7C8F",
+    muted: "#566879",
     border: "#E5EAEE",
     page: "#F6F8F9",
-    green: "#6F8F1F",
+    green: "#587318",
     greenDark: "#587318",
     greenLight: "#EEF3DC",
     lime: "#B5CC45",

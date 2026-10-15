@@ -299,7 +299,7 @@ const Sidebar = () => {
           }}
         >
           <Toolbar sx={{ minHeight: "62px !important", px: 2 }}>
-            <IconButton edge="start" onClick={() => setOpen(true)} sx={{ color: "#FFFFFF", mr: 1 }}>
+            <IconButton edge="start" aria-label="Open navigation menu" onClick={() => setOpen(true)} sx={{ color: "#FFFFFF", mr: 1 }}>
               <MenuIcon />
             </IconButton>
 

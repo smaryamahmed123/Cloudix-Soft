@@ -38,7 +38,7 @@ const ProcessSection = () => (
             <Typography variant="subtitle2" sx={{ color: "primary.main", fontWeight: 700 }}>
               {String(i + 1).padStart(2, "0")}
             </Typography>
-            <Typography variant="h6" sx={{ color: "primary.dark", mb: 1 }}>{title}</Typography>
+            <Typography variant="h6" component="h3" sx={{ color: "primary.dark", mb: 1 }}>{title}</Typography>
             <Typography variant="body2" sx={{ color: "text.secondary", maxWidth: 220, mx: "auto", lineHeight: 1.7 }}>
               {text}
             </Typography>

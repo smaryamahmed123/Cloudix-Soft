@@ -15,7 +15,7 @@ const WhyChoose = () => (
     <Container maxWidth="lg">
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1.4fr" }, gap: { xs: 4, md: 6 }, alignItems: "center" }}>
         <Box>
-          <Typography variant="subtitle2" sx={{ color: "accent.main", fontWeight: 600, mb: 1 }}>
+          <Typography variant="subtitle2" component="h3" sx={{ color: "accent.main", fontWeight: 600, mb: 1 }}>
             Why choose us
           </Typography>
           <Typography component="h2" variant="h4" sx={{ fontWeight: 700, mb: 2 }}>

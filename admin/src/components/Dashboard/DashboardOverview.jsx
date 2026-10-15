@@ -112,6 +112,7 @@ const DashboardOverview = ({
                         <Select
                             size="small"
                             value={range}
+                            SelectDisplayProps={{ "aria-label": "Chart date range" }}
                             onChange={(event) =>
                                 onRangeChange(event.target.value)
                             }
