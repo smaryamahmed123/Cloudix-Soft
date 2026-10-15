@@ -1,5 +1,5 @@
 // frontend/src/App.jsx
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const Login = lazy(() => import('./pages/Login'));
