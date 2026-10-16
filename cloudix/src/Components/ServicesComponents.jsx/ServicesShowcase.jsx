@@ -46,19 +46,18 @@ const ServicesShowcase = () => {
         <Box sx={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: { xs: 2, md: 3 } }}>
           {loading
             ? [...Array(8)].map((_, i) => (
-                <Box key={i} sx={{ gridColumn: { xs: "span 12", sm: "span 6", md: "span 3" } }}>
-                  <Skeleton variant="rounded" height={280} />
-                </Box>
-              ))
+              <Box key={i} sx={{ gridColumn: { xs: "span 12", sm: "span 6", md: "span 3" } }}>
+                <Skeleton variant="rounded" height={280} />
+              </Box>
+            ))
             : visible.map((service, i) => (
-                <Box key={service._id || service.id} sx={{ gridColumn: spanFor(i, visible.length) }}>
-                  <ServiceCard
-                    service={service}
-                    variant={variantFor(i, visible.length)}
-                    // onOpen={() => navigate("/contact")}
-                  />
-                </Box>
-              ))}
+              <Box key={service._id || service.id} sx={{ gridColumn: spanFor(i, visible.length) }}>
+                <ServiceCard
+                  service={service}
+                  variant={variantFor(i, visible.length)}
+                />
+              </Box>
+            ))}
         </Box>
       </Container>
     </Box>

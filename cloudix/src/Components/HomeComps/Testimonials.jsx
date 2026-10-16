@@ -17,6 +17,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import GradientButton from "../GradientButton";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -409,44 +410,12 @@ const Testimonials = () => {
 
         {/* VIEW ALL */}
         <Box sx={{ display: "flex", justifyContent: "center", mt: { xs: 4, md: 5 } }}>
-          <Box
-            component="button"
-            type="button"
+          <GradientButton
+            text="View All Testimonials"
+            size="small"
             onClick={() => setAllOpen(true)}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.2,
-              pl: 3,
-              pr: 0.8,
-              py: 0.8,
-              border: 0,
-              borderRadius: "999px",
-              backgroundColor: LIME,
-              color: "#0b1d29",
-              fontFamily: "inherit",
-              fontSize: 13,
-              fontWeight: 800,
-              cursor: "pointer",
-              transition: "background-color 0.2s ease",
-              "&:hover": { backgroundColor: LIME_SOFT },
-            }}
-          >
-            View All Testimonials
-            <Box
-              sx={{
-                width: 30,
-                height: 30,
-                borderRadius: "50%",
-                bgcolor: "#0b1d29",
-                color: LIME,
-                display: "grid",
-                placeItems: "center",
-              }}
-            >
-              <ArrowForwardRoundedIcon sx={{ fontSize: 17 }} />
-            </Box>
-          </Box>
+            aria-label="View all testimonials"
+          />
         </Box>
       </Container>
 
