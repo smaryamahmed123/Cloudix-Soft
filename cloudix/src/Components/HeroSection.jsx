@@ -119,7 +119,7 @@ const HeroSection = ({
       </Box>
 
       {/* Lime angled accent */}
-      <Box
+      {/* <Box
         sx={{
           display: { xs: "none", md: "block" },
           position: "absolute",
@@ -131,7 +131,7 @@ const HeroSection = ({
           opacity: 0.85,
           clipPath: "polygon(35% 0, 100% 0, 65% 100%, 0 100%)",
         }}
-      />
+      /> */}
 
       {/* Optional page-specific decorative shapes */}
       {/* {decorations} */}
