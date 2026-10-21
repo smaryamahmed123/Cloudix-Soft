@@ -34,9 +34,9 @@ const HeroSection = ({
   buttonText,
   onButtonClick,
   maxContentWidth = 520,
-  decorations,      // optional page-specific decorative shapes, ReactNode(s).
+  // decorations,      // optional page-specific decorative shapes, ReactNode(s).
   children,                   // Rendered inside the hero's own clipped container so
-                     // they can't overflow it, same as the built-in lime accent.
+  // they can't overflow it, same as the built-in lime accent.
 }) => {
   const theme = useTheme();
   const [loaded, setLoaded] = useState(false);
@@ -134,7 +134,7 @@ const HeroSection = ({
       />
 
       {/* Optional page-specific decorative shapes */}
-      {decorations}
+      {/* {decorations} */}
 
       <Container maxWidth="lg" sx={{ position: "relative", py: { xs: 8, md: 12 } }}>
         <Box sx={{ maxWidth: maxContentWidth }}>
