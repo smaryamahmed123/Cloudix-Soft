@@ -1,2 +1,5 @@
+
 User-agent: *
 Allow: /
+
+Sitemap: https://cloudixsoft.com/sitemap.xml
